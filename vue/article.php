@@ -1,0 +1,98 @@
+  <?php include('header.inc.php');
+
+   require_once('../model/Database.php');
+
+   require_once('../Articles.php');
+    require_once('../Comments.php');
+
+
+
+          $article = new Articles();
+          $article = $article->singleArticle($_GET['id']);
+       
+
+          $comments = new Comments();
+          $comments = $comments->getCommentsFromArticle($_GET['id']);
+      
+
+   ?>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('../public/img/post-bg.jpg')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+              <h1><?= $article['titre'] ?></h1>
+              <h2 class="subheading"><?= $article['chapo'] ?></h2>
+              <span class="meta">Posted by
+                <a href="#">Start Bootstrap</a>
+                on August 24, 2019</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+              <!-- Article Content -->
+              <article>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                      <p>
+                        <?= $article['contenu'] ?>
+
+                      </p>         
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+    <hr>
+  <p>Commentaires</p>
+
+
+          <?php
+          //while ($dataComment = $comment->fetch())
+          foreach ($comments as $comment)
+            {
+            ?>
+
+            <!-- Comment Content -->
+            <article>
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-md-10 mx-auto">
+                      <p><strong>Rédigé par <?= htmlspecialchars($comment['commentaire_id']) ?></strong></p>
+                      <p>le <?= $comment['date_ajout'] ?></p>
+                      
+                      <p>Commentaire</p>
+                      <p><?= nl2br(htmlspecialchars($comment['contenu'])) ?></p>       
+                  </div>
+                </div>
+              </div>
+            </article>
+
+           
+          <?php } ?>
+
+      <hr>
+
+  <?php 
+  include('footer.inc.php'); 
+
+  ?>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="../public/js/clean-blog.min.js"></script>
+
+  </body>
+
+  </html>
