@@ -15,9 +15,9 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
     );
 
     public static $prefixLengthsPsr4 = array (
-        'T' => 
+        'V' => 
         array (
-            'Twig\\' => 5,
+            'Vue\\' => 4,
         ),
         'S' => 
         array (
@@ -36,11 +36,20 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\Console\\' => 26,
         ),
+        'R' => 
+        array (
+            'Rubriques\\' => 10,
+        ),
         'P' => 
         array (
+            'Public\\' => 7,
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
             'PhpCsFixer\\' => 11,
+        ),
+        'M' => 
+        array (
+            'Model\\' => 6,
         ),
         'D' => 
         array (
@@ -49,15 +58,16 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
         ),
         'C' => 
         array (
+            'Controller\\' => 11,
             'Composer\\XdebugHandler\\' => 23,
             'Composer\\Semver\\' => 16,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Twig\\' => 
+        'Vue\\' => 
         array (
-            0 => __DIR__ . '/..' . '/twig/twig/src',
+            0 => __DIR__ . '/../..' . '/vue',
         ),
         'Symfony\\Polyfill\\Php73\\' => 
         array (
@@ -115,6 +125,14 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
+        'Rubriques\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/rubriques',
+        ),
+        'Public\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/public',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -127,6 +145,10 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
         array (
             0 => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src',
         ),
+        'Model\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/model',
+        ),
         'Doctrine\\Common\\Lexer\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/lexer/lib/Doctrine/Common/Lexer',
@@ -135,6 +157,10 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
         array (
             0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
         ),
+        'Controller\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/controller',
+        ),
         'Composer\\XdebugHandler\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/xdebug-handler/src',
@@ -142,16 +168,6 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
         'Composer\\Semver\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/semver/src',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'T' => 
-        array (
-            'Twig_' => 
-            array (
-                0 => __DIR__ . '/..' . '/twig/twig/lib',
-            ),
         ),
     );
 
@@ -220,7 +236,6 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd::$classMap;
 
         }, null, ClassLoader::class);

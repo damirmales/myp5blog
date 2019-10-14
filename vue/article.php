@@ -1,17 +1,19 @@
   <?php include('header.inc.php');
 
-   require_once('../model/Database.php');
+   //require_once('../model/Database.php');
 
-   require_once('../Articles.php');
-    require_once('../Comments.php');
+   //require_once('../model/Articles.php');
+    //require_once('../Comments.php');
+
+ require_once('../model/Articles.php');
+ require_once('../model/Comments.php');
 
 
-
-          $article = new Articles();
+          $article = new \model\Articles();
           $article = $article->singleArticle($_GET['id']);
        
 
-          $comments = new Comments();
+          $comments = new \model\Comments();
           $comments = $comments->getCommentsFromArticle($_GET['id']);
       
 

@@ -1,15 +1,24 @@
 
 <?php 
+//require_once dirname(__DIR__).'\vendor\autoload.php';
+//var_dump(dirname(__DIR__));
 
 include('header.inc.php'); 
 
- require_once('../model/Database.php');
+ //require_once('../model/Database.php');
 
- require_once('../Articles.php');
+ require_once('model/Articles.php');
+ //use model\Articles;
+
+  //require_once('../controller/frontend/articleController.php');
+ // require_once dirname(__DIR__).'\controller\frontend\articleController.php';
+
 
 // utilisation d'un objet Articles pour l'affichage de la liste des articles
-$newArticles = new Articles();
+$newArticles = new \model\Articles();
+
 $articles  = $newArticles->getListArticles();
+
 
 
 
@@ -35,13 +44,15 @@ $articles  = $newArticles->getListArticles();
 
 <?php 
 //ob_start();
-require('../templates/layout_articles.php');
+require('templates/layout_articles.php');
 //$pageContent = ob_get_clean();
 
 ?>        
         
 		<!-- ajouter un nouvel article -->
 		<p><a href="ajout_article.php">Ajouter un article</a>
+
+      
         <hr>
         <!-- Pager -->
         <div class="clearfix">

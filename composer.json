@@ -2,7 +2,24 @@
     "require": {
         "twig/twig": "^2.0"
     },
+    
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15"
+    },
+
+
+    "name": "damir/p5mvcphp",
+    "description": "project P5 en MVC PHP",
+    "type": "blog",
+    "require": {},
+    "autoload": {
+      "psr-4": {
+        "Vue\\": "vue/",
+        "Controller\\": "controller/",
+        "Model\\": "model/",
+        "Public\\": "public/",
+        "Rubriques\\": "rubriques/"
+      }
+    
     }
 }

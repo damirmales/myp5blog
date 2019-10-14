@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">
-          <a href="article.php?id=<?= $article['articles_id'] ?>">
+          <a href="vue/article.php?id=<?= $article['articles_id'] ?>">
             <h2 class="post-title">
               <?php echo htmlspecialchars($article['titre']); ?>
             </h2>
@@ -19,7 +19,7 @@
 			<p> Commentaire</p>
         </div>
         <hr>
-    <a href="article.php?id=<?= $article['articles_id'] ?>">Voir l'article</a>
+    <a href="vue/article.php?id=<?= $article['articles_id'] ?>">Voir l'article</a>
     <a href="delete-article.php?id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
 	</div>
 	</div>

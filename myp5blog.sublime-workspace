@@ -1,0 +1,1157 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ht",
+				"html"
+			],
+			[
+				"i",
+				"inline\tdisplay"
+			],
+			[
+				"ba",
+				"background-position\tproperty"
+			],
+			[
+				"inde",
+				"indexImg"
+			],
+			[
+				"bac",
+				"background-image\tproperty"
+			],
+			[
+				"barber",
+				"Barberêche"
+			],
+			[
+				"font",
+				"font-size\tproperty"
+			],
+			[
+				"fo",
+				"font-size\tproperty"
+			],
+			[
+				"pad",
+				"padding\tproperty"
+			],
+			[
+				"p",
+				"progress\tcursor"
+			],
+			[
+				"a",
+				"auto\tmargin"
+			],
+			[
+				"marg",
+				"margin\tproperty"
+			],
+			[
+				"c",
+				"container"
+			],
+			[
+				"wi",
+				"width\tproperty"
+			],
+			[
+				"he",
+				"header\tTag"
+			],
+			[
+				"cha",
+				"champsSaisi"
+			],
+			[
+				"nombre",
+				"nombre_saisi"
+			],
+			[
+				"mar",
+				"margin-top\tproperty"
+			],
+			[
+				"padd",
+				"padding-top\tproperty"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"ma",
+				"margin-bottom\tproperty"
+			],
+			[
+				"te",
+				"text"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"ti",
+				"title\tTag"
+			],
+			[
+				"max",
+				"max-width\tproperty"
+			],
+			[
+				"di",
+				"div\tTag"
+			],
+			[
+				"be",
+				"beaufort"
+			],
+			[
+				"con",
+				"container-fluid"
+			],
+			[
+				"st",
+				"style\tTag"
+			],
+			[
+				"col-md",
+				"col-md-5"
+			],
+			[
+				"col-s",
+				"col-md-push-7"
+			],
+			[
+				"op",
+				"opacity\tproperty"
+			],
+			[
+				"text",
+				"text-center"
+			],
+			[
+				"col",
+				"col-sm-9"
+			],
+			[
+				"col-m",
+				"col-sm-9"
+			],
+			[
+				"in",
+				"input\tTag"
+			],
+			[
+				"tex",
+				"text-align\tproperty"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"font-",
+				"font-size"
+			],
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"o",
+				"ondragenter\tAttr"
+			],
+			[
+				"co",
+				"codejs"
+			],
+			[
+				"ac",
+				"action\tAttr"
+			],
+			[
+				"on",
+				"onclick\tAttr"
+			],
+			[
+				"h",
+				"height\tAttr"
+			],
+			[
+				"pa",
+				"padding-top"
+			],
+			[
+				"li",
+				"link\tTag"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "vue/article.php",
+			"settings":
+			{
+				"buffer_size": 2641,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "controller/frontend/articleController.php",
+			"settings":
+			{
+				"buffer_size": 304,
+				"encoding": "UTF-8",
+				"line_ending": "Windows",
+				"name": "<?php"
+			}
+		},
+		{
+			"file": "composer.json",
+			"settings":
+			{
+				"buffer_size": 463,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "model/Articles.php",
+			"settings":
+			{
+				"buffer_size": 1226,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "model/Database.php",
+			"settings":
+			{
+				"buffer_size": 704,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Comments.php",
+			"settings":
+			{
+				"buffer_size": 506,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 178,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vue/articles.php",
+			"settings":
+			{
+				"buffer_size": 1714,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "templates/layout_articles.php",
+			"settings":
+			{
+				"buffer_size": 983,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "model/recup_data_article.php",
+			"settings":
+			{
+				"buffer_size": 1218,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vue/home.php",
+			"settings":
+			{
+				"buffer_size": 3374,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "\n<?php\n\n//require_once('model/Database.php');\n\n/****** **************************************************************************\n\t\tCette classe gère la collecte des données pour afficher la liste des articles \n  \t\t et chaque article en particulier \n*************************************************************************************/\n\n\nclass Articles extends Database\n{\n\n//----- Retourne la liste des articles pour affichage ------------\n\tpublic function getListArticles()\n\t{\n\n\n\t\t//$connection = self::getConnectDB();\n\t\t$connection = $this->getConnectDB();\n\t\t$listArticles = $connection->query('\n\t\t\tSELECT articles_id, titre, chapo, auteur, date_mise_a_jour \n\t\t\tFROM articles\n\t\t\tORDER BY articles_id DESC');\n\t\t\n\t\t$articles = $listArticles->fetchAll();\n\t\treturn $articles;\n\t}\n\n\n//----- Retourne un article particulier pour affichage ------------\n\tpublic function singleArticle($idArticle)\n\t{\n\n\n\t\t$connection = $this->getConnectDB();\n\t\t$requete = $connection->prepare('\n\t\t\tSELECT articles_id, titre, chapo, auteur, contenu, date_mise_a_jour\n\t\t\tFROM articles\n\t\t\tWHERE  articles_id = :id\n\t\t\tORDER BY articles_id DESC'\n\t\t);\n\t\t$requete->execute( [ ':id' => $idArticle ] );\n\t\t$article = $requete->fetch();\n\n\t\treturn $article;\n\t}\n\n}\n",
+			"file": "Articles.php",
+			"file_size": 1280,
+			"file_write_time": 132151637518878956,
+			"settings":
+			{
+				"buffer_size": 1228,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vue/header.inc.php",
+			"settings":
+			{
+				"buffer_size": 2291,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Router.php",
+			"settings":
+			{
+				"buffer_size": 853,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vue/backend/ajout_article.php",
+			"settings":
+			{
+				"buffer_size": 3504,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Snippet: ",
+				"Snippet: Lorem ipsum"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"i",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: \t",
+				"Snippet: Lorem ipsum"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"p",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			]
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) ",
+			" import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) ",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/xampp3/htdocs/openclass/p5/myp5blog",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/controller",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/controller/backend",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/controller/frontend",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/model",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/model/backend",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/model/frontend",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/public",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/rubriques",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/templates",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vendor",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vendor/composer",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue"
+	],
+	"file_history":
+	[
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vendor/composer/autoload_real.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vendor/composer/autoload_psr4.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vendor/autoload.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vendor/composer/autoload_namespaces.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vendor/composer/ClassLoader.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/index.html",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/public/index.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/composer.json",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/home.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/Router.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/.htaccess",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/home.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/controller/frontend/frontController",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/index.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/controller/frontend/frontController.php",
+		"/C/Users/dam/AppData/Roaming/Sublime Merge/Packages/User/Preferences.sublime-settings",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet5/git_discussion.txt",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/model/Database.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/vue/article.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/Comments.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/model/ModelConnect.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/model/recup_data_article.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/vue/backend/ajout_article.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/Articles.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/vue/articles.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/vue/header.inc.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/model/connect_bdd.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/templates/layout_articles.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/templates/layout_article.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/index.php",
+		"/C/Users/dam/Documents/formation/openclassroom/alternance/monbilan/candidatures/la-bonne-alternance/enedis_devPHP",
+		"/C/Users/dam/Documents/travail/france/poleemploi/formation/offres-emplois-devPHP",
+		"/C/Users/dam/Documents/formation/openclassroom/alternance/monbilan/candidatures/la-bonne-alternance/lettre_motiv_alternance_horisis.pdf",
+		"/C/xampp3/htdocs/test/index.php",
+		"/C/xampp3/htdocs/damweb/footer.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb/infos.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb/actus.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb/assets/styles.css",
+		"/C/Users/dam/Documents/formation/openclassroom/alternance/monbilan/candidatures/oct19/vinci-alternance",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/mvc/model/Connect_bdd.php",
+		"/C/Users/dam/Documents/travail/france/apec/ledivan email",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/clef_github_ssh",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/index.html",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/about.php",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet5/startbootstrap-clean-blog-gh-pages/index.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet5/p5_blog/index.php",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet5/uikit-develop/tests/article.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet5/uikit-develop/tests/accordion.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb/films2.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb - Copie/films.html",
+		"/C/Users/dam/Documents/internet/navigateurs/bookmarks_opera_02_08_2019.html",
+		"/C/Users/dam/Documents/internet/TUTORIELS_css/112-115_Tuto CCS3_Responsive/demo/index.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb - Copie/test.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquette/index.html",
+		"/C/xampp3/htdocs/damweb/index.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb/inscription.html",
+		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb/films.html",
+		"/C/Users/dam/Documents/GitHub/mini_projet/test/activite/index.html",
+		"/C/Users/dam/Documents/GitHub/mini_projet/index.html",
+		"/C/xampp3/htdocs/damweb/choco/choco-materialize.html",
+		"/C/Users/dam/Documents/travail/COACHING TRE/MODELES/lettre_candidature",
+		"/C/Users/dam/Documents/formation/openclassroom/alternance/monbilan/candidatures/annonces/Digital School of Paris-stage",
+		"/C/Users/dam/Documents/formation/openclassroom/jquery/caroussel.html",
+		"/C/xampp3/htdocs/applications.html",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/juin18/cpd_amaris",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/avr18/AFCO_Management_SA/AFCO Management propose un environnement dynamique",
+		"/C/Users/dam/AppData/Local/Temp/7zOCCE87955/index.html",
+		"/C/Users/dam/Documents/formation/openclassroom/alternance/monbilan/candidatures/stage/jobmania",
+		"/C/Users/dam/Documents/GitHub/mini_projet/correction/index.html",
+		"/C/Users/dam/Documents/formation/openclassroom/mini-projet/index.html",
+		"/C/xampp3/htdocs/damweb/w3/index.html",
+		"/C/Users/dam/AppData/Local/GitHub/PortableGit_69bd5e6f85e4842f07db71c9618a621154c52254/usr/bin/notepad",
+		"/C/Users/dam/Documents/travail/freelance/pharavelle/index.html",
+		"/C/Users/dam/AppData/Roaming/Sublime Text 3/Packages/StandardFormat/Default (Windows).sublime-keymap",
+		"/C/Users/dam/Documents/web/openclassroom/openclass/js/testentretien/chiffre_romain.html",
+		"/C/Users/dam/Documents/travail/france/avr19/socgen/alternant_socgen_boursorama",
+		"/C/Users/dam/Documents/formation/openclassroom/alternance/monbilan/candidatures/la-bonne-boite/tf1",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mars18/urech/biblithécaire",
+		"/C/Users/dam/Documents/travail/france/avr19/chargecomm",
+		"/C/Users/dam/Documents/formation/openclassroom/alternance/liens",
+		"/C/Users/dam/Documents/travail/freelance/webmaster ordre malt",
+		"/C/Users/dam/Documents/travail/france/cnrs/webmaster",
+		"/C/Users/dam/Documents/travail/france/webmaster_fleurymichon",
+		"/C/Users/dam/Documents/travail/france/publisher",
+		"/C/Users/dam/Documents/travail/france/prowebce_webdesign",
+		"/C/Users/dam/Documents/travail/france/stage concepteur web",
+		"/C/Users/dam/Documents/travail/france/assistantmarketing",
+		"/C/Users/dam/Documents/travail/france/integrateur web-puteaux",
+		"/C/xampp3/htdocs/damweb/lynx/index.html",
+		"/C/Users/dam/Documents/travail/france/fev19/consultant seo",
+		"/C/Users/dam/Documents/travail/france/fev19/webdev",
+		"/C/Users/dam/Documents/travail/france/jan19/Rédacteur Web (stage)",
+		"/C/Users/dam/Documents/travail/france/jan19/fromage/stage webmarketing fromage",
+		"/C/Users/dam/Documents/travail/france/jan19/webmarketing montesson",
+		"/C/Users/dam/Documents/travail/france/jan19/CA/annonceCA",
+		"/C/Users/dam/Documents/travail/france/jan19/CA/annonceCA.txt",
+		"/C/Users/dam/Documents/travail/france/jan19/CA/cmd velizy.txt",
+		"/C/Users/dam/Documents/travail/france/jan19/luxembourg/STAGE SEO EXPERT",
+		"/C/xampp3/htdocs/essai/index.html",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/oct18/registrecommerce/employe_admin",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/oct18/publishing/resp-digital",
+		"/C/Users/dam/Documents/travail/freelance/lionbridge/job/rules/search_product",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/aout18/Cloud Technician (Open to juniors)",
+		"/C/Users/dam/Documents/travail/france/jan19/assistantmarketing",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/jan18/marketing-stage",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/aout18/Developer Front-End",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/avr18/coord_marketing",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/avr18/fribourg/redacteur",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/digital",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/webdesigner",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/seo manager",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/digital_marketing",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2017/nov17/fribourg_tourisme/webmaster",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2017/mars17/equinoxe/dev_web_eqinox",
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2017/mars17/scott/employe",
+		"/C/Users/dam/Documents/travail/france/avr19/randstad/agentadmin_interim",
+		"/C/Users/dam/Documents/formation/openclassroom/api-rest/textwatson.txt",
+		"/C/Users/dam/Documents/travail/france/avr19/bnf/motivations bnf",
+		"/C/Users/dam/Documents/travail/france/avr19/Chargé de communication – spécialiste maquettiste",
+		"/C/Users/dam/Documents/travail/france/avr19/promovac_redacteurweb",
+		"/C/Users/dam/Documents/formation/openclassroom/maquette/OC - Cours maquette/index.html",
+		"/C/Users/dam/Documents/travail/freelance/clickworker/agreement",
+		"/C/Users/dam/Documents/travail/freelance/clickworker/Welcome to the UHRS assessment part II",
+		"/C/Users/dam/Documents/travail/freelance/clickworker/uhrs_disclosure",
+		"/C/Users/dam/Documents/travail/france/fev19/seo-expert",
+		"/C/Users/dam/Documents/formation/openclassroom/seo_activite2/Activité2 - Premier contenu/mieuxdormir.html",
+		"/C/xampp3/htdocs/damweb/index_18022019.html",
+		"/C/Users/dam/Documents/internet/Accordion-master/index.html"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 105.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"Articles.php",
+			"Database",
+			"//----- Retourne un article particulier pour affichage ------------\n\tpublic function singleArticle($idArticle)\n\t{\n\n\n\t\t$connection = $this->getConnectDB();\n\t\t$requete = $connection->prepare('\n\t\t\tSELECT articles_id, titre, chapo, auteur, contenu, date_mise_a_jour\n\t\t\tFROM articles\n\t\t\tWHERE  articles_id = :id\n\t\t\tORDER BY articles_id DESC'\n\t\t);\n\t\t$requete->execute( [ ':id' => $idArticle ] );\n\t\t$article = $requete->fetch();\n\n\t\treturn $article;\n\t}"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "vue/article.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2641,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								199,
+								165
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "controller/frontend/articleController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 304,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								28,
+								9
+							]
+						],
+						"settings":
+						{
+							"SL.14.region_keys":
+							[
+							],
+							"SL.28.region_keys":
+							[
+							],
+							"auto_name": "<?php",
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "composer.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 463,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								319,
+								319
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "model/Articles.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1226,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								36,
+								36
+							]
+						],
+						"settings":
+						{
+							"SL.15.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "model/Database.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 704,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								111,
+								111
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Comments.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 506,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 178,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								125,
+								125
+							]
+						],
+						"settings":
+						{
+							"SL.31.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "vue/articles.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1714,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7,
+								7
+							]
+						],
+						"settings":
+						{
+							"SL.18.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "templates/layout_articles.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 983,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.19.region_keys":
+							[
+							],
+							"SL.30.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "model/recup_data_article.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								926,
+								926
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "vue/home.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								144,
+								144
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "Articles.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1228,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								30,
+								38
+							],
+							[
+								362,
+								370
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "vue/header.inc.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2291,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1734,
+								1734
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "Router.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 853,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								26,
+								26
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "vue/backend/ajout_article.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3504,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 109.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 88.0
+	},
+	"pinned_build_system": "",
+	"project": "myp5blog.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 261.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
