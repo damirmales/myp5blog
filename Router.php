@@ -15,7 +15,7 @@ use Controller\FrontendController;
 	                if($_GET['route'] === 'liste'){
 	                    //$idArt = $_GET['idArt'];
 	                    $frontController = new FrontendController;
-	                    $frontController->getListeArticles();
+	                    $frontController->pullListeArticles();
 	                    //require 'vue/articles.php';
 
 	                }

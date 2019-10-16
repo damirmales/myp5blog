@@ -14,7 +14,7 @@ class FrontendController{
 
 	
 
-		public function getListeArticles()
+		public function pullListeArticles()
 		{		        
 				$listeArticles = new Articles();
 				$articles = $listeArticles->getListArticles();
