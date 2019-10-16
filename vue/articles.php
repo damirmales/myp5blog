@@ -1,82 +1,41 @@
+<?php ob_start(); ?>
 
-<?php 
-//require_once dirname(__DIR__).'\vendor\autoload.php';
-//var_dump(dirname(__DIR__));
+<?php foreach ($articles as $article) : ?>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-preview">
 
-include('header.inc.php'); 
+          <!--<a href="vue/article.php?id=<?= $article['articles_id'] ?>"> -->
 
- //require_once('../model/Database.php');
+            <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">
 
- require_once('model/Articles.php');
- //use model\Articles;
-
-  //require_once('../controller/frontend/articleController.php');
- // require_once dirname(__DIR__).'\controller\frontend\articleController.php';
-
-
-// utilisation d'un objet Articles pour l'affichage de la liste des articles
-$newArticles = new \model\Articles();
-
-$articles  = $newArticles->getListArticles();
-
-
-
-
-?>
-
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../public/img/home-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Les articles </h1>
-            <span class="subheading">Blog de damir</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
+            <h2 class="post-title">
+              <?php echo htmlspecialchars($article['titre']); ?>
+            </h2>
+            <h3 class="post-subtitle">
+             <?php echo  htmlspecialchars($article['chapo']); ?>
+            </h3>
+          </a>
   
+      <p class="post-meta">Modifié le : 
+            <?php echo  htmlspecialchars($article['date_mise_a_jour']); ?>
+      </p>
+      <p> supprimer</p>
+      <p> Commentaire</p>
 
-<?php 
-//ob_start();
-require('templates/layout_articles.php');
-//$pageContent = ob_get_clean();
 
-?>        
-        
-		<!-- ajouter un nouvel article -->
-		<p><a href="ajout_article.php">Ajouter un article</a>
-
-      
-        <hr>
-        <!-- Pager -->
-        <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Anciens articles &rarr;</a>
         </div>
-      </div>
-    </div>
+        <hr>
+    <a href="vue/article.php?id=<?= $article['articles_id'] ?>">Voir l'article</a>
+    <a href="delete-article.php?id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
+  </div>
+  </div>
   </div>
 
-  <hr>
+<?php endforeach ?>
 
-<?php 
-include('footer.inc.php'); 
-
-?>
+  <?php $content = ob_get_clean();?>
 
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="../public/js/clean-blog.min.js"></script>
-
-</body>
-
-</html>
+<?php require('templates/layout_gabarit.php'); ?>

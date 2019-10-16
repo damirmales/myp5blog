@@ -1,100 +1,69 @@
-  <?php include('header.inc.php');
+<?php ob_start(); ?>
 
-   //require_once('../model/Database.php');
-
-   //require_once('../model/Articles.php');
-    //require_once('../Comments.php');
-
- require_once('../model/Articles.php');
- require_once('../model/Comments.php');
-
-
-          $article = new \model\Articles();
-          $article = $article->singleArticle($_GET['id']);
-       
-
-          $comments = new \model\Comments();
-          $comments = $comments->getCommentsFromArticle($_GET['id']);
-      
-
-   ?>
-
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('../public/img/post-bg.jpg')">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post-heading">
-              <h1><?= $article['titre'] ?></h1>
-              <h2 class="subheading"><?= $article['chapo'] ?></h2>
-              <span class="meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on August 24, 2019</span>
-            </div>
+   <!-- Page Header -->
+   <header class="masthead" style="background-image: url('../public/img/post-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1><?= $article['titre'] ?></h1>
+            <h2 class="subheading"><?= $article['chapo'] ?></h2>
+            <span class="meta">Posted by
+              <a href="#">Start Bootstrap</a>
+            on August 24, 2019</span>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
 
-              <!-- Article Content -->
-              <article>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                      <p>
-                        <?= $article['contenu'] ?>
+  <!-- Article Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>
+            <?= $article['contenu'] ?>
 
-                      </p>         
-                    </div>
-                  </div>
-                </div>
-              </article>
+          </p>         
+        </div>
+      </div>
+    </div>
+  </article>
 
-    <hr>
+  <hr>
   <p>Commentaires</p>
 
 
-          <?php
+  <?php
           //while ($dataComment = $comment->fetch())
-          foreach ($comments as $comment)
-            {
-            ?>
+  foreach ($comments as $comment)
+  {
+    ?>
 
-            <!-- Comment Content -->
-            <article>
-              <div class="container">
-                <div class="row">
-                  <div class="col-lg-8 col-md-10 mx-auto">
-                      <p><strong>Rédigé par <?= htmlspecialchars($comment['commentaire_id']) ?></strong></p>
-                      <p>le <?= $comment['date_ajout'] ?></p>
-                      
-                      <p>Commentaire</p>
-                      <p><?= nl2br(htmlspecialchars($comment['contenu'])) ?></p>       
-                  </div>
-                </div>
-              </div>
-            </article>
+    <!-- Comment Content -->
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <p><strong>Rédigé par <?= htmlspecialchars($comment['commentaire_id']) ?></strong></p>
+            <p>le <?= $comment['date_ajout'] ?></p>
 
-           
-          <?php } ?>
-
-      <hr>
-
-  <?php 
-  include('footer.inc.php'); 
-
-  ?>
+            <p>Commentaire</p>
+            <p><?= nl2br(htmlspecialchars($comment['contenu'])) ?></p>       
+          </div>
+        </div>
+      </div>
+    </article>
 
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <?php } ?>
 
-    <!-- Custom scripts for this template -->
-    <script src="../public/js/clean-blog.min.js"></script>
+  <hr>
 
-  </body>
+<?php $content = ob_get_clean();?>
 
-  </html>
+
+<?php require('templates/layout_gabarit.php'); ?>

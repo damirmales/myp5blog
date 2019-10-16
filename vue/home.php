@@ -1,36 +1,11 @@
-  <!-- Header-->
-<?php 
-require('../vue/header.inc.php'); 
-//require_once('../model/Database.php');
 
-require_once __DIR__.'/vendor/autoload.php'
-
-$router = new Router();
-$route = $router->run();
-
-?>
-
-   <!-- Blog Author -->
-  <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Blog de Damir M</h1>
-            <span class="subheading">Développeur PHP</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
+<?php ob_start(); ?>
+<!-- Main Content -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <p>Vous êtes dans le blog de Damir Males.
-		<br/>Vous avez un projet de site web?, alors vous êtes au bon endroit contactez-moi</p>
+    <br/>Vous avez un projet de site web?, alors vous êtes au bon endroit contactez-moi</p>
         <!-- Contact Form - Enter your email address on line 19 of the file to make this form work. -->
        
         <form name="sentMessage" id="contactForm" novalidate>
@@ -41,15 +16,15 @@ $route = $router->run();
               <p class="help-block text-danger"></p>
             </div>
           </div>
-		  
-		  <div class="control-group">
+      
+      <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Nom</label>
               <input type="text" class="form-control" placeholder="Nom" id="name" required data-validation-required-message="Entrez votre nom.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
-		  
+      
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Email</label>
@@ -57,7 +32,7 @@ $route = $router->run();
               <p class="help-block text-danger"></p>
             </div>
           </div>
-		  
+      
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Message</label>
@@ -65,7 +40,7 @@ $route = $router->run();
               <p class="help-block text-danger"></p>
             </div>
           </div>
-		  
+      
           <br>
           <div id="success"></div>
           <div class="form-group">
@@ -78,24 +53,7 @@ $route = $router->run();
 
 
   <hr>
-
-<?php 
-include('vue/footer.inc.php'); 
-
-?>
+  <?php $content = ob_get_clean();?>
 
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Contact Form JavaScript -->
-  <script src="public/js/jqBootstrapValidation.js"></script>
-  <script src="public/js/contact_me.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="public/js/clean-blog.min.js"></script>
-
-</body>
-
-</html>
+<?php require('templates/layout_gabarit.php'); ?>

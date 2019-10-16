@@ -1,22 +1,12 @@
 <?php
-
-
-
-/*
-class Router {
-
-    private $url; // Contiendra l'URL sur laquelle on souhaite se rendre
-    private $routes = []; // Contiendra la liste des routes
-
-    public function __construct($url){
-        $this->url = $url;
-    }
-*/
+use Controller\FrontendController;
 
 
 
    class Router
 	{
+		
+	    
 	    public function run()
 	    {
 	        try{
@@ -24,16 +14,30 @@ class Router {
 	            {
 	                if($_GET['route'] === 'liste'){
 	                    //$idArt = $_GET['idArt'];
-	                    require 'vue/articles.php';
+	                    $frontController = new FrontendController;
+	                    $frontController->getListeArticles();
+	                    //require 'vue/articles.php';
+
+	                }
+	                elseif($_GET['route'] === 'article'){
+
+	                  //  $idArt = $_GET['id'];
+	                	$frontController = new FrontendController;
+	                    $frontController->singleArticle($_GET['id']);
+	                   //require "vue/article.php";
+	                	//$frontend->readArticle();
+
+
 	                }
 	                else
-	                {
-	                    echo 'page inconnue';
-	                }
+		            {
+		                    echo 'page inconnue'." ".var_dump( $idArt);
+		            }
 	            }
 	            else
 	            {
-	               require 'home.php';
+	            	$frontController = new FrontendController;
+	                $frontController->home();
 	            }
 	        }
 	        catch (Exception $e)
