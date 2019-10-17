@@ -7,13 +7,13 @@ use Model\Comments;
 class FrontendController{
 
 
-/******************* home management **********************/
+	/******************* home management **********************/
 	public function home()
 	{		        
 		require 'vue/home.php';
 	}
 
-/******************* Front articles management **********************/	
+	/******************* Front articles management **********************/	
 
 	public function pullListeArticles()
 	{		        
@@ -27,13 +27,13 @@ class FrontendController{
 	{		        
 		$article = new Articles();
 		$article = $article->singleArticle($id);
-	
+
 
 		require 'vue/article.php';		
 
 	}
 
-/******************* Front comments management **********************/
+	/******************* Front comments management **********************/
 
 	public function getComments($id)
 	{		        
@@ -46,15 +46,17 @@ class FrontendController{
 
 	public function publishComments($id, $nom, $comment)
 	{		        
-		$comment = new Comments();
-		$affectedLines = $comment->addCommentsToDb($id,$comment);		
 
-		    if ($affectedLines === false) {
-        die('Impossible d\'ajouter le commentaire !');
-    }
-    else {
-        header('Location: index.php?route=article&id=' . $id);
-    }
+		$newcomment = new Comments();
+		$affectedLines = $newcomment->addCommentsToDb($id, $nom,$comment);		
+		var_dump('front to Comments : '.$affectedLines);
+
+		if ($affectedLines === false) {
+			die('Impossible d\'ajouter le commentaire !');
+		}
+		else {
+			header('Location: index.php?route=article&id=' . $id);
+		}
 		
 	}
 

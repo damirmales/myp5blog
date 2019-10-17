@@ -14,7 +14,7 @@
   <p>Commentaires</p>
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            <p><strong>Rédigé par <?= htmlspecialchars($comment['commentaire_id']) ?></strong></p>
+            <p><strong>Rédigé par <?= htmlspecialchars($comment['pseudo']) ?></strong></p>
             <p>le <?= $comment['date_ajout'] ?></p>
 
             <p>Commentaire</p>

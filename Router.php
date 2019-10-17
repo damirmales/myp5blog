@@ -29,13 +29,21 @@
 
 
 					}
-					elseif ($_GET['route'] == 'addComment') {
+					elseif ($_GET['route'] === 'addComment') {
+
 						if (isset($_GET['id']) && $_GET['id'] > 0) {
+
+						
+
 							if (!empty($_POST['nom']) && !empty($_POST['comment'])) {
+
+								 var_dump($_POST['comment']);
 
 							$frontController = new FrontendController;					
 
 							$frontController->publishComments($_GET['id'], $_POST['nom'], $_POST['comment']);
+
+
 							}
 							else {
 								echo 'Erreur : tous les champs ne sont pas remplis !';
@@ -49,7 +57,7 @@
 
 					else
 					{
-						echo 'page inconnue'." ".var_dump( $idArt);
+						echo 'page inconnue '." ".var_dump( $idArt);
 					}
 				}
 				else
@@ -60,7 +68,7 @@
 			}
 			catch (Exception $e)
 			{
-				echo 'Erreur';
+				echo 'Erreur catch Router :'. $e->getMessage();
 			}
 		}
 	}

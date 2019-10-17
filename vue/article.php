@@ -40,7 +40,7 @@
 
     <form action="index.php?route=addComment&id=<?= $article['articles_id'] ?>" method="post">
       <div class="form-group">
-        <label for="Nom">Nom</label>
+        <label for="nom">Nom</label>
         <input type="text" class="form-control" id="Nom" placeholder="" value="" required name="nom">
       </div>
      <!-- <div class="form-group">             
