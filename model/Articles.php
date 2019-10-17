@@ -1,6 +1,6 @@
 <?php
 namespace Model;
-//require_once('Database.php');
+
 use Model\Database;
 /****** **************************************************************************
 		Cette classe gère la collecte des données pour afficher la liste des articles 

@@ -1,7 +1,7 @@
-<?php ob_start(); ?>
+  <?php ob_start(); ?>
 
-   <!-- Page Header -->
-   <header class="masthead" style="background-image: url('../public/img/post-bg.jpg')">
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('public/img/post-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -34,36 +34,41 @@
   </article>
 
   <hr>
-  <p>Commentaires</p>
+  <!-- Comment form -->
+  <div class="container">
+    <p>Ajouter un commentaire</p>
 
-
-  <?php
-          //while ($dataComment = $comment->fetch())
-  foreach ($comments as $comment)
-  {
-    ?>
-
-    <!-- Comment Content -->
-    <article>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <p><strong>Rédigé par <?= htmlspecialchars($comment['commentaire_id']) ?></strong></p>
-            <p>le <?= $comment['date_ajout'] ?></p>
-
-            <p>Commentaire</p>
-            <p><?= nl2br(htmlspecialchars($comment['contenu'])) ?></p>       
-          </div>
-        </div>
+    <form action="index.php?route=addComment&id=<?= $article['articles_id'] ?>" method="post">
+      <div class="form-group">
+        <label for="Nom">Nom</label>
+        <input type="text" class="form-control" id="Nom" placeholder="" value="" required name="nom">
       </div>
-    </article>
+     <!-- <div class="form-group">             
+        <label for="email">Email :</label>
+        <input type="email" class="form-control" id="email">
+      </div>
+      -->
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Votre commentaire</span>
+        </div>
+        <textarea class="form-control" aria-label="With textarea" name="comment"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
 
+  </div>
 
-  <?php } ?>
+  <!-- display comments -->
 
+  <?php use Controller\FrontendController;
+  $frontComment = new FrontendController();
+
+  $frontComment=$frontComment->getComments($id); 
+  ?>
   <hr>
 
-<?php $content = ob_get_clean();?>
+  <?php $content = ob_get_clean();?>
 
 
-<?php require('templates/layout_gabarit.php'); ?>
+  <?php require('templates/layout_gabarit.php'); ?>
