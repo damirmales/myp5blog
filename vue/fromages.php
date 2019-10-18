@@ -8,20 +8,18 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
             <h1>Blog de Damir M</h1>
-            <span class="subheading">Liste des articles</span>
+            <span class="subheading">Liste des articles de fromages</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-<?php foreach ($articles as $article) : ?>
+<?php foreach ($rubriques as $article) : ?>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">
-
-          <!--<a href="vue/article.php?id=<?= $article['articles_id'] ?>"> -->
 
             <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">
 

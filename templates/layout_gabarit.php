@@ -45,12 +45,12 @@
       <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Rubriques</a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="livres.php">Livres</a>
-        <a class="dropdown-item" href="#">Fromages</a>
+        <a class="dropdown-item" href="index.php?route=livres">Livres</a>
+        <a class="dropdown-item" href="index.php?route=fromages">Fromages</a>
       </div>
       </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.php">Contact</a>
+            <a class="nav-link" href="index.php?route=contact">Contact</a>
           </li>
       
         </ul>

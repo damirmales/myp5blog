@@ -32,45 +32,25 @@ class Comments extends Database
 	public function addCommentsToDb($articleId,$nom,$comment)
 	{
 
-
 		$connection = self::getConnectDB();
-		var_dump('$comment '.$comment);
+
 		$requete = $connection->prepare('
 			INSERT INTO commentaires (commentaire_id,pseudo,contenu,date_ajout,validation,date_validation,Articles_articles_id)
-			VALUES (:id,:nom,:comment,:dateajout,:valid,:datevalid,:idart)
+			VALUES (:id,:nom,:comment,NOW(),:valid,NOW(),:idart)
 			');
 		$requete->bindValue(':id', NULL, \PDO::PARAM_INT);
-$requete->bindValue(':nom', $nom, \PDO::PARAM_STR);
-$requete->bindValue(':comment', $comment, \PDO::PARAM_STR);
-$requete->bindValue(':dateajout', '2019-10-08', \PDO::PARAM_INT);
-$requete->bindValue(':valid', 1, \PDO::PARAM_INT);
-$requete->bindValue(':datevalid', '2019-10-08', \PDO::PARAM_INT);
-$requete->bindValue(':idart', $articleId, \PDO::PARAM_INT);
+		$requete->bindValue(':nom', $nom, \PDO::PARAM_STR);
+		$requete->bindValue(':comment', $comment, \PDO::PARAM_STR);
+		$requete->bindValue(':valid', 1, \PDO::PARAM_INT);
+		$requete->bindValue(':idart', $articleId, \PDO::PARAM_INT);
 
 		$affectedLines = $requete->execute();
 
-   // return $affectedLines;
-
+		return $affectedLines;
 
 	}
-	/*
-		 public function addCommentsToDb($nom,$comment,$articleId)
-	        {
-	        $nom = "testnom";
-	        $comment = "testcomment";
-	         $articleId = "1";
-
-	            $connection = self::getConnectDB();
-
-	            $requete = $connection->prepare('
-	                INSERT INTO commentaires 
-	                VALUES (NULL, $nom, $comment, now(),1,now(),$articleId)
-	            ');
-
-	            $affectedLines = $requete->execute();
-			}
-			*/
-	}		
+	
+}		
 
 ?>
 

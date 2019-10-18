@@ -7,6 +7,7 @@ use Model\Comments;
 class FrontendController{
 
 
+
 	/******************* home management **********************/
 	public function home()
 	{		        
@@ -28,7 +29,6 @@ class FrontendController{
 		$article = new Articles();
 		$article = $article->singleArticle($id);
 
-
 		require 'vue/article.php';		
 
 	}
@@ -49,7 +49,7 @@ class FrontendController{
 
 		$newcomment = new Comments();
 		$affectedLines = $newcomment->addCommentsToDb($id, $nom,$comment);		
-		var_dump('front to Comments : '.$affectedLines);
+
 
 		if ($affectedLines === false) {
 			die('Impossible d\'ajouter le commentaire !');
@@ -58,6 +58,38 @@ class FrontendController{
 			header('Location: index.php?route=article&id=' . $id);
 		}
 		
+	}
+
+	/******************* Front comments management **********************/
+
+	public function getCategoryArticles($rubriq)
+	{		        
+		$rubArticles = new Articles();
+		$rubriques = $rubArticles->showArticlesByCategory($rubriq);		
+
+		
+		if ($rubriq == "livres"){
+
+			require 'vue/livres.php';
+			
+		}
+		elseif ($rubriq == "fromages") {
+			require 'vue/fromages.php';
+		}
+		else{
+			header('Location: vue/home.php');
+
+		}		
+		
+	}
+
+	public function addContact($id)
+	{		        
+		$article = new Articles();
+		$article = $article->singleArticle($id);
+
+		require 'vue/article.php';		
+
 	}
 
 

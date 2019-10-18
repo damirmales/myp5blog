@@ -199,7 +199,7 @@
 			"file": "vue/comments.php",
 			"settings":
 			{
-				"buffer_size": 647,
+				"buffer_size": 639,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -208,16 +208,7 @@
 			"file": "vue/article.php",
 			"settings":
 			{
-				"buffer_size": 2033,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "vue/articles.php",
-			"settings":
-			{
-				"buffer_size": 1654,
+				"buffer_size": 2117,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -226,7 +217,25 @@
 			"file": "model/Articles.php",
 			"settings":
 			{
-				"buffer_size": 1224,
+				"buffer_size": 1788,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vue/articles.php",
+			"settings":
+			{
+				"buffer_size": 1657,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "vue/livres.php",
+			"settings":
+			{
+				"buffer_size": 1591,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -235,7 +244,7 @@
 			"file": "model/Comments.php",
 			"settings":
 			{
-				"buffer_size": 1170,
+				"buffer_size": 1556,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -244,7 +253,7 @@
 			"file": "controller/FrontendController.php",
 			"settings":
 			{
-				"buffer_size": 1213,
+				"buffer_size": 1642,
 				"encoding": "UTF-8",
 				"line_ending": "Windows",
 				"name": "<?php"
@@ -254,7 +263,7 @@
 			"file": "Router.php",
 			"settings":
 			{
-				"buffer_size": 1425,
+				"buffer_size": 1535,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -263,7 +272,7 @@
 			"file": "templates/layout_gabarit.php",
 			"settings":
 			{
-				"buffer_size": 3973,
+				"buffer_size": 3997,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -352,6 +361,11 @@
 	],
 	"file_history":
 	[
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/fromages.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/livres.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/model/Articles.php",
+		"/C/Users/dam/AppData/Local/Packages/Microsoft.MicrosoftEdge_8wekyb3d8bbwe/TempState/Downloads/Router (3).php",
+		"/C/Users/dam/AppData/Local/Packages/Microsoft.MicrosoftEdge_8wekyb3d8bbwe/TempState/Downloads/Router (1).php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/backend/ajout_article.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/Router.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/header.inc.php",
@@ -474,12 +488,7 @@
 		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/avr18/coord_marketing",
 		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/avr18/fribourg/redacteur",
 		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/digital",
-		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/webdesigner",
-		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/seo manager",
-		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/digital_marketing",
-		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2017/nov17/fribourg_tourisme/webmaster",
-		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2017/mars17/equinoxe/dev_web_eqinox",
-		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2017/mars17/scott/employe"
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/mai18/webdesigner"
 	],
 	"find":
 	{
@@ -527,15 +536,45 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 647,
+						"buffer_size": 639,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								597,
-								597
+								545,
+								545
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "vue/article.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2117,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								528,
+								528
 							]
 						],
 						"settings":
@@ -552,27 +591,29 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "vue/article.php",
+					"buffer": 2,
+					"file": "model/Articles.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2033,
+						"buffer_size": 1788,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1048,
-								1048
+								1761,
+								1761
 							]
 						],
 						"settings":
 						{
+							"SL.21.region_keys":
+							[
+							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 405.0,
@@ -582,24 +623,27 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "vue/articles.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1654,
+						"buffer_size": 1657,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								764,
-								795
+								0,
+								1657
 							]
 						],
 						"settings":
 						{
+							"SL.15.region_keys":
+							[
+							],
 							"SL.35.region_keys":
 							[
 							],
@@ -611,71 +655,37 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "model/Articles.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1224,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								674,
-								674
-							]
-						],
-						"settings":
-						{
-							"SL.14.region_keys":
-							[
-							],
-							"SL.15.region_keys":
-							[
-							],
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "model/Comments.php",
+					"file": "vue/livres.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1170,
+						"buffer_size": 1591,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1027,
-								1027
+								493,
+								493
 							]
 						],
 						"settings":
 						{
-							"SL.16.region_keys":
+							"SL.26.region_keys":
 							[
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 225.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -683,19 +693,54 @@
 				},
 				{
 					"buffer": 5,
-					"file": "controller/FrontendController.php",
+					"file": "model/Comments.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1213,
+						"buffer_size": 1556,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1210,
-								1210
+								782,
+								782
+							]
+						],
+						"settings":
+						{
+							"SL.16.region_keys":
+							[
+							],
+							"SL.17.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 255.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "controller/FrontendController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1642,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1378,
+								1387
 							]
 						],
 						"settings":
@@ -710,27 +755,27 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 495.0,
+						"translation.y": 720.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "Router.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1425,
+						"buffer_size": 1535,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								44,
-								44
+								1080,
+								1080
 							]
 						],
 						"settings":
@@ -739,27 +784,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 135.0,
+						"translation.y": 540.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "templates/layout_gabarit.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3973,
+						"buffer_size": 3997,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2274,
-								2274
+								2020,
+								2020
 							]
 						],
 						"settings":
@@ -769,10 +814,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 630.0,
+						"translation.y": 495.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]

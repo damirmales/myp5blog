@@ -1,53 +1,56 @@
-<?php 
-include('header.inc.php'); 
+<?php ob_start(); ?>
 
-?>
    <!-- Blog Author -->
-  <header class="masthead" style="background-image: url('img/contact-bg.jpg')">
+  <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Livres lus</h1>
-            <span class="subheading">Quelques livres appréciés</span>
+          <div class="site-heading">
+            <h1>Blog de Damir M</h1>
+            <span class="subheading">Liste des articles de livres</span>
           </div>
         </div>
       </div>
     </div>
   </header>
+      <p> supprimer</p>
+<? var_dump($rubriques) ?> 
 
-  <!-- Main Content -->
+<?php foreach ($rubriques as $article) :?>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in officia voluptas voluptatibus, minus!</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut consequuntur magnam, excepturi aliquid ex itaque esse est vero natus quae optio aperiam soluta voluptatibus corporis atque iste neque sit tempora!</p>
-      </div>
-    </div>
+        <div class="post-preview">
+
+            <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">
+
+            <h2 class="post-title">
+              <?php echo htmlspecialchars($article['titre']); ?>
+            </h2>
+            <h3 class="post-subtitle">
+             <?php echo  htmlspecialchars($article['chapo']); ?>
+            </h3>
+          </a>
+  
+      <p class="post-meta">Modifié le : 
+            <?php echo  htmlspecialchars($article['date_mise_a_jour']); ?>
+      </p>
+
+      <p> Commentaire</p>
+    
+
+        </div>
+        <hr>
+    <a href="vue/article.php?id=<?= $article['articles_id'] ?>">Voir l'article</a>
+    <a href="delete-article.php?id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
+  </div>
+  </div>
   </div>
 
-  <hr>
+<?php endforeach ?>
+
+  <?php $content = ob_get_clean();?>
 
 
-<?php 
-include('footer.inc.php'); 
-
-?>
-
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Contact Form JavaScript -->
-  <script src="js/jqBootstrapValidation.js"></script>
-
-
-  <!-- Custom scripts for this template -->
-  <script src="js/clean-blog.min.js"></script>
-
-</body>
-
-</html>
+<?php require('templates/layout_gabarit.php'); ?>
