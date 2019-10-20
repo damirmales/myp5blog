@@ -9,10 +9,24 @@
 
 			public function run()
 			{
+
 				try{
 					if(isset($_GET['route']))
 					{
-						if($_GET['route'] === 'liste'){
+						
+						if($_GET['route'] === 'contact'){
+
+							$frontController = new FrontendController;
+						$frontController->home();
+
+						}
+						elseif($_GET['route'] === 'cv'){
+
+							$frontController = new FrontendController;
+						$frontController->cv();
+
+						}
+						elseif($_GET['route'] === 'liste'){
 
 							$frontController = new FrontendController;
 							$frontController->pullListeArticles();
@@ -34,7 +48,7 @@
 
 								if (!empty($_POST['nom']) && !empty($_POST['comment'])) {
 
-									var_dump($_POST['comment']);
+
 
 									$frontController = new FrontendController;					
 
@@ -47,7 +61,7 @@
 								}
 							}
 							else {
-								echo 'Erreur : aucun identifiant de billet envoyé';
+								echo 'Erreur : aucun identifiant d\'article envoyé';
 							}
 						}
 						elseif($_GET['route'] == 'livres'){
@@ -66,11 +80,14 @@
 
 
 						}
-						elseif($_GET['route'] === 'contact'){
+						elseif($_GET['route'] === 'contactForm'){
 
-			        		$frontController = new FrontendController;
-							$frontController->addContact($_GET['route']);
-							
+
+
+							$frontController = new FrontendController;
+							//$frontController->addContact($_POST['prenom'], $_POST['nom'], $_POST['email'], $_POST['message']);
+
+							$frontController->addContact($_POST);
 						}
 
 						else
@@ -89,7 +106,7 @@
 					echo 'Erreur catch Router :'. $e->getMessage();
 				}
 			}
-		}
 
+		}
 
 		?>

@@ -8,7 +8,7 @@
 		<br/>Vous avez un projet de site web?, alors vous êtes au bon endroit contactez-moi</p>
         <!-- Contact Form - Enter your email address on line 19 of the file to make this form work. -->
        
-        <form name="sentMessage" id="contactForm" novalidate>
+        <form action="" method="post" name="sentMessage" id="contactForm" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Prénom</label>
