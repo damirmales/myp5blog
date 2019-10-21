@@ -96,20 +96,37 @@ class FrontendController{
 		/** ---- 
  * Contrôle du formulaire
  */
-		//if (!empty($post))
-		if ($post['prenom']!= null && $post['nom'] != null && $post['email'] != null && $post['message'] != null)
+
+		//if ($post['prenom']!= null && $post['nom'] != null && $post['email'] != null && $post['message'] != null)
+		if (empty($post['prenom']))
 		{
-  // Nettoyage des chaines envoyées
+			echo "rien ds le prenom";
+			require 'vue/home.php';
+
+		}elseif(empty($post['nom'])){
+
+			echo "rien ds le nom";
+			require 'vue/home.php';
+		
+		}elseif(empty($post['email'])){
+
+			echo "rien ds le email";
+			require 'vue/home.php';
+
+		}elseif(empty($post['message'])){
+
+			echo "rien ds le message";
+			require 'vue/home.php';
+		}
+		else {
+			
+			  // Nettoyage des chaines envoyées
 			$_POST['prenom']  = isset($_POST['prenom'])  ? trim($_POST['prenom'])  : '';
 			$_POST['nom']  = isset($_POST['nom'])  ? trim($_POST['nom'])  : '';
 			$_POST['message'] = isset($_POST['message']) ? trim($_POST['message']) : '';
 			$_POST['email']    = isset($_POST['email'])    ? intval($_POST['email'])  : 5;
 
-
-			// Le pseudo est-il rempli ?
-
-
-
+		
 			$contact = new Contacts();
 			$affectedLines = $contact->addContactsToDb($_POST['prenom'],$_POST['nom'],$_POST['email'],$_POST['message']);
 
@@ -122,10 +139,6 @@ class FrontendController{
 				header('Location: index.php');
 			}
 
-
-		}
-		else {
-			echo "rien ds le formulaire";
 		}
 
 
