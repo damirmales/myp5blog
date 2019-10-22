@@ -63,7 +63,6 @@
 
 
 
-
     <?= $content;?>
 
     <!-- Footer -->

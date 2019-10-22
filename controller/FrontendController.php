@@ -4,6 +4,8 @@ use Model\Articles;
 use Model\Comments;
 use Model\Contacts;
 
+
+
 class FrontendController{
 
 
@@ -96,11 +98,14 @@ class FrontendController{
 		/** ---- 
  * Contrôle du formulaire
  */
+		$contactMessage="";
+echo "$contactMessage " .$contactMessage;
 
 		//if ($post['prenom']!= null && $post['nom'] != null && $post['email'] != null && $post['message'] != null)
 		if (empty($post['prenom']))
 		{
-			echo "rien ds le prenom";
+			$_GLOBALS["contactMessage"] = "rien ds le prenom";
+
 			require 'vue/home.php';
 
 		}elseif(empty($post['nom'])){
@@ -126,7 +131,13 @@ class FrontendController{
 			$_POST['message'] = isset($_POST['message']) ? trim($_POST['message']) : '';
 			$_POST['email']    = isset($_POST['email'])    ? intval($_POST['email'])  : 5;
 
-		
+
+			$_POST['prenom'] = htmlspecialchars($_POST['prenom']) ;
+			$_POST['nom']  = htmlspecialchars($_POST['nom']) ;
+			$_POST['message'] = htmlspecialchars($_POST['message']) ;
+			$_POST['email'] = htmlspecialchars($_POST['email']) ;
+
+
 			$contact = new Contacts();
 			$affectedLines = $contact->addContactsToDb($_POST['prenom'],$_POST['nom'],$_POST['email'],$_POST['message']);
 
@@ -136,7 +147,8 @@ class FrontendController{
 				die('Impossible d\'ajouter le contact!');
 			}
 			else {
-				header('Location: index.php');
+				//header('Location: index.php');
+				require 'vue/home.php';
 			}
 
 		}
