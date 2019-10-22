@@ -204,19 +204,13 @@
 	"buffers":
 	[
 		{
-			"file": "vue/article.php",
-			"settings":
-			{
-				"buffer_size": 2117,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
+			"contents": "<?php\nnamespace Model;\nuse Model\\Database;\n\n/*********************************************/\n/************ Manage comments ***************/\n/*********************************************/\n\nclass Contacts extends Database\n{\n\t\n\t/************ Add comments to database ***************/\n\n\tpublic function addContactsToDb($prenom,$nom,$email,$message)\n\t{\n\n\t\t$connection = self::getConnectDB();\n\n\t\t$requete = $connection->prepare('\n\t\t\t\n\t\t\tINSERT INTO contacts\n\t\t\tVALUES (:id,:prenom,:nom,:emel,:message,NOW())\n\t\t\t');\n\t\t$requete->bindValue(':id', NULL, \\PDO::PARAM_INT);\n\t\t$requete->bindValue(':prenom', $prenom, \\PDO::PARAM_STR);\n\t\t$requete->bindValue(':nom', $nom, \\PDO::PARAM_STR);\n\t\t$requete->bindValue(':emel', $email, \\PDO::PARAM_STR);\n\t\t$requete->bindValue(':message', $message, \\PDO::PARAM_STR);\n\t\n\n\t\t$affectedLines = $requete->execute();\n\n\t\treturn $affectedLines;\n\n\t}\n\t\n}\t\t\n\n?>\n\n",
 			"file": "model/Contacts.php",
+			"file_size": 937,
+			"file_write_time": 132159831799834408,
 			"settings":
 			{
-				"buffer_size": 897,
+				"buffer_size": 879,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -225,40 +219,37 @@
 			"file": "vue/home.php",
 			"settings":
 			{
-				"buffer_size": 2931,
+				"buffer_size": 2973,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 249,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "templates/layout_gabarit.php",
 			"settings":
 			{
-				"buffer_size": 4367,
+				"buffer_size": 4366,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "<?php\nnamespace Controller;\nuse Model\\Articles;\nuse Model\\Comments;\nuse Model\\Contacts;\n\nclass FrontendController{\n\n\n\n\t/******************* home management **********************/\n\tpublic function home()\n\t{\t\t        \n\t\trequire 'vue/home.php';\n\t}\n\n\t/******************* cv  **********************/\n\tpublic function cv()\n\t{\t\t        \n\t\trequire 'vue/cv.php';\n\t}\n\n\t/******************* Front articles management **********************/\t\n\n\tpublic function pullListeArticles()\n\t{\t\t        \n\t\t$listeArticles = new Articles();\n\t\t$articles = $listeArticles->getListArticles();\n\t\trequire 'vue/articles.php';\n\t}\n\n\tpublic function singleArticle($id)\n\t{\t\t        \n\t\t$article = new Articles();\n\t\t$article = $article->singleArticle($id);\n\n\t\trequire 'vue/article.php';\t\t\n\n\t}\n\n\t/******************* Front comments management **********************/\n\n\tpublic function getComments($id)\n\t{\t\t        \n\t\t$comments = new Comments();\n\t\t$comments = $comments->getCommentsFromDb($id);\t\t\n\n\t\trequire 'vue/comments.php';\n\t\t\n\t}\n\n\tpublic function publishComments($id, $nom, $comment)\n\t{\t\t        \n\n\t\t$newcomment = new Comments();\n\t\t$affectedLines = $newcomment->addCommentsToDb($id, $nom,$comment);\t\t\n\n\n\t\tif ($affectedLines === false) {\n\t\t\tdie('Impossible d\\'ajouter le commentaire !');\n\t\t}\n\t\telse {\n\t\t\theader('Location: index.php?route=article&id=' . $id);\n\t\t}\n\t\t\n\t}\n\n\t/******************* Front comments management **********************/\n\n\tpublic function getCategoryArticles($rubriq)\n\t{\t\t        \n\t\t$rubArticles = new Articles();\n\t\t$rubriques = $rubArticles->showArticlesByCategory($rubriq);\t\t\n\n\t\t\n\t\tif ($rubriq == \"livres\"){\n\n\t\t\trequire 'vue/livres.php';\n\t\t\t\n\t\t}\n\t\telseif ($rubriq == \"fromages\") {\n\t\t\trequire 'vue/fromages.php';\n\t\t}\n\t\telse{\n\t\t\theader('Location: vue/home.php');\n\n\t\t}\t\t\n\t\t\n\t}\n\n\t/******************* Form contact management **********************/\n\t//public function addContact($prenom,$nom,$email,$message)\n\tpublic function addContact($post)\n\t{\t\t        \n\n\t\t/** ---- \n * Contrôle du formulaire\n */\n\n\t\tif ($post['prenom']!= null && $post['nom'] != null && $post['email'] != null && $post['message'] != null)\n\t\t{\n  // Nettoyage des chaines envoyées\n\t\t\t$_POST['prenom']  = isset($_POST['prenom'])  ? trim($_POST['prenom'])  : '';\n\t\t\t$_POST['nom']  = isset($_POST['nom'])  ? trim($_POST['nom'])  : '';\n\t\t\t$_POST['message'] = isset($_POST['message']) ? trim($_POST['message']) : '';\n\t\t\t$_POST['email']    = isset($_POST['email'])    ? intval($_POST['email'])  : 5;\n\n\t\t\t// Le pseudo est-il rempli ?\n\t\t\tif(!isset($_POST['prenom']))\n\t\t\t{\n\t\t\t\techo \"rien ds le formulaire\";\n\t\t\t}\t\n\n\n\n\t\t\t$contact = new Contacts();\n\t\t\t$affectedLines = $contact->addContactsToDb($_POST['prenom'],$_POST['nom'],$_POST['email'],$_POST['message']);\n\n\t\t\tvar_dump(\"affectedLines : \".$affectedLines);\n\n\t\t\tif ($affectedLines === false) {\n\t\t\t\tdie('Impossible d\\'ajouter le contact!');\n\t\t\t}\n\t\t\telse {\n\t\t\t\theader('Location: index.php');\n\t\t\t}\n\n\n\t\t}\n\t\telse {\n\t\t\techo \"rien ds le formulaire\";\n\t\t}\n\n\n\t}\n}\t",
 			"file": "controller/FrontendController.php",
-			"file_size": 3109,
-			"file_write_time": 132160690947689772,
 			"settings":
 			{
-				"buffer_size": 2950,
+				"buffer_size": 3530,
 				"encoding": "UTF-8",
 				"line_ending": "Windows",
 				"name": "<?php"
-			}
-		},
-		{
-			"file": "vue/cv.php",
-			"settings":
-			{
-				"buffer_size": 772,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
 			}
 		},
 		{
@@ -354,6 +345,8 @@
 	],
 	"file_history":
 	[
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/cv.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/article.php",
 		"/C/xampp3/htdocs/openclass/p5/p5_blog - Copie/index.html",
 		"/C/xampp3/htdocs/openclass/p5/p5_blog - Copie/apropos.php",
 		"/C/xampp3/htdocs/openclass/p5/p5_blog - Copie/index_old.php",
@@ -479,9 +472,7 @@
 		"/C/Users/dam/Documents/travail/france/jan19/CA/cmd velizy.txt",
 		"/C/Users/dam/Documents/travail/france/jan19/luxembourg/STAGE SEO EXPERT",
 		"/C/xampp3/htdocs/essai/index.html",
-		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/oct18/registrecommerce/employe_admin",
-		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/oct18/publishing/resp-digital",
-		"/C/Users/dam/Documents/travail/freelance/lionbridge/job/rules/search_product"
+		"/C/Users/dam/Documents/travail/COACHING TRE/postulation/2018/oct18/registrecommerce/employe_admin"
 	],
 	"find":
 	{
@@ -527,49 +518,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "vue/article.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2117,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								528,
-								528
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 720.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "model/Contacts.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 897,
+						"buffer_size": 879,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								283,
-								885
+								348,
+								348
 							]
 						],
 						"settings":
@@ -588,20 +549,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "vue/home.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2931,
+						"buffer_size": 2973,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								889,
-								889
+								769,
+								734
 							]
 						],
 						"settings":
@@ -618,20 +579,51 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "templates/layout_gabarit.php",
+					"buffer": 2,
+					"file": "index.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4367,
+						"buffer_size": 249,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3213,
-								3205
+								206,
+								206
+							]
+						],
+						"settings":
+						{
+							"SL.26.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "templates/layout_gabarit.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4366,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2565,
+								2565
 							]
 						],
 						"settings":
@@ -644,10 +636,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 486.0,
+						"translation.y": 846.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -656,15 +648,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2950,
+						"buffer_size": 3530,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1990,
-								1990
+								2052,
+								2052
 							]
 						],
 						"settings":
@@ -682,7 +674,7 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1566.0,
+						"translation.y": 1782.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -690,36 +682,6 @@
 				},
 				{
 					"buffer": 5,
-					"file": "vue/cv.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 772,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								602,
-								602
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 198.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
 					"file": "Router.php",
 					"semi_transient": false,
 					"settings":
@@ -744,10 +706,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 54.0,
+						"translation.y": 1404.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
