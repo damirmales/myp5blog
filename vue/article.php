@@ -1,100 +1,76 @@
-  <?php include('header.inc.php');
+  <?php ob_start(); ?>
 
-   //require_once('../model/Database.php');
-
-   //require_once('../model/Articles.php');
-    //require_once('../Comments.php');
-
- require_once('../model/Articles.php');
- require_once('../model/Comments.php');
-
-
-          $article = new \model\Articles();
-          $article = $article->singleArticle($_GET['id']);
-       
-
-          $comments = new \model\Comments();
-          $comments = $comments->getCommentsFromArticle($_GET['id']);
-      
-
-   ?>
-
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('../public/img/post-bg.jpg')">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post-heading">
-              <h1><?= $article['titre'] ?></h1>
-              <h2 class="subheading"><?= $article['chapo'] ?></h2>
-              <span class="meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on August 24, 2019</span>
-            </div>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('public/img/post-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1><?= $article['titre'] ?></h1>
+            <h2 class="subheading"><?= $article['chapo'] ?></h2>
+            <span class="meta">Posté par 
+              <a href="#"><?= $article['auteur'] ?></a>
+              <br>
+            Le <?= $article['date_creation'] ?></span>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
 
-              <!-- Article Content -->
-              <article>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                      <p>
-                        <?= $article['contenu'] ?>
+  <!-- Article Content -->
+  <article>
+    <div class="container">
+        <p>Contenu : </p>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+        
+            <p><?= $article['contenu'] ?>
 
-                      </p>         
-                    </div>
-                  </div>
-                </div>
-              </article>
+          </p>         
+        </div>
+      </div>
+    </div>
+  </article>
 
-    <hr>
-  <p>Commentaires</p>
+  <hr>
+  <!-- Comment form -->
+  <div class="container">
+    <p>Ajouter un commentaire</p>
 
+    <form action="index.php?route=addComment&id=<?= $article['articles_id'] ?>" method="post">
+      <div class="form-group">
+        <label for="nom">Nom</label>
+        <input type="text" class="form-control" id="Nom" placeholder="" value="" required name="nom">
+      </div>
+     <!-- <div class="form-group">             
+        <label for="email">Email :</label>
+        <input type="email" class="form-control" id="email">
+      </div>
+      -->
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Votre commentaire</span>
+        </div>
+        <textarea class="form-control" aria-label="With textarea" name="comment"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
 
-          <?php
-          //while ($dataComment = $comment->fetch())
-          foreach ($comments as $comment)
-            {
-            ?>
+  </div>
 
-            <!-- Comment Content -->
-            <article>
-              <div class="container">
-                <div class="row">
-                  <div class="col-lg-8 col-md-10 mx-auto">
-                      <p><strong>Rédigé par <?= htmlspecialchars($comment['commentaire_id']) ?></strong></p>
-                      <p>le <?= $comment['date_ajout'] ?></p>
-                      
-                      <p>Commentaire</p>
-                      <p><?= nl2br(htmlspecialchars($comment['contenu'])) ?></p>       
-                  </div>
-                </div>
-              </div>
-            </article>
+  <!-- display comments -->
 
-           
-          <?php } ?>
+  <?php use Controller\FrontendController;
+  $frontComment = new FrontendController();
 
-      <hr>
-
-  <?php 
-  include('footer.inc.php'); 
-
+  $frontComment=$frontComment->getComments($id); 
   ?>
+  <hr>
+
+  <?php $content = ob_get_clean();?>
 
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom scripts for this template -->
-    <script src="../public/js/clean-blog.min.js"></script>
-
-  </body>
-
-  </html>
+  <?php require('templates/layout_gabarit.php'); ?>

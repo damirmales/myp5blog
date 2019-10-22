@@ -1,47 +1,112 @@
-<?php
+		<?php
+		use Controller\FrontendController;
 
 
 
-/*
-class Router {
-
-    private $url; // Contiendra l'URL sur laquelle on souhaite se rendre
-    private $routes = []; // Contiendra la liste des routes
-
-    public function __construct($url){
-        $this->url = $url;
-    }
-*/
+		class Router
+		{
 
 
+			public function run()
+			{
 
-   class Router
-	{
-	    public function run()
-	    {
-	        try{
-	            if(isset($_GET['route']))
-	            {
-	                if($_GET['route'] === 'liste'){
-	                    //$idArt = $_GET['idArt'];
-	                    require 'vue/articles.php';
-	                }
-	                else
-	                {
-	                    echo 'page inconnue';
-	                }
-	            }
-	            else
-	            {
-	               require 'home.php';
-	            }
-	        }
-	        catch (Exception $e)
-	        {
-	            echo 'Erreur';
-	        }
-	    }
-	}
-	
+				try{
+					if(isset($_GET['route']))
+					{
+						
+						if($_GET['route'] === 'contact'){
 
-?>
+							$frontController = new FrontendController;
+						$frontController->home();
+
+						}
+						elseif($_GET['route'] === 'cv'){
+
+							$frontController = new FrontendController;
+						$frontController->cv();
+
+						}
+						elseif($_GET['route'] === 'liste'){
+
+							$frontController = new FrontendController;
+							$frontController->pullListeArticles();
+
+
+						}
+						elseif($_GET['route'] === 'article'){
+
+			                  //  $idArt = $_GET['id'];
+							$frontController = new FrontendController;
+							$frontController->singleArticle($_GET['id']);
+
+						}
+						elseif ($_GET['route'] === 'addComment') {
+
+							if (isset($_GET['id']) && $_GET['id'] > 0) {
+
+
+
+								if (!empty($_POST['nom']) && !empty($_POST['comment'])) {
+
+
+
+									$frontController = new FrontendController;					
+
+									$frontController->publishComments($_GET['id'], $_POST['nom'], $_POST['comment']);
+
+
+								}
+								else {
+									echo 'Erreur : tous les champs ne sont pas remplis !';
+								}
+							}
+							else {
+								echo 'Erreur : aucun identifiant d\'article envoyé';
+							}
+						}
+						elseif($_GET['route'] == 'livres'){
+
+
+							$frontController = new FrontendController;
+							$frontController->getCategoryArticles($_GET['route']);
+
+						}
+						elseif($_GET['route'] == 'fromages'){
+
+
+							$frontController = new FrontendController;
+							$frontController->getCategoryArticles($_GET['route']);
+
+
+
+						}
+						elseif($_GET['route'] === 'contactForm'){
+
+
+
+							$frontController = new FrontendController;
+							//$frontController->addContact($_POST['prenom'], $_POST['nom'], $_POST['email'], $_POST['message']);
+
+							$frontController->addContact($_POST);
+						}
+
+						else
+						{
+							echo 'page inconnue '.$_GET['route'] ;
+						}
+					}
+					else
+					{
+						$frontController = new FrontendController;
+						$frontController->home();
+					}
+				}
+				catch (Exception $e)
+				{
+					echo 'Erreur catch Router :'. $e->getMessage();
+				}
+			}
+
+		}
+
+		?>

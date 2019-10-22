@@ -1,7 +1,7 @@
 <?php
-namespace model;
-require_once('Database.php');
-use model\Database;
+namespace Model;
+
+use Model\Database;
 /****** **************************************************************************
 		Cette classe gère la collecte des données pour afficher la liste des articles 
   		 et chaque article en particulier 
@@ -18,7 +18,7 @@ class Articles extends Database
 		//$connection = self::getConnectDB();
 		$connection = $this->getConnectDB();
 		$listArticles = $connection->query('
-			SELECT articles_id, titre, chapo, auteur, date_mise_a_jour 
+			SELECT articles_id, titre, chapo, auteur,date_creation, date_mise_a_jour 
 			FROM articles
 			ORDER BY articles_id DESC');
 		
@@ -34,7 +34,7 @@ class Articles extends Database
 
 		$connection = $this->getConnectDB();
 		$requete = $connection->prepare('
-			SELECT articles_id, titre, chapo, auteur, contenu, date_mise_a_jour
+			SELECT articles_id, titre, chapo, auteur, contenu,date_creation, date_mise_a_jour
 			FROM articles
 			WHERE  articles_id = :id
 			ORDER BY articles_id DESC'
@@ -43,6 +43,27 @@ class Articles extends Database
 		$article = $requete->fetch();
 
 		return $article;
+	}
+
+
+	/*-------- Retourne la liste des articles selon la rubrique -------
+	 ------------------ pour affichage -----------------------------------*/
+
+	public function showArticlesByCategory($rubrique)
+	{
+
+		$connection = $this->getConnectDB();
+		$listArticles = $connection->prepare('
+			SELECT articles_id, titre, chapo, auteur,contenu, rubrique, date_creation, date_mise_a_jour 
+			FROM articles
+			WHERE rubrique = "'.$rubrique.'" 
+			ORDER BY date_creation DESC');
+
+		$listArticles->execute();
+		
+		$articles = $listArticles->fetchAll();
+
+		return $articles;
 	}
 
 }

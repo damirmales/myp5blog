@@ -1,28 +1,6 @@
-  <!-- Header-->
-<?php 
-include('vue/header.inc.php'); 
-require_once('model/Database.php');
 
-?>
-
-
-
-   <!-- Blog Author -->
-  <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Blog de Damir M</h1>
-            <span class="subheading">Développeur PHP</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
+<?php ob_start(); ?>
+<!-- Main Content -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
@@ -30,7 +8,7 @@ require_once('model/Database.php');
 		<br/>Vous avez un projet de site web?, alors vous êtes au bon endroit contactez-moi</p>
         <!-- Contact Form - Enter your email address on line 19 of the file to make this form work. -->
        
-        <form name="sentMessage" id="contactForm" novalidate>
+        <form action="" method="post" name="sentMessage" id="contactForm" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Prénom</label>
@@ -75,24 +53,4 @@ require_once('model/Database.php');
 
 
   <hr>
-
-<?php 
-include('vue/footer.inc.php'); 
-
-?>
-
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Contact Form JavaScript -->
-  <script src="public/js/jqBootstrapValidation.js"></script>
-  <script src="public/js/contact_me.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="public/js/clean-blog.min.js"></script>
-
-</body>
-
-</html>
+  <?php $content = ob_get_clean(); ?>
