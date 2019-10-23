@@ -7,17 +7,25 @@ use Model\Database;
   		 et chaque article en particulier 
 *************************************************************************************/
 
+
 class Articles extends Database
 {
+
+		private $connection;
+
+		public function __construct(){
+
+			$this->connection = $this->getConnectDB();
+			
+		}
+
 
 //----- Retourne la liste des articles pour affichage ------------
 	public function getListArticles()
 	{
-
-
-		//$connection = self::getConnectDB();
-		$connection = $this->getConnectDB();
-		$listArticles = $connection->query('
+		
+		
+		$listArticles = $this->connection->query('
 			SELECT articles_id, titre, chapo, auteur,date_creation, date_mise_a_jour 
 			FROM articles
 			ORDER BY articles_id DESC');
@@ -31,9 +39,8 @@ class Articles extends Database
 	public function singleArticle($idArticle)
 	{
 
-
-		$connection = $this->getConnectDB();
-		$requete = $connection->prepare('
+	
+		$requete = $this->connection->prepare('
 			SELECT articles_id, titre, chapo, auteur, contenu,date_creation, date_mise_a_jour
 			FROM articles
 			WHERE  articles_id = :id
@@ -52,8 +59,8 @@ class Articles extends Database
 	public function showArticlesByCategory($rubrique)
 	{
 
-		$connection = $this->getConnectDB();
-		$listArticles = $connection->prepare('
+		//$connection = $this->getConnectDB();
+		$listArticles = $this->connection->prepare('
 			SELECT articles_id, titre, chapo, auteur,contenu, rubrique, date_creation, date_mise_a_jour 
 			FROM articles
 			WHERE rubrique = "'.$rubrique.'" 

@@ -13,10 +13,15 @@ class Contacts extends Database
 
 	public function addContactsToDb($prenom,$nom,$email,$message)
 	{
-var_dump($prenom);
-		$connection = self::getConnectDB();
+		private $connection;
 
-		$requete = $connection->prepare('
+		public function __construct(){
+
+			$this->connection = $this->getConnectDB();
+			
+		}
+		
+		$requete = $this->connection->prepare('
 			
 			INSERT INTO contacts
 			VALUES (:id,:prenom,:nom,:emel,:message,NOW())

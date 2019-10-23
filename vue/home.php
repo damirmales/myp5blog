@@ -23,10 +23,18 @@
         <p>Vous êtes dans le blog de Damir Males.
     <br/>Vous pouvez me contactez par ce formulaire</p>
 
-      <?php if (isset($_GLOBALS["contactMessage"])){
+     <?php   if (isset($_GLOBALS["contactMessage"])){
         echo $_GLOBALS["contactMessage"];
-      }?>
-      
+          
+        /*
+        global $contactMessage;
+        if ( isset($contactMessage)){
+        echo $contactMessage;
+         } 
+         */
+        } 
+      ?>
+    
         <!-- Contact Form - Enter your email address on line 19 of the file to make this form work. -->
        
         <form action="index.php?route=contactForm" method="post" name="sentMessage" id="contactForm" novalidate>

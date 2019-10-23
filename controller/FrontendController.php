@@ -24,6 +24,7 @@ class FrontendController{
 
 	/******************* Front articles management **********************/	
 
+
 	public function pullListeArticles()
 	{		        
 		$listeArticles = new Articles();
@@ -98,29 +99,30 @@ class FrontendController{
 		/** ---- 
  * Contrôle du formulaire
  */
-		$contactMessage="";
+$contactMessage="";
 echo "$contactMessage " .$contactMessage;
 
 		//if ($post['prenom']!= null && $post['nom'] != null && $post['email'] != null && $post['message'] != null)
 		if (empty($post['prenom']))
 		{
 			$_GLOBALS["contactMessage"] = "rien ds le prenom";
+			//echo $contactMessage =  "rien ds le prenom";
 
 			require 'vue/home.php';
 
 		}elseif(empty($post['nom'])){
 
-			echo "rien ds le nom";
+			$_GLOBALS["contactMessage"] = "rien ds le nom";
 			require 'vue/home.php';
 		
 		}elseif(empty($post['email'])){
 
-			echo "rien ds le email";
+			$_GLOBALS["contactMessage"] = "rien ds le email";
 			require 'vue/home.php';
 
 		}elseif(empty($post['message'])){
 
-			echo "rien ds le message";
+			$_GLOBALS["contactMessage"] = "rien ds le message";
 			require 'vue/home.php';
 		}
 		else {
@@ -141,8 +143,7 @@ echo "$contactMessage " .$contactMessage;
 			$contact = new Contacts();
 			$affectedLines = $contact->addContactsToDb($_POST['prenom'],$_POST['nom'],$_POST['email'],$_POST['message']);
 
-			var_dump("affectedLines : ".$affectedLines);
-
+		
 			if ($affectedLines === false) {
 				die('Impossible d\'ajouter le contact!');
 			}

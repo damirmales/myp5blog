@@ -10,12 +10,20 @@ class Comments extends Database
 {
 	/************ Fetch comments from database ***************/
 
+		private $connection;
+
+		public function __construct(){
+
+			$this->connection = $this->getConnectDB();
+			
+		}
+
+
 	public function getCommentsFromDb($articleId)
 	{
 
-		$connection = self::getConnectDB();
-
-		$requete = $connection->prepare('
+		
+		$requete = $this->connection->prepare('
 			SELECT commentaire_id, pseudo, contenu, date_ajout 
 			FROM commentaires
 			WHERE  Articles_articles_id = :id
@@ -32,9 +40,8 @@ class Comments extends Database
 	public function addCommentsToDb($articleId,$nom,$comment)
 	{
 
-		$connection = self::getConnectDB();
-
-		$requete = $connection->prepare('
+	
+		$requete = $this->connection->prepare('
 			INSERT INTO commentaires (commentaire_id,pseudo,contenu,date_ajout,validation,date_validation,Articles_articles_id)
 			VALUES (:id,:nom,:comment,NOW(),:valid,NOW(),:idart)
 			');
