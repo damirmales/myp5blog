@@ -1,23 +1,16 @@
 <?php
 namespace Model;
 
-use Model\Database;
+use Model\PdoConstruct;
 /****** **************************************************************************
 		Cette classe gère la collecte des données pour afficher la liste des articles 
   		 et chaque article en particulier 
 *************************************************************************************/
 
 
-class Articles extends Database
+class Articles extends PdoConstruct
 {
 
-		private $connection;
-
-		public function __construct(){
-
-			$this->connection = $this->getConnectDB();
-			
-		}
 
 
 //----- Retourne la liste des articles pour affichage ------------

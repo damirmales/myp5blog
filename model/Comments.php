@@ -1,28 +1,20 @@
 <?php
 namespace Model;
-use Model\Database;
+use Model\PdoConstruct;
 
 /*********************************************/
 /************ Manage comments ***************/
 /*********************************************/
 
-class Comments extends Database
+class Comments extends PdoConstruct
 {
 	/************ Fetch comments from database ***************/
-
-		private $connection;
-
-		public function __construct(){
-
-			$this->connection = $this->getConnectDB();
-			
-		}
 
 
 	public function getCommentsFromDb($articleId)
 	{
 
-		
+	
 		$requete = $this->connection->prepare('
 			SELECT commentaire_id, pseudo, contenu, date_ajout 
 			FROM commentaires
