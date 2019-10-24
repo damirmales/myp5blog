@@ -6,7 +6,6 @@
 		class Router
 		{
 
-
 			public function run()
 			{
 
@@ -17,13 +16,13 @@
 						if($_GET['route'] === 'contact'){
 
 							$frontController = new FrontendController;
-						$frontController->home();
+							$frontController->home();
 
 						}
 						elseif($_GET['route'] === 'cv'){
 
 							$frontController = new FrontendController;
-						$frontController->cv();
+							$frontController->cv();
 
 						}
 						elseif($_GET['route'] === 'liste'){

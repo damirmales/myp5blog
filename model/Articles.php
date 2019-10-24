@@ -25,11 +25,12 @@ class Articles extends Database
 	{
 		
 		
-		$listArticles = $this->connection->query('
+		$listArticles = $this->connection->prepare('
 			SELECT articles_id, titre, chapo, auteur,date_creation, date_mise_a_jour 
 			FROM articles
 			ORDER BY articles_id DESC');
 		
+		$listArticles->execute();
 		$articles = $listArticles->fetchAll();
 		return $articles;
 	}
