@@ -68,7 +68,7 @@ class FrontendController{
 		
 	}
 
-	/******************* Front comments management **********************/
+	/******************* Front articles categories management **********************/
 
 	public function getCategoryArticles($rubriq)
 	{		        
@@ -92,21 +92,20 @@ class FrontendController{
 	}
 
 	/******************* Form contact management **********************/
-	//public function addContact($prenom,$nom,$email,$message)
+	
 	public function addContact($post)
 	{		        
 
-		/** ---- 
- * Contrôle du formulaire
- */
-$contactMessage="";
-echo "$contactMessage " .$contactMessage;
+		/******** Contact form check ****************/
+		
+		$contactMessage="";
+		echo "$contactMessage " .$contactMessage;
 
 		//if ($post['prenom']!= null && $post['nom'] != null && $post['email'] != null && $post['message'] != null)
 		if (empty($post['prenom']))
 		{
-			$_GLOBALS["contactMessage"] = "rien ds le prenom";
-			//echo $contactMessage =  "rien ds le prenom";
+			$_GLOBALS["contactMessage"] = "rien ds le prenom"; // stocke le message pour d'erreur pour le rendre disponible dans home.php
+			
 
 			require 'vue/home.php';
 
@@ -114,7 +113,7 @@ echo "$contactMessage " .$contactMessage;
 
 			$_GLOBALS["contactMessage"] = "rien ds le nom";
 			require 'vue/home.php';
-		
+			
 		}elseif(empty($post['email'])){
 
 			$_GLOBALS["contactMessage"] = "rien ds le email";
@@ -143,7 +142,7 @@ echo "$contactMessage " .$contactMessage;
 			$contact = new Contacts();
 			$affectedLines = $contact->addContactsToDb($_POST['prenom'],$_POST['nom'],$_POST['email'],$_POST['message']);
 
-		
+			
 			if ($affectedLines === false) {
 				die('Impossible d\'ajouter le contact!');
 			}
