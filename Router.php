@@ -1,51 +1,62 @@
 		<?php
 		use Controller\FrontendController;
 
-
-
+       
 		class Router
 		{
+			public $get;
 
 			public function run()
-			{
+			{  
+				
 
 				try{
 					if(isset($_GET['route']))
-					{
-						
-						if($_GET['route'] === 'contact'){
+					{ 
+						$get1 = $_GET['route'];			
+					
+						$get = filter_var($get1, FILTER_SANITIZE_SPECIAL_CHARS);
+				
 
+						if($get === 'contact')
+						{  
 							$frontController = new FrontendController;
 							$frontController->home();
 
 						}
-						elseif($_GET['route'] === 'cv'){
+						elseif($get === 'cv')
+						{
 
 							$frontController = new FrontendController;
 							$frontController->cv();
 
 						}
-						elseif($_GET['route'] === 'liste'){
+						elseif($get === 'liste')
+						{
 
 							$frontController = new FrontendController;
 							$frontController->pullListeArticles();
 
 
 						}
-						elseif($_GET['route'] === 'article'){
+						elseif($get === 'article')
+						{
 
 			                  //  $idArt = $_GET['id'];
 							$frontController = new FrontendController;
 							$frontController->singleArticle($_GET['id']);
 
 						}
-						elseif ($_GET['route'] === 'addComment') {
+						elseif ($_GET['route'] === 'addComment')
+						{
 
-							if (isset($_GET['id']) && $_GET['id'] > 0) {
+							if (isset($_GET['id']) && $_GET['id'] > 0)
+							{
 
 
 
-								if (!empty($_POST['nom']) && !empty($_POST['comment'])) {
+								if (!empty($_POST['nom']) && !empty($_POST['comment']))
+								{
 
 
 
@@ -55,22 +66,26 @@
 
 
 								}
-								else {
+								else
+								{
 									echo 'Erreur : tous les champs ne sont pas remplis !';
 								}
 							}
-							else {
+							else
+							{
 								echo 'Erreur : aucun identifiant d\'article envoyé';
 							}
 						}
-						elseif($_GET['route'] == 'livres'){
+						elseif($_GET['route'] == 'livres')
+						{
 
 
 							$frontController = new FrontendController;
 							$frontController->getCategoryArticles($_GET['route']);
 
 						}
-						elseif($_GET['route'] == 'fromages'){
+						elseif($_GET['route'] == 'fromages')
+						{
 
 
 							$frontController = new FrontendController;
@@ -79,7 +94,8 @@
 
 
 						}
-						elseif($_GET['route'] === 'contactForm'){
+						elseif($_GET['route'] === 'contactForm')
+						{
 
 
 
