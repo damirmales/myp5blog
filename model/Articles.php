@@ -11,13 +11,10 @@ use Model\PdoConstruct;
 class Articles extends PdoConstruct
 {
 
-
-
 //----- Retourne la liste des articles pour affichage ------------
 	public function getListArticles()
 	{
-		
-		
+				
 		$listArticles = $this->connection->prepare('
 			SELECT articles_id, titre, chapo, auteur,date_creation, date_mise_a_jour 
 			FROM articles

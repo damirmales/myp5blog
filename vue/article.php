@@ -61,14 +61,13 @@
 
   </div>
 
-  <!-- display comments -->
+  <!-- display comments  a mettre dans la methode du FrontendController-->
 
-  <?php use Controller\FrontendController;
-  $frontComment = new FrontendController();
 
-  $frontComment=$frontComment->getComments($id); 
-  ?>
-  <hr>
+  <?php 
+
+  require'vue/comments.php'; ?>
+
 
   <?php $content = ob_get_clean();?>
 

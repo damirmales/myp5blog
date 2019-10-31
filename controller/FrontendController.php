@@ -2,7 +2,7 @@
 namespace Controller;
 use Model\Articles;
 use Model\Comments;
-use Model\Contacts;
+use Model\backend\Emails;
 
 
 
@@ -36,17 +36,21 @@ class FrontendController
 		$article = new Articles();
 		$article = $article->singleArticle($id);
 
+		$comments=$this->getComments($id); // insérer les commentaires avec l'article
+		
 		require 'vue/article.php';
+
 	}
 
 	/******************* Front comments management **********************/
 
 	public function getComments($id)
-	{		        
-		$comments = new Comments();
-		$comments = $comments->getCommentsFromDb($id);		
+	{	
 
-		require 'vue/comments.php';		
+		$comments = new Comments();
+		$comments = $comments->getCommentsFromDb($id);	
+		return 	$comments ;
+
 	}
 
 	public function publishComments($id, $nom, $comment)
@@ -72,10 +76,11 @@ class FrontendController
 
 	public function getCategoryArticles($rubriq)
 	{		        
+		// récupérer les articles selon la rubrique désirée
 		$rubArticles = new Articles();
 		$rubriques = $rubArticles->showArticlesByCategory($rubriq);		
 
-		
+		// Associer la vue correspondante à la rubrique sélectionnée
 		if ($rubriq == "livres")
 		{
 
@@ -89,6 +94,7 @@ class FrontendController
 		else
 		{
 			header('Location: vue/home.php');
+			exit();
 
 		}		
 		
@@ -104,10 +110,10 @@ class FrontendController
 		$contactMessage="";
 		echo "$contactMessage " .$contactMessage;
 
-		//if ($post['prenom']!= null && $post['nom'] != null && $post['email'] != null && $post['message'] != null)
+
 		if (empty($post['prenom']))
 		{
-			$_GLOBALS["contactMessage"] = "rien ds le prenom"; // stocke le message pour d'erreur pour le rendre disponible dans home.php
+			$_GLOBALS["contactMessage"] = "rien ds le prenom"; // Store error message to be abvailable into home.php
 			
 
 			require 'vue/home.php';
@@ -135,36 +141,14 @@ class FrontendController
 		}
 		else 
 		{
-			
-			  // Nettoyage des chaines envoyées
-			$post['prenom']  = isset($post['prenom'])  ? trim($post['prenom'])  : '';
-			$post['nom']  = isset($post['nom'])  ? trim($post['nom'])  : '';
-			$post['message'] = isset($post['message']) ? trim($post['message']) : '';
-			$post['email']    = isset($post['email'])    ? intval($post['email'])  : 5;
-
-
-			$post['prenom'] = htmlspecialchars($post['prenom']) ;
-			$post['nom']  = htmlspecialchars($post['nom']) ;
-			$post['message'] = htmlspecialchars($post['message']) ;
-			$post['email'] = htmlspecialchars($post['email']) ;
-
-
-			$contact = new Contacts();
-			$affectedLines = $contact->addContactsToDb($post['prenom'],$post['nom'],$post['email'],$post['message']);
-
-			
-			if ($affectedLines === false)
-			{
-				//die('Impossible d\'ajouter le contact!');
-				exit('Impossible d\'ajouter le contact!');
-			}
-			else
-			{
-				require 'vue/home.php';
-			}
+			// Call class Emails to send contact form data
+			$sendEmail = new Emails();
+			$email = $sendEmail->sendEmail();	
+			echo '$email '.$email;
 
 		}
 
 
 	}
+
 }	

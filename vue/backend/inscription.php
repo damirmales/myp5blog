@@ -35,7 +35,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="page-heading">
-          <h1>login page</h1>
+          <h1>Page d'inscription</h1>
           <span class="subheading">administration</span>
         </div>
       </div>
@@ -48,17 +48,32 @@
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
      <form>
+  <div class="form-group">
+    <label for="nom">Nom</label>
+    <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required>
+  </div>
+    <div class="form-group">
+    <label for="prenom">Prénom</label>
+    <input type="text" class="form-control" id="prenom" placeholder="Entrez le prenom" name="prenom" required>
+  </div>
+      <div class="form-group">
+      <label for="inputEmail">E-mail</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+    </div>
       <div class="form-group">
         <label for="inputLogin">Login</label>
-        <input type="input" class="form-control" id="login" aria-describedby="login" placeholder="Enter login">
-     
+        <input type="input" class="form-control" id="login" aria-describedby="login" placeholder="Enter login" required>     
       </div>
       <div class="form-group">
-        <label for="inputPassword">Password</label>
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        <label for="inputPassword">Mot de Passe</label>
+        <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+      </div>
+            <div class="form-group">
+        <label for="inputPassword2">Retapez votre Mot de Passe</label>
+        <input type="password2" class="form-control" id="inputPassword2" placeholder="re Password" required>
       </div>
   
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Envoyez</button>
     </form>
   </div>
 </div>

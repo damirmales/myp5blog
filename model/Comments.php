@@ -51,5 +51,5 @@ class Comments extends PdoConstruct
 	
 }		
 
-?>
+
 

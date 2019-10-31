@@ -1,6 +1,6 @@
 		<?php
 		use Controller\FrontendController;
-
+		use Controller\BackendController;
        
 		class Router
 		{
@@ -13,11 +13,11 @@
 				try{
 					if(isset($_GET['route']))
 					{ 
-						$get1 = $_GET['route'];			
+						$getAction = $_GET['route'];		
 					
-						$get = filter_var($get1, FILTER_SANITIZE_SPECIAL_CHARS);
+					
+						$get = filter_var($getAction, FILTER_SANITIZE_SPECIAL_CHARS);
 				
-
 						if($get === 'contact')
 						{  
 							$frontController = new FrontendController;
@@ -47,17 +47,15 @@
 							$frontController->singleArticle($_GET['id']);
 
 						}
-						elseif ($_GET['route'] === 'addComment')
+						elseif ($get === 'addComment')
 						{
 
 							if (isset($_GET['id']) && $_GET['id'] > 0)
 							{
 
 
-
 								if (!empty($_POST['nom']) && !empty($_POST['comment']))
 								{
-
 
 
 									$frontController = new FrontendController;					
@@ -76,38 +74,37 @@
 								echo 'Erreur : aucun identifiant d\'article envoyé';
 							}
 						}
-						elseif($_GET['route'] == 'livres')
+						elseif($get == 'livres')
 						{
 
 
 							$frontController = new FrontendController;
-							$frontController->getCategoryArticles($_GET['route']);
+							$frontController->getCategoryArticles($get);
 
 						}
-						elseif($_GET['route'] == 'fromages')
+						elseif($get == 'fromages')
 						{
 
-
 							$frontController = new FrontendController;
-							$frontController->getCategoryArticles($_GET['route']);
-
-
+							$frontController->getCategoryArticles($get);
 
 						}
-						elseif($_GET['route'] === 'contactForm')
+						elseif($get === 'contactForm')
 						{
 
-
-
-							$frontController = new FrontendController;
-							//$frontController->addContact($_POST['prenom'], $_POST['nom'], $_POST['email'], $_POST['message']);
-
+							$frontController = new FrontendController;							
 							$frontController->addContact($_POST);
+							
 						}
-
+						elseif($get === 'admin')
+						{
+							$BackendController = new BackendController;							
+							$BackendController->admin();
+						
+						}
 						else
 						{
-							echo 'page inconnue '.$_GET['route'] ;
+							echo 'page inconnue '.$get ;
 						}
 					}
 					else
@@ -118,10 +115,9 @@
 				}
 				catch (Exception $e)
 				{
-					echo 'Erreur catch Router :'. $e->getMessage();
+					echo 'Erreur niveau Router :'. $e->getMessage();
 				}
 			}
 
 		}
 
-		?>

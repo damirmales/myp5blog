@@ -2,7 +2,7 @@
 
 
   <?php
-  
+
   foreach ($comments as $comment)
   {
     ?>
