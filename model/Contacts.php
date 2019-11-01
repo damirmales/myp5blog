@@ -1,25 +1,18 @@
 <?php
 namespace Model;
-use Model\Database;
-
+use Model\PdoConstruct;
 /*********************************************/
 /************ Manage comments ***************/
 /*********************************************/
 
-class Contacts extends Database
+class Contacts extends PdoConstruct
 {
 	
 	/************ Add comments to database ***************/
 
 	public function addContactsToDb($prenom,$nom,$email,$message)
 	{
-		private $connection;
 
-		public function __construct(){
-
-			$this->connection = $this->getConnectDB();
-			
-		}
 		
 		$requete = $this->connection->prepare('
 			
