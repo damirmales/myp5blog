@@ -1,3 +1,4 @@
+  <!-- Header-->
   <!DOCTYPE html>
   <html lang="fr">
 
@@ -8,7 +9,7 @@
     <meta name="description" content="">
     <meta name="auteur" content="">
 
-    <title>Damir Blog - formulaire pour administrateur</title>
+    <title>Damir Blog - admin </title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -34,7 +35,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="page-heading">
-          <h1>login page</h1>
+          <h1>Page d'administration du blog</h1>
           <span class="subheading">administration</span>
         </div>
       </div>
@@ -45,21 +46,7 @@
 <!-- Main Content -->
 <div class="container">
   <div class="row">
-    <div class="col-lg-8 col-md-10 mx-auto">
-     <form action="index.php?route=pageAdmin" method="post" name="sentMessage" id="loginForm">
-      <div class="form-group">
-        <label for="inputLogin">Login</label>
-        <input type="input" class="form-control" id="login" name="login" aria-describedby="login" placeholder="Votre login">
-     
-      </div>
-      <div class="form-group">
-        <label for="inputPassword">Password</label>
-        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Votre mot de passe">
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
+   
 </div>
 </div>
 

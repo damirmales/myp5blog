@@ -15,12 +15,17 @@ use Model\PdoConstruct;
 			{
 				
 				$userData = $this->connection->prepare('
-					SELECT id, login, password
-					FROM Users');
+					SELECT login, password
+					FROM Users
+					WHERE role = "administrateur"
+					');
 
 				$userData->execute();
 				$user = $userData->fetch();
+
 				return $user;
 
 			}
+
+
 		}	

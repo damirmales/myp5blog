@@ -38,18 +38,21 @@
   <hr>
   <!-- Comment form -->
   <div class="container">
-    <p>Ajouter un commentaire</p>
+    <p>Ajouter un commentaire<br/>
+    <span>Vous devez vous enregistrer pour poster un commentaire</span><br/>
+    <a href="index.php?route=register""> S'enregistrer</a></p>
+     <a href="index.php?route=connecter""> Se connecter</a></p>
 
     <form action="index.php?route=addComment&id=<?= $article['articles_id'] ?>" method="post">
       <div class="form-group">
         <label for="nom">Nom</label>
-        <input type="text" class="form-control" id="Nom" placeholder="" value="" required name="nom">
+        <input type="text" class="form-control" id="nom" placeholder="" value="" required name="nom">
       </div>
-     <!-- <div class="form-group">             
+      <div class="form-group">             
         <label for="email">Email :</label>
-        <input type="email" class="form-control" id="email">
+        <input type="email" class="form-control" id="email" required name="email">
       </div>
-      -->
+  
       <div class="input-group">
         <div class="input-group-prepend">
           <span class="input-group-text">Votre commentaire</span>
@@ -64,9 +67,7 @@
   <!-- display comments  a mettre dans la methode du FrontendController-->
 
 
-  <?php 
-
-  require'vue/comments.php'; ?>
+  <?php require'vue/comments.php'; ?>
 
 
   <?php $content = ob_get_clean();?>

@@ -1,5 +1,5 @@
 <?php
-namespace Model\backend;
+namespace Model;
 
 class Emails
 {
@@ -17,8 +17,11 @@ class Emails
 		$subject = "sujet";
 		$emailFrom = $_POST['email']; 
 
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+
 		// envoi email 
-		$success = mail($emailTo, $subject, $message, "From: <$emailFrom>");
+		$success = mail($emailTo, $subject, $message, $headers);
 		return $success;	
 
 	}

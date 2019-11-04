@@ -47,7 +47,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
-     <form>
+     <form action="index.php?route=registerForm" method="post" name="registerForm" id="registerForm">
   <div class="form-group">
     <label for="nom">Nom</label>
     <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required>
@@ -73,7 +73,7 @@
         <input type="password2" class="form-control" id="inputPassword2" placeholder="re Password" required>
       </div>
   
-      <button type="submit" class="btn btn-primary">Envoyez</button>
+      <button type="submit" class="btn btn-primary">Soumettre</button>
     </form>
   </div>
 </div>

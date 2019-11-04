@@ -5,25 +5,38 @@ use Model\backend\AdminUsers;
 class BackendController
 {
 	/******************* admin management **********************/
-	public function admin()
+	//
+	public function checkAdmin()
 	{		        
 		$userData = new AdminUsers();
 		$checkUser = $userData->checkUserData();
-
-		if (isset($checkUser))
+var_dump($_POST['login']);
+		if ($checkUser['login'] == $_POST['login'])
 		{
-			var_dump($checkUser);
-			require 'vue/backend/login.php';
+			
+			require 'vue/backend/adminPage.php';
 
 		}
 		else
 		{
-			echo "no user in database";
+			echo "no admin in database";
 		}
 
 		
 	}
 
+	public function logAdmin()
+	{		        
+		require 'vue/backend/login.php';
+
+	}
+
+
+	public function register()
+	{		        
+		require 'vue/backend/register.php';
+
+	}
 
 }
 

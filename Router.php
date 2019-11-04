@@ -42,31 +42,31 @@
 						elseif($get === 'article')
 						{
 
-			                  //  $idArt = $_GET['id'];
-							$frontController = new FrontendController;
+			              	$frontController = new FrontendController;
 							$frontController->singleArticle($_GET['id']);
 
 						}
 						elseif ($get === 'addComment')
 						{
-
+							
+							//verifier si le numéro d'article est renseigné
 							if (isset($_GET['id']) && $_GET['id'] > 0)
 							{
-
-
-								if (!empty($_POST['nom']) && !empty($_POST['comment']))
+								//verifier si les champs du formulaire de commentaire sont renseignés
+								if (!empty($_POST['nom']) && !empty($_POST['comment']) && !empty($_POST['email']))
 								{
-
-
+									
 									$frontController = new FrontendController;					
 
-									$frontController->publishComments($_GET['id'], $_POST['nom'], $_POST['comment']);
+									$frontController->publishComments($_GET['id'], $_POST['nom'], $_POST['email'],$_POST['comment']);
 
 
 								}
 								else
 								{
 									echo 'Erreur : tous les champs ne sont pas remplis !';
+									header('Location: index.php?route=article&id=' . $id);
+									exit();
 								}
 							}
 							else
@@ -96,10 +96,22 @@
 							$frontController->addContact($_POST);
 							
 						}
-						elseif($get === 'admin')
+						elseif($get === 'admin') // go to admin login form page
 						{
 							$BackendController = new BackendController;							
-							$BackendController->admin();
+							$BackendController->logAdmin();
+						
+						}
+						elseif($get === 'pageAdmin') // check admin data to login
+						{
+							$BackendController = new BackendController;							
+							$BackendController->checkAdmin();
+						
+						}
+						elseif($get === 'register')
+						{
+							$BackendController = new BackendController;							
+							$BackendController->register($_POST);
 						
 						}
 						else

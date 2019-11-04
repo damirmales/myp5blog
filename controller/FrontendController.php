@@ -2,7 +2,8 @@
 namespace Controller;
 use Model\Articles;
 use Model\Comments;
-use Model\backend\Emails;
+use Model\Emails;
+use Model\Users;
 
 
 
@@ -53,23 +54,38 @@ class FrontendController
 
 	}
 
-	public function publishComments($id, $nom, $comment)
+	public function publishComments($id, $nom,$email, $comment)
 	{		        
-
-		$newcomment = new Comments();
-		$affectedLines = $newcomment->addCommentsToDb($id, $nom,$comment);		
-
-
-		if ($affectedLines === false)
-		{
-			//die('Impossible d\'ajouter le commentaire !');
-			exit('Impossible d\'ajouter le commentaire !');
-		}
-		else 
-		{
-			header('Location: index.php?route=article&id=' . $id);
-		}
 		
+		//instancier la classe qui recupère les données des utilisateurs enregistrés
+		$user= new Users();
+		$checkUser = $user->checkUserRecord($id, $nom,$email);
+
+		//verifier si l'utilisateur ayant soumit le le commentaire est enregistré
+		if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email))
+		{
+			//Ajouter le commentaire si le visiteur est enregistré
+			$newcomment = new Comments();
+			$affectedLines = $newcomment->addCommentsToDb($id, $nom,$comment);
+
+			if ($affectedLines === false)
+			{
+			//die('Impossible d\'ajouter le commentaire !');
+				exit('Impossible d\'ajouter le commentaire !');
+			}
+			else 
+			{
+				header('Location: index.php?route=article&id=' . $id);
+				exit();
+			}
+
+		}
+		else
+		{
+			header('Location: vue/home.php');
+			exit();
+		}
+
 	}
 
 	/******************* Front articles categories management **********************/
