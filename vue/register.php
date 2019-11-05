@@ -1,3 +1,4 @@
+  <!-- Header-->
   <!DOCTYPE html>
   <html lang="fr">
 
@@ -8,7 +9,7 @@
     <meta name="description" content="">
     <meta name="auteur" content="">
 
-    <title>Damir Blog - formulaire pour administrateur</title>
+    <title>Damir Blog - admin </title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,14 +29,14 @@
    
 
 <!-- Page Header -->
-<header class="masthead" style="background-image: url('img/about-bg.jpg')">
+<header class="masthead" style="background-image: url('public/img/about-bg.jpg')">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="page-heading">
-          <h1>login page</h1>
-          <span class="subheading">administration</span>
+          <h1>Page d'inscription</h1>
+          <span class="subheading">membre ou admin</span>
         </div>
       </div>
     </div>
@@ -46,18 +47,33 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
-     <form action="index.php?route=pageAdmin" method="post" name="sentMessage" id="loginForm">
+     <form action="index.php?route=registerForm" method="post" name="registerForm" id="registerForm">
+  <div class="form-group">
+    <label for="nom">Nom</label>
+    <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required>
+  </div>
+    <div class="form-group">
+    <label for="prenom">Prénom</label>
+    <input type="text" class="form-control" id="prenom" placeholder="Entrez le prenom" name="prenom" required>
+  </div>
+      <div class="form-group">
+      <label for="inputEmail">E-mail</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" required>
+    </div>
       <div class="form-group">
         <label for="inputLogin">Login</label>
-        <input type="input" class="form-control" id="login" name="login" aria-describedby="login" placeholder="Votre login">
-     
+        <input type="input" class="form-control" id="login" aria-describedby="login" name="login" placeholder="Enter login" required>     
       </div>
       <div class="form-group">
-        <label for="inputPassword">Password</label>
-        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Votre mot de passe">
+        <label for="inputPassword">Mot de Passe</label>
+        <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
+      </div>
+            <div class="form-group">
+        <label for="inputPassword2">Retapez votre Mot de Passe</label>
+        <input type="password" class="form-control" id="inputPassword2" placeholder="re Password" name="password2"  required>
       </div>
   
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Soumettre</button>
     </form>
   </div>
 </div>
@@ -107,7 +123,7 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Custom scripts for this template -->
-<script src="js/clean-blog.min.js"></script>
+<script src="public/js/clean-blog.min.js"></script>
 
 </body>
 

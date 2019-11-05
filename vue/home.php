@@ -85,4 +85,4 @@
   <?php $content = ob_get_clean();?>
 
 
-<?php require'templates/layout_gabarit.php'; ?>
+<?php require 'templates/layout_gabarit.php'; ?>

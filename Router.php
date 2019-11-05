@@ -96,22 +96,29 @@
 							$frontController->addContact($_POST);
 							
 						}
-						elseif($get === 'admin') // go to admin login form page
+						elseif($get === 'connexion') // go to admin login form page
 						{
-							$BackendController = new BackendController;							
+							$BackendController = new FrontendController;							
 							$BackendController->logAdmin();
 						
 						}
 						elseif($get === 'pageAdmin') // check admin data to login
 						{
 							$BackendController = new BackendController;							
-							$BackendController->checkAdmin();
+							$BackendController->checkUser();
 						
 						}
-						elseif($get === 'register')
+	
+						elseif($get === 'register')// to the register form page
+						{
+							$BackendController = new FrontendController;							
+							$BackendController->register();
+						
+						}
+						elseif($get === 'registerForm')// register user's data into the database
 						{
 							$BackendController = new BackendController;							
-							$BackendController->register($_POST);
+							$BackendController->addUser($_POST);
 						
 						}
 						else
@@ -132,4 +139,4 @@
 			}
 
 		}
-
+		

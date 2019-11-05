@@ -41,27 +41,9 @@
     <p>Ajouter un commentaire<br/>
     <span>Vous devez vous enregistrer pour poster un commentaire</span><br/>
     <a href="index.php?route=register""> S'enregistrer</a></p>
-     <a href="index.php?route=connecter""> Se connecter</a></p>
+     <a href="index.php?route=connexion""> Se connecter</a></p>
 
-    <form action="index.php?route=addComment&id=<?= $article['articles_id'] ?>" method="post">
-      <div class="form-group">
-        <label for="nom">Nom</label>
-        <input type="text" class="form-control" id="nom" placeholder="" value="" required name="nom">
-      </div>
-      <div class="form-group">             
-        <label for="email">Email :</label>
-        <input type="email" class="form-control" id="email" required name="email">
-      </div>
-  
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">Votre commentaire</span>
-        </div>
-        <textarea class="form-control" aria-label="With textarea" name="comment"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Envoyer</button>
-    </form>
-
+    
   </div>
 
   <!-- display comments  a mettre dans la methode du FrontendController-->

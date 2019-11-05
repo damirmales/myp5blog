@@ -76,7 +76,7 @@ class FrontendController
 			else 
 			{
 				header('Location: index.php?route=article&id=' . $id);
-				exit();
+				exit;
 			}
 
 		}
@@ -110,7 +110,7 @@ class FrontendController
 		else
 		{
 			header('Location: vue/home.php');
-			exit();
+			exit;
 
 		}		
 		
@@ -164,7 +164,21 @@ class FrontendController
 
 		}
 
+	}
+	//********** acces admin login page *************
+
+	public function logAdmin()
+	{		        
+		require 'vue/login.php';
 
 	}
+	//********** acces admin login page *************
+
+	public function register()
+	{		        
+		require 'vue/register.php';
+
+	}
+
 
 }	

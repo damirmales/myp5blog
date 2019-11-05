@@ -114,7 +114,7 @@
 </div>
 </div>
 </div>
- <p class="admin text-center"><a href="index.php?route=admin"> Administration</a></p>
+ <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a></p>
 
             <p class="copyright text-muted">Copyright &copy; Damir Blog 2019</p>
           </div>
