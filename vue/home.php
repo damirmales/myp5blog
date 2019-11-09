@@ -35,13 +35,13 @@
         } 
       ?>
     
-        <!-- Contact Form - Enter your email address on line 19 of the file to make this form work. -->
+        <!-- Contact Form -  -->
        
         <form action="index.php?route=contactForm" method="post" name="sentMessage" id="contactForm" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-              <label>Prénom</label>
-              <input type="text" class="form-control" placeholder="Prénom" name="prenom" id="prenom" required data-validation-required-message="Entrez votre prénom.">
+              <label>Prénom </label>
+              <input type="text" class="form-control" placeholder="Prénom ☝" name="prenom" id="prenom" required data-validation-required-message="Entrez votre prénom.">
               <p class="help-block text-danger"></p>
             </div>
           </div>

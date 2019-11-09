@@ -1,4 +1,5 @@
-  <!-- Header-->
+   <?php session_start ();
+   ?>
   <!DOCTYPE html>
   <html lang="fr">
 
@@ -37,11 +38,18 @@
         <div class="page-heading">
           <h1>Page d'inscription</h1>
           <span class="subheading">membre ou admin</span>
+           <a class="nav-link" href="index.php">Accueil</a>
         </div>
       </div>
     </div>
   </div>
 </header>
+
+     <?php   if (isset($_GLOBALS["contactMessage"])){
+        echo $_GLOBALS["contactMessage"];          
+
+        } 
+      ?>
 
 <!-- Main Content -->
 <div class="container">
@@ -49,8 +57,9 @@
     <div class="col-lg-8 col-md-10 mx-auto">
      <form action="index.php?route=registerForm" method="post" name="registerForm" id="registerForm">
   <div class="form-group">
-    <label for="nom">Nom</label>
-    <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required>
+    <label for="nom">Nom </label>
+    <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
+    <input type="text" class="form-control" id="nom" placeholder="<?=$_SESSION['nom'] ?>" name="nom" required> 
   </div>
     <div class="form-group">
     <label for="prenom">Prénom</label>
@@ -120,7 +129,7 @@
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
 <!-- Custom scripts for this template -->
 <script src="public/js/clean-blog.min.js"></script>

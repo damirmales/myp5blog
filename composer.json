@@ -1,6 +1,7 @@
 {
     "require": {
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "swiftmailer/swiftmailer": "^6.0"
     },
     
     "require-dev": {
@@ -11,8 +12,7 @@
     "name": "damir/p5mvcphp",
     "description": "project P5 en MVC PHP",
     "type": "blog",
-    "require": {},
-    "autoload": {
+     "autoload": {
       "psr-4": {
         "Vue\\": "vue/",
         "Controller\\": "controller/",

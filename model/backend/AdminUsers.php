@@ -15,10 +15,11 @@ use Model\PdoConstruct;
 			{
 				
 				$userData = $this->connection->prepare('
-					SELECT login, password
-					FROM Users
+					SELECT *
+					FROM users
 					WHERE login = :loginUser
 					');
+
 				$userData->execute( [ ':loginUser' => $loginUser ] );
 				
 				$user = $userData->fetch();
@@ -42,7 +43,7 @@ use Model\PdoConstruct;
 				$requete->bindValue(':prenom', $post['prenom'], \PDO::PARAM_STR);
 				$requete->bindValue(':email', $post['email'], \PDO::PARAM_STR);
 				$requete->bindValue(':role', 'member', \PDO::PARAM_STR);
-				$requete->bindValue(':statut', '1', \PDO::PARAM_INT);
+				$requete->bindValue(':statut', 1, \PDO::PARAM_INT);
 				$requete->bindValue(':token', 'null', \PDO::PARAM_STR);
 				$requete->bindValue(':login', $post['login'], \PDO::PARAM_STR);
 				$requete->bindValue(':password', $this->hashPassword($post['password']), \PDO::PARAM_STR);
@@ -59,6 +60,7 @@ use Model\PdoConstruct;
 				return $pwd_hashed;
 
 			}
+
 
 
 		}	

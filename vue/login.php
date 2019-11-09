@@ -36,11 +36,24 @@
         <div class="page-heading">
           <h1>login page</h1>
           <span class="subheading">accès aux membres et admins</span>
+          <a class="nav-link" href="index.php">Accueil</a>
         </div>
       </div>
     </div>
   </div>
 </header>
+
+     <?php   if (isset($_GLOBALS["contactMessage"])){
+        echo $_GLOBALS["contactMessage"];
+          
+        /*
+        global $contactMessage;
+        if ( isset($contactMessage)){
+        echo $contactMessage;
+         } 
+         */
+        } 
+      ?>
 
 <!-- Main Content -->
 <div class="container">

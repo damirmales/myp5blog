@@ -15,7 +15,7 @@
     </div>
   </header>
       <p> supprimer</p>
-<? var_dump($rubriques) ?> 
+
 
 <?php foreach ($rubriques as $article) :?>
   <div class="container">

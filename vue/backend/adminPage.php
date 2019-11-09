@@ -37,6 +37,7 @@
         <div class="page-heading">
           <h1>Page d'administration du blog</h1>
           <span class="subheading">administration</span>
+           <a class="nav-link" href="index.php">Accueil</a>
         </div>
       </div>
     </div>
