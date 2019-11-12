@@ -21,7 +21,8 @@
 					if($get === 'contact')
 					{  
 						$frontController = new FrontendController;
-						$frontController->home();
+						//$frontController->home();
+							$frontController->addContact($_POST);
 
 					}
 					elseif($get === 'cv')
@@ -104,7 +105,7 @@
 					}
 					elseif($get === 'pageAdmin') // check admin data to login
 					{
-						$BackendController = new BackendController;							
+						$BackendController = new FrontendController;							
 						$BackendController->checkUser();
 					
 					}
@@ -117,7 +118,7 @@
 					}
 					elseif($get === 'registerForm')// register user's data into the database
 					{
-						$BackendController = new BackendController;							
+						$BackendController = new FrontendController;							
 						$BackendController->addUser($_POST);
 					
 					}
