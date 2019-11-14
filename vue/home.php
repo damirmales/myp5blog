@@ -1,5 +1,8 @@
 
-<?php ob_start(); ?>
+<?php ob_start(); 
+require_once('functions/functions.php');
+
+?>
 
 <!-- Blog Author -->
 <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
@@ -23,7 +26,8 @@
       <p>Vous êtes dans le blog de Damir Males.
         <br/>Vous pouvez me contactez par ce formulaire</p>
 
-        <?php   if (!empty($contactErrorMessage)){
+        <?php   
+        if (!empty($contactErrorMessage)){
 
           echo '<br/><div class="alert alert-warning alert-dismissible">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -55,24 +59,7 @@
 
         }  */
 
-
-        //*** Get an input value entered by user ***
-     function getFormData($key)
-    { 
-      if (!empty($_SESSION['input'] [$key]))
-      {
-        return $_SESSION['input'] [$key];
-      }
-      else  
-      {
-        return null;
-      }
-        
-    
-    }
-
         ?>
-
         <!-- Contact Form -  -->
 
         <form action="index.php?route=contact" method="post" name="sentMessage" id="contactForm" novalidate>

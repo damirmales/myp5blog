@@ -125,7 +125,7 @@ class FrontendController
 			/******** Contact form check ****************/
 			
 			$contactErrorMessage=[];// Store error message to be available into home.php
-			$messageSend = "";
+
 
 			if (!empty($_POST))
 			{ 
@@ -168,16 +168,15 @@ class FrontendController
 
 //var_dump($contactErrorMessage);
 
-					if (empty($contactErrorMessage))
-					{
-	
-						
-					/***** Call class Emails to send contact form data*/
-					$sendEmail = new Emails();
-					$email = $sendEmail->sendEmail();	
+		if (empty($contactErrorMessage))
+		{
+
+			/***** Call class Emails to send contact form data*/
+			$sendEmail = new Emails();
+			$email = $sendEmail->sendEmail();	
 
 
-					$this->messageEmailContactOK($email);
+			$this->messageEmailContactOK($email);
 
 						/* $sendEmail = new Emails();
 						$email = $sendEmail->swiftMailer();	*/
@@ -192,20 +191,6 @@ class FrontendController
 			}
 
 			require 'vue/home.php';
-
-		}
-		//********** acces admin login page *************
-
-		public function logAdmin()
-		{		        
-			require 'vue/login.php';
-
-		}
-		//********** acces admin login page *************
-
-		public function register()
-		{		        
-			require 'vue/register.php';
 
 		}
 
@@ -233,59 +218,111 @@ class FrontendController
 //*** save all input value entered by user ***
 		public function saveFormData()
 		{ 
+
+
 			foreach ($_POST as $key => $value)
 			{
 				$_SESSION['input'] [$key] = $value;
-			
+
 			}
+		}
+
+	//********** acces admin login page *************
+
+		public function logAdmin()
+		{		        
+			require 'vue/login.php';
+
+		}
+		//********** acces admin login page *************
+
+		public function register()
+		{		        
+			require 'vue/register.php';
+
 		}
 
 
 		/******************* Check user presence in database **********************/
-				//
-		public function checkUser()
+				//---- from login.php ---------
+		public function checkUser() 
 		{		        
-			$userData = new AdminUsers();
+			$connexionErrorMessage = [];// Store error message to be available into login.php
+
+			
+
+			if(empty($_POST['login']))
+			{
+				//$_GLOBALS["contactMessage"] = "Pas de login renseigné";		
+				$connexionErrorMessage['login'] = "Pas de login renseigné";
+
+			}
+
+			if(empty($_POST['password']))
+			{
+				$connexionErrorMessage['password'] = "Pas de password renseigné";			
+
+			}
+
+			if (empty($connexionErrorMessage))
+			{
+				$userData = new AdminUsers();
 			$checkUser = $userData->checkUserData($_POST['login']);
 
 					//---- check if user is registered ---------
-			if (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'] ))
-			{
-						//------ check if user is admin --------
-				if ($this->userRole($checkUser))
+				if (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'] ))
 				{
-					require 'vue/backend/adminPage.php';
+						//------ check if user is admin --------
+					if ($this->userRole($checkUser))
+					{
+						
+						header('Location: index.php?route=admin');
+						exit();
+
+					}
+					else
+					{
+						$_SESSION["contactFormOK"] = "Vous êtes membre";
+						header('Location: index.php');
+						exit();
+					}
+
+
+				}
+
+				else
+				{
+					echo "Vous n\'êtes pas enregistré(e)";
+					
+						header('Location: vue/home.php');
+						exit();
+
+				}
+			}	
+			require 'vue/login.php';
+		}
+
+
+					//** check user's role ********
+			public function userRole($role)
+			{
+				var_dump($role['statut']);
+				if (($role['role'] === 'admin') &&  ($role['statut'] == 1))
+				{
+					echo '$role est admin';
+					return true;
+				}
+				elseif(($role['role'] === 'member') &&  ($role['statut'] == 1))
+				{
+					echo '$role est member';
+					return false;
 				}
 				else
 				{
-					$_GLOBALS["contactMessage"] = "Vous êtes membre";
-					require 'vue/login.php';
+					echo '$role n\'est ni member ni admin';
+					return false;
 				}
-
-
 			}
-			elseif(empty($_POST['login']))
-			{
-				$_GLOBALS["contactMessage"] = "Pas de login renseigné";
-				require 'vue/login.php';
-
-			}
-			elseif(empty($_POST['password']))
-			{
-				$_GLOBALS["contactMessage"] = "Pas de password renseigné";
-				require 'vue/login.php';
-
-			}
-			else
-			{
-				echo "Vous n'êtes pas enregistré(e)";
-				require 'vue/home.php';
-						//header('Location: vue/login.php');
-						//exit;
-
-			}
-
-		}
 
 		/******************* Add user from register.php to database  **********************/
 
@@ -294,102 +331,103 @@ class FrontendController
 			$post = $_POST;
 			/******** Contact form check ****************/
 
-		$contactMessage=""; // on initialise ne variable pour afficher les erreurs dans les champs du formulaire
-		echo "$contactMessage " .$contactMessage;
+		$registerFormMessage = []; // on initialise un tableau pour afficher les erreurs dans les champs du formulaire
+
+		if (!empty($post))
+		{	
 
 
-
-		
-		$_SESSION['nom'] = "Entrez le nom" ;	
-
-
-		if (empty($post['nom']))
-		{
-						$_GLOBALS["contactMessage"] = "rien ds le nom"; // Store error message to be abvailable into register.php	
-						require 'vue/register.php';
-
-					}
-					elseif(empty($post['prenom']))
-					{
-
-						$_GLOBALS["contactMessage"] = "rien ds le prenom";
-						require 'vue/register.php';
-						
-					}
-					elseif(empty($post['email']))
-					{
-
-						$_GLOBALS["contactMessage"] = "rien ds le email";
-						require 'vue/register.php';
-
-					}
-					//check given email address 
-					elseif(!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) 
-					{					
-						$_SESSION['nom'] = $post['nom'] ;	
-						echo($post['email']."  is not a valid email address ".$_SESSION['nom']);
-
-						require 'vue/register.php';						
-						
-					}
-					elseif(empty($post['login']))
-					{
-						$_GLOBALS["contactMessage"] = "rien ds le login";
-						require 'vue/register.php';
-					}
-					elseif(empty($post['password']))
-					{
-
-						$_GLOBALS["contactMessage"] = "rien ds le password";
-						require 'vue/register.php';
-					}
-					elseif(empty($post['password2']))
-					{
-
-						$_GLOBALS["contactMessage"] = "rien ds le password2";
-						require 'vue/register.php';
-					}
-					elseif(($post['password2']) !== ($post['password'])  )
-					{
-
-						$_GLOBALS["contactMessage"] = "les champs des mots de passe doivent être identique";
-						require 'vue/register.php';
-					}
-					else 
-					{
-
-						echo "formulaire envoyé";
-						//instancier la classe qui envoie les données des utilisateurs vers la bdd
-						$user= new AdminUsers();
-						$checkUser = $user->addUserToDb($post);
-
-						echo $checkUser;
-
-					}
-
-				}
-
-					//** check user's role ********
-				private function userRole($role)
+			if($post['formRegister'] == 'sent' )
+			{
+				if (empty($post['nom']))
 				{
-					var_dump($role['statut']);
-					if (($role['role'] === 'admin') &&  ($role['statut'] == 1))
-					{
-						echo '$role est admin';
-						return true;
-					}
-					elseif(($role['role'] === 'member') &&  ($role['statut'] == 1))
-					{
-						echo '$role est member';
-						return false;
-					}
-					else
-					{
-						echo '$role n\'est ni member ni admin';
-						return false;
+							$registerFormMessage['nom'] = "rien ds le nom"; // Store error message to be abvailable into register.php	
+
+						}
+
+						if(empty($post['prenom']))
+						{
+
+							$registerFormMessage['prenom'] = "rien ds le prenom";
+
+							
+						}
+
+						if(empty($post['email']))
+						{
+
+							$registerFormMessage['email'] = "rien ds le email";
+
+
+						}
+
+						//check given email address 
+						if(!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) 
+						{					
+							$registerFormMessage['email']  ="L'email doit être selon format :bibi@fricotin.fr";
+
+							
+						}
+
+						if(empty($post['login']))
+						{
+							$registerFormMessage['login'] = "rien ds le login";
+
+						}
+
+						if(empty($post['password']))
+						{
+							$registerFormMessage['login'] = "rien ds le password";
+
+						}
+
+						if(empty($post['password2']))
+						{
+							$registerFormMessage['password'] = "rien ds le password2";
+
+						}
+
+						if(($post['password2']) !== ($post['password'])  )
+						{
+							$registerFormMessage['password2'] = "les champs des mots de passe doivent être identique";
+
+						}
+
+
+
+						if (empty($registerFormMessage)) 
+						{
+							echo "formulaire envoyé";
+							//instancier la classe qui envoie les données des utilisateurs vers la bdd
+							$user = new AdminUsers();
+							$checkUser = $user->addUserToDb($post);
+							echo $checkUser;
+
+							header('Location: index.php');
+							exit();
+
+						}
+						else
+						{
+
+							$_SESSION["contactFormKO"] = "email non envoyé";
+							//$noMessageSend = "addContact email non envoyé";
+							//$this->saveFormData();
+						}
 					}
 				}
+			/*	session_destroy();
+				echo "<pre>";
+				print_r($post)	 ; 
+				print_r($_SESSION);	
+				echo "error register";
+				print_r($registerFormMessage);
+	*/
+				require 'vue/register.php';	
+				
+			}		
 
 
 
-			}	
+
+		}	

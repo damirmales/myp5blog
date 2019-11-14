@@ -3,7 +3,7 @@
 namespace Model\backend;
 
 use Model\PdoConstruct;
-/****** **************************************************************************
+		/****** **************************************************************************
 		Cette classe gère la vérification des paramètres d'identification 
 		pour l'accès à la partie administration
 		*************************************************************************************/
@@ -53,6 +53,7 @@ use Model\PdoConstruct;
 				return $affectedLines;
 
 			}
+
 			//** encrypt password ********
 			private function hashPassword($pswd)
 			{

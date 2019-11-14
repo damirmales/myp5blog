@@ -47,6 +47,13 @@
 						$frontController->singleArticle($_GET['id']);
 
 					}
+					elseif($get === 'admin')
+					{
+
+						$frontController = new BackendController;
+						$frontController->admin();
+
+					}
 					elseif ($get === 'addComment')
 					{
 						
@@ -90,13 +97,13 @@
 						$frontController->getCategoryArticles($get);
 
 					}
-					elseif($get === 'contactForm')
+					/*elseif($get === 'contactForm')
 					{
 
 						$frontController = new FrontendController;							
 						$frontController->addContact($_POST);
 						
-					}
+					} */
 					elseif($get === 'connexion') // go to admin login form page
 					{
 						$BackendController = new FrontendController;							

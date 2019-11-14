@@ -43,17 +43,20 @@
   </div>
 </header>
 
-     <?php   if (isset($_GLOBALS["contactMessage"])){
-        echo $_GLOBALS["contactMessage"];
-          
-        /*
-        global $contactMessage;
-        if ( isset($contactMessage)){
-        echo $contactMessage;
-         } 
-         */
+ <?php   
+ if (!empty($connexionErrorMessage)){
+
+          echo '<br/><div class="container alert alert-warning alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          ☝ <strong>Attention! </strong>';
+          foreach ($connexionErrorMessage as $err) {
+
+            echo $err.'<br/>';
+          }
+          echo '</div>';
         } 
-      ?>
+        ?>
+
 
 <!-- Main Content -->
 <div class="container">

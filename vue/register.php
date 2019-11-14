@@ -1,89 +1,117 @@
-  <!DOCTYPE html>
-  <html lang="fr">
+<?php
+require_once('functions/functions.php');
+?>
+<!DOCTYPE html>
+<html lang="fr">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="auteur" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="auteur" content="">
 
-    <title>Damir Blog - admin </title>
+  <title>Damir Blog - admin </title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet' ?>" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet' ?>" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-    <!-- Custom styles for this template -->
-    <link href="public/css/clean-blog.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="public/css/clean-blog.min.css" rel="stylesheet">
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-   
 
-<!-- Page Header -->
-<header class="masthead" style="background-image: url('public/img/about-bg.jpg')">
-  <div class="overlay"></div>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="page-heading">
-          <h1>Page d'inscription</h1>
-          <span class="subheading">membre ou admin</span>
-           <a class="nav-link" href="index.php">Accueil</a>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('public/img/about-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Page d'inscription</h1>
+            <span class="subheading">membre ou admin</span>
+            <a class="nav-link" href="index.php">Accueil</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-     <?php   if (isset($_GLOBALS["contactMessage"])){
-        echo $_GLOBALS["contactMessage"];          
+  <?php   
+  if (!empty($registerFormMessage))
+  {
 
-        } 
-      ?>
+    echo '<br/><div class="container alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    ☝ <strong>Attention! </strong>';
+    foreach ($registerFormMessage as $err)
+    {
 
-<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-md-10 mx-auto">
-     <form action="index.php?route=registerForm" method="post" name="registerForm" id="registerForm">
-  <div class="form-group">
-    <label for="nom">Nom </label>
-    <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
-    <input type="text" class="form-control" id="nom" placeholder="<?=$_SESSION['nom'] ?>" name="nom" required> 
-  </div>
-    <div class="form-group">
-    <label for="prenom">Prénom</label>
-    <input type="text" class="form-control" id="prenom" placeholder="Entrez le prenom" name="prenom" required>
-  </div>
-      <div class="form-group">
-      <label for="inputEmail">E-mail</label>
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" required>
+      echo $err.'<br/>';
+    }
+    echo '</div>';
+  } 
+  ?>
+
+  <?php 
+
+  if (!empty($_SESSION["contactFormOK"]))
+  {
+
+    echo '<br/><div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Bravo! </strong>'
+    .$_SESSION["contactFormOK"].'</div>';
+  }
+  ?>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+       <form action="index.php?route=registerForm" method="post" name="registerForm" id="registerForm">
+        <input type="hidden" name="formRegister" value="sent">
+        <div class="form-group">
+          <label for="nom">Nom </label>
+          <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
+          <input type="text" class="form-control" id="nom" placeholder="Prénom" name="nom" 
+          value="<?= getFormData('prenom') ?>"> 
+        </div>
+        <div class="form-group">
+          <label for="prenom">Prénom</label>
+          <input type="text" class="form-control" id="prenom" placeholder="Nom" name="prenom" 
+          value="<?= getFormData('nom') ?>">
+        </div>
+        <div class="form-group">
+          <label for="inputEmail">E-mail</label>
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" value="<?= getFormData('email') ?>">
+        </div>
+        <div class="form-group">
+          <label for="inputLogin">Login</label>
+          <input type="input" class="form-control" id="login" aria-describedby="login" name="login" placeholder="Enter login" value="<?= getFormData('login') ?>">     
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">Mot de Passe</label>
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" >
+        </div>
+        <div class="form-group">
+          <label for="inputPassword2">Retapez votre Mot de Passe</label>
+          <input type="password" class="form-control" id="inputPassword2" placeholder="re Password" name="password2" >
+        </div>
+
+        <button type="submit" class="btn btn-primary" >Soumettre</button>
+      </form>
     </div>
-      <div class="form-group">
-        <label for="inputLogin">Login</label>
-        <input type="input" class="form-control" id="login" aria-describedby="login" name="login" placeholder="Enter login" required>     
-      </div>
-      <div class="form-group">
-        <label for="inputPassword">Mot de Passe</label>
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
-      </div>
-            <div class="form-group">
-        <label for="inputPassword2">Retapez votre Mot de Passe</label>
-        <input type="password" class="form-control" id="inputPassword2" placeholder="re Password" name="password2"  required>
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Soumettre</button>
-    </form>
   </div>
-</div>
 </div>
 
 <hr>
@@ -127,7 +155,7 @@
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Custom scripts for this template -->
 <script src="public/js/clean-blog.min.js"></script>
