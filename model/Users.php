@@ -18,7 +18,6 @@ class Users extends PdoConstruct
 				$user = $userRecord->fetch();
 				
 				return $user;
-
 			}
 
  }

@@ -14,6 +14,6 @@ if (isset($_SESSION["message email contact"]))
     $_SESSION["message email contact"] = [];
 
   }
-  ?>
+
 
 

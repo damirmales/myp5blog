@@ -30,6 +30,30 @@ class Emails
 		return $success;	
 
 	}
+//---- send email with token to register a new user ----------
+		public function tokenEmail($userEmail,$UrlToken)
+	{
+
+		$prenom = $_POST['prenom'];
+		$nom = $_POST['nom']; 
+		$email = $_POST['email'];
+		$message   = '$email : '.$userEmail;
+		$message   .= '$token : '. $UrlToken ;
+
+
+		$emailTo = $userEmail;
+		$subject = "confirmez votre email";
+		$emailFrom = $_POST['email']; 
+
+		$headers   = 'MIME-Version: 1.0' . "\r\n";
+		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+
+
+		// envoi email 
+		$success = mail($emailTo, $subject, $message, $headers);
+		return $success;	
+
+	}
 
 
 	public function swiftMailer()

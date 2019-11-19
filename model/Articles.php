@@ -10,6 +10,34 @@ use Model\PdoConstruct;
 
 class Articles extends PdoConstruct
 {
+  
+
+
+
+  /************ Add articles to database ***************/
+
+    public function addArticleToDb()
+    {
+        
+        $requete = $this->connection->prepare('
+            INSERT INTO articles (articles_id,titre,chapo,auteur,contenu,rubrique,date_creation,date_mise_a_jour)
+            VALUES (:id,:titre,:chapo,:auteur,:contenu,:rubrique,NOW(),NOW())
+            ');
+        $requete->bindValue(':id', NULL, \PDO::PARAM_INT);
+        $requete->bindValue(':titre', $titre, \PDO::PARAM_STR);
+        $requete->bindValue(':chapo', $chapo, \PDO::PARAM_STR);
+        $requete->bindValue(':auteur', $auteur, \PDO::PARAM_STR);
+        $requete->bindValue(':contenu', $contenu, \PDO::PARAM_STR);
+        $requete->bindValue(':rubrique', $rubrique, \PDO::PARAM_STR);
+        $requete->bindValue(':date_creation', $date_creation, \PDO::PARAM_INT);
+        $requete->bindValue(':date_mise_a_jour', $date_mise_a_jour, \PDO::PARAM_INT);
+
+        $affectedLines = $requete->execute();
+
+        return $affectedLines;
+
+    }
+
 
 //----- Retourne la liste des articles pour affichage ------------
 	public function getListArticles()

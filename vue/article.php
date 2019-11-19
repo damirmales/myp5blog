@@ -40,8 +40,8 @@
   <div class="container">
     <p>Ajouter un commentaire<br/>
     <span>Vous devez vous enregistrer pour poster un commentaire</span><br/>
-    <a href="index.php?route=register""> S'enregistrer</a></p>
-     <a href="index.php?route=connexion""> Se connecter</a></p>
+    <a href="index.php?route=register"> S'enregistrer</a></p>
+     <a href="index.php?route=connexion"> Se connecter</a></p>
 
     
   </div>

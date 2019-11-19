@@ -10,7 +10,9 @@ use Model\PdoConstruct;
 
 		class AdminUsers extends PdoConstruct
 		{
-	//----- Retourne la liste des articles pour affichage ------------
+
+		//----- Check if user is in the DB ------------
+
 			public function checkUserData($loginUser)
 			{
 				
@@ -28,11 +30,10 @@ use Model\PdoConstruct;
 
 			}
 
-			/************ Add comments to database ***************/
+			/************ Add user to database ***************/
 
-			public function addUserToDb($post)
+			public function addUserToDb($post,$token)
 			{
-
 
 				$requete = $this->connection->prepare('
 					INSERT INTO users (id,nom,prenom,email,role,statut,token,login,password)
@@ -43,8 +44,8 @@ use Model\PdoConstruct;
 				$requete->bindValue(':prenom', $post['prenom'], \PDO::PARAM_STR);
 				$requete->bindValue(':email', $post['email'], \PDO::PARAM_STR);
 				$requete->bindValue(':role', 'member', \PDO::PARAM_STR);
-				$requete->bindValue(':statut', 1, \PDO::PARAM_INT);
-				$requete->bindValue(':token', 'null', \PDO::PARAM_STR);
+				$requete->bindValue(':statut', 0, \PDO::PARAM_INT);
+				$requete->bindValue(':token', $token, \PDO::PARAM_STR);
 				$requete->bindValue(':login', $post['login'], \PDO::PARAM_STR);
 				$requete->bindValue(':password', $this->hashPassword($post['password']), \PDO::PARAM_STR);
 
