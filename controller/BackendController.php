@@ -1,6 +1,6 @@
 <?php
 namespace Controller;
-use Model\backend\Article;
+use Model\Articles;
 
 class BackendController
 {
@@ -20,7 +20,7 @@ class BackendController
 
     public function addArticle()
     {               
-        $article = new Article();
+        $article = new Articles();
         $articleAdded = $article->addArticleToDb();
         echo 'articleAdded';// require 'vue/articles.php';
 
@@ -28,16 +28,16 @@ class BackendController
 
     public function editArticle()
     {               
-        $article = new Article();
-        $articlEdited = $article->showArticle();
+        $article = new Articles();
+        $articlEdited = $article->singleArticle();
         echo 'articlEdited';// require 'vue/articles.php';
 
     }
 
     public function editListArticles()
     {               
-        $articles = new Article();
-        $articlesEdited = $articles->showListArticles();
+        $articles = new Articles();
+        $articlesEdited = $articles->getListArticles();
         require 'vue/backend/list_articles.php';
 
     }

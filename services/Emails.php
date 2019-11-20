@@ -30,6 +30,7 @@ class Emails
 		return $success;	
 
 	}
+	
 //---- send email with token to register a new user ----------
 		public function tokenEmail($userEmail,$UrlToken)
 	{
@@ -56,7 +57,7 @@ class Emails
 	}
 
 
-	public function swiftMailer()
+	/*public function swiftMailer()
 	{
 
 // Create the Transport
@@ -79,7 +80,7 @@ class Emails
 // Send the message
 		$result = $mailer->send($message);
 
-	}
+	} */
 
 
 }

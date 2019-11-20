@@ -6,7 +6,7 @@ use Model\Articles;
 use Model\Comments;
 use Model\Emails;
 use Model\Users;
-use Model\backend\AdminUsers;
+
 require_once ('functions/functions.php');
 
 class FrontendController extends PdoConstruct
@@ -268,9 +268,11 @@ class FrontendController extends PdoConstruct
 			//---- if no errors compare form fields data with those into the DB -----
 			if (empty($connexionErrorMessage))
 			{
-				$userData = new AdminUsers();
+				
+				$userData = new Users();
 				$checkUser = $userData->checkUserData($_POST['login']);
 
+		
 					//---- check if user is registered ---------
 				if (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'] ))
 				{
