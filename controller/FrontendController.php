@@ -1,6 +1,6 @@
 <?php
 namespace Controller;
-session_start();
+
 use Model\PdoConstruct;
 use Model\Articles;
 use Model\Comments;
@@ -34,10 +34,10 @@ class FrontendController extends PdoConstruct
 		require 'vue/articles.php';
 	}
 
-	public function singleArticle($id)
+	public function getSingleArticle($id)
 	{		        
 		$article = new Articles();
-		$article = $article->singleArticle($id);
+		$article = $article->getSingleArticle($id);
 
 			$comments=$this->getComments($id); // insérer les commentaires avec l'article
 			
@@ -84,7 +84,7 @@ class FrontendController extends PdoConstruct
 			}
 			else
 			{
-				header('Location: vue/home.php');
+				header('Location: index.php');
 				exit();
 			}
 
@@ -96,7 +96,7 @@ class FrontendController extends PdoConstruct
 		{		        
 			// récupérer les articles selon la rubrique désirée
 			$rubArticles = new Articles();
-			$rubriques = $rubArticles->showArticlesByCategory($rubriq);		
+			$rubriques = $rubArticles->getArticlesByCategory($rubriq);		
 
 			// Associer la vue correspondante à la rubrique sélectionnée
 			if ($rubriq == "livres")
@@ -111,7 +111,7 @@ class FrontendController extends PdoConstruct
 			}
 			else
 			{
-				header('Location: vue/home.php');
+				header('Location: index.php');
 				exit();
 
 			}		
@@ -252,7 +252,6 @@ class FrontendController extends PdoConstruct
 			$connexionErrorMessage = [];// Store error message to be available into login.php
 
 			
-
 			if(empty($_POST['login']))
 			{
 				//$_GLOBALS["contactMessage"] = "Pas de login renseigné";		
@@ -267,7 +266,7 @@ class FrontendController extends PdoConstruct
 			}
 			//---- if no errors compare form fields data with those into the DB -----
 			if (empty($connexionErrorMessage))
-			{
+			{ 
 				
 				$userData = new Users();
 				$checkUser = $userData->checkUserData($_POST['login']);
@@ -278,15 +277,16 @@ class FrontendController extends PdoConstruct
 				{
 						//------ check if user is admin --------
 					if ($this->userRole($checkUser))
-					{
-						
+					{		
+
 						header('Location: index.php?route=admin'); // if user is admin go to admin page
 						exit();
 
 					}
 					else
 					{
-						$_SESSION["contactFormOK"] = "Vous êtes membre";
+						$_SESSION["contactFormOK"] = "Vous êtes member";
+						
 						header('Location: index.php');
 						exit();
 					}
@@ -297,9 +297,10 @@ class FrontendController extends PdoConstruct
 				else
 				{
 					echo "Vous n\'êtes pas enregistré(e)";
+					$_SESSION["contactFormOK"] = "Vous êtes pas notre member";
 					
-					header('Location: vue/home.php');
-					exit();
+					header('Location: index.php');
+				exit();
 
 				}
 			}	

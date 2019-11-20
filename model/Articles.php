@@ -11,13 +11,19 @@ use Model\PdoConstruct;
 class Articles extends PdoConstruct
 {
   
-
-
+    //private $id;
+    private $titre;
+    private $chapo;
+    private $auteur;
+    private $contenu;
+    private $rubrique;
 
   /************ Add articles to database ***************/
 
-    public function addArticleToDb()
+    public function addArticleToDb($post)
     {
+        
+
         
         $requete = $this->connection->prepare('
             INSERT INTO articles (articles_id,titre,chapo,auteur,contenu,rubrique,date_creation,date_mise_a_jour)
@@ -55,7 +61,7 @@ class Articles extends PdoConstruct
 
 
 //----- Retourne un article particulier pour affichage ------------
-	public function singleArticle($idArticle)
+	public function getSingleArticle($idArticle)
 	{
 	
 		$requete = $this->connection->prepare('
@@ -74,7 +80,7 @@ class Articles extends PdoConstruct
 	/*-------- Retourne la liste des articles selon la rubrique -------
 	 ------------------ pour affichage -----------------------------------*/
 
-	public function showArticlesByCategory($rubrique)
+	public function getArticlesByCategory($rubrique)
 	{
 
 		//$connection = $this->getConnectDB();

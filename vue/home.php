@@ -1,4 +1,3 @@
-
 <?php ob_start(); 
 require_once('functions/functions.php');
 
@@ -109,7 +108,7 @@ require_once('functions/functions.php');
 
   <hr>
   <?php $content = ob_get_clean();
-  session_destroy();
+ 
   ?> 
 
 

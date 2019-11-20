@@ -7,8 +7,8 @@ error_reporting(E_ALL);
 require __DIR__ . '/vendor/autoload.php';
 
 
-require_once'RouterAdmin.php';
+require_once'Router.php';
 
-$routerAdmin = new \RouterAdmin();
+$routerAdmin = new \Router();
 $routerAdmin->run();
 

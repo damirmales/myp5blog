@@ -18,8 +18,7 @@
 				
 					$get = filter_var($getAction, FILTER_SANITIZE_SPECIAL_CHARS);
 					
-			var_dump($get);
-
+		
 					if($get === 'contact')
 					{  
 						$frontController = new FrontendController;
@@ -133,6 +132,33 @@
 						$frontController = new FrontendController;							
 						$frontController->verifyToken();
 						
+					}
+/*********************************************************************************/				
+/********************************* PARTIE BACKEND ********************************/	
+/*********************************************************************************/			
+					elseif($get === 'createArticle')
+					{  
+						$backController = new BackendController;
+						$backController->createArticle();
+
+					}
+					elseif($get === 'addArticle')
+					{  
+						$backController = new BackendController;
+						$backController->addArticle($_POST);
+
+					}
+					elseif($get === 'editArticle')
+					{  
+						$backController = new BackendController;
+						$backController->editArticle($id);
+
+					}
+					elseif($get === 'editListArticles')
+					{  
+						$backController = new BackendController;
+						$backController->editListArticles();
+
 					}
 					else
 					{
