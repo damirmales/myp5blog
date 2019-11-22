@@ -27,7 +27,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
         
-            <p><?= $article['contenu'] ?>//$article->
+            <p><?= $article['contenu'] ?><!-- $article-> -->
 
           </p>         
         </div>
@@ -49,7 +49,7 @@
   <!-- display comments  a mettre dans la methode du FrontendController-->
 
 
-  <?php require'vue/comments.php'; ?>
+<?= $allComments; ?>
 
 
   <?php $content = ob_get_clean();?>

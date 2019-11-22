@@ -2,17 +2,17 @@
 use Model\PdoConstruct;
 
                   //*** Get an input value entered by user ***
-    function getFormData($key)
-    {  
-      if (!empty($_SESSION['input'] [$key]))
+    function getFormData($session,$key)
+    {  //echo "getFormData : $key";
+      if (!empty($_SESSION[$session] [$key]))
       {
 
-        return htmlspecialchars($_SESSION['input'] [$key]);
+        return htmlspecialchars($_SESSION[$session] [$key]);
         }
-    else  
-    {
-        return null;
-    }        
+        else  
+        {
+            return null;
+        }        
 
     }
 
@@ -41,7 +41,7 @@ use Model\PdoConstruct;
 
 
     // get user email and id from users table 
-    function getUserEmailandId() // Nota : voir si doublon avec checkUserData($loginUser) de la classe AdminUsers ou checkUserRecord() de la classe Users
+    function getUserEmailandId() // Nota : voir si doublon avec checkUserLogin($loginUser) de la classe AdminUsers ou checkUserRecord() de la classe Users
     {
         {
             $connection = new PdoConstruct;

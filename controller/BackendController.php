@@ -21,15 +21,24 @@ class BackendController
     public function addArticle()
     {               
         $article = new Articles();
-        $articleAdded = $article->addArticleToDb();
-        echo 'articleAdded';// require 'vue/articles.php';
+        
+            $article->setTitre ( $_POST['titre'] );
+            $article->setChapo ( $_POST['chapo'] );
+            $article->setAuteur ( $_POST['auteur'] );
+            $article->setContenu ( $_POST['contenu'] );
+            $article->setRubrique ( $_POST['rubrique'] );
+            $article->setDateCreation (date("d-m-Y"));
+            $article->setDateMiseAJour ( date("d-m-Y"));
+        
+            $articleAdded = $article->setArticleToDb();
+            echo 'articleAdded';// require 'vue/articles.php';
 
     }
 
     public function editArticle()
     {               
         $article = new Articles();
-        $articlEdited = $article->singleArticle();
+        $articlEdited = $article->getSingleArticle();
         echo 'articlEdited';// require 'vue/articles.php';
 
     }
@@ -41,7 +50,6 @@ class BackendController
         require 'vue/backend/list_articles.php';
 
     }
-
 
 
 }

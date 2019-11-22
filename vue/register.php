@@ -84,20 +84,20 @@ require_once('functions/functions.php');
           <label for="nom">Nom </label>
           <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
           <input type="text" class="form-control" id="nom" placeholder="Prénom" name="nom" 
-          value="<?= getFormData('prenom') ?>"> 
+          value="<?= getFormData('register','prenom') ?>"> 
         </div>
         <div class="form-group">
           <label for="prenom">Prénom</label>
           <input type="text" class="form-control" id="prenom" placeholder="Nom" name="prenom" 
-          value="<?= getFormData('nom') ?>">
+          value="<?= getFormData('register','nom') ?>">
         </div>
         <div class="form-group">
           <label for="inputEmail">E-mail</label>
-          <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" value="<?= getFormData('email') ?>">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" value="<?= getFormData('register','email') ?>">
         </div>
         <div class="form-group">
           <label for="inputLogin">Login</label>
-          <input type="input" class="form-control" id="login" aria-describedby="login" name="login" placeholder="Enter login" value="<?= getFormData('login') ?>">     
+          <input type="input" class="form-control" id="login" aria-describedby="login" name="login" placeholder="Enter login" value="<?= getFormData('register','login') ?>">     
         </div>
         <div class="form-group">
           <label for="inputPassword">Mot de Passe</label>

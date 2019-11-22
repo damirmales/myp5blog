@@ -41,8 +41,8 @@ class FrontendController extends PdoConstruct
 
 			$comments=$this->getComments($id); // insérer les commentaires avec l'article
 			
-			require 'vue/article.php';
-
+			//require 'vue/article.php';
+			require 'vue/comments.php';
 		}
 
 		/******************* Front comments management **********************/
@@ -61,14 +61,18 @@ class FrontendController extends PdoConstruct
 			
 			//instancier la classe qui recupère les données des utilisateurs enregistrés
 			$user= new Users();
-			$checkUser = $user->checkUserRecord($id, $nom,$email);
+			$checkUser = $user->checkUserRecord($id, $nom,$email); // id de l'article
 
 			//verifier si l'utilisateur ayant soumit le le commentaire est enregistré
 			if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email))
 			{
-				//Ajouter le commentaire si le visiteur est enregistré
+				//Ajouter le commentaire et le pseudo si le visiteur est enregistré
 				$newcomment = new Comments();
-				$affectedLines = $newcomment->addCommentsToDb($id, $nom,$comment);
+
+				$newcomment->setPseudo($nom);
+				$newcomment->setComment($comment);
+
+				$affectedLines = $newcomment->addCommentsToDb($id); // id de l'article
 
 				if ($affectedLines === false)
 				{
@@ -185,8 +189,8 @@ class FrontendController extends PdoConstruct
 					else
 					{
 						$_SESSION["contactFormKO"] = "email non envoyé";
-						//$noMessageSend = "addContact email non envoyé";
-						$this->saveFormData();
+					
+						$this->saveFormData('input');
 					}
 				}	
 			}
@@ -217,12 +221,12 @@ class FrontendController extends PdoConstruct
 
 
 //*** save all input value entered by user ***
-		public function saveFormData()
+		public function saveFormData($index)
 		{ 
 
 			foreach ($_POST as $key => $value)
 			{
-				$_SESSION['input'] [$key] = $value;
+				$_SESSION[$index] [$key] = $value;
 
 			}
 		}
@@ -269,27 +273,32 @@ class FrontendController extends PdoConstruct
 			{ 
 				
 				$userData = new Users();
-				$checkUser = $userData->checkUserData($_POST['login']);
+				$checkUser = $userData->checkUserLogin($_POST['login']);
 
-		
+$_SESSION["user"]['role'] = $checkUser['role'];
+$_SESSION["user"]['nom'] = $checkUser['nom'];
+$_SESSION["user"]['login'] = $checkUser['login'];
+
 					//---- check if user is registered ---------
 				if (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'] ))
 				{
 						//------ check if user is admin --------
-					if ($this->userRole($checkUser))
+					if ($this->userRole($checkUser) == 'admin')
 					{		
 
 						header('Location: index.php?route=admin'); // if user is admin go to admin page
 						exit();
 
 					}
-					else
+					elseif($this->userRole($checkUser) == 'member')
 					{
 						$_SESSION["contactFormOK"] = "Vous êtes member";
 						
 						header('Location: index.php');
 						exit();
 					}
+
+					
 
 
 				}
@@ -300,10 +309,11 @@ class FrontendController extends PdoConstruct
 					$_SESSION["contactFormOK"] = "Vous êtes pas notre member";
 					
 					header('Location: index.php');
-				exit();
+					exit();
 
 				}
-			}	
+			}
+
 			require 'vue/login.php';
 		}
 
@@ -312,15 +322,16 @@ class FrontendController extends PdoConstruct
 		public function userRole($role)
 		{
 			var_dump($role['statut']);
-			if (($role['role'] === 'admin') &&  ($role['statut'] == 1))
+			if (($role['role'] === 'admin') && ($role['statut'] == 1))
 			{
 				echo '$role est admin';
-				return true;
+
+				return 'admin';
 			}
-			elseif(($role['role'] === 'member') &&  ($role['statut'] == 1))
+			elseif(($role['role'] === 'member') && ($role['statut'] == 1))
 			{
 				echo '$role est member';
-				return false;
+				return 'member';
 			}
 			else
 			{
@@ -341,7 +352,6 @@ class FrontendController extends PdoConstruct
 		if (!empty($post))
 		{	
 
-
 			if($post['formRegister'] == 'sent' )
 			{
 				if (empty($post['nom']))
@@ -354,15 +364,12 @@ class FrontendController extends PdoConstruct
 						{
 
 							$registerFormMessage['prenom'] = "rien ds le prenom";
-
 							
 						}
 
 						if(empty($post['email']))
 						{
-
 							$registerFormMessage['email'] = "rien ds le email";
-
 
 						}
 
@@ -370,7 +377,6 @@ class FrontendController extends PdoConstruct
 						if(!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) 
 						{					
 							$registerFormMessage['email']  ="L'email doit être selon format :bibi@fricotin.fr";
-
 							
 						}
 
@@ -408,13 +414,23 @@ class FrontendController extends PdoConstruct
 							
 							//instancier la classe qui envoie les données des utilisateurs vers la bdd
 
-							 $user = new AdminUsers();
-								$checkUser = $user->addUserToDb($post,$token);
-								echo 'checkUser :'.$checkUser;
+							$user = new Users();
+
+				$user->setNom($_POST['nom']);
+				$user->setPrenom($_POST['prenom']);
+				$user->setEmail($_POST['email']);
+				$user->setRole($_POST['role']);
+				$user->setStatut($_POST['statut']);
+				$user->setToken($_POST['token']);
+				$user->setLogin($_POST['login']);
+				$user->setPassword($_POST['password']);
+
+							$checkUser = $user->addUserToDb();
+							echo 'checkUser :'.$checkUser;
 
 								//$result =$this->verifyToken();
 
-						
+
 								//echo 'verifyToken :'.$result;
 
 								/*if ($result)
@@ -441,7 +457,7 @@ class FrontendController extends PdoConstruct
 							{
 								$_SESSION["contactFormKO"] = "email non envoyé";
 							//$noMessageSend = "addContact email non envoyé";
-							//$this->saveFormData();
+							$this->saveFormData('register');
 							}
 						}
 					}
@@ -462,7 +478,7 @@ class FrontendController extends PdoConstruct
 				{
 					$userToken = trim($_GET['token']);
 					$sql = "SELECT nom  FROM users WHERE  token = :token";
-				
+
 					$stmt = $this->connection->prepare($sql);
 					
 					$stmt->bindParam(':token', $userToken);
@@ -470,9 +486,9 @@ class FrontendController extends PdoConstruct
 
 					$result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-echo ' inside_verify : '.$result;
+					echo ' inside_verify : '.$result;
 
-				return $result;
+					return $result;
 					
 				}				
 			}

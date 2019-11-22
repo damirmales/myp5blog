@@ -42,7 +42,7 @@
 					elseif($get === 'article')					{
 
 		              	$frontController = new FrontendController;
-						$frontController->singleArticle($_GET['id']);
+						$frontController->getSingleArticle($_GET['id']);
 
 					}
 					elseif($get === 'admin')
