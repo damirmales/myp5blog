@@ -6,9 +6,8 @@ use Model\Contacts;
 
 
 
-class FrontendController{
-
-
+class FrontendController
+{
 
 	/******************* home management **********************/
 	public function home()
@@ -37,8 +36,7 @@ class FrontendController{
 		$article = new Articles();
 		$article = $article->singleArticle($id);
 
-		require 'vue/article.php';		
-
+		require 'vue/article.php';
 	}
 
 	/******************* Front comments management **********************/
@@ -48,8 +46,7 @@ class FrontendController{
 		$comments = new Comments();
 		$comments = $comments->getCommentsFromDb($id);		
 
-		require 'vue/comments.php';
-		
+		require 'vue/comments.php';		
 	}
 
 	public function publishComments($id, $nom, $comment)
@@ -59,10 +56,13 @@ class FrontendController{
 		$affectedLines = $newcomment->addCommentsToDb($id, $nom,$comment);		
 
 
-		if ($affectedLines === false) {
-			die('Impossible d\'ajouter le commentaire !');
+		if ($affectedLines === false)
+		{
+			//die('Impossible d\'ajouter le commentaire !');
+			exit('Impossible d\'ajouter le commentaire !');
 		}
-		else {
+		else 
+		{
 			header('Location: index.php?route=article&id=' . $id);
 		}
 		
@@ -76,15 +76,18 @@ class FrontendController{
 		$rubriques = $rubArticles->showArticlesByCategory($rubriq);		
 
 		
-		if ($rubriq == "livres"){
+		if ($rubriq == "livres")
+		{
 
 			require 'vue/livres.php';
 			
 		}
-		elseif ($rubriq == "fromages") {
+		elseif ($rubriq == "fromages")
+		{
 			require 'vue/fromages.php';
 		}
-		else{
+		else
+		{
 			header('Location: vue/home.php');
 
 		}		
@@ -109,45 +112,54 @@ class FrontendController{
 
 			require 'vue/home.php';
 
-		}elseif(empty($post['nom'])){
+		}
+		elseif(empty($post['nom']))
+		{
 
 			$_GLOBALS["contactMessage"] = "rien ds le nom";
 			require 'vue/home.php';
 			
-		}elseif(empty($post['email'])){
+		}
+		elseif(empty($post['email']))
+		{
 
 			$_GLOBALS["contactMessage"] = "rien ds le email";
 			require 'vue/home.php';
 
-		}elseif(empty($post['message'])){
+		}
+		elseif(empty($post['message']))
+		{
 
 			$_GLOBALS["contactMessage"] = "rien ds le message";
 			require 'vue/home.php';
 		}
-		else {
+		else 
+		{
 			
 			  // Nettoyage des chaines envoyées
-			$_POST['prenom']  = isset($_POST['prenom'])  ? trim($_POST['prenom'])  : '';
-			$_POST['nom']  = isset($_POST['nom'])  ? trim($_POST['nom'])  : '';
-			$_POST['message'] = isset($_POST['message']) ? trim($_POST['message']) : '';
-			$_POST['email']    = isset($_POST['email'])    ? intval($_POST['email'])  : 5;
+			$post['prenom']  = isset($post['prenom'])  ? trim($post['prenom'])  : '';
+			$post['nom']  = isset($post['nom'])  ? trim($post['nom'])  : '';
+			$post['message'] = isset($post['message']) ? trim($post['message']) : '';
+			$post['email']    = isset($post['email'])    ? intval($post['email'])  : 5;
 
 
-			$_POST['prenom'] = htmlspecialchars($_POST['prenom']) ;
-			$_POST['nom']  = htmlspecialchars($_POST['nom']) ;
-			$_POST['message'] = htmlspecialchars($_POST['message']) ;
-			$_POST['email'] = htmlspecialchars($_POST['email']) ;
+			$post['prenom'] = htmlspecialchars($post['prenom']) ;
+			$post['nom']  = htmlspecialchars($post['nom']) ;
+			$post['message'] = htmlspecialchars($post['message']) ;
+			$post['email'] = htmlspecialchars($post['email']) ;
 
 
 			$contact = new Contacts();
-			$affectedLines = $contact->addContactsToDb($_POST['prenom'],$_POST['nom'],$_POST['email'],$_POST['message']);
+			$affectedLines = $contact->addContactsToDb($post['prenom'],$post['nom'],$post['email'],$post['message']);
 
 			
-			if ($affectedLines === false) {
-				die('Impossible d\'ajouter le contact!');
+			if ($affectedLines === false)
+			{
+				//die('Impossible d\'ajouter le contact!');
+				exit('Impossible d\'ajouter le contact!');
 			}
-			else {
-				//header('Location: index.php');
+			else
+			{
 				require 'vue/home.php';
 			}
 
