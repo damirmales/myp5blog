@@ -1,25 +1,95 @@
 <?php
-namespace Model;
+namespace Services;
 //require __DIR__ . '/vendor/autoload.php';
 //require 'vendor/autoload.php';
 
 class Emails
 {
 
+	private $nom;
+    private $prenom;
+    private $email;
+
+     /**************************************
+     * @return mixed
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @param mixed $nom
+     */
+    public function setNom( $nom ): void
+    {
+        $this->nom = $nom;
+    }
+
+    /**************************************
+     * @return mixed
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * @param mixed $prenom
+     */
+    public function setPrenom( $prenom ): void
+    {
+        $this->prenom = $prenom;
+    }
+
+    /**************************************
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail( $email ): void
+    {
+        $this->email = $email;
+    }
+
+    /**************************************
+     * @return mixed
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param mixed $message
+     */
+    public function setMessage( $message ): void
+    {
+        $this->message = $message;
+    }
+
+
 	public function sendEmail()
 	{
 
-		$prenom = $_POST['prenom'];
-		$nom = $_POST['nom']; 
-		$email = $_POST['email'];
-		$message = $_POST['message'].' '; 
+		$prenom = $this->getPrenom('prenom');
+		$nom = $this->getNom('nom'); 
+		$email = $this->getEmail('email');
+		$message = $this->getMessage('message').' '; 
+
 		$message   .= '$email : '.$email;
 		$message   .= '$nom : '. $nom ;
 
 
 		$emailTo = "damir@romandie.com";
 		$subject = "Contact";
-		$emailFrom = $_POST['email']; 
+		$emailFrom = $this->getEmail('email'); 
 
 		$headers   = 'MIME-Version: 1.0' . "\r\n";
 		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
@@ -35,16 +105,16 @@ class Emails
 		public function tokenEmail($userEmail,$UrlToken)
 	{
 
-		$prenom = $_POST['prenom'];
-		$nom = $_POST['nom']; 
-		$email = $_POST['email'];
+		$prenom = $this->getPrenom('prenom');
+		$nom = $this->getNom('nom'); 
+		$email = $this->getEmail('email');
 		$message   = '$email : '.$userEmail;
 		$message   .= '$token : '. $UrlToken ;
 
 
 		$emailTo = $userEmail;
 		$subject = "confirmez votre email";
-		$emailFrom = $_POST['email']; 
+		$emailFrom = $this->getEmail('email'); 
 
 		$headers   = 'MIME-Version: 1.0' . "\r\n";
 		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";

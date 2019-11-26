@@ -108,6 +108,12 @@
 						$frontController->logAdmin();
 					
 					}
+					elseif($get === 'deconnexion') // go to admin login.php form page
+					{
+						$frontController = new FrontendController;							
+						$frontController->logOff();
+					
+					}
 					elseif($get === 'pageAdmin') // from login.php check admin data to login
 					{
 						$frontController = new FrontendController;							
@@ -145,7 +151,7 @@
 					elseif($get === 'addArticle')
 					{  
 						$backController = new BackendController;
-						$backController->addArticle($_POST);
+						$backController->addArticle();
 
 					}
 					elseif($get === 'editArticle')
@@ -160,6 +166,12 @@
 						$backController->editListArticles();
 
 					}
+                    elseif($get === 'deleteArticle')
+                    {
+                        $backController = new BackendController;
+                        $backController->deleteArticle($_GET['id']);
+
+                    }
 					else
 					{
 						echo 'page inconnue '.$get ;

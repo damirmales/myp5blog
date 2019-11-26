@@ -1,4 +1,3 @@
-  <!-- Header-->
   <!DOCTYPE html>
   <html lang="fr">
 
@@ -44,7 +43,7 @@
       </div>
     </header>
     <pre>
-<?php var_dump($_SESSION); ?>
+
 
     <!-- Main Content -->
     <div class="container">

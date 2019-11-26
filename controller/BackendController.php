@@ -4,41 +4,58 @@ use Model\Articles;
 
 class BackendController
 {
-	//********** acces admin login page *************
+	//********** admin login page access *************
 
     public function admin()
-    {               
-        require 'vue/backend/admin_page.php'; 
+    {        
+        if ($_SESSION["user"]['role'] != 'admin')
+        {
 
-    }
+               header('Location: index.php'); // if user is not admin
+               exit();    
 
-    public function createArticle()
-    {               
-        require 'vue/backend/create_article.php';
+               
+         /*header('Location:index.php?route=admin'); 
+         exit(); */
+     }
+     
+     require 'vue/backend/admin_page.php'; 
+     
+     
+     
 
-    }
+ }
 
-    public function addArticle()
-    {               
-        $article = new Articles();
-        
-            $article->setTitre ( $_POST['titre'] );
-            $article->setChapo ( $_POST['chapo'] );
-            $article->setAuteur ( $_POST['auteur'] );
-            $article->setContenu ( $_POST['contenu'] );
-            $article->setRubrique ( $_POST['rubrique'] );
-            $article->setDateCreation (date("d-m-Y"));
-            $article->setDateMiseAJour ( date("d-m-Y"));
-        
-            $articleAdded = $article->setArticleToDb();
-            echo 'articleAdded';// require 'vue/articles.php';
+    //********** Manage articles *************
 
-    }
+ public function createArticle()
+ {               
+    require 'vue/backend/create_article.php';//call addArticle() when form would be completed
 
-    public function editArticle()
-    {               
-        $article = new Articles();
-        $articlEdited = $article->getSingleArticle();
+}
+
+public function addArticle()
+{               
+    $article = new Articles();
+
+    $article->setTitre ( $_POST['titre'] );
+    $article->setChapo ( $_POST['chapo'] );
+    $article->setAuteur ( $_POST['auteur'] );
+    $article->setContenu ( $_POST['contenu'] );
+    $article->setRubrique ( $_POST['rubrique'] );
+    $article->setDateCreation (date("d-m-Y"));
+    $article->setDateMiseAJour ( date("d-m-Y"));
+
+    $articleAdded = $article->setArticleToDb();
+            echo 'articleAdded';
+            require 'vue/articles.php';
+
+        }
+
+        public function editArticle()
+        {               
+            $article = new Articles();
+            $articlEdited = $article->getSingleArticle();
         echo 'articlEdited';// require 'vue/articles.php';
 
     }
@@ -50,6 +67,15 @@ class BackendController
         require 'vue/backend/list_articles.php';
 
     }
+
+    public function deleteArticle($idArticle)
+    {               
+        $articles = new Articles();
+        $articleDeleted = $articles->deleteArticle($idArticle);
+        
+
+    }
+
 
 
 }

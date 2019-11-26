@@ -178,7 +178,13 @@ class Articles extends PdoConstruct
             ORDER BY articles_id DESC');
 
         $listArticles->execute();
+
+        //--------------- get results into an object -------------------------
+        $listArticles->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, 'Articles');
+
         $articles = $listArticles->fetchAll();
+
+        $listArticles->closeCursor();
         return $articles;
     }
 
@@ -206,10 +212,33 @@ class Articles extends PdoConstruct
             SELECT articles_id, titre, chapo, auteur,contenu, rubrique, date_creation, date_mise_a_jour 
             FROM articles
             WHERE rubrique = "'.$rubrique.'" 
-            ORDER BY date_creation DESC');
-        $listArticles->execute();
+            ORDER BY date_creation DESC'
+        );
 
+        $listArticles->execute();
         $articles = $listArticles->fetchAll();
         return $articles;
+    }
+
+    //---------- efface l'article en fonction du numéro d'id fournit ----------
+
+    public function deleteArticle($idArticle)
+    {
+        $commentaire = $this->connection->prepare('
+            DELETE 
+            FROM commentaires
+            WHERE Articles_articles_id = :id');
+
+        $commentaire->execute([ ':id' => $idArticle ] );
+
+        $article = $this->connection->prepare('
+            DELETE 
+            FROM articles
+            WHERE articles_id = :id');
+
+        $article->execute([ ':id' => $idArticle ] );    
+
+        return $article;
+        
     }
 }

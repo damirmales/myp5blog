@@ -48,6 +48,8 @@ require_once('functions/functions.php');
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Bravo! </strong>'
           .$_SESSION["contactFormOK"].'</div>';
+
+          unset($_SESSION["contactFormOK"]);
         }
         /*else
         {echo('messageSend'.$_SESSION["contactFormOK"]);

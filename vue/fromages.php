@@ -34,7 +34,7 @@
       <p class="post-meta">Modifié le : 
             <?php echo  htmlspecialchars($article['date_mise_a_jour']); ?>
       </p>
-      <p> supprimer</p>
+
       <p> Commentaire</p>
 
 

@@ -11,7 +11,6 @@ namespace Model;
 
 				public function getConnectDB()
 				{
-
 					try
 					{
 						$connectPDO = new \PDO(self::DB_HOST, self::DB_USER , self::DB_PASS);
@@ -30,9 +29,6 @@ namespace Model;
 
 				}
 	}	
-
-
-	
 
 
 ?>

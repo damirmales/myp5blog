@@ -4,9 +4,12 @@ namespace Controller;
 use Model\PdoConstruct;
 use Model\Articles;
 use Model\Comments;
-use Model\Emails;
 use Model\Users;
+use Services\Emails;
+use Services\ValidateForms;
 
+require_once ('services/Emails.php');
+require_once ('services/ValidateForms.php');
 require_once ('functions/functions.php');
 
 class FrontendController extends PdoConstruct
@@ -31,7 +34,10 @@ class FrontendController extends PdoConstruct
 	{		        
 		$listeArticles = new Articles();
 		$articles = $listeArticles->getListArticles();
+		//require 'vue/articles.php';
 		require 'vue/articles.php';
+
+
 	}
 
 	public function getSingleArticle($id)
@@ -126,6 +132,11 @@ class FrontendController extends PdoConstruct
 		
 		public function addContact($post)
 		{	
+			$validContact = new ValidateForms;
+			print_r($validContact->verifyEmptiness($post)); 
+
+
+
 
 			/******** Contact form check ****************/
 			
@@ -138,7 +149,6 @@ class FrontendController extends PdoConstruct
 
 				if($_POST['formContact'] == 'sent' )
 				{
-
 
 					if (empty($post['prenom']))
 					{
@@ -178,6 +188,11 @@ class FrontendController extends PdoConstruct
 
 			/***** Call class Emails to send contact form data*/
 			$sendEmail = new Emails();
+
+			$sendEmail->setNom($_POST['nom']);
+			$sendEmail->setPrenom($_POST['prenom']);
+			$sendEmail->setEmail($_POST['email']);
+
 			$email = $sendEmail->sendEmail();	
 
 
@@ -189,7 +204,7 @@ class FrontendController extends PdoConstruct
 					else
 					{
 						$_SESSION["contactFormKO"] = "email non envoyé";
-					
+
 						$this->saveFormData('input');
 					}
 				}	
@@ -246,6 +261,14 @@ class FrontendController extends PdoConstruct
 
 		}
 
+		public function logOff()
+		{
+			unset($_SESSION);
+			session_destroy();
+			header('Location: index.php');
+			exit();
+		}
+
 		/**************************************************************************/
 		/******************* Before login check user presence in database *********/
 
@@ -275,77 +298,92 @@ class FrontendController extends PdoConstruct
 				$userData = new Users();
 				$checkUser = $userData->checkUserLogin($_POST['login']);
 
-$_SESSION["user"]['role'] = $checkUser['role'];
-$_SESSION["user"]['nom'] = $checkUser['nom'];
-$_SESSION["user"]['login'] = $checkUser['login'];
+
 
 					//---- check if user is registered ---------
 				if (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'] ))
 				{
+
+
+
+					if($checkUser['statut'] == 1)
+					{
+						$_SESSION["user"]['role'] = $checkUser['role'];
+						$_SESSION["user"]['nom'] = $checkUser['nom'];
+						$_SESSION["user"]['login'] = $checkUser['login'];
+
+
+
+
 						//------ check if user is admin --------
-					if ($this->userRole($checkUser) == 'admin')
-					{		
+						if ($checkUser['role'] == 'admin')
+						{		
+
 
 						header('Location: index.php?route=admin'); // if user is admin go to admin page
 						exit();
 
-					}
-					elseif($this->userRole($checkUser) == 'member')
-					{
-						$_SESSION["contactFormOK"] = "Vous êtes member";
-						
-						header('Location: index.php');
-						exit();
-					}
+						}
+						else
+						{
+							$_SESSION["contactFormOK"] = "Vous êtes member";
 
-					
-
-
-				}
-
-				else
+							header('Location: index.php');
+							exit();
+						}
+				}else // statut = 0
 				{
-					echo "Vous n\'êtes pas enregistré(e)";
-					$_SESSION["contactFormOK"] = "Vous êtes pas notre member";
+					echo "Vous n\'êtes pas autorisé à vous connecter";
+					$_SESSION["contactFormOK"] = "Vous êtes pas autorisé à vous connecter";
 					
 					header('Location: index.php');
 					exit();
-
-				}
+				}					
 			}
 
-			require 'vue/login.php';
+			else
+			{
+				echo "Vous n\'êtes pas enregistré(e)";
+				$_SESSION["contactFormOK"] = "Vous êtes pas notre member";
+
+				header('Location: index.php?route=connexion');
+				exit();
+
+			}
 		}
+
+		require 'vue/login.php';
+	}
 
 
 					//** check user's role ********
-		public function userRole($role)
+	public function userRole($role)
+	{
+		var_dump($role['statut']);
+		if (($role['role'] === 'admin') && ($role['statut'] == 1))
 		{
-			var_dump($role['statut']);
-			if (($role['role'] === 'admin') && ($role['statut'] == 1))
-			{
-				echo '$role est admin';
+			echo '$role est admin';
 
-				return 'admin';
-			}
-			elseif(($role['role'] === 'member') && ($role['statut'] == 1))
-			{
-				echo '$role est member';
-				return 'member';
-			}
-			else
-			{
-				echo '$role n\'est ni member ni admin';
-				return false;
-			}
+			return 'admin';
 		}
-		/**********************************************************************************/	
-		/******************* Add user from register.php to database  **********************/
+		elseif(($role['role'] === 'member') && ($role['statut'] == 1))
+		{
+			echo '$role est member';
+			return 'member';
+		}
+		else
+		{
+			echo '$role n\'est ni member ni admin';
+			return false;
+		}
+	}
+	/**********************************************************************************/	
+	/******************* Add user from register.php to database  **********************/
 
-		public function addUser()
-		{	
-			$post = $_POST;
-			/******** Contact form check ****************/
+	public function addUser()
+	{	
+		$post = $_POST;
+		/******** Contact form check ****************/
 
 		$registerFormMessage = []; // on initialise un tableau pour afficher les erreurs dans les champs du formulaire
 
@@ -416,14 +454,14 @@ $_SESSION["user"]['login'] = $checkUser['login'];
 
 							$user = new Users();
 
-				$user->setNom($_POST['nom']);
-				$user->setPrenom($_POST['prenom']);
-				$user->setEmail($_POST['email']);
-				$user->setRole($_POST['role']);
-				$user->setStatut($_POST['statut']);
-				$user->setToken($_POST['token']);
-				$user->setLogin($_POST['login']);
-				$user->setPassword($_POST['password']);
+							$user->setNom($_POST['nom']);
+							$user->setPrenom($_POST['prenom']);
+							$user->setEmail($_POST['email']);
+							$user->setRole('member');
+							$user->setStatut(0);
+							$user->setToken($_POST['token']);
+							$user->setLogin($_POST['login']);
+							$user->setPassword($_POST['password']);
 
 							$checkUser = $user->addUserToDb();
 							echo 'checkUser :'.$checkUser;
@@ -457,7 +495,7 @@ $_SESSION["user"]['login'] = $checkUser['login'];
 							{
 								$_SESSION["contactFormKO"] = "email non envoyé";
 							//$noMessageSend = "addContact email non envoyé";
-							$this->saveFormData('register');
+								$this->saveFormData('register');
 							}
 						}
 					}

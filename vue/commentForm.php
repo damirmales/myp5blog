@@ -17,4 +17,4 @@
       </div>
       <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
-  <?php $content = ob_get_clean();?>
+  <?php $formComment= ob_get_clean();?>

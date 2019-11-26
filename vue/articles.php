@@ -22,8 +22,6 @@
         <div class="post-preview">
 
 
-            
-
             <h2 class="post-title">
            <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">   <?php echo htmlspecialchars($article['titre']); ?>       </a>
             </h2>
@@ -43,7 +41,7 @@
         </div>
      
     <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">Voir l'article</a><br>
-    <a href="delete-article.php?id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
+    <!--<a href="delete-article.php?id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>-->
        <hr>
   </div>
   </div>
