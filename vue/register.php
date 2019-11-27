@@ -49,10 +49,11 @@ require_once('functions/functions.php');
   <?php   
   if (!empty($registerFormMessage))
   {
-
-    echo '<br/><div class="container alert alert-warning alert-dismissible">
+?>
+   <br/><div class="container alert alert-warning alert-dismissible">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    ☝ <strong>Attention! </strong>';
+    ☝ <strong>Attention! </strong><br>
+      <?php
     foreach ($registerFormMessage as $err)
     {
 
@@ -64,13 +65,13 @@ require_once('functions/functions.php');
 
   <?php 
 
-  if (!empty($_SESSION["contactFormOK"]))
+  if (!empty($_SESSION["registerFormOK"]))
   {
 
     echo '<br/><div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Bravo! </strong>'
-    .$_SESSION["contactFormOK"].'</div>';
+    .$_SESSION["registerFormOK"].'</div>';
   }
   ?>
 
@@ -83,13 +84,13 @@ require_once('functions/functions.php');
         <div class="form-group">
           <label for="nom">Nom </label>
           <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
-          <input type="text" class="form-control" id="nom" placeholder="Prénom" name="nom" 
-          value="<?= getFormData('register','prenom') ?>"> 
+          <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"
+          value="<?= getFormData('register','nom') ?>">
         </div>
         <div class="form-group">
           <label for="prenom">Prénom</label>
-          <input type="text" class="form-control" id="prenom" placeholder="Nom" name="prenom" 
-          value="<?= getFormData('register','nom') ?>">
+          <input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"
+          value="<?= getFormData('register','prenom') ?>">
         </div>
         <div class="form-group">
           <label for="inputEmail">E-mail</label>
@@ -97,7 +98,7 @@ require_once('functions/functions.php');
         </div>
         <div class="form-group">
           <label for="inputLogin">Login</label>
-          <input type="input" class="form-control" id="login" aria-describedby="login" name="login" placeholder="Enter login" value="<?= getFormData('register','login') ?>">     
+          <input type="input" class="form-control" id="login" aria-describedby="login" name="login" placeholder="Login" value="<?= getFormData('register','login') ?>">
         </div>
         <div class="form-group">
           <label for="inputPassword">Mot de Passe</label>

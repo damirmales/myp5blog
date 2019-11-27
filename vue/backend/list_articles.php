@@ -10,7 +10,7 @@
             
 
             <h2 class="post-title">
-           <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">   <?php echo htmlspecialchars($article['titre']); ?>       </a>
+           <a href="admin.php?route=article_back&id=<?= $article['articles_id'] ?>">   <?php echo htmlspecialchars($article['titre']); ?>       </a>
             </h2>
 
             <h3 class="post-subtitle">
@@ -27,8 +27,8 @@
 
         </div>
      
-    <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">Voir l'article</a><br>
-    <a href="index.php?route=deleteArticle&id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
+    <a href="admin.php?route=article_back&id=<?= $article['articles_id'] ?>">Voir l'article</a><br>
+    <a href="admin.php?route=deleteArticle&id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
        <hr>
   </div>
   </div>

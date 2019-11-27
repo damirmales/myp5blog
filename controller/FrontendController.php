@@ -17,21 +17,21 @@ class FrontendController extends PdoConstruct
 
 	/******************* home management **********************/
 	public function home()
-	{		        
+	{
 		require 'vue/home.php';
 	}
 
 	/******************* cv  **********************/
 	public function cv()
-	{		        
+	{
 		require 'vue/cv.php';
 	}
 
-	/******************* Front articles management **********************/	
+	/******************* Front articles management **********************/
 
 
 	public function pullListeArticles()
-	{		        
+	{
 		$listeArticles = new Articles();
 		$articles = $listeArticles->getListArticles();
 		//require 'vue/articles.php';
@@ -41,65 +41,98 @@ class FrontendController extends PdoConstruct
 	}
 
 	public function getSingleArticle($id)
-	{		        
+	{
 		$article = new Articles();
 		$article = $article->getSingleArticle($id);
 
 			$comments=$this->getComments($id); // insérer les commentaires avec l'article
-			
-			//require 'vue/article.php';
-			require 'vue/comments.php';
+
+
+			require 'vue/commentForm.php';
 		}
 
 		/******************* Front comments management **********************/
 
 		public function getComments($id)
-		{	
+		{
 
 			$comments = new Comments();
-			$comments = $comments->getCommentsFromDb($id);	
+			$comments = $comments->getCommentsFromDb($id);
 			return 	$comments ;
 
 		}
 
-		public function publishComments($id, $nom,$email, $comment)
-		{		        
-			
-			//instancier la classe qui recupère les données des utilisateurs enregistrés
-			$user= new Users();
-			$checkUser = $user->checkUserRecord($id, $nom,$email); // id de l'article
+		public function publishComments($articleId, $post)
+        {
+            $nom = $post['nom'];
+            $email = $post['email'];
+            $comment = $post['comment'];
 
-			//verifier si l'utilisateur ayant soumit le le commentaire est enregistré
-			if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email))
-			{
-				//Ajouter le commentaire et le pseudo si le visiteur est enregistré
-				$newcomment = new Comments();
+            $commentErrorMessage = [];// Store error messages to be available into commentForm.php
 
-				$newcomment->setPseudo($nom);
-				$newcomment->setComment($comment);
+            if (isset($post['commentFormBtn']))
+            {
+                echo "commentFormBtn";
+                if (empty($post['nom']))
+                {
+                    $commentErrorMessage['nom'] = "Nom non renseigné";
+                }
 
-				$affectedLines = $newcomment->addCommentsToDb($id); // id de l'article
+                if (empty($post['email']))
+                {
+                    $commentErrorMessage['email'] = "Email non renseigné";
+                }
 
-				if ($affectedLines === false)
-				{
-				//die('Impossible d\'ajouter le commentaire !');
-					exit('Impossible d\'ajouter le commentaire !');
-				}
-				else 
-				{
-					header('Location: index.php?route=article&id=' . $id);
-					exit;
-				}
+                if (empty($post['comment']))
+                {
+                    $commentErrorMessage['comment'] = "Commentaire non renseigné";
+                }
 
-			}
-			else
-			{
-				header('Location: index.php');
-				exit();
-			}
 
-		}
 
+
+                if (empty($commentErrorMessage))
+                {
+                      echo "pas d'erreur c'est lessieur" ;
+
+                    //instancier la classe qui recupère les données des utilisateurs enregistrés
+                    $user = new Users();
+                    $checkUser = $user->checkUserRecord($articleId, $nom, $email); // id de l'article
+
+                    //verifier si l'utilisateur ayant soumit le commentaire est enregistré
+                    if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email))
+                    {
+                        //Ajouter le commentaire et le pseudo si le visiteur est enregistré
+                        $newcomment = new Comments();
+
+                        $newcomment->setPseudo($nom);
+                        $newcomment->setComment($comment);
+
+                        $affectedLines = $newcomment->addCommentsToDb($articleId); // id de l'article
+
+                        if ($affectedLines === false) {
+                            //die('Impossible d\'ajouter le commentaire !');
+                            exit('Impossible d\'ajouter le commentaire !');
+                        } else {
+                            header('Location: index.php?route=article&id=' . $articleId);
+                            exit;
+                        }
+
+                    }
+                    else
+                    { echo 'vous n\etes pas membre pour pouvoir commenter';
+                        /*header('Location: index.php');
+                        exit();*/
+                    }
+
+                }
+
+            }
+    print_r( $commentErrorMessage['nom'] );
+            require 'vue/commentForm.php';
+            /*header('Location: index.php?route=article&id=' . $articleId);
+            exit;*/
+        }
 		/******************* Front articles categories management **********************/
 
 		public function getCategoryArticles($rubriq)
@@ -135,71 +168,53 @@ class FrontendController extends PdoConstruct
 			$validContact = new ValidateForms;
 			print_r($validContact->verifyEmptiness($post)); 
 
-
-
-
 			/******** Contact form check ****************/
 			
 			$contactErrorMessage=[];// Store error message to be available into home.php
 
-
 			if (!empty($_POST))
-			{ 
-
+			{ echo '$_POST vide ';
 
 				if($_POST['formContact'] == 'sent' )
 				{
 
 					if (empty($post['prenom']))
 					{
-
 						$contactErrorMessage['prenom'] ="Prénom non renseigné";
-
-
 					}
 					if(empty($post['nom']))
 					{
 						$contactErrorMessage['nom'] ="Nom non renseigné";
-
 
 					}
 					if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL))
 					{
 						$contactErrorMessage['email']  ="L'email doit être selon format :bibi@fricotin.fr";
 
-
 					}
 					if(empty($post['message']))
 					{
 						$contactErrorMessage['message'] ="Le message manque";
 
-
 					}
 
-	/*echo "<pre>";
-		print_r($_POST)	 ; 
-		print_r($contactErrorMessage);
-	*/		
+                    if (empty($contactErrorMessage))
+                    {
 
-//var_dump($contactErrorMessage);
+                        /***** Call class Emails to send contact form data*/
+                        $sendEmail = new Emails();
 
-		if (empty($contactErrorMessage))
-		{
+                        $sendEmail->setNom($_POST['nom']);
+                        $sendEmail->setPrenom($_POST['prenom']);
+                        $sendEmail->setEmail($_POST['email']);
 
-			/***** Call class Emails to send contact form data*/
-			$sendEmail = new Emails();
-
-			$sendEmail->setNom($_POST['nom']);
-			$sendEmail->setPrenom($_POST['prenom']);
-			$sendEmail->setEmail($_POST['email']);
-
-			$email = $sendEmail->sendEmail();	
+                        $email = $sendEmail->sendEmail();
 
 
-			$this->messageEmailContactOK($email);
+                        $this->messageEmailContactOK($email);
 
-						/* $sendEmail = new Emails();
-						$email = $sendEmail->swiftMailer();	*/
+                                    /* $sendEmail = new Emails();
+                                    $email = $sendEmail->swiftMailer();	*/
 					}
 					else
 					{
@@ -331,14 +346,15 @@ class FrontendController extends PdoConstruct
 							header('Location: index.php');
 							exit();
 						}
-				}else // statut = 0
-				{
-					echo "Vous n\'êtes pas autorisé à vous connecter";
-					$_SESSION["contactFormOK"] = "Vous êtes pas autorisé à vous connecter";
-					
-					header('Location: index.php');
-					exit();
-				}					
+                    }
+                    else // statut = 0
+                    {
+                            echo "Vous n\'êtes pas autorisé à vous connecter";
+                            $_SESSION["contactFormOK"] = "Vous êtes pas autorisé à vous connecter";
+
+                            header('Location: index.php');
+                            exit();
+                    }
 			}
 
 			else
@@ -396,7 +412,7 @@ class FrontendController extends PdoConstruct
 				{
 							$registerFormMessage['nom'] = "rien ds le nom"; // Store error message to be abvailable into register.php	
 
-						}
+                }
 
 						if(empty($post['prenom']))
 						{
@@ -426,19 +442,19 @@ class FrontendController extends PdoConstruct
 
 						if(empty($post['password']))
 						{
-							$registerFormMessage['login'] = "rien ds le password";
+							$registerFormMessage['password'] = "rien ds le password";
 
 						}
 
 						if(empty($post['password2']))
 						{
-							$registerFormMessage['password'] = "rien ds le password2";
+							$registerFormMessage['password2'] = "rien ds le password2";
 
 						}
 
 						if(($post['password2']) !== ($post['password'])  )
 						{
-							$registerFormMessage['password2'] = "les champs des mots de passe doivent être identique";
+							$registerFormMessage['password2'] = "les champs des mots de passe doivent être identiques";
 
 						}
 
@@ -459,41 +475,41 @@ class FrontendController extends PdoConstruct
 							$user->setEmail($_POST['email']);
 							$user->setRole('member');
 							$user->setStatut(0);
-							$user->setToken($_POST['token']);
+							$user->setToken($token );
 							$user->setLogin($_POST['login']);
 							$user->setPassword($_POST['password']);
 
-							$checkUser = $user->addUserToDb();
-							echo 'checkUser :'.$checkUser;
+							$userInDb = $user->addUserToDb();
+							echo 'userInDb :'.$userInDb;
 
 								//$result =$this->verifyToken();
-
 
 								//echo 'verifyToken :'.$result;
 
 								/*if ($result)
 								{
-									echo $userEmail = getUserEmailandId();
+									//echo $userEmail = getUserEmailandId(); // in functions.php
+                                    echo $user->getEmail();
 								}
 								else
 								{
 									echo 'token non vérifié';
 								}								
-								/*
+                    */
 
-								//$userEmail = "damir@romandie.com";
+								$userEmail = "damir@romandie.com";
 
-							   /* $createUrlToken = createUrlWithToken($token);
+							   $createUrlToken = createUrlWithToken($token);
 								
 								$anEmail = new Emails();
-								$sendUrlEmail = $anEmail->tokenEmail($userEmail,$createUrlToken);
-								*/
-								//header('Location: index.php');
-								//exit();
+								$anEmail->tokenEmail($userEmail,$createUrlToken); //in Emails.php class
+                            $_SESSION["registerFormOK"] = "email envoyé";
+								header('Location: index.php?route=register');
+								exit();
 							}
 							else
 							{
-								$_SESSION["contactFormKO"] = "email non envoyé";
+								$_SESSION["registerFormOK"] = "email non envoyé";
 							//$noMessageSend = "addContact email non envoyé";
 								$this->saveFormData('register');
 							}
@@ -512,9 +528,10 @@ class FrontendController extends PdoConstruct
 //*********** check the token from the link validate by the user **************
 			public function verifyToken()
 			{
-				if(isset($_GET['token'])) // if get user's token
+				if(isset($_GET['token'])) // if got user's token from email
 				{
-					$userToken = trim($_GET['token']);
+					$userToken = trim($_GET['token']);//token from email
+
 					$sql = "SELECT nom  FROM users WHERE  token = :token";
 
 					$stmt = $this->connection->prepare($sql);
@@ -524,10 +541,11 @@ class FrontendController extends PdoConstruct
 
 					$result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-					echo ' inside_verify : '.$result;
-
-					return $result;
-					
+echo "nom user : ".$result['nom'];
+                    $_SESSION["userName"] = $result['nom'];
+					//return $result;
+                    header('Location: index.php');
+                    exit();
 				}				
 			}
 

@@ -1,4 +1,6 @@
-  <?php ob_start(); ?>
+  <?php ob_start();?>
+
+
 
   <!-- Page Header -->
   <header class="masthead" style="background-image: url('public/img/post-bg.jpg')">
@@ -39,7 +41,7 @@
   <!-- Comment form -->
   <div class="container">
     <p>Ajouter un commentaire<br/>
-    <span>Vous devez vous enregistrer pour poster un commentaire</span><br/>
+
     <a href="index.php?route=register"> S'enregistrer</a></p>
      <a href="index.php?route=connexion"> Se connecter</a></p>
 

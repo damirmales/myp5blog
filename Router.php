@@ -54,31 +54,10 @@
 					}
 					elseif ($get === 'addComment')
 					{
-						
-						//verifier si le numéro d'article est renseigné
-						if (isset($_GET['id']) && $_GET['id'] > 0)
-						{
-							//verifier si les champs du formulaire de commentaire sont renseignés
-							if (!empty($_POST['nom']) && !empty($_POST['comment']) && !empty($_POST['email']))
-							{
-								
-								$frontController = new FrontendController;					
 
-								$frontController->publishComments($_GET['id'], $_POST['nom'], $_POST['email'],$_POST['comment']);
+					            $frontController = new FrontendController;
+								$frontController->publishComments($_GET['id'], $_POST);
 
-
-							}
-							else
-							{
-								echo 'Erreur : tous les champs ne sont pas remplis !';
-								header('Location: index.php?route=article&id=' . $id);
-								exit();
-							}
-						}
-						else
-						{
-							echo 'Erreur : aucun identifiant d\'article envoyé';
-						}
 					}
 					elseif($get == 'livres')
 					{
@@ -172,6 +151,12 @@
                         $backController->deleteArticle($_GET['id']);
 
                     }
+                    elseif($get === 'article_back')
+                    {
+                        $backController = new BackendController;
+                        $backController->editArticle($_GET['id']);
+
+                    }                    
 					else
 					{
 						echo 'page inconnue '.$get ;

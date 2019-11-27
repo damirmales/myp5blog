@@ -99,7 +99,7 @@ class Users extends PdoConstruct
     /**************************************
      * @return mixed
      */
-    public function getSatut()
+    public function getStatut()
     {
         return $this->statut;
     }

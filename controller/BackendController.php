@@ -52,11 +52,11 @@ public function addArticle()
 
         }
 
-        public function editArticle()
+        public function editArticle($idArticle)
         {               
-            $article = new Articles();
-            $articlEdited = $article->getSingleArticle();
-        echo 'articlEdited';// require 'vue/articles.php';
+            $getArticle = new Articles();
+            $article = $getArticle->getSingleArticle($idArticle);
+         require 'vue/backend/show_article.php';
 
     }
 
