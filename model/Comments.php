@@ -53,7 +53,7 @@ class Comments extends PdoConstruct
      */
     public function getContenu()
     {
-        return $this->$contenu;
+        return $this->contenu;
     }
 
     /**
@@ -142,8 +142,8 @@ class Comments extends PdoConstruct
 			VALUES (:id,:pseudo,:contenu,NOW(),:valid, NOW(),:idart)
 			');
 		$requete->bindValue(':id', NULL, \PDO::PARAM_INT);
-		$requete->bindValue(':nom', $this->getPseudo(), \PDO::PARAM_STR);
-		$requete->bindValue(':comment', $this->getContenu(), \PDO::PARAM_STR);
+		$requete->bindValue(':pseudo', $this->getPseudo(), \PDO::PARAM_STR);
+		$requete->bindValue(':contenu', $this->getContenu(), \PDO::PARAM_STR);
 		$requete->bindValue(':valid', 1, \PDO::PARAM_INT);
 		$requete->bindValue(':idart', $articleId, \PDO::PARAM_INT);
 

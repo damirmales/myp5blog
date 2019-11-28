@@ -7,7 +7,6 @@
         <div class="post-preview">
 
 
-            
 
             <h2 class="post-title">
            <a href="admin.php?route=article_back&id=<?= $article['articles_id'] ?>">   <?php echo htmlspecialchars($article['titre']); ?>       </a>
@@ -22,8 +21,6 @@
             <?php echo  htmlspecialchars($article['date_mise_a_jour']); ?>
       </p>
    
-      <p> Commentaire</p>
-
 
         </div>
      

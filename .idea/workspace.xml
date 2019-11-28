@@ -3,18 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Comments.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myp5blog.sublime-workspace" beforeDir="false" afterPath="$PROJECT_DIR$/myp5blog.sublime-workspace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout_gabarit.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_gabarit.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/admin_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/admin_page.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/articles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/backend/list_articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_articles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/comments.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/show_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/show_article.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -130,7 +127,7 @@
       <workItem from="1574608361366" duration="95000" />
       <workItem from="1574708926594" duration="7230000" />
       <workItem from="1574750402154" duration="22196000" />
-      <workItem from="1574838973483" duration="17809000" />
+      <workItem from="1574838973483" duration="34976000" />
     </task>
     <servers />
   </component>

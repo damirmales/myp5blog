@@ -56,14 +56,22 @@
               <?php
               if(isset($_SESSION['user']) )
               {
-                  if (($_SESSION['user']['role'] == 'admin'))
-                  {
-              ?>
+                  if (($_SESSION['user']['role'] == 'admin')) {
+                      ?>
                       <li class="nav-item">
-                          <a class="nav-link" href="index.php?route=admin">Admin</a>
+                          <a class="nav-link" href="index.php?route=admin"> ⚒ Admin</a>
                       </li>
-               <?php
+                      <?php
 
+                  }
+
+                  if (($_SESSION['user']['role'] == 'member'))
+                  {
+                      ?>
+                      <li class="nav-item">
+                          <a class="nav-link" href=""> ☑ Membre</a>
+                      </li>
+                      <?php
                   }
               }
               ?>

@@ -89,50 +89,57 @@ class FrontendController extends PdoConstruct
                 }
 
 
-
-
                 if (empty($commentErrorMessage))
                 {
                       echo "pas d'erreur c'est lessieur" ;
 
                     //instancier la classe qui recupère les données des utilisateurs enregistrés
                     $user = new Users();
-                    $checkUser = $user->checkUserRecord($articleId, $nom, $email); // id de l'article
+                    $checkUser = $user->checkUserRecord($post['email']); // id de l'article
 
                     //verifier si l'utilisateur ayant soumit le commentaire est enregistré
                     if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email))
                     {
-                        //Ajouter le commentaire et le pseudo si le visiteur est enregistré
-                        $newcomment = new Comments();
 
-                        $newcomment->setPseudo($nom);
-                        $newcomment->setComment($comment);
+
+
+                    //Ajouter le commentaire et le pseudo si le visiteur est enregistré
+                    $newcomment = new Comments();
+
+                    $newcomment->setPseudo($nom);
+                    $newcomment->setContenu($comment);
 
                         $affectedLines = $newcomment->addCommentsToDb($articleId); // id de l'article
 
                         if ($affectedLines === false) {
                             //die('Impossible d\'ajouter le commentaire !');
                             exit('Impossible d\'ajouter le commentaire !');
-                        } else {
+                        }
+                        else
+                        {  $_SESSION['user']['role'] = 'member'; // intialize session to the logged user
                             header('Location: index.php?route=article&id=' . $articleId);
                             exit;
-                        }
 
+                        }
                     }
                     else
-                    { echo 'vous n\etes pas membre pour pouvoir commenter';
+                    {
+                        echo 'vous n\etes pas membre pour pouvoir commenter';
                         /*header('Location: index.php');
-                        exit();*/
+    exit();*/
                     }
+
+
 
                 }
 
             }
-    print_r( $commentErrorMessage['nom'] );
+
             require 'vue/commentForm.php';
             /*header('Location: index.php?route=article&id=' . $articleId);
             exit;*/
         }
+
 		/******************* Front articles categories management **********************/
 
 		public function getCategoryArticles($rubriq)
@@ -144,6 +151,7 @@ class FrontendController extends PdoConstruct
 			// Associer la vue correspondante à la rubrique sélectionnée
 			if ($rubriq == "livres")
 			{
+
 
 				require 'vue/livres.php';
 				

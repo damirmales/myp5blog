@@ -1,7 +1,5 @@
   <?php ob_start();?>
 
-
-
   <!-- Page Header -->
   <header class="masthead" style="background-image: url('public/img/post-bg.jpg')">
     <div class="overlay"></div>
@@ -20,7 +18,6 @@
       </div>
     </div>
   </header>
-
 
   <!-- Article Content -->
   <article>
@@ -45,16 +42,12 @@
     <a href="index.php?route=register"> S'enregistrer</a></p>
      <a href="index.php?route=connexion"> Se connecter</a></p>
 
-    
   </div>
 
   <!-- display comments  a mettre dans la methode du FrontendController-->
 
-
-<?= $allComments; ?>
-
+<?= $allComments; // Comments container?>
 
   <?php $content = ob_get_clean();?>
-
 
   <?php require'templates/layout_gabarit.php'; ?>

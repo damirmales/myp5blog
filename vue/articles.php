@@ -35,8 +35,6 @@
             <?php echo  htmlspecialchars($article['date_mise_a_jour']); ?>
       </p>
    
-      <p> Commentaire</p>
-
 
         </div>
      

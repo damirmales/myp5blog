@@ -72,7 +72,12 @@ public function addArticle()
     {               
         $articles = new Articles();
         $articleDeleted = $articles->deleteArticle($idArticle);
-        
+        if ($articleDeleted)
+        {
+            header('Location:admin.php?route=editListArticles');
+
+        exit();
+        }
 
     }
 

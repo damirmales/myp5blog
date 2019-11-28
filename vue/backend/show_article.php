@@ -16,7 +16,7 @@
           </div>
             <p>Contenu : </p>
             <p><?= $article['contenu'] ?><!-- $article-> -->
-
+            <p><a href="admin.php?route=deleteArticle&id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a></p>
           </p>         
         </div>
       </div>
