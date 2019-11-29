@@ -19,6 +19,27 @@ class Articles extends PdoConstruct
     private $date_creation;
     private $date_mise_a_jour;
 
+
+    public function __construct(array $datas)
+    {
+        $this->hydrate($datas);
+    }
+
+
+    public function hydrate(array $datas)
+    {
+        foreach ($datas as $key => $value)
+        {
+            $method = 'set'.ucfirst($key);
+
+            if (method_exists($this, $method))
+            {
+                $this->$method($value);
+            }
+        }
+    }
+
+
     /**
      * @return mixed
      */
@@ -149,7 +170,9 @@ class Articles extends PdoConstruct
 
 
 
-        /************ Add articles to database ***************/
+
+
+    /************ Add articles to database ***************/
     public function setArticleToDb()
     {
         $requete = $this->connection->prepare('
@@ -179,11 +202,12 @@ class Articles extends PdoConstruct
 
         $listArticles->execute();
 
-        //--------------- get results into an object -------------------------
-        $listArticles->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, 'Articles');
+        //--------------- get results into an object à' -------------------------
+        //$listArticles->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, 'Articles');
+        //$listArticles->setFetchMode(\PDO::FETCH_CLASS,'Articles');
 
-        $articles = $listArticles->fetchAll();
-
+        //$articles = $listArticles->fetchAll();
+        $articles = $listArticles->fetchAll(\PDO::FETCH_OBJ);// renvoi les attributs dans un objet
         $listArticles->closeCursor();
         return $articles;
     }
@@ -191,7 +215,6 @@ class Articles extends PdoConstruct
 //----- Retourne un article particulier pour affichage ------------
     public function getSingleArticle($idArticle)
     {
-
         $requete = $this->connection->prepare('
             SELECT articles_id, titre, chapo, auteur, contenu,date_creation, date_mise_a_jour
             FROM articles

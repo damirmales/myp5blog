@@ -239,23 +239,28 @@
 			"file": "vue/commentForm.php",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 1428,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "model/Comments.php",
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
+			"contents": "<?php\nnamespace Controller;\n\nuse Model\\PdoConstruct;\nuse Model\\Articles;\nuse Model\\Comments;\nuse Model\\Users;\nuse Services\\Emails;\nuse Services\\ValidateForms;\n\nrequire_once ('services/Emails.php');\nrequire_once ('services/ValidateForms.php');\nrequire_once ('functions/functions.php');\n\nclass FrontendController extends PdoConstruct\n{\n\n\t/******************* home management **********************/\n\tpublic function home()\n\t{\n\t\trequire 'vue/home.php';\n\t}\n\n\t/******************* cv  **********************/\n\tpublic function cv()\n\t{\n\t\trequire 'vue/cv.php';\n\t}\n\n\t/******************* Front articles management **********************/\n\n\n\tpublic function pullListeArticles()\n\t{\n\t\t$listeArticles = new Articles();\n\t\t$articles = $listeArticles->getListArticles();\n\n\t\trequire 'vue/articles.php';\n\n\n\t}\n\n\tpublic function getArticle($id)\n\t{\n\t\t$article = new Articles();\n\t\t$article = $article->getSingleArticle($id);\n\n\t\t$comments=$this->getComments($id); // insérer les commentaires avec l'article\n\n\n\t\t\trequire 'vue/commentForm.php';\n\t\t}\n\n\t\t/******************* Front comments management **********************/\n\n\t\tpublic function getComments($id)\n\t\t{\n\n\t\t\t$comments = new Comments();\n\t\t\t$comments = $comments->getCommentsFromDb($id);\n\t\t\treturn \t$comments ;\n\n\t\t}\n\n\t\tpublic function publishComments($articleId, $post)\n        {\n            $nom = $post['nom'];\n            $email = $post['email'];\n            $comment = $post['comment'];\n\n            $article=null;// init $article to use it as an array to display article datas\n            $comments=null;// init comments to show all comments\n\n            $commentErrorMessage = [];// Store error messages to be available into commentForm.php\n\n            if (isset($post['commentFormBtn']))\n            {\n\n                if (empty($post['nom']))\n                {\n                    $commentErrorMessage['nom'] = \"Nom non renseigné\";\n                }\n\n                if (empty($post['email']))\n                {\n                    $commentErrorMessage['email'] = \"Email non renseigné\";\n                }\n\n                if (empty($post['comment']))\n                {\n                    $commentErrorMessage['comment'] = \"Commentaire non renseigné\";\n                }\n\n\n                if (empty($commentErrorMessage))\n                {\n                      echo \"pas d'erreur c'est lessieur\" ;\n\n                    //instancier la classe qui recupère les données des utilisateurs enregistrés\n                    $user = new Users();\n                    $checkUser = $user->checkUserRecord($post['email']); // id de l'article\n\n                    //verifier si l'utilisateur ayant soumit le commentaire est enregistré\n                    if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email))\n                    {\n\n\n\n                    //Ajouter le commentaire et le pseudo si le visiteur est enregistré\n                    $newcomment = new Comments();\n\n                    $newcomment->setPseudo($nom);\n                    $newcomment->setContenu($comment);\n\n                        $affectedLines = $newcomment->addCommentsToDb($articleId); // id de l'article\n\n                        if ($affectedLines === false) {\n                            //die('Impossible d\\'ajouter le commentaire !');\n                            exit('Impossible d\\'ajouter le commentaire !');\n                        }\n                        else\n                        {  $_SESSION['user']['role'] = 'member'; // intialize session to the logged user\n                            header('Location: index.php?route=article&id=' . $articleId);\n                            exit;\n\n                        }\n                    }\n                    else\n                    {\n                        echo 'vous n\\etes pas membre pour pouvoir commenter';\n\n                    }\n\n\n                }\n                else\n                {\n                    $this->saveFormData('comment');\n                }\n\n            }\n            //------- check if instance of Articles and Comments classes already exist -------\n            if ( ($article instanceof Articles) != true ) {\n                $article = new Articles();\n                $article = $article->getSingleArticle($articleId);\n            }\n            else\n            {\n                $article->getSingleArticle($articleId);\n            }\n\n            if ( ($comments instanceof Comments) != true ) {\n                $comments = new Comments();\n                $comments = $comments->getCommentsFromDb($articleId);\n            }\n            else\n            {\n                $comments->getCommentsFromDb($articleId);\n            }\n\n\n            require 'vue/commentForm.php';\n\n\n        }\n\n\t\t/******************* Front articles categories management **********************/\n\n\t\tpublic function getCategoryArticles($rubriq)\n\t\t{\t\t        \n\t\t\t// récupérer les articles selon la rubrique désirée\n\t\t\t$rubArticles = new Articles();\n\t\t\t$rubriques = $rubArticles->getArticlesByCategory($rubriq);\t\t\n\n\t\t\t// Associer la vue correspondante à la rubrique sélectionnée\n\t\t\tif ($rubriq == \"livres\")\n\t\t\t{\n\n\n\t\t\t\trequire 'vue/livres.php';\n\t\t\t\t\n\t\t\t}\n\t\t\telseif ($rubriq == \"fromages\")\n\t\t\t{\n\t\t\t\trequire 'vue/fromages.php';\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\theader('Location: index.php');\n\t\t\t\texit();\n\n\t\t\t}\t\t\n\t\t\t\n\t\t}\n\t\t/******************************************************************/\n\t\t/******************* Form contact management **********************/\n\t\t\n\t\tpublic function addContact($post)\n\t\t{\t\n\t\t\t$validContact = new ValidateForms;\n\t\t\tprint_r($validContact->verifyEmptiness($post)); \n\n\t\t\t/******** Contact form check ****************/\n\t\t\t\n\t\t\t$contactErrorMessage=[];// Store error message to be available into home.php\n\n\t\t\tif (!empty($_POST))\n\t\t\t{\n\n\t\t\t\tif($_POST['formContact'] == 'sent' )\n\t\t\t\t{\n\n\t\t\t\t\tif (empty($post['prenom']))\n\t\t\t\t\t{\n\t\t\t\t\t\t$contactErrorMessage['prenom'] =\"Prénom non renseigné\";\n\t\t\t\t\t}\n\t\t\t\t\tif(empty($post['nom']))\n\t\t\t\t\t{\n\t\t\t\t\t\t$contactErrorMessage['nom'] =\"Nom non renseigné\";\n\n\t\t\t\t\t}\n\t\t\t\t\tif(!filter_var($post['email'], FILTER_VALIDATE_EMAIL))\n\t\t\t\t\t{\n\t\t\t\t\t\t$contactErrorMessage['email']  =\"L'email doit être selon format :bibi@fricotin.fr\";\n\n\t\t\t\t\t}\n\t\t\t\t\tif(empty($post['message']))\n\t\t\t\t\t{\n\t\t\t\t\t\t$contactErrorMessage['message'] =\"Le message manque\";\n\n\t\t\t\t\t}\n\n                    if (empty($contactErrorMessage))\n                    {\n\n                        /***** Call class Emails to send contact form data*/\n                        $sendEmail = new Emails();\n\n                        $sendEmail->setNom($_POST['nom']);\n                        $sendEmail->setPrenom($_POST['prenom']);\n                        $sendEmail->setEmail($_POST['email']);\n\n                        $email = $sendEmail->sendEmail();\n\n\n                        $this->messageEmailContactOK($email);\n\n                                    /* $sendEmail = new Emails();\n                                    $email = $sendEmail->swiftMailer();\t*/\n\t\t\t\t\t}\n\t\t\t\t\telse\n\t\t\t\t\t{\n\t\t\t\t\t\t$_SESSION[\"contactFormKO\"] = \"email non envoyé\";\n\n\t\t\t\t\t\t$this->saveFormData('input');\n\t\t\t\t\t}\n\t\t\t\t}\t\n\t\t\t}\n\n\t\t\trequire 'vue/home.php';\n\n\t\t}\n\n\n\t\t/**************** a mettre ds un gestionnaire d'outils ************/\n\t\tpublic function messageEmailContactOK($emel)\n\t\t{\n\n\t\t\tif ($emel == true)\n\t\t\t{ \n\t\t\t\t$_SESSION[\"contactFormOK\"] = \"function messageEmailContactOK email envoyé\";\n\t\t\t\t//$messageSend = \"email envoyé\";\n\n\t\t\t\theader('Location: index.php');\n\t\t\t\texit();\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\t$_SESSION[\"contactFormKO\"] = \"email non envoyé\";\n\t\t\t\t\t//$noMessageSend = \"messageEmailContactOK email non envoyé\";\n\t\t\t}\n\t\t}\n\n\n//*** save all input value entered by user ***\n\t\tpublic function saveFormData($index)\n\t\t{ \n\n\t\t\tforeach ($_POST as $key => $value)\n\t\t\t{\n\t\t\t\t$_SESSION[$index] [$key] = $value;\n\n\t\t\t}\n\t\t}\n\n\t//********** acces admin login page *************\n\n\t\tpublic function logAdmin()\n\t\t{\t\t        \n\t\t\trequire 'vue/login.php';\n\n\t\t}\n\t\t//********** acces admin login page *************\n\n\t\tpublic function register()\n\t\t{\t\t        \n\t\t\trequire 'vue/register.php';\n\n\t\t}\n\n\t\tpublic function logOff()\n\t\t{\n\t\t\tunset($_SESSION);\n\t\t\tsession_destroy();\n\t\t\theader('Location: index.php');\n\t\t\texit();\n\t\t}\n\n\t\t/**************************************************************************/\n\t\t/******************* Before login check user presence in database *********/\n\n\t\t\t\t//---- from login.php ---------\n\n\t\tpublic function checkUser() \n\t\t{\t\t        \n\t\t\t$connexionErrorMessage = [];// Store error message to be available into login.php\n\n\t\t\t\n\t\t\tif(empty($_POST['login']))\n\t\t\t{\n\t\t\t\t//$_GLOBALS[\"contactMessage\"] = \"Pas de login renseigné\";\t\t\n\t\t\t\t$connexionErrorMessage['login'] = \"Pas de login renseigné\";\n\n\t\t\t}\n\n\t\t\tif(empty($_POST['password']))\n\t\t\t{\n\t\t\t\t$connexionErrorMessage['password'] = \"Pas de password renseigné\";\t\t\t\n\n\t\t\t}\n\t\t\t//---- if no errors compare form fields data with those into the DB -----\n\t\t\tif (empty($connexionErrorMessage))\n\t\t\t{ \n\t\t\t\t\n\t\t\t\t$userData = new Users();\n\t\t\t\t$checkUser = $userData->checkUserLogin($_POST['login']);\n\n\n\n\t\t\t\t\t//---- check if user is registered ---------\n\t\t\t\tif (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'] ))\n\t\t\t\t{\n\n\n\n\t\t\t\t\tif($checkUser['statut'] == 1)\n\t\t\t\t\t{\n\t\t\t\t\t\t$_SESSION[\"user\"]['role'] = $checkUser['role'];\n\t\t\t\t\t\t$_SESSION[\"user\"]['nom'] = $checkUser['nom'];\n\t\t\t\t\t\t$_SESSION[\"user\"]['login'] = $checkUser['login'];\n\n\n\n\n\t\t\t\t\t\t//------ check if user is admin --------\n\t\t\t\t\t\tif ($checkUser['role'] == 'admin')\n\t\t\t\t\t\t{\t\t\n\n\n\t\t\t\t\t\theader('Location: index.php?route=admin'); // if user is admin go to admin page\n\t\t\t\t\t\texit();\n\n\t\t\t\t\t\t}\n\t\t\t\t\t\telse\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t$_SESSION[\"contactFormOK\"] = \"Vous êtes member\";\n\n\t\t\t\t\t\t\theader('Location: index.php');\n\t\t\t\t\t\t\texit();\n\t\t\t\t\t\t}\n                    }\n                    else // statut = 0\n                    {\n                            echo \"Vous n\\'êtes pas autorisé à vous connecter\";\n                            $_SESSION[\"contactFormOK\"] = \"Vous êtes pas autorisé à vous connecter\";\n\n                            header('Location: index.php');\n                            exit();\n                    }\n\t\t\t}\n\n\t\t\telse\n\t\t\t{\n\t\t\t\techo \"Vous n\\'êtes pas enregistré(e)\";\n\t\t\t\t$_SESSION[\"contactFormOK\"] = \"Vous êtes pas notre member\";\n\n\t\t\t\theader('Location: index.php?route=connexion');\n\t\t\t\texit();\n\n\t\t\t}\n\t\t}\n\n\t\trequire 'vue/login.php';\n\t}\n\n\n\t\t\t\t\t//** check user's role ********\n\tpublic function userRole($role)\n\t{\n\t\tvar_dump($role['statut']);\n\t\tif (($role['role'] === 'admin') && ($role['statut'] == 1))\n\t\t{\n\t\t\techo '$role est admin';\n\n\t\t\treturn 'admin';\n\t\t}\n\t\telseif(($role['role'] === 'member') && ($role['statut'] == 1))\n\t\t{\n\t\t\techo '$role est member';\n\t\t\treturn 'member';\n\t\t}\n\t\telse\n\t\t{\n\t\t\techo '$role n\\'est ni member ni admin';\n\t\t\treturn false;\n\t\t}\n\t}\n\t/**********************************************************************************/\t\n\t/******************* Add user from register.php to database  **********************/\n\n\tpublic function addUser()\n\t{\t\n\t\t$post = $_POST;\n\t\t/******** Contact form check ****************/\n\n\t\t$registerFormMessage = []; // on initialise un tableau pour afficher les erreurs dans les champs du formulaire\n\n\t\tif (!empty($post))\n\t\t{\t\n\n\t\t\tif($post['formRegister'] == 'sent' )\n\t\t\t{\n\t\t\t\tif (empty($post['nom']))\n\t\t\t\t{\n\t\t\t\t\t\t\t$registerFormMessage['nom'] = \"rien ds le nom\"; // Store error message to be abvailable into register.php\t\n\n                }\n\n\t\t\t\t\t\tif(empty($post['prenom']))\n\t\t\t\t\t\t{\n\n\t\t\t\t\t\t\t$registerFormMessage['prenom'] = \"rien ds le prenom\";\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tif(empty($post['email']))\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t$registerFormMessage['email'] = \"rien ds le email\";\n\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\t//check given email address \n\t\t\t\t\t\tif(!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) \n\t\t\t\t\t\t{\t\t\t\t\t\n\t\t\t\t\t\t\t$registerFormMessage['email']  =\"L'email doit être selon format :bibi@fricotin.fr\";\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tif(empty($post['login']))\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t$registerFormMessage['login'] = \"rien ds le login\";\n\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tif(empty($post['password']))\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t$registerFormMessage['password'] = \"rien ds le password\";\n\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tif(empty($post['password2']))\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t$registerFormMessage['password2'] = \"rien ds le password2\";\n\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tif(($post['password2']) !== ($post['password'])  )\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t$registerFormMessage['password2'] = \"les champs des mots de passe doivent être identiques\";\n\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\t//--------------------------------------------------------------\n\t\t\t\t\t\t//---- if no errors in form fields add user's data in DB and ---\n\t\t\t\t\t\t//---- launch email checking with a token ----------------------\n\n\t\t\t\t\t\tif (empty($registerFormMessage)) \n\t\t\t\t\t\t{\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t$token = generateToken();\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t//instancier la classe qui envoie les données des utilisateurs vers la bdd\n\n\t\t\t\t\t\t\t$user = new Users();\n\n\t\t\t\t\t\t\t$user->setNom($_POST['nom']);\n\t\t\t\t\t\t\t$user->setPrenom($_POST['prenom']);\n\t\t\t\t\t\t\t$user->setEmail($_POST['email']);\n\t\t\t\t\t\t\t$user->setRole('member');\n\t\t\t\t\t\t\t$user->setStatut(0);\n\t\t\t\t\t\t\t$user->setToken($token );\n\t\t\t\t\t\t\t$user->setLogin($_POST['login']);\n\t\t\t\t\t\t\t$user->setPassword($_POST['password']);\n\n\t\t\t\t\t\t\t$userInDb = $user->addUserToDb();\n\t\t\t\t\t\t\techo 'userInDb :'.$userInDb;\n\n\t\t\t\t\t\t\t\t//$result =$this->verifyToken();\n\n\t\t\t\t\t\t\t\t//echo 'verifyToken :'.$result;\n\n\t\t\t\t\t\t\t\t/*if ($result)\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t//echo $userEmail = getUserEmailandId(); // in functions.php\n                                    echo $user->getEmail();\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\techo 'token non vérifié';\n\t\t\t\t\t\t\t\t}\t\t\t\t\t\t\t\t\n                    */\n\n\t\t\t\t\t\t\t\t$userEmail = \"damir@romandie.com\";\n\n\t\t\t\t\t\t\t   $createUrlToken = createUrlWithToken($token);\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t$anEmail = new Emails();\n\t\t\t\t\t\t\t\t$anEmail->tokenEmail($userEmail,$createUrlToken); //in Emails.php class\n                            $_SESSION[\"registerFormOK\"] = \"email envoyé\";\n\t\t\t\t\t\t\t\theader('Location: index.php?route=register');\n\t\t\t\t\t\t\t\texit();\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t$_SESSION[\"registerFormOK\"] = \"email non envoyé\";\n\t\t\t\t\t\t\t//$noMessageSend = \"addContact email non envoyé\";\n\t\t\t\t\t\t\t\t$this->saveFormData('register');\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t/*\tsession_destroy();\n\t\t\t\techo \"<pre>\";\n\t\t\t\tprint_r($post)\t ; \n\t\t\t\tprint_r($_SESSION);\t\n\t\t\t\techo \"error register\";\n\t\t\t\tprint_r($registerFormMessage);\n\t*/\n\t\t\t\trequire 'vue/register.php';\t\n\t\t\t\t\n\t\t\t}\n//*********** check the token from the link validate by the user **************\n\t\t\tpublic function verifyToken()\n\t\t\t{\n\t\t\t\tif(isset($_GET['token'])) // if got user's token from email\n\t\t\t\t{\n\t\t\t\t\t$userToken = trim($_GET['token']);//token from email\n\n\t\t\t\t\t$sql = \"SELECT nom  FROM users WHERE  token = :token\";\n\n\t\t\t\t\t$stmt = $this->connection->prepare($sql);\n\t\t\t\t\t\n\t\t\t\t\t$stmt->bindParam(':token', $userToken);\n\t\t\t\t\t$stmt->execute();\n\n\t\t\t\t\t$result = $stmt->fetch(\\PDO::FETCH_ASSOC);\n\necho \"nom user : \".$result['nom'];\n                    $_SESSION[\"userName\"] = $result['nom'];\n\t\t\t\t\t//return $result;\n                    header('Location: index.php');\n                    exit();\n\t\t\t\t}\t\t\t\t\n\t\t\t}\n\n\t\t}\t",
 			"file": "controller/FrontendController.php",
+			"file_size": 15611,
+			"file_write_time": 132194344005824586,
 			"settings":
 			{
-				"buffer_size": 13439,
+				"buffer_size": 14961,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "controller/BackendController.php",
+			"settings":
+			{
+				"buffer_size": 2166,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -264,15 +269,35 @@
 			"file": "vue/backend/admin_page.php",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 776,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "templates/layout_backend.php",
+			"settings":
+			{
+				"buffer_size": 2192,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vue/backend/create_article.php",
+			"settings":
+			{
+				"buffer_size": 2572,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "vue/backend/list_articles.php",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 1095,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
@@ -280,7 +305,7 @@
 			"file": "Router.php",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 4385,
 				"line_ending": "Windows"
 			}
 		}
@@ -367,35 +392,36 @@
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/public",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/services",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/templates",
-		"/C/xampp3/htdocs/openclass/p5/myp5blog/vendor",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/backend",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/frontend"
 	],
 	"file_history":
 	[
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/livres.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/fromages.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/templates/layout_gabarit.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/article.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/articles.php",
+		"/C/Users/dam/AppData/Local/Temp/7zO036F5B25/index.php",
+		"/C/xampp3/htdocs/openclass/p5/p5_blog/index_old.php",
+		"/C/xampp3/htdocs/openclass/p5/myp5blog/model/Users.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/templates/layout_backend.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/controller/BackendController.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/backend/show_article.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/Database.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/home.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/services/ValidateForms.php",
-		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/livres.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/controller/FrontendController.php",
-		"/C/xampp3/htdocs/openclass/p5/myp5blog/templates/layout_gabarit.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/model/Articles.php",
-		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/fromages.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/backend/create_article.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/backend/list_articles.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/index.php",
-		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/article.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/services/Emails.php",
-		"/C/xampp3/htdocs/openclass/p5/myp5blog/model/Users.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/test.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/composer.json",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/functions/functions.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/comments.php",
-		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/articles.php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/model/Comments.php",
 		"/C/Users/dam/AppData/Local/Packages/Microsoft.MicrosoftEdge_8wekyb3d8bbwe/TempState/Downloads/Articles (1).php",
 		"/C/xampp3/htdocs/openclass/p5/myp5blog/vue/login.php",
@@ -499,9 +525,7 @@
 		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb/films2.html",
 		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb - Copie/films.html",
 		"/C/Users/dam/Documents/internet/navigateurs/bookmarks_opera_02_08_2019.html",
-		"/C/Users/dam/Documents/internet/TUTORIELS_css/112-115_Tuto CCS3_Responsive/demo/index.html",
-		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquetteb - Copie/test.html",
-		"/C/Users/dam/Documents/formation/openclassroom/2echance/projet3/maquette/index.html"
+		"/C/Users/dam/Documents/internet/TUTORIELS_css/112-115_Tuto CCS3_Responsive/demo/index.html"
 	],
 	"find":
 	{
@@ -521,6 +545,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"admin.php",
 			"tokenEmail",
 			"sendEmail",
 			"addUserToDb",
@@ -565,6 +590,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"index.php",
 			"checkUserLogin",
 			"getSingleArticle",
 			"Article",
@@ -592,7 +618,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 1428,
 						"regions":
 						{
 						},
@@ -613,54 +639,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "model/Comments.php",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "controller/FrontendController.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13439,
+						"buffer_size": 14961,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								5608,
+								5718
 							]
 						],
 						"settings":
@@ -669,7 +665,40 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3685.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "controller/BackendController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2166,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								933,
+								933
+							]
+						],
+						"settings":
+						{
+							"SL.25.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 570.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -681,15 +710,27 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 776,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								195,
+								204
+							],
+							[
+								274,
+								283
+							],
+							[
+								501,
+								510
+							],
+							[
+								583,
+								592
 							]
 						],
 						"settings":
@@ -707,11 +748,71 @@
 				},
 				{
 					"buffer": 4,
+					"file": "templates/layout_backend.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2192,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1413,
+								1413
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 513.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "vue/backend/create_article.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2572,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								150,
+								150
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "vue/backend/list_articles.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 1095,
 						"regions":
 						{
 						},
@@ -724,6 +825,9 @@
 						],
 						"settings":
 						{
+							"SL.17.region_keys":
+							[
+							],
 							"SL.27.region_keys":
 							[
 							],
@@ -732,19 +836,19 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 228.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "Router.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 4385,
 						"regions":
 						{
 						},
@@ -764,10 +868,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2166.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

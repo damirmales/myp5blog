@@ -45,6 +45,7 @@
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="index.php?route=livres">Livres</a>
                 <a class="dropdown-item" href="index.php?route=fromages">Fromages</a>
+                  <!--<a class="dropdown-item" href="index.php?route=fromages">Autres</a>-->
               </div>
             </li>
             <li class="nav-item">

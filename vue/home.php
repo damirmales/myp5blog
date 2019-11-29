@@ -25,7 +25,9 @@ require_once('functions/functions.php');
       <p>Vous êtes dans le blog de Damir Males.
         <br/>Vous pouvez me contactez par ce formulaire</p>
 
-        <?php   
+
+        <?php
+        //============== mettre dans une classe Messages / warning ============
         if (!empty($contactErrorMessage)){
         ?>
             <br/><div class="alert alert-warning alert-dismissible">
@@ -41,6 +43,7 @@ require_once('functions/functions.php');
         ?>
 
         <?php
+        //============== mettre dans une classe Messages / success ============
         if (!empty($_SESSION["userName"]))
         {
           echo '<br/><div class="alert alert-success">

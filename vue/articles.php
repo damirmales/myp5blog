@@ -23,23 +23,23 @@
 
 
             <h2 class="post-title">
-           <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">   <?php echo htmlspecialchars($article['titre']); ?>       </a>
+           <a href="index.php?route=article&id=<?= $article->getId() ?>">   <?php echo htmlspecialchars($article->titre); ?>       </a>
             </h2>
 
             <h3 class="post-subtitle">
-             <?php echo  htmlspecialchars($article['chapo']); ?>
+             <?php echo  htmlspecialchars($article->chapo); ?>
             </h3>
    
   
       <p class="post-meta">Modifié le : 
-            <?php echo  htmlspecialchars($article['date_mise_a_jour']); ?>
+            <?php echo  htmlspecialchars($article->date_mise_a_jour); ?>
       </p>
    
 
         </div>
      
-    <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">Voir l'article</a><br>
-    <!--<a href="delete-article.php?id=<?= $article['articles_id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>-->
+    <a href="index.php?route=article&id=<?= $article->id  ?>">Voir l'article</a><br>
+    <!--<a href="delete-article.php?id=<?= $article->id  ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>-->
        <hr>
   </div>
   </div>

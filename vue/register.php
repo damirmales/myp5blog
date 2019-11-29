@@ -46,7 +46,8 @@ require_once('functions/functions.php');
     </div>
   </header>
 
-  <?php   
+  <?php
+  //============== mettre dans une classe Messages / warning ============
   if (!empty($registerFormMessage))
   {
 ?>
@@ -63,8 +64,8 @@ require_once('functions/functions.php');
   } 
   ?>
 
-  <?php 
-
+  <?php
+  //============== mettre dans une classe Messages / success ============
   if (!empty($_SESSION["registerFormOK"]))
   {
 

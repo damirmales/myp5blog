@@ -27,25 +27,24 @@ class FrontendController extends PdoConstruct
 		require 'vue/cv.php';
 	}
 
-	/******************* Front articles management **********************/
-
+	/******************* Front articles.php management **********************/
 
 	public function pullListeArticles()
 	{
 		$listeArticles = new Articles();
 		$articles = $listeArticles->getListArticles();
-		//require 'vue/articles.php';
+
 		require 'vue/articles.php';
 
 
 	}
 
-	public function getSingleArticle($id)
+	public function getArticle($id)
 	{
 		$article = new Articles();
 		$article = $article->getSingleArticle($id);
 
-			$comments=$this->getComments($id); // insérer les commentaires avec l'article
+		$comments=$this->getComments($id); // insérer les commentaires avec l'article
 
 
 			require 'vue/commentForm.php';
@@ -68,11 +67,14 @@ class FrontendController extends PdoConstruct
             $email = $post['email'];
             $comment = $post['comment'];
 
+            $article=null;// init $article to use it as an array to display article datas
+            $comments=null;// init comments to show all comments
+
             $commentErrorMessage = [];// Store error messages to be available into commentForm.php
 
             if (isset($post['commentFormBtn']))
             {
-                echo "commentFormBtn";
+
                 if (empty($post['nom']))
                 {
                     $commentErrorMessage['nom'] = "Nom non renseigné";
@@ -125,26 +127,47 @@ class FrontendController extends PdoConstruct
                     else
                     {
                         echo 'vous n\etes pas membre pour pouvoir commenter';
-                        /*header('Location: index.php');
-    exit();*/
+
                     }
 
 
-
+                }
+                else
+                {
+                    $this->saveFormData('comment');
                 }
 
             }
+            //------- check if instance of Articles and Comments classes already exist -------
+            if ( ($article instanceof Articles) != true ) {
+                $article = new Articles();
+                $article = $article->getSingleArticle($articleId);
+            }
+            else
+            {
+                $article->getSingleArticle($articleId);
+            }
+
+            if ( ($comments instanceof Comments) != true ) {
+                $comments = new Comments();
+                $comments = $comments->getCommentsFromDb($articleId);
+            }
+            else
+            {
+                $comments->getCommentsFromDb($articleId);
+            }
+
 
             require 'vue/commentForm.php';
-            /*header('Location: index.php?route=article&id=' . $articleId);
-            exit;*/
+
+
         }
 
-		/******************* Front articles categories management **********************/
+		/******************* Front articles.php categories management **********************/
 
 		public function getCategoryArticles($rubriq)
 		{		        
-			// récupérer les articles selon la rubrique désirée
+			// récupérer les articles.php selon la rubrique désirée
 			$rubArticles = new Articles();
 			$rubriques = $rubArticles->getArticlesByCategory($rubriq);		
 
@@ -259,6 +282,7 @@ class FrontendController extends PdoConstruct
 
 
 //*** save all input value entered by user ***
+//================ mettre dans services ou functions =================
 		public function saveFormData($index)
 		{ 
 

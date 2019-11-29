@@ -2,18 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/vue/backend/edit_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/myp5blog.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/myp5blog.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Comments.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Articles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myp5blog.sublime-workspace" beforeDir="false" afterPath="$PROJECT_DIR$/myp5blog.sublime-workspace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout_backend.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_backend.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/layout_gabarit.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_gabarit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/article.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/articles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/articles2.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/articles2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/admin_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/admin_page.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/create_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/create_article.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/backend/list_articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_articles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/show_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/show_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/fromages.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/fromages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/livres.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/livres.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,28 +92,22 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1U1ItsIGaXBAJqiS8XKtwBW0N9i" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Documents/formation/openclassroom/2echance/projet5/cmder/vendor/git-for-windows/bin/git.exe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/vue/backend" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\vue\backend" />
       <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\vue" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager">
     <configuration name="articles.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/myp5blog/articles.php" useBuiltInWebServerPort="true">
@@ -111,6 +118,18 @@
         <item itemvalue="JavaScript Debug.articles.php" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -128,6 +147,10 @@
       <workItem from="1574708926594" duration="7230000" />
       <workItem from="1574750402154" duration="22196000" />
       <workItem from="1574838973483" duration="34976000" />
+      <workItem from="1574929248888" duration="9006000" />
+      <workItem from="1574959270942" duration="8685000" />
+      <workItem from="1575012843151" duration="3505000" />
+      <workItem from="1575017514386" duration="25437000" />
     </task>
     <servers />
   </component>
@@ -146,5 +169,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="449" y="166" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1575056621397">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="449" y="166" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1575056621397" />
+    <state x="379" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1575017688170">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="379" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1575017688170" />
   </component>
 </project>

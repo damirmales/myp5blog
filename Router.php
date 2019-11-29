@@ -8,7 +8,6 @@
 
 		public function run()
 		{  
-			
 
 			try{
 				if(isset($_GET['route']))
@@ -42,7 +41,7 @@
 					elseif($get === 'article')					{
 
 		              	$frontController = new FrontendController;
-						$frontController->getSingleArticle($_GET['id']);
+						$frontController->getArticle($_GET['id']);
 
 					}
 					elseif($get === 'admin')
@@ -136,7 +135,7 @@
 					elseif($get === 'editArticle')
 					{  
 						$backController = new BackendController;
-						$backController->editArticle($id);
+						$backController->editArticlePage();
 
 					}
 					elseif($get === 'editListArticles')
@@ -154,7 +153,7 @@
                     elseif($get === 'article_back')
                     {
                         $backController = new BackendController;
-                        $backController->editArticle($_GET['id']);
+                        $backController->editArticlePage($_GET['id']);
 
                     }                    
 					else

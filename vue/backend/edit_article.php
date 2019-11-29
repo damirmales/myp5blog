@@ -1,7 +1,7 @@
 <?php ob_start(); ?>
 
 <div class="col-lg-8 col-md-10 mx-auto">
-    <p>Un nouveau sujet</p>
+    <p>Modifier un article</p>
 
     <?php
     //============== mettre dans une classe Messages / warning ============
@@ -21,7 +21,7 @@
         }
         ?>
 
-        <form action="index.php?route=addArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>
+        <form action="index.php?route=modifyArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                     <label>titre</label>
@@ -51,15 +51,6 @@
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
-            <br/>
-            <label class="mr-sm-2" for="inlineFormCustomSelect">Rubrique</label>
-            <select name="rubrique" class="custom-select custom-select-lg mb-3">
-                <option selected>Choisir la rubrique...</option>
-                <option value="livres">Livres</option>
-                <option value="fromages">Fromages</option>
-                <!--<option value="autres">Autres</option>-->
-                <p class="help-block text-danger"></p>
-            </select>
 
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
