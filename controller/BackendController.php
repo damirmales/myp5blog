@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use Model\ArticleDao;
 use Model\Articles;
 require_once ('functions/functions.php');
 
@@ -31,12 +32,11 @@ class BackendController
     public function createArticle()
     {
         require 'vue/backend/create_article.php';//call addArticle() when form would be completed
-
     }
+
 
     public function addArticle() //
     {
-
         $addArticleErrorMessage = [];// Store error message to be available into create_article
 
         if (isset($_POST['btn_creer_article']))
@@ -92,20 +92,16 @@ class BackendController
 
     public function editListArticles()
     {
-        $articles = new Articles();
+        $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
         $articlesEdited = $articles->getListArticles();
         require 'vue/backend/list_articles.php';
 
     }
 
-    public function editArticlePage()
-    {
-         require 'vue/backend/edit_article.php';
-    }
 
-    public function editArticle($idArticle)
+    public function editArticlePage($idArticle)
     {
-        $getArticle = new Articles();
+        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
         require 'vue/backend/show_article.php';
 
@@ -113,7 +109,7 @@ class BackendController
 
     public function deleteArticle($idArticle)
     {
-        $articles = new Articles();
+        $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
         $articleDeleted = $articles->deleteArticle($idArticle);
         if ($articleDeleted) {
             header('Location:index.php?route=editListArticles');

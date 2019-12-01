@@ -7,12 +7,12 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1><?= $article['titre'] ?></h1>
-            <h2 class="subheading"><?= $article['chapo'] ?></h2>
+            <h1><?= $article->getTitre() ?></h1>
+            <h2 class="subheading"><?= $article->getChapo(); ?></h2>
             <span class="meta">Posté par 
-              <a href="#"><?= $article['auteur'] ?></a>
+              <a href="#"><?= $article->getAuteur(); ?></a>
               <br>
-            Le <?= $article['date_creation'] ?></span>
+            Le <?= $article->getDate_creation(); ?></span>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
         
-            <p><?= $article['contenu'] ?><!-- $article-> -->
+            <p><?= $article->getContenu(); ?><!-- $article-> -->
 
           </p>         
         </div>

@@ -1,23 +1,20 @@
 <?php
-
 namespace Model;
-
 use Model\PdoConstruct;
 
 /****** **************************************************************************
-Cette classe gère la collecte des données pour afficher la liste des articles
-et chaque article en particulier
+Cette classe gère les données liées à l'affichage des articles
  *************************************************************************************/
 class Articles extends PdoConstruct
 {
-    private $id;
-    private $titre;
-    private $chapo;
-    private $auteur;
-    private $contenu;
-    private $rubrique;
-    private $date_creation;
-    private $date_mise_a_jour;
+    protected $articles_id;
+    protected $titre;
+    protected $chapo;
+    protected $auteur;
+    protected $contenu;
+    protected $rubrique;
+    protected $date_creation;
+    protected $date_mise_a_jour;
 
 
     public function __construct(array $datas)
@@ -43,17 +40,17 @@ class Articles extends PdoConstruct
     /**
      * @return mixed
      */
-    public function getId()
+    public function getArticles_id()
     {
-        return $this->id;
+        return $this->articles_id;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $articles_id
      */
-    public function setId( $id ): void
+    public function setArticles_id( $id ): void
     {
-        $this->id = $id;
+        $this->articles_id = $id;
     }
 
     /**
@@ -139,7 +136,7 @@ class Articles extends PdoConstruct
     /**
      * @return mixed
      */
-    public function getDateCreation()
+    public function getDate_creation()
     {
         return $this->date_creation;
     }
@@ -147,7 +144,7 @@ class Articles extends PdoConstruct
     /**
      * @param mixed $date_creation
      */
-    public function setDateCreation( $date_creation ): void
+    public function setDate_creation( $date_creation ): void
     {
         $this->date_creation = $date_creation;
     }
@@ -155,7 +152,7 @@ class Articles extends PdoConstruct
     /**
      * @return mixed
      */
-    public function getDateMiseAJour()
+    public function getDate_mise_a_jour()
     {
         return $this->date_mise_a_jour;
     }
@@ -163,7 +160,7 @@ class Articles extends PdoConstruct
     /**
      * @param mixed $date_mise_a_jour
      */
-    public function setDateMiseAJour( $date_mise_a_jour ): void
+    public function setDate_mise_a_jour( $date_mise_a_jour ): void
     {
         $this->date_mise_a_jour = $date_mise_a_jour;
     }

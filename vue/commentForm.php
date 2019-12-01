@@ -15,7 +15,7 @@ if (!empty($commentErrorMessage)){
       }
       ?>
 
-<form action="index.php?route=addComment&id=<?= $article['articles_id'] ?>" method="post" name="commentForm">
+<form action="index.php?route=addComment&id=<?= $article->getArticles_id() ?>" method="post" name="commentForm">
       <div class="form-group">
         <label for="nom">Nom</label>
         <input type="text" class="form-control" id="nom" placeholder="" value="<?= getFormData('comment','nom') ?>"  name="nom">
