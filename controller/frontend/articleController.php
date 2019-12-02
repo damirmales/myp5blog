@@ -6,7 +6,7 @@ require('../model/Articles.php');
 
 
 if (isset($_GET['id']) && $_GET['id'] > 0) {
-    $article = singleArticle($_GET['id']);
+    $article = getSingleArticle($_GET['id']);
     //$comments = getComments($_GET['id']);
     require('../../vue/article.php');
 }

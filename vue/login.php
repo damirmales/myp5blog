@@ -73,7 +73,7 @@
         <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Votre mot de passe">
       </div>
   
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Soumettre</button>
     </form>
   </div>
 </div>

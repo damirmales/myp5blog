@@ -17,7 +17,8 @@
 				
 				
 					$get = filter_var($getAction, FILTER_SANITIZE_SPECIAL_CHARS);
-			
+					
+		
 					if($get === 'contact')
 					{  
 						$frontController = new FrontendController;
@@ -34,24 +35,21 @@
 					}
 					elseif($get === 'liste')
 					{
-
 						$frontController = new FrontendController;
 						$frontController->pullListeArticles();
 
-
 					}
-					elseif($get === 'article')
-					{
+					elseif($get === 'article')					{
 
 		              	$frontController = new FrontendController;
-						$frontController->singleArticle($_GET['id']);
+						$frontController->getSingleArticle($_GET['id']);
 
 					}
 					elseif($get === 'admin')
 					{
 
-						$frontController = new BackendController;
-						$frontController->admin();
+						$backController = new BackendController; // from frontendController checkUser() method
+						$backController->admin();
 
 					}
 					elseif ($get === 'addComment')
@@ -104,35 +102,69 @@
 						$frontController->addContact($_POST);
 						
 					} */
-					elseif($get === 'connexion') // go to admin login form page
+					elseif($get === 'connexion') // go to admin login.php form page
 					{
-						$BackendController = new FrontendController;							
-						$BackendController->logAdmin();
+						$frontController = new FrontendController;							
+						$frontController->logAdmin();
 					
 					}
-					elseif($get === 'pageAdmin') // check admin data to login
+					elseif($get === 'pageAdmin') // from login.php check admin data to login
 					{
-						$BackendController = new FrontendController;							
-						$BackendController->checkUser();
+						$frontController = new FrontendController;							
+						$frontController->checkUser();
 					
 					}
 
 					elseif($get === 'register')// to the register form page
 					{
-						$BackendController = new FrontendController;							
-						$BackendController->register();
+						$frontController = new FrontendController;							
+						$frontController->register();
 					
 					}
 					elseif($get === 'registerForm')// register user's data into the database
 					{
-						$BackendController = new FrontendController;							
-						$BackendController->addUser($_POST);
+						$frontController = new FrontendController;							
+						$frontController->addUser($_POST);
 					
+					}
+					elseif($get === 'verifEmail')// check user email via token
+					{
+						$frontController = new FrontendController;							
+						$frontController->verifyToken();
+						
+					}
+/*********************************************************************************/				
+/********************************* PARTIE BACKEND ********************************/	
+/*********************************************************************************/			
+					elseif($get === 'createArticle')
+					{  
+						$backController = new BackendController;
+						$backController->createArticle();
+
+					}
+					elseif($get === 'addArticle')
+					{  
+						$backController = new BackendController;
+						$backController->addArticle($_POST);
+
+					}
+					elseif($get === 'editArticle')
+					{  
+						$backController = new BackendController;
+						$backController->editArticle($id);
+
+					}
+					elseif($get === 'editListArticles')
+					{  
+						$backController = new BackendController;
+						$backController->editListArticles();
+
 					}
 					else
 					{
 						echo 'page inconnue '.$get ;
 					}
+
 				}
 				else
 				{

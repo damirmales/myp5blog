@@ -1,7 +1,5 @@
-  <!-- Header-->
   <!DOCTYPE html>
   <html lang="fr">
-
   <head>
 
     <meta charset="utf-8">
@@ -61,8 +59,6 @@
       </div>
     </nav>
 
-
-
     <?= $content;?>
 
     <!-- Footer -->
@@ -114,7 +110,8 @@
 </div>
 </div>
 </div>
- <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a></p>
+ <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a><br/>
+  <a href="index.php?route=register"> S'enregistrer</a></p>
 
             <p class="copyright text-muted">Copyright &copy; Damir Blog 2019</p>
           </div>

@@ -16,9 +16,10 @@ namespace Model;
 					{
 						$connectPDO = new \PDO(self::DB_HOST, self::DB_USER , self::DB_PASS);
 						$connectPDO->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-					
+					//NOTA se renseigner sur \PDO::FETCH_OBJ  pour récupérer un objet
+						
 					// on renvoi un objet de type PDOstatement qui contien la connexion à la bdd
-						return $connectPDO;
+						return $connectPDO; 
 										
 					}
 

@@ -1,14 +1,15 @@
 <?php
 namespace Controller;
-session_start();
+
+use Model\PdoConstruct;
 use Model\Articles;
 use Model\Comments;
 use Model\Emails;
 use Model\Users;
-use Model\backend\AdminUsers;
 
+require_once ('functions/functions.php');
 
-class FrontendController
+class FrontendController extends PdoConstruct
 {
 
 	/******************* home management **********************/
@@ -33,15 +34,15 @@ class FrontendController
 		require 'vue/articles.php';
 	}
 
-	public function singleArticle($id)
+	public function getSingleArticle($id)
 	{		        
 		$article = new Articles();
-		$article = $article->singleArticle($id);
+		$article = $article->getSingleArticle($id);
 
 			$comments=$this->getComments($id); // insérer les commentaires avec l'article
 			
-			require 'vue/article.php';
-
+			//require 'vue/article.php';
+			require 'vue/comments.php';
 		}
 
 		/******************* Front comments management **********************/
@@ -60,14 +61,18 @@ class FrontendController
 			
 			//instancier la classe qui recupère les données des utilisateurs enregistrés
 			$user= new Users();
-			$checkUser = $user->checkUserRecord($id, $nom,$email);
+			$checkUser = $user->checkUserRecord($id, $nom,$email); // id de l'article
 
 			//verifier si l'utilisateur ayant soumit le le commentaire est enregistré
 			if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email))
 			{
-				//Ajouter le commentaire si le visiteur est enregistré
+				//Ajouter le commentaire et le pseudo si le visiteur est enregistré
 				$newcomment = new Comments();
-				$affectedLines = $newcomment->addCommentsToDb($id, $nom,$comment);
+
+				$newcomment->setPseudo($nom);
+				$newcomment->setComment($comment);
+
+				$affectedLines = $newcomment->addCommentsToDb($id); // id de l'article
 
 				if ($affectedLines === false)
 				{
@@ -83,7 +88,7 @@ class FrontendController
 			}
 			else
 			{
-				header('Location: vue/home.php');
+				header('Location: index.php');
 				exit();
 			}
 
@@ -95,7 +100,7 @@ class FrontendController
 		{		        
 			// récupérer les articles selon la rubrique désirée
 			$rubArticles = new Articles();
-			$rubriques = $rubArticles->showArticlesByCategory($rubriq);		
+			$rubriques = $rubArticles->getArticlesByCategory($rubriq);		
 
 			// Associer la vue correspondante à la rubrique sélectionnée
 			if ($rubriq == "livres")
@@ -110,13 +115,13 @@ class FrontendController
 			}
 			else
 			{
-				header('Location: vue/home.php');
+				header('Location: index.php');
 				exit();
 
 			}		
 			
 		}
-
+		/******************************************************************/
 		/******************* Form contact management **********************/
 		
 		public function addContact($post)
@@ -184,8 +189,8 @@ class FrontendController
 					else
 					{
 						$_SESSION["contactFormKO"] = "email non envoyé";
-						//$noMessageSend = "addContact email non envoyé";
-						$this->saveFormData();
+					
+						$this->saveFormData('input');
 					}
 				}	
 			}
@@ -216,13 +221,12 @@ class FrontendController
 
 
 //*** save all input value entered by user ***
-		public function saveFormData()
+		public function saveFormData($index)
 		{ 
-
 
 			foreach ($_POST as $key => $value)
 			{
-				$_SESSION['input'] [$key] = $value;
+				$_SESSION[$index] [$key] = $value;
 
 			}
 		}
@@ -242,15 +246,16 @@ class FrontendController
 
 		}
 
+		/**************************************************************************/
+		/******************* Before login check user presence in database *********/
 
-		/******************* Check user presence in database **********************/
 				//---- from login.php ---------
+
 		public function checkUser() 
 		{		        
 			$connexionErrorMessage = [];// Store error message to be available into login.php
 
 			
-
 			if(empty($_POST['login']))
 			{
 				//$_GLOBALS["contactMessage"] = "Pas de login renseigné";		
@@ -263,29 +268,37 @@ class FrontendController
 				$connexionErrorMessage['password'] = "Pas de password renseigné";			
 
 			}
-
+			//---- if no errors compare form fields data with those into the DB -----
 			if (empty($connexionErrorMessage))
-			{
-				$userData = new AdminUsers();
-			$checkUser = $userData->checkUserData($_POST['login']);
+			{ 
+				
+				$userData = new Users();
+				$checkUser = $userData->checkUserLogin($_POST['login']);
+
+$_SESSION["user"]['role'] = $checkUser['role'];
+$_SESSION["user"]['nom'] = $checkUser['nom'];
+$_SESSION["user"]['login'] = $checkUser['login'];
 
 					//---- check if user is registered ---------
 				if (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'] ))
 				{
 						//------ check if user is admin --------
-					if ($this->userRole($checkUser))
-					{
-						
-						header('Location: index.php?route=admin');
+					if ($this->userRole($checkUser) == 'admin')
+					{		
+
+						header('Location: index.php?route=admin'); // if user is admin go to admin page
 						exit();
 
 					}
-					else
+					elseif($this->userRole($checkUser) == 'member')
 					{
-						$_SESSION["contactFormOK"] = "Vous êtes membre";
+						$_SESSION["contactFormOK"] = "Vous êtes member";
+						
 						header('Location: index.php');
 						exit();
 					}
+
+					
 
 
 				}
@@ -293,37 +306,40 @@ class FrontendController
 				else
 				{
 					echo "Vous n\'êtes pas enregistré(e)";
+					$_SESSION["contactFormOK"] = "Vous êtes pas notre member";
 					
-						header('Location: vue/home.php');
-						exit();
+					header('Location: index.php');
+					exit();
 
 				}
-			}	
+			}
+
 			require 'vue/login.php';
 		}
 
 
 					//** check user's role ********
-			public function userRole($role)
+		public function userRole($role)
+		{
+			var_dump($role['statut']);
+			if (($role['role'] === 'admin') && ($role['statut'] == 1))
 			{
-				var_dump($role['statut']);
-				if (($role['role'] === 'admin') &&  ($role['statut'] == 1))
-				{
-					echo '$role est admin';
-					return true;
-				}
-				elseif(($role['role'] === 'member') &&  ($role['statut'] == 1))
-				{
-					echo '$role est member';
-					return false;
-				}
-				else
-				{
-					echo '$role n\'est ni member ni admin';
-					return false;
-				}
-			}
+				echo '$role est admin';
 
+				return 'admin';
+			}
+			elseif(($role['role'] === 'member') && ($role['statut'] == 1))
+			{
+				echo '$role est member';
+				return 'member';
+			}
+			else
+			{
+				echo '$role n\'est ni member ni admin';
+				return false;
+			}
+		}
+		/**********************************************************************************/	
 		/******************* Add user from register.php to database  **********************/
 
 		public function addUser()
@@ -335,7 +351,6 @@ class FrontendController
 
 		if (!empty($post))
 		{	
-
 
 			if($post['formRegister'] == 'sent' )
 			{
@@ -349,15 +364,12 @@ class FrontendController
 						{
 
 							$registerFormMessage['prenom'] = "rien ds le prenom";
-
 							
 						}
 
 						if(empty($post['email']))
 						{
-
 							$registerFormMessage['email'] = "rien ds le email";
-
 
 						}
 
@@ -365,7 +377,6 @@ class FrontendController
 						if(!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) 
 						{					
 							$registerFormMessage['email']  ="L'email doit être selon format :bibi@fricotin.fr";
-
 							
 						}
 
@@ -393,29 +404,63 @@ class FrontendController
 
 						}
 
-
+						//--------------------------------------------------------------
+						//---- if no errors in form fields add user's data in DB and ---
+						//---- launch email checking with a token ----------------------
 
 						if (empty($registerFormMessage)) 
-						{
-							echo "formulaire envoyé";
+						{							
+							$token = generateToken();
+							
 							//instancier la classe qui envoie les données des utilisateurs vers la bdd
-							$user = new AdminUsers();
-							$checkUser = $user->addUserToDb($post);
-							echo $checkUser;
 
-							header('Location: index.php');
-							exit();
+							$user = new Users();
 
-						}
-						else
-						{
+				$user->setNom($_POST['nom']);
+				$user->setPrenom($_POST['prenom']);
+				$user->setEmail($_POST['email']);
+				$user->setRole($_POST['role']);
+				$user->setStatut($_POST['statut']);
+				$user->setToken($_POST['token']);
+				$user->setLogin($_POST['login']);
+				$user->setPassword($_POST['password']);
 
-							$_SESSION["contactFormKO"] = "email non envoyé";
+							$checkUser = $user->addUserToDb();
+							echo 'checkUser :'.$checkUser;
+
+								//$result =$this->verifyToken();
+
+
+								//echo 'verifyToken :'.$result;
+
+								/*if ($result)
+								{
+									echo $userEmail = getUserEmailandId();
+								}
+								else
+								{
+									echo 'token non vérifié';
+								}								
+								/*
+
+								//$userEmail = "damir@romandie.com";
+
+							   /* $createUrlToken = createUrlWithToken($token);
+								
+								$anEmail = new Emails();
+								$sendUrlEmail = $anEmail->tokenEmail($userEmail,$createUrlToken);
+								*/
+								//header('Location: index.php');
+								//exit();
+							}
+							else
+							{
+								$_SESSION["contactFormKO"] = "email non envoyé";
 							//$noMessageSend = "addContact email non envoyé";
-							//$this->saveFormData();
+							$this->saveFormData('register');
+							}
 						}
 					}
-				}
 			/*	session_destroy();
 				echo "<pre>";
 				print_r($post)	 ; 
@@ -425,9 +470,27 @@ class FrontendController
 	*/
 				require 'vue/register.php';	
 				
-			}		
+			}
+//*********** check the token from the link validate by the user **************
+			public function verifyToken()
+			{
+				if(isset($_GET['token'])) // if get user's token
+				{
+					$userToken = trim($_GET['token']);
+					$sql = "SELECT nom  FROM users WHERE  token = :token";
 
+					$stmt = $this->connection->prepare($sql);
+					
+					$stmt->bindParam(':token', $userToken);
+					$stmt->execute();
 
+					$result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
+					echo ' inside_verify : '.$result;
+
+					return $result;
+					
+				}				
+			}
 
 		}	

@@ -29,6 +29,6 @@
 
   <hr>
 
-<?php $allComments = ob_get_flush();?>
+<?php $allComments = ob_get_clean();?>
 
-
+  <?php require'vue/article.php'; ?>
