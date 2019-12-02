@@ -8,7 +8,6 @@
 
 		public function run()
 		{  
-			
 
 			try{
 				if(isset($_GET['route']))
@@ -42,7 +41,7 @@
 					elseif($get === 'article')					{
 
 		              	$frontController = new FrontendController;
-						$frontController->getSingleArticle($_GET['id']);
+						$frontController->getArticle($_GET['id']);
 
 					}
 					elseif($get === 'admin')
@@ -54,31 +53,10 @@
 					}
 					elseif ($get === 'addComment')
 					{
-						
-						//verifier si le numéro d'article est renseigné
-						if (isset($_GET['id']) && $_GET['id'] > 0)
-						{
-							//verifier si les champs du formulaire de commentaire sont renseignés
-							if (!empty($_POST['nom']) && !empty($_POST['comment']) && !empty($_POST['email']))
-							{
-								
-								$frontController = new FrontendController;					
 
-								$frontController->publishComments($_GET['id'], $_POST['nom'], $_POST['email'],$_POST['comment']);
+					            $frontController = new FrontendController;
+								$frontController->publishComments($_GET['id'], $_POST);
 
-
-							}
-							else
-							{
-								echo 'Erreur : tous les champs ne sont pas remplis !';
-								header('Location: index.php?route=article&id=' . $id);
-								exit();
-							}
-						}
-						else
-						{
-							echo 'Erreur : aucun identifiant d\'article envoyé';
-						}
 					}
 					elseif($get == 'livres')
 					{
@@ -106,6 +84,12 @@
 					{
 						$frontController = new FrontendController;							
 						$frontController->logAdmin();
+					
+					}
+					elseif($get === 'deconnexion') // go to admin login.php form page
+					{
+						$frontController = new FrontendController;							
+						$frontController->logOff();
 					
 					}
 					elseif($get === 'pageAdmin') // from login.php check admin data to login
@@ -145,21 +129,39 @@
 					elseif($get === 'addArticle')
 					{  
 						$backController = new BackendController;
-						$backController->addArticle($_POST);
+						$backController->addArticle();
 
 					}
 					elseif($get === 'editArticle')
 					{  
 						$backController = new BackendController;
-						$backController->editArticle($id);
+						$backController->editArticle($_GET['id']);
 
 					}
-					elseif($get === 'editListArticles')
+                    elseif($get === 'updateArticle')
+                    {//var_dump($_GET['id']);
+                        $backController = new BackendController;
+                        $backController->updateArticle();
+
+                    }
+                    elseif($get === 'editListArticles')
 					{  
 						$backController = new BackendController;
 						$backController->editListArticles();
 
 					}
+                    elseif($get === 'deleteArticle')
+                    {
+                        $backController = new BackendController;
+                        $backController->deleteArticle($_GET['id']);
+
+                    }
+                    elseif($get === 'showArticle')
+                    {
+                        $backController = new BackendController;
+                        $backController->showArticle($_GET['id']);
+
+                    }                    
 					else
 					{
 						echo 'page inconnue '.$get ;

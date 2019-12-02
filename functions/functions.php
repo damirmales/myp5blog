@@ -16,6 +16,18 @@ use Model\PdoConstruct;
 
     }
 
+//*** save all input value entered by user ***
+//================ mettre dans services ou functions =================
+ function saveFormData($index)
+{
+
+    foreach ($_POST as $key => $value)
+    {
+        $_SESSION[$index] [$key] = $value;
+
+    }
+}
+
     function generateToken()
     {
 

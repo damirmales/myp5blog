@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
   <html lang="fr">
 
   <head>
@@ -33,24 +33,21 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
               <h1>Page d'administration du blog</h1>
-              <span class="subheading">Liste des articles</span>
-              <a class="nav-link" href="index.php">Accueil</a>
+              <span class="subheading"><?= $titre; ?></span>
+                <a class="nav-link" href="index.php?route=admin">tableau de bord</a>
+              <a class="nav-link" href="index.php">Accueil du blog</a>
             </div>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container">
-      <div class="row">
 
     <?= $content; ?>
       
-    </div>
-  </div>
 
-  <hr>
+
+
 
   <!-- Footer -->
   <footer>

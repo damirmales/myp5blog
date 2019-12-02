@@ -11,15 +11,14 @@ namespace Model;
 
 				public function getConnectDB()
 				{
-
 					try
 					{
 						$connectPDO = new \PDO(self::DB_HOST, self::DB_USER , self::DB_PASS);
 						$connectPDO->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 					//NOTA se renseigner sur \PDO::FETCH_OBJ  pour récupérer un objet
-						
-					// on renvoi un objet de type PDOstatement qui contien la connexion à la bdd
-						return $connectPDO; 
+                        //$connectPDO->setFetchMode(\PDO::FETCH_OBJ );
+					// on renvoi un objet de type PDOstatement qui contient la connexion à la bdd
+						return $connectPDO;
 										
 					}
 
@@ -30,9 +29,6 @@ namespace Model;
 
 				}
 	}	
-
-
-	
 
 
 ?>

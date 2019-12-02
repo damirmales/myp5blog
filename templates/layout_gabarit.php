@@ -45,6 +45,7 @@
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="index.php?route=livres">Livres</a>
                 <a class="dropdown-item" href="index.php?route=fromages">Fromages</a>
+                  <!--<a class="dropdown-item" href="index.php?route=fromages">Autres</a>-->
               </div>
             </li>
             <li class="nav-item">
@@ -53,7 +54,28 @@
             <li class="nav-item">
               <a class="nav-link" href="index.php?route=contact">Contact</a>
             </li>
+              <?php
+              if(isset($_SESSION['user']) )
+              {
+                  if (($_SESSION['user']['role'] == 'admin')) {
+                      ?>
+                      <li class="nav-item">
+                          <a class="nav-link" href="index.php?route=admin"> ⚒ Admin</a>
+                      </li>
+                      <?php
 
+                  }
+
+                  if (($_SESSION['user']['role'] == 'member'))
+                  {
+                      ?>
+                      <li class="nav-item">
+                          <a class="nav-link" href=""> ☑ Membre</a>
+                      </li>
+                      <?php
+                  }
+              }
+              ?>
           </ul>
         </div>
       </div>
@@ -94,43 +116,71 @@
             </ul>
             //-->
             <div class="footer-social my-5">
-<div class="container">
-<div class="d-flex justify-content-center">
-<a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-github" href="https://github.com/blackrockdigital">
-<i class="fab fa-github"></i>
-</a>
+              <div class="container">
+                <div class="d-flex justify-content-center">
+                  <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-github" href="https://github.com/blackrockdigital">
+                    <i class="fab fa-github"></i>
+                  </a>
 
 
-<a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-twitter" href="https://twitter.com/sbootstrap">
-<i class="fab fa-twitter"></i>
-</a>
-<a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-facebook" href="https://www.facebook.com/StartBootstrap/">
-<i class="fab fa-facebook-f"></i>
-</a>
-</div>
-</div>
-</div>
- <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a><br/>
-  <a href="index.php?route=register"> S'enregistrer</a></p>
+                  <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-twitter" href="https://twitter.com/sbootstrap">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-facebook" href="https://www.facebook.com/StartBootstrap/">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
 
-            <p class="copyright text-muted">Copyright &copy; Damir Blog 2019</p>
+            <?php
+            if(isset($_SESSION['user']) )
+            {
+             
+              if(($_SESSION['user']['role'] != 'admin' ) && ($_SESSION['user']['role'] != 'member' ))
+                { echo $_SESSION['user']['role'];
+
+              ?>
+              <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a><br/>
+                Pas encore membre?  <a href="index.php?route=register"> S'enregistrer</a></p>
+                <?php
+              }
+              else
+              {
+                ?>
+                <p class="admin text-center"><a href="index.php?route=deconnexion"> Deconnexion</a>;
+
+                  <?php
+                } 
+              }
+              else
+              {
+                ?>  
+                <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a><br/>
+                  Pas encore membre?  <a href="index.php?route=register"> S'enregistrer</a></p>
+
+                  <?php  
+                } 
+                ?>
+
+                <p class="copyright text-muted">Copyright &copy; Damir Blog 2019</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </footer>
+        </footer>
 
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Contact Form JavaScript -->
-    <script src="public/js/jqBootstrapValidation.js"></script>
-    <!-- <script src="public/js/contact_me.js"></script> -->
+        <!-- Contact Form JavaScript -->
+        <script src="public/js/jqBootstrapValidation.js"></script>
+        <!-- <script src="public/js/contact_me.js"></script> -->
 
-    <!-- Custom scripts for this template -->
-    <script src="public/js/clean-blog.min.js"></script>
+        <!-- Custom scripts for this template -->
+        <script src="public/js/clean-blog.min.js"></script>
 
-  </body>
+      </body>
 
-  </html>
+      </html>

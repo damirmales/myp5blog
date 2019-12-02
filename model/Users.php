@@ -99,7 +99,7 @@ class Users extends PdoConstruct
     /**************************************
      * @return mixed
      */
-    public function getSatut()
+    public function getStatut()
     {
         return $this->statut;
     }
@@ -162,17 +162,20 @@ class Users extends PdoConstruct
 
 
  	//----- Check if user is registered------------
-			public function checkUserRecord()
+			public function checkUserRecord($email)
 			{
 				
 				$userRecord = $this->connection->prepare('
 					SELECT id,nom,email
 					FROM Users
+					WHERE email = :email
 					');
+                // On lie la variable $email définie au-dessus au paramètre :email de la requête préparée
+                $userRecord->bindValue(':email', $email, \PDO::PARAM_STR);
 
 				$userRecord->execute();
 				$user = $userRecord->fetch();
-				
+
 				return $user;
 			}
 //----- Check if user's login is in the DB ------------

@@ -1,98 +1,33 @@
-  <!-- Header-->
-  <!DOCTYPE html>
-  <html lang="fr">
 
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="auteur" content="">
-
-    <title>Damir Blog - admin </title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet' ?>" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
-    <!-- Custom styles for this template -->
-    <link href="public/css/clean-blog.min.css" rel="stylesheet">
-
-  </head>
-
-  <body>
-
-
-
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('public/img/about-bg.jpg')">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="page-heading">
-              <h1>Page d'administration du blog</h1>
-              <span class="subheading">administration</span>
-              <a class="nav-link" href="index.php">Accueil</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <pre>
-<?php var_dump($_SESSION); ?>
-
+<?php ob_start();
+$titre = "Liste des pages";
+?>
     <!-- Main Content -->
-    <div class="container">
-      <div class="row">
-       <p>
-        <p>Articles</p>
-        <ul>
-          <li><a href="admin.php?route=createArticle" >Créer un article</a></li>
-        <li><a href="admin.php?route=editListArticles" >Afficher les articles</a></li>
-
-        <!--<li><a href="admin.php?route=supprArticle" >Supprimer un article</a></li>-->
+<div class="container">
+<div class="row">
+<div class="col-lg-8 col-md-10 mx-auto">
+        <p>Articles </p>
+        <p><ul>
+          <li><a href="index.php?route=createArticle" >Créer un article</a></li>
+        <li><a href="index.php?route=editListArticles" >Afficher les articles</a></li>
+        <li><a href="index.php?route=editArticle" >Editer un article</a></li>
       </ul>
-      </p>
-      </div>
-      <div class="row">
-      <br/><br/>
+    </p>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
       <p>Commentaires</p>
-      <p>
         <ul>
-          <li><a href="admin.php?route=editComment" >Editer un commentaire</a></li>
-        <li><a href="admin.php?route=supprComment" >Supprimer un commentaire</a></li>
+          <li><a href="index.php?route=editComment" >Editer un commentaire</a></li>
+        <li><a href="index.php?route=supprComment" >Supprimer un commentaire</a></li>
       </ul>
-      </p>
     </div>
-  </div>
-
+</div>
+</div>
   <hr>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
+<?php $content = ob_get_clean();?>
 
-          </ul>
-          <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="public/js/clean-blog.min.js"></script>
-
-</body>
-
-</html>
+<?php require'templates/layout_backend.php'; ?>

@@ -43,7 +43,8 @@
   </div>
 </header>
 
- <?php   
+ <?php
+ //============== mettre dans une classe Messages / warning ============
  if (!empty($connexionErrorMessage)){
 
           echo '<br/><div class="container alert alert-warning alert-dismissible">

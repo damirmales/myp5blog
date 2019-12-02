@@ -18,7 +18,8 @@
         "Controller\\": "controller/",
         "Model\\": "model/",
         "Public\\": "public/",
-        "Rubriques\\": "rubriques/"
+        "Rubriques\\": "rubriques/",
+        "Services\\": "services/"
       }
     
     }

@@ -25,13 +25,16 @@ require_once('functions/functions.php');
       <p>Vous êtes dans le blog de Damir Males.
         <br/>Vous pouvez me contactez par ce formulaire</p>
 
-        <?php   
-        if (!empty($contactErrorMessage)){
 
-          echo '<br/><div class="alert alert-warning alert-dismissible">
+        <?php
+        //============== mettre dans une classe Messages / warning ============
+        if (!empty($contactErrorMessage)){
+        ?>
+            <br/><div class="alert alert-warning alert-dismissible">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          ☝ <strong>Attention! </strong>';
-          foreach ($contactErrorMessage as $err) {
+          ☝ <strong>Attention! </strong><br>
+        <?php
+            foreach ($contactErrorMessage as $err) {
 
             echo $err.'<br/>';
           }
@@ -39,24 +42,17 @@ require_once('functions/functions.php');
         } 
         ?>
 
-        <?php 
-
-        if (!empty($_SESSION["contactFormOK"]))
+        <?php
+        //============== mettre dans une classe Messages / success ============
+        if (!empty($_SESSION["userName"]))
         {
-
           echo '<br/><div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Bravo! </strong>'
-          .$_SESSION["contactFormOK"].'</div>';
-        }
-        /*else
-        {echo('messageSend'.$_SESSION["contactFormOK"]);
-          echo '<br/><div class="alert alert-warning ">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong>Attention! </strong>'
-          .$_SESSION["contactFormOK"].'</div>';
+          .$_SESSION["userName"].' vous êtes membre du blog</div>';
 
-        }  */
+          unset($_SESSION["userName"]);
+        }
 
         ?>
         <!-- Contact Form -  -->

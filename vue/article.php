@@ -1,4 +1,4 @@
-  <?php ob_start(); ?>
+  <?php ob_start();?>
 
   <!-- Page Header -->
   <header class="masthead" style="background-image: url('public/img/post-bg.jpg')">
@@ -7,18 +7,17 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1><?= $article['titre'] ?></h1>
-            <h2 class="subheading"><?= $article['chapo'] ?></h2>
+            <h1><?= $article->getTitre() ?></h1>
+            <h2 class="subheading"><?= $article->getChapo(); ?></h2>
             <span class="meta">Posté par 
-              <a href="#"><?= $article['auteur'] ?></a>
+              <a href="#"><?= $article->getAuteur(); ?></a>
               <br>
-            Le <?= $article['date_creation'] ?></span>
+            Le <?= $article->getDate_creation(); ?></span>
           </div>
         </div>
       </div>
     </div>
   </header>
-
 
   <!-- Article Content -->
   <article>
@@ -27,7 +26,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
         
-            <p><?= $article['contenu'] ?><!-- $article-> -->
+            <p><?= $article->getContenu(); ?><!-- $article-> -->
 
           </p>         
         </div>
@@ -39,20 +38,16 @@
   <!-- Comment form -->
   <div class="container">
     <p>Ajouter un commentaire<br/>
-    <span>Vous devez vous enregistrer pour poster un commentaire</span><br/>
+
     <a href="index.php?route=register"> S'enregistrer</a></p>
      <a href="index.php?route=connexion"> Se connecter</a></p>
 
-    
   </div>
 
   <!-- display comments  a mettre dans la methode du FrontendController-->
 
-
-<?= $allComments; ?>
-
+<?= $allComments; // Comments container?>
 
   <?php $content = ob_get_clean();?>
-
 
   <?php require'templates/layout_gabarit.php'; ?>
