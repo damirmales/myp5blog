@@ -12,15 +12,18 @@ class Emails
 		$prenom = $_POST['prenom'];
 		$nom = $_POST['nom']; 
 		$email = $_POST['email'];
-		$message = $_POST['message']; 
+		$message = $_POST['message'].' '; 
+		$message   .= '$email : '.$email;
+		$message   .= '$nom : '. $nom ;
 
 
 		$emailTo = "damir@romandie.com";
-		$subject = "sujet";
+		$subject = "Contact";
 		$emailFrom = $_POST['email']; 
 
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+		$headers   = 'MIME-Version: 1.0' . "\r\n";
+		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+
 
 		// envoi email 
 		$success = mail($emailTo, $subject, $message, $headers);
@@ -34,6 +37,7 @@ class Emails
 
 // Create the Transport
 		$transport = (new \Swift_SmtpTransport('smtp.gmail.com', 25))
+		//$transport = (new \Swift_SmtpTransport('mail07.lwspanel.com', 465))
 		->setUsername('your username')
 		->setPassword('your password')
 		;

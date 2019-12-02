@@ -21,7 +21,8 @@
 					if($get === 'contact')
 					{  
 						$frontController = new FrontendController;
-						$frontController->home();
+						//$frontController->home();
+							$frontController->addContact($_POST);
 
 					}
 					elseif($get === 'cv')
@@ -44,6 +45,13 @@
 
 		              	$frontController = new FrontendController;
 						$frontController->singleArticle($_GET['id']);
+
+					}
+					elseif($get === 'admin')
+					{
+
+						$frontController = new BackendController;
+						$frontController->admin();
 
 					}
 					elseif ($get === 'addComment')
@@ -89,13 +97,13 @@
 						$frontController->getCategoryArticles($get);
 
 					}
-					elseif($get === 'contactForm')
+					/*elseif($get === 'contactForm')
 					{
 
 						$frontController = new FrontendController;							
 						$frontController->addContact($_POST);
 						
-					}
+					} */
 					elseif($get === 'connexion') // go to admin login form page
 					{
 						$BackendController = new FrontendController;							
@@ -104,7 +112,7 @@
 					}
 					elseif($get === 'pageAdmin') // check admin data to login
 					{
-						$BackendController = new BackendController;							
+						$BackendController = new FrontendController;							
 						$BackendController->checkUser();
 					
 					}
@@ -117,7 +125,7 @@
 					}
 					elseif($get === 'registerForm')// register user's data into the database
 					{
-						$BackendController = new BackendController;							
+						$BackendController = new FrontendController;							
 						$BackendController->addUser($_POST);
 					
 					}
