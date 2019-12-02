@@ -1,4 +1,5 @@
-<?php ob_start(); 
+<?php ob_start();
+$titre = "Liste des articles";
 
  foreach ($articlesEdited as $article) : ?>
   <div class="container">
@@ -9,7 +10,7 @@
 
 
             <h2 class="post-title">
-           <a href="index.php?route=article_back&id=<?= $article->getArticles_id() ?>">   <?php echo htmlspecialchars($article->getTitre()); ?>
+           <a href="index.php?route=showArticle&id=<?= $article->getArticles_id() ?>">   <?php echo htmlspecialchars($article->getTitre()); ?>
        </a>
             </h2>
 
@@ -25,7 +26,7 @@
 
         </div>
      
-    <a href="index.php?route=article_back&id=<?= $article->getArticles_id() ?>">Voir l'article</a><br>
+    <a href="index.php?route=showArticle&id=<?= $article->getArticles_id() ?>">Voir l'article</a><br>
     <a href="index.php?route=deleteArticle&id=<?= $article->getArticles_id() ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
        <hr>
   </div>

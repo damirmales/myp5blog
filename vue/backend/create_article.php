@@ -1,7 +1,9 @@
-<?php ob_start(); ?>
+<?php ob_start();
+$titre = "Nouvel article";
+?>
 
 <div class="col-lg-8 col-md-10 mx-auto">
-    <p>Un nouveau sujet</p>
+    <p>Un nouvel article</p>
 
     <?php
     //============== mettre dans une classe Messages / warning ============

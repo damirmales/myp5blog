@@ -1,5 +1,7 @@
 
-<?php ob_start(); ?>
+<?php ob_start();
+$titre = "Liste des pages";
+?>
     <!-- Main Content -->
 <div class="container">
 <div class="row">

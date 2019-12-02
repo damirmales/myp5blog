@@ -9,13 +9,13 @@ use Model\PdoConstruct;
 class Comments extends PdoConstruct
 {
 
- 	private $id;
-    private $pseudo;
-    private $contenu;
-    private $date_ajout;
-    private $validation;
-    private $date_validation;
-    private $Articles_articles_id;
+ 	protected $id;
+    protected $pseudo;
+    protected $contenu;
+    protected $date_ajout;
+    protected $validation;
+    protected $date_validation;
+    protected $Articles_articles_id;
 
     /**
      * @return mixed
@@ -112,17 +112,33 @@ class Comments extends PdoConstruct
     }
 
 
-	/************ Fetch comments from database ***************/
+    public function __construct(array $datas)
+    {
+        $this->hydrate($datas);
+    }
 
+    public function hydrate(array $datas)
+    {
+        foreach ($datas as $key => $value)
+        {
+            $method = 'set'.ucfirst($key);
+
+            if (method_exists($this, $method))
+            {
+                $this->$method($value);
+            }
+        }
+    }
+
+
+	/************ Fetch comments from database ***************/
 
 	public function getCommentsFromDb($articleId)
 	{
-
-	
 		$requete = $this->connection->prepare('
 			SELECT commentaire_id, pseudo, contenu, date_ajout 
 			FROM commentaires
-			WHERE  Articles_articles_id = :id
+			WHERE  Articles_articles_id = :id AND validation = 1
 			ORDER BY date_ajout DESC'
 		);
 
@@ -136,7 +152,6 @@ class Comments extends PdoConstruct
 	public function addCommentsToDb($articleId)
 	{
 
-	
 		$requete = $this->connection->prepare('
 			INSERT INTO commentaires (commentaire_id,pseudo,contenu,date_ajout,validation,date_validation,Articles_articles_id)
 			VALUES (:id,:pseudo,:contenu,NOW(),:valid, NOW(),:idart)
@@ -144,7 +159,7 @@ class Comments extends PdoConstruct
 		$requete->bindValue(':id', NULL, \PDO::PARAM_INT);
 		$requete->bindValue(':pseudo', $this->getPseudo(), \PDO::PARAM_STR);
 		$requete->bindValue(':contenu', $this->getContenu(), \PDO::PARAM_STR);
-		$requete->bindValue(':valid', 1, \PDO::PARAM_INT);
+		$requete->bindValue(':valid', 0, \PDO::PARAM_INT);
 		$requete->bindValue(':idart', $articleId, \PDO::PARAM_INT);
 
 		$affectedLines = $requete->execute();

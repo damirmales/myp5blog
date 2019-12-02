@@ -135,10 +135,16 @@
 					elseif($get === 'editArticle')
 					{  
 						$backController = new BackendController;
-						$backController->editArticlePage();
+						$backController->editArticle($_GET['id']);
 
 					}
-					elseif($get === 'editListArticles')
+                    elseif($get === 'updateArticle')
+                    {//var_dump($_GET['id']);
+                        $backController = new BackendController;
+                        $backController->updateArticle();
+
+                    }
+                    elseif($get === 'editListArticles')
 					{  
 						$backController = new BackendController;
 						$backController->editListArticles();
@@ -150,10 +156,10 @@
                         $backController->deleteArticle($_GET['id']);
 
                     }
-                    elseif($get === 'article_back')
+                    elseif($get === 'showArticle')
                     {
                         $backController = new BackendController;
-                        $backController->editArticlePage($_GET['id']);
+                        $backController->showArticle($_GET['id']);
 
                     }                    
 					else

@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 use Model\PdoConstruct;
@@ -32,9 +33,8 @@ class FrontendController extends PdoConstruct
 
     public function pullListeArticles() // get all articles
     {
-
         $reqArticles = new ArticleDao(); //////////// voir gestion instance en Singleton
-         $articles = $reqArticles->getListArticles();
+        $articles = $reqArticles->getListArticles();
 
         require 'vue/articles.php';
     }
@@ -85,40 +85,43 @@ class FrontendController extends PdoConstruct
                 $commentErrorMessage['comment'] = "Commentaire non renseigné";
             }
 
-
-            if (empty($commentErrorMessage)) {
-                echo "pas d'erreur c'est lessieur";
+            if (empty($commentErrorMessage))
+            {
 
                 //instancier la classe qui recupère les données des utilisateurs enregistrés
                 $user = new Users();
                 $checkUser = $user->checkUserRecord($post['email']); // id de l'article
 
                 //verifier si l'utilisateur ayant soumit le commentaire est enregistré
-                if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email)) {
-
+                if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email))
+                {
 
                     //Ajouter le commentaire et le pseudo si le visiteur est enregistré
                     $newcomment = new Comments();
-
                     $newcomment->setPseudo($nom);
                     $newcomment->setContenu($comment);
 
                     $affectedLines = $newcomment->addCommentsToDb($articleId); // id de l'article
 
-                    if ($affectedLines === false) {
+                    if ($affectedLines === false)
+                    {
                         //die('Impossible d\'ajouter le commentaire !');
                         exit('Impossible d\'ajouter le commentaire !');
-                    } else {
-                        $_SESSION['user']['role'] = 'member'; // intialize session to the logged user
-                        header('Location: index.php?route=article&id=' . $articleId);
-                        exit;
+                    }
+                    else
+                    {
+                        //$_SESSION['user']['role'] = 'member'; // intialize session to the logged user
+                        echo 'commentaire en attente de validation';
+                        /*header('Location: index.php?route=article&id=' . $articleId);
+                        exit();*/
 
                     }
-                } else {
-                    echo 'vous n\etes pas membre pour pouvoir commenter';
-
                 }
-
+                else
+                {
+                    /////////// modifier pour mettre un message flash instead /////////
+                    echo 'vous n\etes pas membre pour pouvoir commenter';
+                }
 
             } else {
                 $this->saveFormData('comment');
@@ -130,44 +133,49 @@ class FrontendController extends PdoConstruct
             $reqArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
             $article = $reqArticle->getSingleArticle($articleId);
 
-        } else {
-           // $article->getSingleArticle($articleId);
+        }
+        else
+        {
+            // $article->getSingleArticle($articleId);
             $article = $reqArticle->getSingleArticle($articleId);
         }
 
         if (($comments instanceof Comments) != true) {
+
+
             $comments = new Comments();
             $comments = $comments->getCommentsFromDb($articleId);
         } else {
             $comments->getCommentsFromDb($articleId);
         }
 
-
         require 'vue/commentForm.php';
-
-
     }
 
     /******************* Front articles.php categories management **********************/
 
     public function getCategoryArticles($rubriq)
     {
+        $post = $_POST;
         // récupérer les articles.php selon la rubrique désirée
-        $rubArticles = new Articles();
-        $rubriques = $rubArticles->getArticlesByCategory($rubriq);
+
+        $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
+
+        $rubriques = $articleDao->getArticlesByCategory($rubriq);
 
         // Associer la vue correspondante à la rubrique sélectionnée
-        if ($rubriq == "livres") {
-
-
+        if ($rubriq == "livres")
+        {
             require 'vue/livres.php';
 
-        } elseif ($rubriq == "fromages") {
+        }
+        elseif ($rubriq == "fromages") {
             require 'vue/fromages.php';
-        } else {
+
+        }
+        else {
             header('Location: index.php');
             exit();
-
         }
 
     }
@@ -180,7 +188,6 @@ class FrontendController extends PdoConstruct
         print_r($validContact->verifyEmptiness($post));
 
         /******** Contact form check ****************/
-
         $contactErrorMessage = [];// Store error message to be available into home.php
 
         if (!empty($_POST)) {
@@ -193,17 +200,13 @@ class FrontendController extends PdoConstruct
                 }
                 if (empty($post['nom'])) {
                     $contactErrorMessage['nom'] = "Nom non renseigné";
-
                 }
                 if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
                     $contactErrorMessage['email'] = "L'email doit être selon format :bibi@fricotin.fr";
-
                 }
                 if (empty($post['message'])) {
                     $contactErrorMessage['message'] = "Le message manque";
-
                 }
-
                 if (empty($contactErrorMessage)) {
 
                     /***** Call class Emails to send contact form data*/
@@ -215,12 +218,13 @@ class FrontendController extends PdoConstruct
 
                     $email = $sendEmail->sendEmail();
 
-
                     $this->messageEmailContactOK($email);
 
                     /* $sendEmail = new Emails();
                     $email = $sendEmail->swiftMailer();	*/
-                } else {
+                }
+                else
+                {
                     $_SESSION["contactFormKO"] = "email non envoyé";
 
                     $this->saveFormData('input');
