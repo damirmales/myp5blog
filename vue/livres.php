@@ -15,7 +15,7 @@
     </div>
   </header>
       <p> supprimer</p>
-<? var_dump($rubriques) ?> 
+
 
 <?php foreach ($rubriques as $article) :?>
   <div class="container">
@@ -53,4 +53,4 @@
   <?php $content = ob_get_clean();?>
 
 
-<?php require('templates/layout_gabarit.php'); ?>
+<?php require'templates/layout_gabarit.php'; ?>

@@ -70,7 +70,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            <ul class="list-inline text-center">
+            <!--<ul class="list-inline text-center">
               <li class="list-inline-item">
                 <a href="#">
                   <span class="fa-stack fa-lg">
@@ -96,7 +96,27 @@
                 </a>
               </li>
             </ul>
-            <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
+            //-->
+            <div class="footer-social my-5">
+<div class="container">
+<div class="d-flex justify-content-center">
+<a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-github" href="https://github.com/blackrockdigital">
+<i class="fab fa-github"></i>
+</a>
+
+
+<a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-twitter" href="https://twitter.com/sbootstrap">
+<i class="fab fa-twitter"></i>
+</a>
+<a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-facebook" href="https://www.facebook.com/StartBootstrap/">
+<i class="fab fa-facebook-f"></i>
+</a>
+</div>
+</div>
+</div>
+ <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a></p>
+
+            <p class="copyright text-muted">Copyright &copy; Damir Blog 2019</p>
           </div>
         </div>
       </div>
@@ -117,3 +137,10 @@
   </body>
 
   </html>
+<?php
+// On détruit les variables de notre session
+session_unset ();
+
+// On détruit notre session
+session_destroy ();
+?>
