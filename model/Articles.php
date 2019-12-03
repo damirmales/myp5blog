@@ -1,7 +1,6 @@
 <?php
 namespace Model;
 
-
 /****** **************************************************************************
 Cette classe gère les données liées à l'affichage des articles
  *************************************************************************************/
@@ -27,6 +26,7 @@ class Articles
     {
         foreach ($datas as $key => $value)
         {
+
             $method = 'set'.ucfirst($key);
 
             if (method_exists($this, $method))

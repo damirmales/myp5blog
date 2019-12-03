@@ -1,4 +1,5 @@
 <?php ob_start();
+
 //============== mettre dans une classe Messages / warning ============
 if (!empty($commentErrorMessage)){
 ?>

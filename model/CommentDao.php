@@ -8,7 +8,6 @@ class CommentDao extends PdoConstruct
 
     public function getCommentsFromDb($articleId)
     {
-
         $requete = $this->connection->prepare('
 			SELECT commentaire_id, pseudo, contenu, date_ajout 
 			FROM commentaires
@@ -42,6 +41,30 @@ class CommentDao extends PdoConstruct
         return $affectedLines;
 
     }
+
+    /************ Fetch list of comments from database ***************/
+
+    public function getListComments()
+    {
+        $requete = $this->connection->prepare('
+			SELECT commentaire_id, pseudo, contenu, date_ajout 
+			FROM commentaires
+		    ORDER BY date_ajout DESC'
+        );
+
+        $requete->execute();
+
+       // $listComments = $requete->fetchAll(\PDO::FETCH_ASSOC);
+
+        $comments = [];
+        foreach ($requete as $comment) {
+            $comments[] = new Comments($comment);
+        }
+
+        return $comments;
+
+    }
+
 
 
 }

@@ -1,7 +1,7 @@
 <?php ob_start();
 $titre = "Liste des commentaires";
 
-foreach ($commentsEdited as $comment) : ?>
+foreach ($commentEdited as $comment) : ?>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
@@ -10,7 +10,7 @@ foreach ($commentsEdited as $comment) : ?>
 
 
                     <h2 class="post-title">
-                        <a href="index.php?route=showArticle&id=<?= $article->getCommentaire_id() ?>">   <?php echo htmlspecialchars($comment->getPseudo()); ?>
+                        <a href="index.php?route=showArticle&id=<?= $comment->getCommentaire_id() ?>">   <?php echo htmlspecialchars($comment->getPseudo()); ?>
                         </a>
                     </h2>
 

@@ -1,7 +1,5 @@
 <?php
-
 namespace Model;
-
 use Model\PdoConstruct;
 use Model\Articles;
 
@@ -40,24 +38,29 @@ class ArticleDao extends PdoConstruct
 
     public function updateArticleToDb($article)
     {
-        echo '<pre> updateArticleToDb :';
-        var_dump($article);
-        die();
-        $requete = $this->connection->prepare('
-            UPDATE articles (titre,chapo,auteur,contenu,rubrique,date_creation,date_mise_a_jour)
-            VALUES (:titre,:chapo,:auteur,:contenu,:rubrique,NOW(),NOW())
+
+        try {
+            $requete = $this->connection->prepare('
+            UPDATE articles
+            SET titre = :titre, chapo = :chapo, auteur = :auteur, contenu = :contenu, date_mise_a_jour = NOW()
             WHERE  articles_id = :id
             ');
-        $requete->bindValue(':id', $idArticle, \PDO::PARAM_INT);
-        $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
-        $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
-        $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
-        $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
-        $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
-        //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
-        //$requete->bindValue(':date_mise_a_jour', $this->getDateMiseAJour(), \PDO::PARAM_INT);
-        $affectedLines = $requete->execute();
-        return $affectedLines;
+            $requete->bindValue(':id', $article->getArticles_id(), \PDO::PARAM_INT);
+            $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
+            $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
+            $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
+            $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
+            // $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
+            //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
+           // $requete->bindValue(':date_mise_a_jour', $article->getDate_mise_a_jour(), \PDO::PARAM_INT);
+
+            $affectedLines = $requete->execute();
+            return $affectedLines;
+        }
+        catch(PDOException $e)
+        {
+            echo $requete . "<br>" . $e->getMessage();
+        }
     }
 
 //----- Retourne la liste des articles pour affichage ------------
@@ -91,12 +94,10 @@ class ArticleDao extends PdoConstruct
             ORDER BY articles_id DESC'
         );
         $requete->execute([':id' => $idArticle]);
-        $article = $requete->fetch();
+        $article = $requete->fetch(\PDO::FETCH_ASSOC); //si pas FETCH_ASSOC alors on recupere des numéros de colonne
 
-        // echo '<pre>';var_dump($article);
-        $oneArticles = new Articles($article);
-
-        return $oneArticles;
+        $oneArticle = new Articles($article);
+        return $oneArticle;
     }
 
     /*-------- Retourne la liste des articles selon la rubrique -------

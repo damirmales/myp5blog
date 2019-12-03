@@ -161,8 +161,14 @@
                         $backController = new BackendController;
                         $backController->showArticle($_GET['id']);
 
-                    }                    
-					else
+                    }
+                    elseif($get === 'listComments')
+                    {
+                        $backController = new BackendController;
+                        $backController->editLisComments();
+
+                    }
+                    else
 					{
 						echo 'page inconnue '.$get ;
 					}

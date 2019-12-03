@@ -239,7 +239,7 @@
 			"file": "vue/commentForm.php",
 			"settings":
 			{
-				"buffer_size": 1500,
+				"buffer_size": 1501,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -266,7 +266,7 @@
 			"file": "controller/BackendController.php",
 			"settings":
 			{
-				"buffer_size": 5161,
+				"buffer_size": 5144,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -588,7 +588,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1500,
+						"buffer_size": 1501,
 						"regions":
 						{
 						},
@@ -677,7 +677,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5161,
+						"buffer_size": 5144,
 						"regions":
 						{
 						},

@@ -1,8 +1,11 @@
 <?php
+
 namespace Controller;
 
 use Model\ArticleDao;
 use Model\Articles;
+use Model\CommentDao;
+use Model\Comments;
 
 require_once('functions/functions.php');
 
@@ -78,18 +81,14 @@ class BackendController
 
     public function updateArticle()
     {
-        /*print_r($_POST);
-        print_r($article);
-        die();*/
         $article = new Articles($_POST);
+
         $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
         $articleUpdate = $articleDao->updateArticleToDb($article);
+
         if ($articleUpdate) {
 
-            echo 'btn cliqué --> formulaire non remplis totalement';
-            //header('Location:index.php?route=editListArticles');
-            //exit();
-            $this->showArticle($idArticle);
+            $this->showArticle($_POST['articles_id']);
 
         }
     }
@@ -107,8 +106,8 @@ class BackendController
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
-        /*echo '<pre> editarticle'; var_dump($article);
-        die ();*/
+        //echo '<pre> editarticle'; var_dump($article);
+
         require 'vue/backend/edit_article.php';
 
     }
@@ -140,9 +139,14 @@ class BackendController
 
     public function editLisComments()
     {
-        $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $articlesEdited = $articles->getListArticles();
-        require 'vue/backend/list_articles.php';
+        $comments = new CommentDao(); //////////// voir gestion instance en Singleton
+        $commentEdited = $comments->getListComments();
+
+
+        echo '<pre> editarticle';
+        var_dump($commentEdited);
+
+        require 'vue/backend/list_comments.php';
     }
 
     public function showComment($idArticle)

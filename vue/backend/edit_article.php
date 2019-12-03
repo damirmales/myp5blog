@@ -1,9 +1,7 @@
 <?php ob_start();
 $titre = "Modifier un article";
 
-
 ?>
-
 <div class="col-lg-8 col-md-10 mx-auto">
     <p>Vous pouvez modifier cet article</p>
 

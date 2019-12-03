@@ -1,5 +1,7 @@
   <?php ob_start();
   $titre = "Un article";
+
+
   ?>
 
   <!-- Article Content -->
