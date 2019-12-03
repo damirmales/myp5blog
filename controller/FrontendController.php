@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Model\CommentDao;
 use Model\PdoConstruct;
 use Model\Articles;
 use Model\ArticleDao;
@@ -54,7 +55,8 @@ class FrontendController extends PdoConstruct
 
     public function getComments($id)
     {
-        $comments = new Comments();
+        $comments = new CommentDao();
+
         $comments = $comments->getCommentsFromDb($id);
         return $comments;
 
@@ -143,7 +145,7 @@ class FrontendController extends PdoConstruct
         if (($comments instanceof Comments) != true) {
 
 
-            $comments = new Comments();
+            $comments = new CommentDao();
             $comments = $comments->getCommentsFromDb($articleId);
         } else {
             $comments->getCommentsFromDb($articleId);

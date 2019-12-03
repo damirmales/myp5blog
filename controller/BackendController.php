@@ -28,14 +28,14 @@ class BackendController
 
 
     }
-
-    //********** Manage articles.php *************
+    //*****************************************************************
+    //******************** Manage articles ************************
+    //*****************************************************************
 
     public function createArticle()
     {
         require 'vue/backend/create_article.php';//call addArticle() when form would be completed
     }
-
 
     public function addArticle() //
     {
@@ -74,7 +74,6 @@ class BackendController
         }
 
         require 'vue/backend/create_article.php';
-
     }
 
     public function updateArticle()
@@ -135,7 +134,33 @@ class BackendController
         }
     }
 
+    //*****************************************************************
+    //******************** Manage comments  ************************
+    //*****************************************************************
 
+    public function editLisComments()
+    {
+        $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $articlesEdited = $articles->getListArticles();
+        require 'vue/backend/list_articles.php';
+    }
+
+    public function showComment($idArticle)
+    {
+        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $article = $getArticle->getSingleArticle($idArticle);
+        require 'vue/backend/show_article.php';
+    }
+
+    public function deleteComment($idArticle)
+    {
+        $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $articleDeleted = $articles->deleteArticle($idArticle);
+        if ($articleDeleted) {
+            header('Location:index.php?route=editListArticles');
+            exit();
+        }
+    }
 }
 
 

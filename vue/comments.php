@@ -2,7 +2,13 @@
 
  <div class="container">
 
-     <?= $formComment; // affiche le formulaire pour commenter ?>
+     <?php
+     if ($_SESSION['user']['role'] === 'member')
+     {
+         echo $formComment; // affiche le formulaire pour commenter
+     }
+
+     ?>
 
 <p>Commentaires</p>
 <?php

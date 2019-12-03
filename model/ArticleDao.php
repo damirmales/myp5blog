@@ -20,18 +20,18 @@ class ArticleDao extends PdoConstruct
     }
 
     /************ Add articles to database ***************/
-    public function setArticleToDb($objArt)
+    public function setArticleToDb($article)
     {
         $requete = $this->connection->prepare('
             INSERT INTO articles (articles_id,titre,chapo,auteur,contenu,rubrique,date_creation,date_mise_a_jour)
             VALUES (:id,:titre,:chapo,:auteur,:contenu,:rubrique,NOW(),NOW())
             ');
         $requete->bindValue(':id', NULL, \PDO::PARAM_INT);
-        $requete->bindValue(':titre', $objArt->getTitre(), \PDO::PARAM_STR);
-        $requete->bindValue(':chapo', $objArt->getChapo(), \PDO::PARAM_STR);
-        $requete->bindValue(':auteur', $objArt->getAuteur(), \PDO::PARAM_STR);
-        $requete->bindValue(':contenu', $objArt->getContenu(), \PDO::PARAM_STR);
-        $requete->bindValue(':rubrique', $objArt->getRubrique(), \PDO::PARAM_STR);
+        $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
+        $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
+        $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
+        $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
+        $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
         //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
         //$requete->bindValue(':date_mise_a_jour', $this->getDateMiseAJour(), \PDO::PARAM_INT);
         $affectedLines = $requete->execute();
@@ -49,11 +49,11 @@ class ArticleDao extends PdoConstruct
             WHERE  articles_id = :id
             ');
         $requete->bindValue(':id', $idArticle, \PDO::PARAM_INT);
-        $requete->bindValue(':titre', $objArt->getTitre(), \PDO::PARAM_STR);
-        $requete->bindValue(':chapo', $objArt->getChapo(), \PDO::PARAM_STR);
-        $requete->bindValue(':auteur', $objArt->getAuteur(), \PDO::PARAM_STR);
-        $requete->bindValue(':contenu', $objArt->getContenu(), \PDO::PARAM_STR);
-        $requete->bindValue(':rubrique', $objArt->getRubrique(), \PDO::PARAM_STR);
+        $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
+        $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
+        $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
+        $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
+        $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
         //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
         //$requete->bindValue(':date_mise_a_jour', $this->getDateMiseAJour(), \PDO::PARAM_INT);
         $affectedLines = $requete->execute();
