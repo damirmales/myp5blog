@@ -165,7 +165,13 @@
                     elseif($get === 'listComments')
                     {
                         $backController = new BackendController;
-                        $backController->editLisComments();
+                        $backController->editListComments();
+
+                    }
+                    elseif($get === 'deleteComment')
+                    {
+                        $backController = new BackendController;
+                        $backController->deleteComment($_GET['id']);
 
                     }
                     else

@@ -1,22 +1,22 @@
 <?php ob_start();
 $titre = "Liste des commentaires";
 
-foreach ($commentEdited as $comment) : ?>
+foreach ($commentEdited as $comment) : //echo '<pre> list_ '; var_dump($comment->getCommentaire_id());?>
+
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="post-preview">
 
+                    <h2 class="post-title">Nom</h2>
+                    <p>
+                            <?php echo htmlspecialchars($comment->getPseudo()); ?>
+                    </p>
 
 
-                    <h2 class="post-title">
-                        <a href="index.php?route=showArticle&id=<?= $comment->getCommentaire_id() ?>">   <?php echo htmlspecialchars($comment->getPseudo()); ?>
-                        </a>
-                    </h2>
+                    <h3 class="post-subtitle"> Commentaire  </h3>
+                       <p> <?php echo  htmlspecialchars($comment->getContenu()); ?></p>
 
-                    <h3 class="post-subtitle">
-                        <?php echo  htmlspecialchars($comment->getContenu()); ?>
-                    </h3>
 
 
                     <p class="post-meta">Ajouté le :
@@ -26,8 +26,8 @@ foreach ($commentEdited as $comment) : ?>
 
                 </div>
 
-                <a href="index.php?route=showArticle&id=<?= $comment->getCommentaire_id() ?>">Voir le commentaire</a><br>
-                <a href="index.php?route=deleteArticle&id=<?= $comment->getCommentaire_id() ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
+                <p>Lié à l'article : <?=  "rr"?> </p><br>
+                <a href="index.php?route=deleteComment&id=<?= $comment->getCommentaire_id(); ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
                 <hr>
             </div>
         </div>

@@ -99,11 +99,12 @@ class FrontendController extends PdoConstruct
                 {
 
                     //Ajouter le commentaire et le pseudo si le visiteur est enregistré
-                    $newcomment = new Comments();
-                    $newcomment->setPseudo($nom);
-                    $newcomment->setContenu($comment);
+                    $newComment = new Comments($post);
+                    $newComment->setPseudo($nom);
+                    $newComment->setContenu($comment);
 
-                    $affectedLines = $newcomment->addCommentsToDb($articleId); // id de l'article
+                    $commentObj= new CommentDao;
+                    $affectedLines = $commentObj->addCommentsToDb($articleId,$newComment); // id de l'article
 
                     if ($affectedLines === false)
                     {

@@ -137,15 +137,11 @@ class BackendController
     //******************** Manage comments  ************************
     //*****************************************************************
 
-    public function editLisComments()
+    public function editListComments()
     {
         $comments = new CommentDao(); //////////// voir gestion instance en Singleton
         $commentEdited = $comments->getListComments();
-
-
-        echo '<pre> editarticle';
-        var_dump($commentEdited);
-
+//echo '<pre> backend'; var_dump($commentEdited);
         require 'vue/backend/list_comments.php';
     }
 
@@ -156,13 +152,17 @@ class BackendController
         require 'vue/backend/show_article.php';
     }
 
-    public function deleteComment($idArticle)
+    public function deleteComment($idComment)
     {
-        $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $articleDeleted = $articles->deleteArticle($idArticle);
-        if ($articleDeleted) {
-            header('Location:index.php?route=editListArticles');
-            exit();
+        $comment = new CommentDao(); //////////// voir gestion instance en Singleton
+        $commentDeleted = $comment->deleteComment($idComment);
+
+        if ($commentDeleted) {
+            echo '<pre> getlist'; var_dump($commentDeleted); die();
+            //$this->editListComments();
+            //require 'vue/backend/list_comments.php';
+            //header('Location:index.php?route=listComments');
+            //exit();
         }
     }
 }

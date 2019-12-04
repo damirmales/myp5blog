@@ -166,8 +166,4 @@ class Articles
     }
 
 
-
-
-
-
 }

@@ -5,15 +5,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/ArticleDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/ArticleDao.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Articles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/CommentDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/CommentDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Comments.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myp5blog.sublime-workspace" beforeDir="false" afterPath="$PROJECT_DIR$/myp5blog.sublime-workspace" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/admin_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/admin_page.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/edit_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/edit_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/ValidateForms.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/ValidateForms.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/backend/list_comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_comments.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/show_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/show_article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +148,8 @@
       <workItem from="1575195595943" duration="25735000" />
       <workItem from="1575268586686" duration="23464000" />
       <workItem from="1575312103174" duration="1910000" />
-      <workItem from="1575357584020" duration="18597000" />
+      <workItem from="1575357584020" duration="27541000" />
+      <workItem from="1575440278176" duration="18883000" />
     </task>
     <servers />
   </component>
@@ -172,6 +174,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="449" y="166" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1575056621397" />
+    <state x="363" y="91" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575461423697">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="363" y="91" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1575461423697" />
     <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1575364789435">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -180,10 +186,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575269221943" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1575357887432">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1575440474121">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1575357887432" />
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1575440474121" />
     <state x="339" y="162" key="run.anything.popup" timestamp="1575302092118">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

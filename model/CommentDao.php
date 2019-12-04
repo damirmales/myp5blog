@@ -1,10 +1,12 @@
 <?php
+
 namespace Model;
 
 
 class CommentDao extends PdoConstruct
 {
-    /************ Fetch comments from database ***************/
+
+   /************ Fetch comments from database ***************/
 
     public function getCommentsFromDb($articleId)
     {
@@ -15,14 +17,18 @@ class CommentDao extends PdoConstruct
 			ORDER BY date_ajout DESC'
         );
 
-        $requete->execute( [ ':id' => $articleId ] );
+        $requete->execute([':id' => $articleId]);
         $comments = $requete->fetchAll();
         return $comments;
     }
 
-    /************ Add comments to database ***************/
+    /************ Add comments to database **************
+     * @param $articleId
+     * @param $comment
+     * @return bool
+     */
 
-    public function addCommentsToDb($articleId)
+    public function addCommentsToDb($articleId,$comment)
     {
 
 
@@ -31,9 +37,9 @@ class CommentDao extends PdoConstruct
 			VALUES (:id,:pseudo,:contenu,NOW(),:valid, NOW(),:idart)
 			');
         $requete->bindValue(':id', NULL, \PDO::PARAM_INT);
-        $requete->bindValue(':pseudo', $this->getPseudo(), \PDO::PARAM_STR);
-        $requete->bindValue(':contenu', $this->getContenu(), \PDO::PARAM_STR);
-        $requete->bindValue(':valid', 1, \PDO::PARAM_INT);
+        $requete->bindValue(':pseudo', $comment->getPseudo(), \PDO::PARAM_STR);
+        $requete->bindValue(':contenu', $comment->getContenu(), \PDO::PARAM_STR);
+        $requete->bindValue(':valid', 0, \PDO::PARAM_INT);
         $requete->bindValue(':idart', $articleId, \PDO::PARAM_INT);
 
         $affectedLines = $requete->execute();
@@ -47,24 +53,38 @@ class CommentDao extends PdoConstruct
     public function getListComments()
     {
         $requete = $this->connection->prepare('
-			SELECT commentaire_id, pseudo, contenu, date_ajout 
-			FROM commentaires
-		    ORDER BY date_ajout DESC'
+            
+            SELECT commentaire_id, pseudo, B.contenu, date_ajout
+            FROM commentaires as B
+      
+            ORDER BY B . Articles_articles_id DESC'
         );
-
         $requete->execute();
 
-       // $listComments = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        /*$listComments = $requete->fetchAll(\PDO::FETCH_ASSOC);
+              $comments = new Comments($listComments);
+        return $comments; */
 
         $comments = [];
         foreach ($requete as $comment) {
             $comments[] = new Comments($comment);
         }
-
+       // echo '<pre> getlist'; var_dump($comments);
         return $comments;
-
     }
 
+    //---------- efface le commentaire en fonction du numéro d'id fournit ----------
 
+    public function deleteComment($idComment)
+    {//echo '<pre> deleteComment'; var_dump($idComment);
+        $commentaire = $this->connection->prepare('
+            DELETE 
+            FROM commentaires
+            WHERE Articles_articles_id = :id');
 
+        $commentaire->execute([':id' => $idComment]);
+
+        return $commentaire;
+
+    }
 }

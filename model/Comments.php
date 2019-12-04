@@ -1,36 +1,36 @@
 <?php
 namespace Model;
-use Model\PdoConstruct;
+
 
 /*********************************************/
 /************ Manage comments ***************/
 /*********************************************/
 
-class Comments extends PdoConstruct
+class Comments
 {
 
- 	protected $id;
+ 	protected $commentaire_id;
     protected $pseudo;
     protected $contenu;
     protected $date_ajout;
     protected $validation;
     protected $date_validation;
-    protected $Articles_articles_id;
+
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getCommentaire_id()
     {
-        return $this->id;
+        return $this->commentaire_id;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $commentaire_id
      */
-    public function setId( $id ): void
+    public function setCommentaire_id( $commentaire_id ): void
     {
-        $this->id = $id;
+        $this->commentaire_id = $commentaire_id;
     }
 
      /**
@@ -85,7 +85,7 @@ class Comments extends PdoConstruct
      */
     public function getValidation()
     {
-        return $this->auteur;
+        return $this->validation;
     }
 
     /**
@@ -112,6 +112,7 @@ class Comments extends PdoConstruct
     }
 
 
+
     public function __construct(array $datas)
     {
         $this->hydrate($datas);
@@ -119,6 +120,7 @@ class Comments extends PdoConstruct
 
     public function hydrate(array $datas)
     {
+//echo '<pre> hydra'; var_dump($datas);
         foreach ($datas as $key => $value)
         {
             $method = 'set'.ucfirst($key);
@@ -126,47 +128,11 @@ class Comments extends PdoConstruct
             if (method_exists($this, $method))
             {
                 $this->$method($value);
+
             }
         }
     }
 
-
-	/************ Fetch comments from database ***************/
-
-	public function getCommentsFromDb($articleId)
-	{
-		$requete = $this->connection->prepare('
-			SELECT commentaire_id, pseudo, contenu, date_ajout 
-			FROM commentaires
-			WHERE  Articles_articles_id = :id AND validation = 1
-			ORDER BY date_ajout DESC'
-		);
-
-		$requete->execute( [ ':id' => $articleId ] );
-		$comments = $requete->fetchAll();
-		return $comments;
-	}
-
-	/************ Add comments to database ***************/
-
-	public function addCommentsToDb($articleId)
-	{
-
-		$requete = $this->connection->prepare('
-			INSERT INTO commentaires (commentaire_id,pseudo,contenu,date_ajout,validation,date_validation,Articles_articles_id)
-			VALUES (:id,:pseudo,:contenu,NOW(),:valid, NOW(),:idart)
-			');
-		$requete->bindValue(':id', NULL, \PDO::PARAM_INT);
-		$requete->bindValue(':pseudo', $this->getPseudo(), \PDO::PARAM_STR);
-		$requete->bindValue(':contenu', $this->getContenu(), \PDO::PARAM_STR);
-		$requete->bindValue(':valid', 0, \PDO::PARAM_INT);
-		$requete->bindValue(':idart', $articleId, \PDO::PARAM_INT);
-
-		$affectedLines = $requete->execute();
-
-		return $affectedLines;
-
-	}
 	
 }		
 

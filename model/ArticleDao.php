@@ -1,5 +1,7 @@
 <?php
+
 namespace Model;
+
 use Model\PdoConstruct;
 use Model\Articles;
 
@@ -10,10 +12,9 @@ use Model\Articles;
  *************************************************************************************/
 class ArticleDao extends PdoConstruct
 {
-    private function buildArticle($field)
+    private function buildArticle($field) // create an object Articles to allow acces to its properties    {
     {
         $article = new Articles($field);
-
         return $article;
     }
 
@@ -52,13 +53,11 @@ class ArticleDao extends PdoConstruct
             $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
             // $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
             //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
-           // $requete->bindValue(':date_mise_a_jour', $article->getDate_mise_a_jour(), \PDO::PARAM_INT);
+            // $requete->bindValue(':date_mise_a_jour', $article->getDate_mise_a_jour(), \PDO::PARAM_INT);
 
             $affectedLines = $requete->execute();
             return $affectedLines;
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $requete . "<br>" . $e->getMessage();
         }
     }
@@ -121,12 +120,18 @@ class ArticleDao extends PdoConstruct
 
     public function deleteArticle($idArticle)
     {
-        $commentaire = $this->connection->prepare('
-            DELETE 
-            FROM commentaires
-            WHERE Articles_articles_id = :id');
+        try {
+            $commentaire = $this->connection->prepare('
+                DELETE 
+                FROM commentaires
+                WHERE Articles_articles_id = :id');
 
-        $commentaire->execute([':id' => $idArticle]);
+            $commentaire->execute([':id' => $idArticle]);
+        }
+        catch (PDOException $e)
+        {
+            echo $commentaire . "<br>" . $e->getMessage();
+        }
 
         $article = $this->connection->prepare('
             DELETE 

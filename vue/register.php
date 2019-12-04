@@ -103,11 +103,11 @@ require_once('functions/functions.php');
         </div>
         <div class="form-group">
           <label for="inputPassword">Mot de Passe</label>
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" >
+          <input type="password" class="form-control" id="inputPassword" placeholder="Mot de passe" name="password" >
         </div>
         <div class="form-group">
           <label for="inputPassword2">Retapez votre Mot de Passe</label>
-          <input type="password" class="form-control" id="inputPassword2" placeholder="re Password" name="password2" >
+          <input type="password" class="form-control" id="inputPassword2" placeholder="répeter Mot de passe" name="password2" >
         </div>
 
         <button type="submit" class="btn btn-primary" >Soumettre</button>
