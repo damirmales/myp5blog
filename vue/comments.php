@@ -3,9 +3,17 @@
  <div class="container">
 
      <?php
-     if ($_SESSION['user']['role'] === 'member')
+     if (($_SESSION['user']['role'] === 'member') || ($_SESSION['user']['role'] === 'admin'))
      {
          echo $formComment; // affiche le formulaire pour commenter
+     }
+     else
+     {
+         ?>
+         <p> Pour commenter un article vous devez vous enregistrer ou vous connecter</p>
+         <a href="index.php?route=register" class""> s'enregistrer</a>
+         <a href="index.php?route=connexion" class""> se connecter</a>
+    <?php
      }
 
      ?>

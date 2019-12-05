@@ -16,6 +16,28 @@ class Users extends PdoConstruct
     private $login;
     private $password;
 
+
+    public function __construct(array $datas)
+    {
+        $this->hydrate($datas);
+    }
+
+
+    public function hydrate(array $datas)
+    {
+        foreach ($datas as $key => $value)
+        {
+
+            $method = 'set'.ucfirst($key);
+
+            if (method_exists($this, $method))
+            {
+                $this->$method($value);
+            }
+        }
+    }
+
+
     /***************************************
      * @return mixed
      */
@@ -85,7 +107,7 @@ class Users extends PdoConstruct
      */
     public function getRole()
     {
-        return $this->email;
+        return $this->role;
     }
 
     /**
@@ -93,7 +115,7 @@ class Users extends PdoConstruct
      */
     public function setRole( $role ): void
     {
-        $this->email = $role;
+        $this->role = $role;
     }
 
     /**************************************
@@ -161,6 +183,10 @@ class Users extends PdoConstruct
     }
 
 
+
+
+
+
  	//----- Check if user is registered------------
 			public function checkUserRecord($email)
 			{
@@ -196,6 +222,10 @@ class Users extends PdoConstruct
 				return $user;
 
 			}
+
+
+
+
 
 	/************ Add user to database ***************/
 

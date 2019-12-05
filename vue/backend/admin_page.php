@@ -21,8 +21,7 @@ $titre = "Liste des pages";
       <p>Commentaires</p>
         <ul>
          <li><a href="index.php?route=listComments" >Liste des commentaires</a></li>
-         <li><a href="index.php?route=editComment" >Editer un commentaire</a></li>
-        <li><a href="index.php?route=supprComment" >Supprimer un commentaire</a></li>
+
       </ul>
     </div>
 </div>

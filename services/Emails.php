@@ -5,10 +5,10 @@ namespace Services;
 
 class Emails
 {
-
 	private $nom;
     private $prenom;
     private $email;
+    private $message;
 
      /**************************************
      * @return mixed
@@ -77,15 +77,13 @@ class Emails
 
 	public function sendEmail()
 	{
-
 		$prenom = $this->getPrenom('prenom');
 		$nom = $this->getNom('nom'); 
 		$email = $this->getEmail('email');
-		$message = $this->getMessage('message').' '; 
 
-		$message   .= '$email : '.$email;
-		$message   .= '$nom : '. $nom ;
-
+		$message   = 'email : '.$email.' - ';
+		$message   .= 'nom : '.$prenom.' '.$nom." - " ;
+        $message .= 'message : '.$this->getMessage('message');
 
 		$emailTo = "damir@romandie.com";
 		$subject = "Contact";
@@ -94,9 +92,11 @@ class Emails
 		$headers   = 'MIME-Version: 1.0' . "\r\n";
 		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
-
-		// envoi email 
+		//---- envoi email
 		$success = mail($emailTo, $subject, $message, $headers);
+
+       // echo '<pre>'; var_dump($success);
+        //$_SESSION["contactForm"] = "email  envoyé";
 		return $success;	
 
 	}

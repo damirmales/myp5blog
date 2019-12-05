@@ -8,6 +8,7 @@ use Model\Articles;
 use Model\ArticleDao;
 use Model\Comments;
 use Model\Users;
+use Model\UserDao;
 use Services\Emails;
 use Services\ValidateForms;
 
@@ -36,7 +37,6 @@ class FrontendController extends PdoConstruct
     {
         $reqArticles = new ArticleDao(); //////////// voir gestion instance en Singleton
         $articles = $reqArticles->getListArticles();
-
         require 'vue/articles.php';
     }
 
@@ -44,9 +44,7 @@ class FrontendController extends PdoConstruct
     {
         $reqArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $reqArticle->getSingleArticle($id);
-
         $comments = $this->getComments($id); // insérer les commentaires avec l'article
-
 
         require 'vue/commentForm.php';
     }
@@ -56,13 +54,11 @@ class FrontendController extends PdoConstruct
     public function getComments($id)
     {
         $comments = new CommentDao();
-
         $comments = $comments->getCommentsFromDb($id);
         return $comments;
-
     }
 
-    public function publishComments($articleId, $post)
+    public function addComment($articleId, $post)
     {
         $nom = $post['nom'];
         $email = $post['email'];
@@ -187,16 +183,16 @@ class FrontendController extends PdoConstruct
 
     public function addContact($post)
     {
-        $validContact = new ValidateForms;
-        print_r($validContact->verifyEmptiness($post));
+        //$validContact = new ValidateForms;
+        //print_r($validContact->verifyEmptiness($post));
 
         /******** Contact form check ****************/
         $contactErrorMessage = [];// Store error message to be available into home.php
 
-        if (!empty($_POST)) {
-            echo '$_POST vide ';
 
-            if ($_POST['formContact'] == 'sent') {
+
+            if ($_POST['formContact'] == 'sent')
+            {
 
                 if (empty($post['prenom'])) {
                     $contactErrorMessage['prenom'] = "Prénom non renseigné";
@@ -218,23 +214,24 @@ class FrontendController extends PdoConstruct
                     $sendEmail->setNom($_POST['nom']);
                     $sendEmail->setPrenom($_POST['prenom']);
                     $sendEmail->setEmail($_POST['email']);
+                    $sendEmail->setMessage($_POST['message']);
 
                     $email = $sendEmail->sendEmail();
 
-                    $this->messageEmailContactOK($email);
+                   echo '<pre>'; var_dump($email);
+                    //$this->messageEmailContactOK($email);
+                    $_SESSION["contactForm"] = "email  envoyé";
 
-                    /* $sendEmail = new Emails();
-                    $email = $sendEmail->swiftMailer();	*/
                 }
                 else
                 {
-                    $_SESSION["contactFormKO"] = "email non envoyé";
+                    $_SESSION["contactForm"] = "email non envoyé";
 
                     $this->saveFormData('input');
                 }
             }
-        }
 
+        echo $_SESSION['contactForm'];
         require 'vue/home.php';
 
     }
@@ -299,67 +296,69 @@ class FrontendController extends PdoConstruct
 
     public function checkUser()
     {
+
         $connexionErrorMessage = [];// Store error message to be available into login.php
 
+        if (htmlspecialchars($_POST['formLogin']) == 'sent') {
 
-        if (empty($_POST['login'])) {
-            //$_GLOBALS["contactMessage"] = "Pas de login renseigné";
-            $connexionErrorMessage['login'] = "Pas de login renseigné";
+            if (empty($_POST['login'])) {
+                //$_GLOBALS["contactMessage"] = "Pas de login renseigné";
+                $connexionErrorMessage['login'] = "Pas de login renseigné";
 
-        }
+            }
 
-        if (empty($_POST['password'])) {
-            $connexionErrorMessage['password'] = "Pas de password renseigné";
+            if (empty($_POST['password'])) {
+                $connexionErrorMessage['password'] = "Pas de password renseigné";
 
-        }
-        //---- if no errors compare form fields data with those into the DB -----
-        if (empty($connexionErrorMessage)) {
+            }
+            //---- if no errors compare form fields data with those into the DB -----
+            if (empty($connexionErrorMessage)) {
 
-            $userData = new Users();
-            $checkUser = $userData->checkUserLogin($_POST['login']);
-
-
-            //---- check if user is registered ---------
-            if (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'])) {
+                $userData = new UserDao();
+                $checkUser = $userData->checkUserLogin($_POST['login']);
 
 
-                if ($checkUser['statut'] == 1) {
-                    $_SESSION["user"]['role'] = $checkUser['role'];
-                    $_SESSION["user"]['nom'] = $checkUser['nom'];
-                    $_SESSION["user"]['login'] = $checkUser['login'];
+                //---- check if user is registered ---------
+                if (($checkUser['login'] === $_POST['login']) && password_verify($_POST['password'], $checkUser['password'])) {
 
 
-                    //------ check if user is admin --------
-                    if ($checkUser['role'] == 'admin') {
+                    if ($checkUser['statut'] == 1) {
+                        $_SESSION["user"]['role'] = $checkUser['role'];
+                        $_SESSION["user"]['nom'] = $checkUser['nom'];
+                        $_SESSION["user"]['login'] = $checkUser['login'];
 
 
-                        header('Location: index.php?route=admin'); // if user is admin go to admin page
-                        exit();
+                        //------ check if user is admin --------
+                        if ($checkUser['role'] == 'admin') {
 
-                    } else {
-                        $_SESSION["contactFormOK"] = "Vous êtes member";
+
+                            header('Location: index.php?route=admin'); // if user is admin go to admin page
+                            exit();
+
+                        } else {
+                            $_SESSION["contactFormOK"] = "Vous êtes member";
+
+                            header('Location: index.php');
+                            exit();
+                        }
+                    } else // statut = 0
+                    {
+                        echo "Vous n\'êtes pas autorisé à vous connecter";
+                        $_SESSION["contactFormOK"] = "Vous êtes pas autorisé à vous connecter";
 
                         header('Location: index.php');
                         exit();
                     }
-                } else // statut = 0
-                {
-                    echo "Vous n\'êtes pas autorisé à vous connecter";
-                    $_SESSION["contactFormOK"] = "Vous êtes pas autorisé à vous connecter";
+                } else {
+                    echo "Vous n\'êtes pas enregistré(e)";
+                    $_SESSION["contactFormOK"] = "Vous êtes pas notre member";
 
-                    header('Location: index.php');
+                    header('Location: index.php?route=connexion');
                     exit();
+
                 }
-            } else {
-                echo "Vous n\'êtes pas enregistré(e)";
-                $_SESSION["contactFormOK"] = "Vous êtes pas notre member";
-
-                header('Location: index.php?route=connexion');
-                exit();
-
             }
         }
-
         require 'vue/login.php';
     }
 
@@ -401,18 +400,15 @@ class FrontendController extends PdoConstruct
                 if (empty($post['prenom'])) {
 
                     $registerFormMessage['prenom'] = "rien ds le prenom";
-
                 }
 
                 if (empty($post['email'])) {
                     $registerFormMessage['email'] = "rien ds le email";
-
                 }
 
                 //check given email address
                 if (!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
                     $registerFormMessage['email'] = "L'email doit être selon format :bibi@fricotin.fr";
-
                 }
 
                 if (empty($post['login'])) {
@@ -444,18 +440,21 @@ class FrontendController extends PdoConstruct
 
                     //instancier la classe qui envoie les données des utilisateurs vers la bdd
 
-                    $user = new Users();
-
+                    echo '<pre> user '; var_dump($post);
+                    $user = new Users($post);
+                    $user->setToken($token);
+                   /*
                     $user->setNom($_POST['nom']);
                     $user->setPrenom($_POST['prenom']);
                     $user->setEmail($_POST['email']);
                     $user->setRole('member');
                     $user->setStatut(0);
-                    $user->setToken($token);
+
                     $user->setLogin($_POST['login']);
                     $user->setPassword($_POST['password']);
-
-                    $userInDb = $user->addUserToDb();
+                    */
+                    $userDao = new UserDao();
+                    $userInDb = $userDao->addUserToDb($user);
                     echo 'userInDb :' . $userInDb;
 
                     //$result =$this->verifyToken();
@@ -480,8 +479,10 @@ class FrontendController extends PdoConstruct
                     $anEmail = new Emails();
                     $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
                     $_SESSION["registerFormOK"] = "email envoyé";
+
                     header('Location: index.php?route=register');
                     exit();
+
                 } else {
                     $_SESSION["registerFormOK"] = "email non envoyé";
                     //$noMessageSend = "addContact email non envoyé";
@@ -500,14 +501,14 @@ class FrontendController extends PdoConstruct
 
     }
 
-//*********** check the token from the link validate by the user **************
+//*********** check the token from the link validate in the user's email **************
     public function verifyToken()
     {
-        if (isset($_GET['token'])) // if got user's token from email
+        if (isset($_GET['token']) && !empty($_GET['token']) ) // if got user's token from email
         {
             $userToken = trim($_GET['token']);//token from email
 
-            $sql = "SELECT nom  FROM users WHERE  token = :token";
+            $sql = "SELECT id,nom  FROM users WHERE  token = :token";
 
             $stmt = $this->connection->prepare($sql);
 
@@ -516,8 +517,8 @@ class FrontendController extends PdoConstruct
 
             $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-            echo "nom user : " . $result['nom'];
-            $_SESSION["userName"] = $result['nom'];
+           $newUser = new UserDao();
+           $newUser->validateUser($result['id']);
             //return $result;
             header('Location: index.php');
             exit();

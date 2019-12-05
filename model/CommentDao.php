@@ -1,5 +1,4 @@
 <?php
-
 namespace Model;
 
 
@@ -54,16 +53,12 @@ class CommentDao extends PdoConstruct
     {
         $requete = $this->connection->prepare('
             
-            SELECT commentaire_id, pseudo, B.contenu, date_ajout
+            SELECT commentaire_id, pseudo, B.contenu, date_ajout, validation
             FROM commentaires as B
       
             ORDER BY B . Articles_articles_id DESC'
         );
         $requete->execute();
-
-        /*$listComments = $requete->fetchAll(\PDO::FETCH_ASSOC);
-              $comments = new Comments($listComments);
-        return $comments; */
 
         $comments = [];
         foreach ($requete as $comment) {
@@ -87,4 +82,16 @@ class CommentDao extends PdoConstruct
         return $commentaire;
 
     }
+
+    public function validateComment($idComment)
+    {
+        $commentaire = $this->connection->prepare('
+            UPDATE  commentaires
+            SET validation = 1 
+            WHERE commentaire_id = :id');
+
+        $commentaire->execute([':id' => $idComment]);
+
+    }
+
 }

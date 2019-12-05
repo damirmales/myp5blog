@@ -34,6 +34,7 @@ if (!empty($commentErrorMessage)){
             </div>
             <textarea class="form-control" aria-label="With textarea" name="comment"></textarea>
         </div>
+    <br>
         <button type="submit" class="btn btn-primary" name="commentFormBtn">Envoyer</button>
     </form>
 

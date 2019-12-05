@@ -63,7 +63,8 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
-     <form action="index.php?route=pageAdmin" method="post" name="sentMessage" id="loginForm">
+     <form action="index.php?route=pageAdmin" method="post" name="loginForm" id="loginForm">
+         <input type="hidden" name="formLogin" value="sent">
       <div class="form-group">
         <label for="inputLogin">Login</label>
         <input type="input" class="form-control" id="login" name="login" aria-describedby="login" placeholder="Votre login">

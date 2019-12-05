@@ -55,7 +55,7 @@
 					{
 
 					            $frontController = new FrontendController;
-								$frontController->publishComments($_GET['id'], $_POST);
+								$frontController->addComment($_GET['id'], $_POST);
 
 					}
 					elseif($get == 'livres')
@@ -162,6 +162,7 @@
                         $backController->showArticle($_GET['id']);
 
                     }
+                    /*************** manage comments ***********/
                     elseif($get === 'listComments')
                     {
                         $backController = new BackendController;
@@ -172,6 +173,12 @@
                     {
                         $backController = new BackendController;
                         $backController->deleteComment($_GET['id']);
+
+                    }
+                    elseif($get === 'validateComment')
+                    {
+                        $backController = new BackendController;
+                        $backController->validateComment($_GET['id']);
 
                     }
                     else

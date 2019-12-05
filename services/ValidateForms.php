@@ -16,7 +16,7 @@ protected $prenom;
 
     public function __construct()
     {
-        
+
     }
 
     public function verifyEmptiness($post)

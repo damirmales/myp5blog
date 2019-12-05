@@ -82,6 +82,9 @@ require_once('functions/functions.php');
       <div class="col-lg-8 col-md-10 mx-auto">
        <form action="index.php?route=registerForm" method="post" name="registerForm" id="registerForm">
         <input type="hidden" name="formRegister" value="sent">
+           <input type="hidden" name="role" value="member">
+           <input type="hidden" name="statut" value="0">
+
         <div class="form-group">
           <label for="nom">Nom </label>
           <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->

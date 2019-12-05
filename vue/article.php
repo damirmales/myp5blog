@@ -39,8 +39,8 @@
   <div class="container">
     <p>Ajouter un commentaire<br/>
 
-    <a href="index.php?route=register"> S'enregistrer</a></p>
-     <a href="index.php?route=connexion"> Se connecter</a></p>
+
+
 
   </div>
 

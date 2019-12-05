@@ -22,9 +22,6 @@ class BackendController
             header('Location: index.php'); // if user is not admin
             exit();
 
-
-            /*header('Location:index.php?route=admin');
-            exit(); */
         }
 
         require 'vue/backend/admin_page.php';
@@ -164,6 +161,13 @@ class BackendController
             //header('Location:index.php?route=listComments');
             //exit();
         }
+    }
+
+    public function validateComment($idComment)
+    {
+        $getComment = new CommentDao(); //////////// voir gestion instance en Singleton
+        $comment = $getComment->validateComment($idComment);
+        $this->editListComments();
     }
 }
 
