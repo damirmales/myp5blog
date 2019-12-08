@@ -18,7 +18,7 @@
 					$get = filter_var($getAction, FILTER_SANITIZE_SPECIAL_CHARS);
 					
 		
-					if($get === 'contact')
+					if($get === 'contactForm')
 					{  
 						$frontController = new FrontendController;
 						//$frontController->home();
@@ -32,6 +32,13 @@
 						$frontController->cv();
 
 					}
+                    elseif($get === 'contact')
+                    {
+                        $frontController = new FrontendController;
+                        //$frontController->home();
+                        $frontController->contact();
+
+                    }
 					elseif($get === 'liste')
 					{
 						$frontController = new FrontendController;
@@ -46,7 +53,6 @@
 					}
 					elseif($get === 'admin')
 					{
-
 						$backController = new BackendController; // from frontendController checkUser() method
 						$backController->admin();
 
@@ -73,20 +79,13 @@
 						$frontController->getCategoryArticles($get);
 
 					}
-					/*elseif($get === 'contactForm')
-					{
-
-						$frontController = new FrontendController;							
-						$frontController->addContact($_POST);
-						
-					} */
-					elseif($get === 'connexion') // go to admin login.php form page
+		     		elseif($get === 'connexion') // go to login.php form page
 					{
 						$frontController = new FrontendController;							
 						$frontController->logAdmin();
 					
 					}
-					elseif($get === 'deconnexion') // go to admin login.php form page
+					elseif($get === 'deconnexion')
 					{
 						$frontController = new FrontendController;							
 						$frontController->logOff();

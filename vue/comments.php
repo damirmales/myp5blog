@@ -10,9 +10,9 @@
      else
      {
          ?>
-         <p> Pour commenter un article vous devez vous enregistrer ou vous connecter</p>
-         <a href="index.php?route=register" class""> s'enregistrer</a>
-         <a href="index.php?route=connexion" class""> se connecter</a>
+         <p> Pour commenter un article vous devez vous enregistrer et/ou vous connecter</p>
+         <p>➢<a href="index.php?route=register" class""> s'enregistrer</a></p>
+         <p>➢<a href="index.php?route=connexion" class""> se connecter</a></p>
     <?php
      }
 

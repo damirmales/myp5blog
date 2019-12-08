@@ -11,7 +11,7 @@ class UserDao extends PdoConstruct
 
         $userRecord = $this->connection->prepare('
 					SELECT id,nom,email
-					FROM Users
+					FROM users
 					WHERE email = :email
 					');
         // On lie la variable $email définie au-dessus au paramètre :email de la requête préparée

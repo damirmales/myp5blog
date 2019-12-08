@@ -1,6 +1,6 @@
 <?php ob_start();
 require_once('functions/functions.php');
-
+$errs[] = "";
 ?>
 
     <!-- Blog Author -->
@@ -34,30 +34,50 @@ require_once('functions/functions.php');
             <div class="alert alert-warning alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 ☝ <strong>Attention! </strong><br>
+
+
                 <?php
                 foreach ($contactErrorMessage as $err) {
 
-                    echo $err . '<br/>';
+                    print_r( $err . '<br/><br/>');
                 }
                 echo '</div>';
                 }
                 ?>
 
                 <?php
-                //============== mettre dans une classe Messages / success ============
-                if (!empty($_SESSION["userName"])) {
-                    echo '<br/><div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong>Bravo! </strong>'
-                        . $_SESSION["userName"] . ' vous êtes membre du blog</div>';
-
-                    unset($_SESSION["userName"]);
-                }
-
+                //============== mettre dans une classe Messages / warning ============
+               /* if (!empty($contactErrorMessage2)){
                 ?>
+                <br/>
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    ☝ <strong>Attention! </strong><br>
+
+
+                    <?php
+                    foreach ($contactErrorMessage2 as $err) {
+
+
+                            print_r( $err . '<br/><br/>');
+
+
+                    }
+                    echo '</div>';
+                    }
+                    */?>
+
+
+                    <?php
+                    if(!empty($contactErrorMessage2)){
+                        flashMessage($contactErrorMessage2);
+                    }
+
+                    ?>
+
                 <!-- Contact Form -  -->
 
-                <form action="index.php?route=contact" method="post" name="sentMessage" id="contactForm" novalidate>
+                <form action="index.php?route=contactForm" method="post" name="sentMessage" id="contactForm" novalidate>
                     <input type="hidden" name="formContact" value="sent">
                     <div class="control-group">
 
@@ -114,9 +134,7 @@ require_once('functions/functions.php');
 
 
     <hr>
-<?php $content = ob_get_clean();
-
-?>
+<?php $content = ob_get_clean();?>
 
 
 <?php require 'templates/layout_gabarit.php'; ?>

@@ -6,7 +6,6 @@ use Model\PdoConstruct;
     {  //echo "getFormData : $key";
       if (!empty($_SESSION[$session] [$key]))
       {
-
         return htmlspecialchars($_SESSION[$session] [$key]);
         }
         else  
@@ -70,4 +69,21 @@ use Model\PdoConstruct;
 
             return $userEmail;
         }
-    }  
+    }
+
+function setFlash($titre, $message, $type) {
+    $mess = [
+        'titre' =>$titre,
+        'message' => $message,
+        'type' =>$type
+    ];
+    return $mess;
+}
+
+function flashMessage($mess)
+{
+    echo '<div class="container alerte alert-'.$mess['type'].'">' . $mess['titre'] . '
+<button type="button" class="close" data-dismiss="alert">&times;</button>' . $mess['message'] .
+        '</div>';
+    unset($mess);
+}

@@ -6,23 +6,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/model/UserDao.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/securizeFormFields.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/CommentDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/CommentDao.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/checkFrontForms.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/UserDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserDao.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Users.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myp5blog.sublime-workspace" beforeDir="false" afterPath="$PROJECT_DIR$/myp5blog.sublime-workspace" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Emails.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Emails.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ValidateForms.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/ValidateForms.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/admin_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/admin_page.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/list_comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/articles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
     </list>
@@ -164,7 +161,10 @@
       <workItem from="1575440278176" duration="22357000" />
       <workItem from="1575493513823" duration="3114000" />
       <workItem from="1575531164446" duration="9079000" />
-      <workItem from="1575551539763" duration="15967000" />
+      <workItem from="1575551539763" duration="16550000" />
+      <workItem from="1575620451340" duration="22923000" />
+      <workItem from="1575718505087" duration="27871000" />
+      <workItem from="1575807143878" duration="17742000" />
     </task>
     <servers />
   </component>
@@ -205,13 +205,17 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575496558583" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1575551553854">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1575807431190">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1575551553854" />
-    <state x="339" y="162" key="run.anything.popup" timestamp="1575302092118">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1575807431190" />
+    <state x="339" y="162" key="run.anything.popup" timestamp="1575818018812">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1575302092118" />
+    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1575818018812" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1575822832601">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1575822832601" />
   </component>
 </project>

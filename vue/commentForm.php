@@ -15,6 +15,12 @@ if (!empty($commentErrorMessage)){
     echo '</div>';
     }
     ?>
+    <?php
+    if(!empty($commentErrorID)){
+        flashMessage($commentErrorID['userID']);
+    }
+
+    ?>
 
     <form action="index.php?route=addComment&id=<?= $article->getArticles_id() ?>" method="post" name="commentForm">
         <div class="form-group">
