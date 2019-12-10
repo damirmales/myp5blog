@@ -1,5 +1,4 @@
 <?php
-
 namespace Controller;
 
 use Model\ArticleDao;
@@ -8,6 +7,7 @@ use Model\CommentDao;
 use Model\Comments;
 
 require_once('functions/functions.php');
+require_once('functions/securizeFormFields.php');
 
 class BackendController
 {
@@ -40,21 +40,49 @@ class BackendController
     public function addArticle() //
     {
         $addArticleErrorMessage = [];// Store error message to be available into create_article
+        $post = securizeFormFields($_POST);
+        $messOk="";
 
-        if (isset($_POST['btn_creer_article'])) {
-            echo $_POST['rubrique'];
+        if (isset($post['btn_creer_article'])) {
 
-            if (empty($_POST['titre'])) {
-                $addArticleErrorMessage['titre'] = "Manque le titre";
+            if (empty($post['titre'])) {
+                $addArticleErrorMessage['titre'] = setFlash("Attention !", "Manque le titre", 'warning');
             }
-            if (empty($_POST['chapo'])) {
-                $addArticleErrorMessage['chapo'] = "Manque le chapo";
+            elseif (strlen($post['titre']) < 3)
+            {
+                $addArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
             }
-            if (empty($_POST['auteur'])) {
-                $addArticleErrorMessage['auteur'] = "Manque l'auteur";
+            elseif (strlen($post['titre']) > 45)
+            {
+                $addArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
             }
+
+            if (empty($post['chapo'])) {
+                $addArticleErrorMessage['chapo'] = setFlash("Attention !", "Manque le chapo", 'warning');
+            }
+            elseif (strlen($post['chapo']) < 3)
+            {
+                $addArticleErrorMessage['chapo'] = setFlash("Attention !", 'Votre chapo doit faire plus de 3 caractères', 'warning');
+            }
+            elseif (strlen($post['chapo']) > 45)
+            {
+                $addArticleErrorMessage['chapo'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
+            }
+
+            if (empty($post['auteur'])) {
+                $addArticleErrorMessage['auteur'] = setFlash("Attention !", "Manque l'auteur", 'warning');
+            }
+            elseif (strlen($post['auteur']) < 3)
+            {
+                $addArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire plus de 3 caractères', 'warning');
+            }
+            elseif (strlen($post['auteur']) > 45)
+            {
+                $addArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
+            }
+
             if (empty($_POST['contenu'])) {
-                $addArticleErrorMessage['contenu'] = "Manque le contenu";
+                $addArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
             }
 
 
@@ -63,16 +91,15 @@ class BackendController
 
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleAdded = $articleDao->setArticleToDb($article);
-                echo 'articleAdded';
-                $this->editListArticles();
+                echo $articleAdded;
+                $messOk = setFlash("Super !", "Article ajouté", 'success');
+
+                $this->showArticle($articleAdded);
                 unset($_SESSION['newArticle']); // delete data provided by user
                 //require 'vue/articles.php.php';
-            } else {
-                echo 'btn cliqué --> formulaire non remplis totalement';
-                saveFormData('newArticle');
             }
         }
-
+        saveFormData('newArticle');
         require 'vue/backend/create_article.php';
     }
 

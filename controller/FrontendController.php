@@ -68,8 +68,8 @@ class FrontendController
 
     public function addComment($articleId, $post)
     {
-        $nom = $post['nom'];
-        $email = $post['email'];
+        $nom = $_SESSION['user']['nom'];
+        $email = $_SESSION['user']['email'];
         $comment = $post['comment'];
 
 
@@ -81,27 +81,13 @@ class FrontendController
 
         if (isset($post['commentFormBtn'])) {
 
-            if (empty($post['nom'])) {
-                $commentErrorMessage['nom'] = "Nom non renseigné";
-            }
-
-            if (empty($post['email'])) {
-                $commentErrorMessage['email'] = "Email non renseigné";
-            }
-
             if (empty($post['comment'])) {
-                $commentErrorMessage['comment'] = "Commentaire non renseigné";
+                $commentErrorMessage ['contenu']= setFlash("Attention !", "Commentaire non renseigné", 'warning');
+               ;;
             }
 
             if (empty($commentErrorMessage)) {
 
-
-                //instancier la classe qui recupère les données des utilisateurs enregistrés
-                $user = new UserDao();
-                $checkUser = $user->checkUserRecord($post['email']);
-
-                //verifier si l'utilisateur ayant soumi le commentaire est enregistré
-                if (($checkUser['nom'] == $nom) && ($checkUser['email'] == $email)) {
 
                     //Ajouter le commentaire et le pseudo si le visiteur est enregistré
                     $newComment = new Comments($post);
@@ -111,7 +97,8 @@ class FrontendController
                     $commentObj = new CommentDao;
                     $affectedLines = $commentObj->addCommentsToDb($articleId, $newComment); // id de l'article
 
-                    if ($affectedLines === false) {
+                    if ($affectedLines === false)
+                    {
                         //die('Impossible d\'ajouter le commentaire !');
                         exit('Impossible d\'ajouter le commentaire !');
                     } else {
@@ -119,12 +106,7 @@ class FrontendController
                         echo 'commentaire en attente de validation';
                         /*header('Location: index.php?route=article&id=' . $articleId);
                         exit();*/
-
                     }
-                } else {
-
-                    $commentErrorID['userID'] = setFlash("Attention !", 'identifiants non conforme pour pouvoir commenter', 'warning');;
-                }
 
             } else {
                 saveFormData('comment');
@@ -142,7 +124,6 @@ class FrontendController
         }
 
         if (($comments instanceof Comments) != true) {
-
 
             $comments = new CommentDao();
             $comments = $comments->getCommentsFromDb($articleId);
@@ -195,23 +176,40 @@ class FrontendController
 
         if ($field['formContact'] == 'sent') {
 
-            if (empty($field['prenom'])) {
-                $contactErrorMessage['prenom'] = "Prénom non renseigné";
-            } elseif (strlen($field['prenom']) < 3) {
-                $contactErrorMessage['prenom'] = "Votre prenom doit faire 3 caractères mininum";
-            }
             if (empty($field['nom'])) {
-                $contactErrorMessage['nom'] = "Nom non renseigné";
-            } elseif (strlen($field['nom']) < 3) {
-                $contactErrorMessage['nom'] = "Votre nom doit faire 3 caractères mininum";
+                $contactErrorMessage['nom'] = setFlash("Attention !", "Nom non renseigné", "warning"); // Store error message to be abvailable into register.php
             }
+            elseif (strlen($field['nom']) < 3)
+            {
+                $contactErrorMessage['nom'] = setFlash("Attention !", 'Votre nom doit faire plus de 3 caractères', 'warning');
+            }
+            elseif (strlen($field['nom']) > 45)
+            {
+                $contactErrorMessage['nom'] = setFlash("Attention !", 'Votre nom doit faire moins de 45 caractères', 'warning');
+            }
+
+            if (empty($field['prenom'])) {
+                $contactErrorMessage['prenom'] = setFlash("Attention !", "prenom non renseigné", "warning"); // Store error message to be abvailable into register.php
+            }
+            elseif (strlen($field['prenom']) < 3)
+            {
+                $contactErrorMessage['prenom'] = setFlash("Attention !", 'Votre prenom doit faire plus de 3 caractères', 'warning');
+            }
+            elseif (strlen($field['prenom']) > 45)
+            {
+                $contactErrorMessage['prenom'] = setFlash("Attention !", 'Votre prenom doit faire moins de 45 caractères', 'warning');
+            }
+
+
             if (empty($field['email'])) {
-                $contactErrorMessage['email'] = "Email non renseigné";
+                $contactErrorMessage['email'] = setFlash("Attention !", "Email non renseigné", 'warning');
             } elseif (!filter_var($field['email'], FILTER_VALIDATE_EMAIL)) {
-                $contactErrorMessage['email'] = "L'email doit être selon format :bibi@fricotin.fr";
+                $contactErrorMessage['email'] = setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", 'warning');
             }
+
+
             if (empty($field['message'])) {
-                $contactErrorMessage['message'] = "Le message manque";
+                $contactErrorMessage['message'] = setFlash("Attention !", "Le message manque", 'warning');
             }
 
             if (empty($contactErrorMessage)) {
@@ -297,15 +295,13 @@ class FrontendController
 
             if (empty($field['login'])) {
 
-                $connexionErrorMessage['login'] = "Pas de login renseigné";
+                $connexionErrorMessage['login'] = setFlash("Attention !", "Pas de login renseigné", 'warning');
             }
 
             if (empty($field['password'])) {
-                $connexionErrorMessage['password'] = "Pas de password renseigné";
+                $connexionErrorMessage['password'] = setFlash("Attention !", "Pas de password renseigné", 'warning');
 
             }
-
-
 
             //---- if no errors compare form fields data with those into the DB -----
             if (empty($connexionErrorMessage)) {
@@ -321,6 +317,8 @@ class FrontendController
                         $_SESSION["user"]['role'] = $checkUser['role'];
                         $_SESSION["user"]['nom'] = $checkUser['nom'];
                         $_SESSION["user"]['login'] = $checkUser['login'];
+                        $_SESSION["user"]['email'] = $checkUser['email'];
+                        $_SESSION["user"]['bienvenu'] = 1;
 
                         //------ check if user is admin --------
                         if ($checkUser['role'] == 'admin') {
@@ -361,7 +359,7 @@ class FrontendController
     public
     function userRole($role)
     {
-        var_dump($role['statut']);
+
         if (($role['role'] === 'admin') && ($role['statut'] == 1)) {
             echo '$role est admin';
 
@@ -382,63 +380,70 @@ class FrontendController
     function addUser()
     {
         unset($_SESSION["registerFormOK"]);
-        $post = $_POST;
+
+        $post = securizeFormFields($_POST);
         /******** Contact form check ****************/
 
         $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs dans les champs du formulaire
 
         if (!empty($post)) {
-            saveFormData('register');
+
             if ($post['formRegister'] == 'sent') {
                 if (empty($post['nom'])) {
-                    $registerFormMessage = setFlash("Attention !", "rien ds le nom", "warning");; // Store error message to be abvailable into register.php
-
+                    $registerFormMessage['nom'] = setFlash("Attention !", "rien ds le nom", "warning"); // Store error message to be abvailable into register.php
                 }
                 elseif (strlen($post['nom']) < 3)
                 {
-                    $registerFormMessage = setFlash("Attention !", 'Votre nom doit faire plus de 3 caractères', 'warning');
-
+                    $registerFormMessage['nom'] = setFlash("Attention !", 'Votre nom doit faire plus de 3 caractères', 'warning');
                 }
+                elseif (strlen($post['nom']) > 45)
+                {
+                    $registerFormMessage['nom'] = setFlash("Attention !", 'Votre nom doit faire moins de 45 caractères', 'warning');
+                }
+
                 if (empty($post['prenom'])) {
 
-                    $registerFormMessage = setFlash("Attention !", "rien ds le prenom", "warning");; // Store error message to be abvailable into register.php
+                    $registerFormMessage['prenom']= setFlash("Attention !", "rien ds le prenom", "warning"); // Store error message to be abvailable into register.php
 
                 }
                 elseif (strlen($post['prenom']) < 3)
                 {
-                    $registerFormMessage = setFlash("Attention !", 'Votre prenom doit faire plus de 3 caractères', 'warning');
-
+                    $registerFormMessage['prenom'] = setFlash("Attention !", 'Votre prenom doit faire plus de 3 caractères', 'warning');
                 }
+                elseif (strlen($post['prenom']) > 45)
+                {
+                    $registerFormMessage['prenom'] = setFlash("Attention !", 'Votre prenom doit faire moins de 45 caractères', 'warning');
+                }
+
                 if (empty($post['email'])) {
-                    $registerFormMessage = setFlash("Attention !", "rien ds le email", "warning");; // Store error message to be abvailable into register.php
+                    $registerFormMessage['email']= setFlash("Attention !", "rien ds le email", "warning"); // Store error message to be abvailable into register.php
 
                 }
                 elseif (!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-                    $registerFormMessage = setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", "warning");
+                    $registerFormMessage['email'] = setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", "warning");
 
                 }
 
                 if (empty($post['login'])) {
-                    $registerFormMessage = setFlash("Attention !", "rien ds le login", "warning");; // Store error message to be abvailable into register.php
-
+                    $registerFormMessage['login'] = setFlash("Attention !", "rien ds le login", "warning"); // Store error message to be abvailable into register.php
 
                 }
 
                 if (empty($post['password'])) {
-                    $registerFormMessage = setFlash("Attention !", "rien ds le Mot de passe ", "warning");; // Store error message to be abvailable into register.php
+                    $registerFormMessage['password']  = setFlash("Attention !", "rien ds le Mot de passe ", "warning"); // Store error message to be abvailable into register.php
 
                 }
 
                 if (empty($post['password2'])) {
-                    $registerFormMessage = setFlash("Attention !", "rien ds le répéter mot de passe ", "warning");; // Store error message to be abvailable into register.php
+                    $registerFormMessage ['password2'] = setFlash("Attention !", "rien ds le répéter mot de passe ", "warning"); // Store error message to be abvailable into register.php
 
                 }
 
                 if (($post['password2']) !== ($post['password'])) {
-                    $registerFormMessage = setFlash("Attention !", "les champs des mots de passe doivent être identiques", "warning");; // Store error message to be abvailable into register.php
+                    $registerFormMessage['password12']  = setFlash("Attention !", "les champs des mots de passe doivent être identiques", "warning"); // Store error message to be abvailable into register.php
 
                 }
-
+                saveFormData('register');
                 //--------------------------------------------------------------
                 //---- if no errors in form fields add user's data in DB and ---
                 //---- launch email checking with a token ----------------------
@@ -449,7 +454,6 @@ class FrontendController
                     $token = generateToken();
 
                     //instancier la classe qui envoie les données des utilisateurs vers la bdd
-
 
                     $user = new Users($post);
                     $user->setToken($token);
@@ -471,7 +475,7 @@ class FrontendController
                     {
                         echo 'token non vérifié';
                     }
-        */
+                */
 
                     $userEmail = $user->getEmail(); //"damir@romandie.com";
 
@@ -484,11 +488,7 @@ class FrontendController
                     header('Location: index.php?route=register');
                     exit();
 
-                } else {
-                    $registerFormMessage['sendEmail'] = "email non envoyé";
-                    //$noMessageSend = "addContact email non envoyé";
-
-                }
+                } 
             }
         }
         /*	session_destroy();

@@ -1,27 +1,16 @@
 <?php ob_start();
 $titre = "Modifier un article";
-
+$messOk="";
 ?>
 <div class="col-lg-8 col-md-10 mx-auto">
     <p>Vous pouvez modifier cet article</p>
 
     <?php
-    //============== mettre dans une classe Messages / warning ============
-    if (!empty($addArticleErrorMessage))
-    {
-    ?>
-<br/>
-    <div class="container alert alert-warning alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        ☝ <strong>Attention! </strong><br>
-        <?php
-        foreach ($addArticleErrorMessage as $err) {
+    if(isset($addArticleErrorMessage) && empty($addArticleErrorMessage)){
+        flashMessage2($messOk);
+    }
 
-            echo $err . '<br/>';
-        }
-        echo '</div>';
-        }
-        ?>
+    ?>
 
         <form action="index.php?route=updateArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>
             <input type="hidden" name="articles_id" value="<?= $article->getArticles_id();?>">

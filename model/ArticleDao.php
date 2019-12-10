@@ -34,7 +34,10 @@ class ArticleDao extends PdoConstruct
         //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
         //$requete->bindValue(':date_mise_a_jour', $this->getDateMiseAJour(), \PDO::PARAM_INT);
         $affectedLines = $requete->execute();
-        return $affectedLines;
+
+        $lastId = $this->connection->lastInsertId();
+        $requete->closeCursor();
+        return $lastId; //$affectedLines;
     }
 
     public function updateArticleToDb($article)
@@ -56,6 +59,7 @@ class ArticleDao extends PdoConstruct
             // $requete->bindValue(':date_mise_a_jour', $article->getDate_mise_a_jour(), \PDO::PARAM_INT);
 
             $affectedLines = $requete->execute();
+            $requete->closeCursor();
             return $affectedLines;
         } catch (PDOException $e) {
             echo $requete . "<br>" . $e->getMessage();
@@ -76,7 +80,6 @@ class ArticleDao extends PdoConstruct
         foreach ($listArticles as $article) {
             $articles[] = new Articles($article);
         }
-
         return $articles;
 
         $listArticles->closeCursor();
@@ -94,7 +97,7 @@ class ArticleDao extends PdoConstruct
         );
         $requete->execute([':id' => $idArticle]);
         $article = $requete->fetch(\PDO::FETCH_ASSOC); //si pas FETCH_ASSOC alors on recupere des numéros de colonne
-
+        $requete->closeCursor();
         $oneArticle = new Articles($article);
         return $oneArticle;
     }
@@ -113,6 +116,7 @@ class ArticleDao extends PdoConstruct
 
         $listArticles->execute();
         $articles = $listArticles->fetchAll();
+        $listArticles->closeCursor();
         return $articles;
     }
 
@@ -139,7 +143,7 @@ class ArticleDao extends PdoConstruct
             WHERE articles_id = :id');
 
         $article->execute([':id' => $idArticle]);
-
+        $article->closeCursor();
         return $article;
 
     }

@@ -45,7 +45,8 @@ class UserDao extends PdoConstruct
 
     public function addUserToDb($user)
     {
-
+        try
+        {
         $requete = $this->connection->prepare('
 					INSERT INTO users (id,nom,prenom,email,role,statut,token,login,password)
 					VALUES (:id,:nom,:prenom,:email,:role,:statut,:token,:login,:password)
@@ -60,7 +61,13 @@ class UserDao extends PdoConstruct
         $requete->bindValue(':login', $user->getLogin(), \PDO::PARAM_STR);
         $requete->bindValue(':password', $this->hashPassword($user->getPassword()), \PDO::PARAM_STR);
 
+
         $affectedLines = $requete->execute();
+        }
+        catch(Exception $e){
+        print_r($e->getMessage());
+       
+    }
 
         return $affectedLines;
 

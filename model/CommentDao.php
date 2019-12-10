@@ -55,7 +55,7 @@ class CommentDao extends PdoConstruct
             
             SELECT commentaire_id, pseudo, B.contenu, date_ajout, validation
             FROM commentaires as B
-      
+            WHERE validation = 0
             ORDER BY B . Articles_articles_id DESC'
         );
         $requete->execute();

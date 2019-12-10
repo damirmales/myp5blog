@@ -7,8 +7,6 @@ $titre = "Liste des articles";
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">
 
-
-
             <h2 class="post-title">
            <a href="index.php?route=showArticle&id=<?= $article->getArticles_id() ?>">   <?php echo htmlspecialchars($article->getTitre()); ?>
        </a>
@@ -17,12 +15,10 @@ $titre = "Liste des articles";
             <h3 class="post-subtitle">
              <?php echo  htmlspecialchars($article->getChapo()); ?>
             </h3>
-   
-  
+
       <p class="post-meta">Modifié le : 
             <?php echo  htmlspecialchars($article->getDate_mise_a_jour()); ?>
       </p>
-   
 
         </div>
      

@@ -21,13 +21,13 @@
 /******************************** gestion des messages selon les renseignements des formulaires ***********
  * //************* mettre dans une classe Messages / success **********************
  * /*****************************************************************************/
-if (!empty($_SESSION["user"]['nom'])) {
+if (!empty($_SESSION["user"]['bienvenu'])) {
     echo '<br/><div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Bravo! </strong>'
         . $_SESSION["user"]['nom'] . ' vous êtes membre du blog et vous pouvez commenter</div>';
 
-    unset($_SESSION["user"]['nom']);
+    unset($_SESSION["user"]['bienvenu']);
 }
 
 if (!empty($_SESSION["loginForm"])) {

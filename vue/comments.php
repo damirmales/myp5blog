@@ -5,6 +5,7 @@
      <?php
      if (($_SESSION['user']['role'] === 'member') || ($_SESSION['user']['role'] === 'admin'))
      {
+
          echo $formComment; // affiche le formulaire pour commenter
      }
      else

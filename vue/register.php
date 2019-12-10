@@ -21,28 +21,9 @@ $errs[] = "";
     </header>
 
 <?php
-//============== mettre dans une classe Messages / warning ============
-/*
-   if (!empty($registerFormMessage)) {
-    ?>
-    <br/><div class="container alert alert-warning alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    ☝ <strong>Attention! </strong><br>
-
- <?php
-    foreach ($registerFormMessage as $err) {
-        echo $err . '<br/>';
-    }
-    echo '</div>';
-} */
-?>
-
-<?php
-
 if(!empty($registerFormMessage)){
     flashMessage($registerFormMessage);
 }
-
 ?>
 
 <?php
@@ -61,7 +42,7 @@ if (!empty($_SESSION["registerFormOK"])) {
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <form action="index.php?route=registerForm" method="post" name="registerForm" id="registerForm">
+                <form action="index.php?route=addUser" method="post" name="registerForm" id="registerForm">
                     <input type="hidden" name="formRegister" value="sent">
                     <input type="hidden" name="role" value="member">
                     <input type="hidden" name="statut" value="0">

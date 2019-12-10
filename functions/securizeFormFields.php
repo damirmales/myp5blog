@@ -21,18 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 {
     foreach ($data as $key => $field)
     {
-
-
         $field = trim($field);
         $field = stripslashes($field);
         $field = htmlspecialchars($field);
 
         $arrayField[$key]=$field;
-
-
     }
-    
     return $arrayField;
-
 }
 

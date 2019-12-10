@@ -1,7 +1,7 @@
 <?php ob_start();
 
 //============== mettre dans une classe Messages / warning ============
-if (!empty($commentErrorMessage)){
+/*if (!empty($commentErrorMessage)){
 ?>
 <br/>
 <div class="alert alert-warning alert-dismissible">
@@ -13,17 +13,18 @@ if (!empty($commentErrorMessage)){
         echo $err . '<br/>';
     }
     echo '</div>';
-    }
+    }*/
     ?>
+
     <?php
-    if(!empty($commentErrorID)){
-        flashMessage($commentErrorID['userID']);
+    if (!empty($commentErrorMessage)) {
+        flashMessage($commentErrorMessage);
     }
 
     ?>
 
     <form action="index.php?route=addComment&id=<?= $article->getArticles_id() ?>" method="post" name="commentForm">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="nom">Nom</label>
             <input type="text" class="form-control" id="nom" placeholder="" value="<?= getFormData('comment', 'nom') ?>"
                    name="nom">
@@ -33,14 +34,14 @@ if (!empty($commentErrorMessage)){
             <input type="email" class="form-control" id="email" value="<?= getFormData('comment', 'email') ?>"
                    name="email">
         </div>
-
+        //-->
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">Votre commentaire</span>
             </div>
             <textarea class="form-control" aria-label="With textarea" name="comment"></textarea>
         </div>
-    <br>
+        <br>
         <button type="submit" class="btn btn-primary" name="commentFormBtn">Envoyer</button>
     </form>
 

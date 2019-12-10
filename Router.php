@@ -67,7 +67,6 @@
 					elseif($get == 'livres')
 					{
 
-
 						$frontController = new FrontendController;
 						$frontController->getCategoryArticles($get);
 
@@ -104,10 +103,10 @@
 						$frontController->register();
 					
 					}
-					elseif($get === 'registerForm')// register user's data into the database
+					elseif($get === 'addUser')// register user's data into the database
 					{
 						$frontController = new FrontendController;							
-						$frontController->addUser($_POST);
+						$frontController->addUser();
 					
 					}
 					elseif($get === 'verifEmail')// check user email via token

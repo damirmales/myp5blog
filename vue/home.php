@@ -1,6 +1,6 @@
 <?php ob_start();
 require_once('functions/functions.php');
-$errs[] = "";
+
 ?>
 
     <!-- Blog Author -->
@@ -25,58 +25,12 @@ $errs[] = "";
             <p>Vous êtes dans le blog de Damir Males.
                 <br/>Vous pouvez me contactez par ce formulaire</p>
 
-
-            <?php
-            //============== mettre dans une classe Messages / warning ============
-            if (!empty($contactErrorMessage)){
-            ?>
-            <br/>
-            <div class="alert alert-warning alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                ☝ <strong>Attention! </strong><br>
-
-
-                <?php
-                foreach ($contactErrorMessage as $err) {
-
-                    print_r( $err . '<br/><br/>');
-                }
-                echo '</div>';
-                }
-                ?>
-
-                <?php
-                //============== mettre dans une classe Messages / warning ============
-               /* if (!empty($contactErrorMessage2)){
-                ?>
-                <br/>
-                <div class="alert alert-warning alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    ☝ <strong>Attention! </strong><br>
-
-
                     <?php
-                    foreach ($contactErrorMessage2 as $err) {
-
-
-                            print_r( $err . '<br/><br/>');
-
-
+                    if(!empty($contactErrorMessage)){
+                        flashMessage($contactErrorMessage);
                     }
-                    echo '</div>';
-                    }
-                    */?>
-
-
-                    <?php
-                    if(!empty($contactErrorMessage2)){
-                        flashMessage($contactErrorMessage2);
-                    }
-
                     ?>
-
                 <!-- Contact Form -  -->
-
                 <form action="index.php?route=contactForm" method="post" name="sentMessage" id="contactForm" novalidate>
                     <input type="hidden" name="formContact" value="sent">
                     <div class="control-group">
@@ -105,8 +59,8 @@ $errs[] = "";
                         <div class="form-group floating-label-form-group controls">
                             <label>Email</label>
                             <input type="email" class="form-control" placeholder="Email" name="email" id="email"
-                                   required data-validation-required-message="Entrez votre email."
-                                   value="<?= getFormData('input', 'email') ?>">
+                                    data-validation-required-message="Entrez votre email."
+                                   value="<?= getFormData('input', 'email') ?>"  required>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>

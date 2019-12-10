@@ -23,7 +23,7 @@ $errs[] = "";
 
  <?php
  //============== mettre dans une classe Messages / warning ============
- if (!empty($connexionErrorMessage)){
+ /*if (!empty($connexionErrorMessage)){
 
           echo '<br/><div class="container alert alert-warning alert-dismissible">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -34,8 +34,14 @@ $errs[] = "";
           }
           echo '</div>';
         } 
-        ?>
+   */    ?>
 
+<?php
+if (!empty($connexionErrorMessage)) {
+    flashMessage($connexionErrorMessage);
+}
+
+?>
 
 <!-- Main Content -->
 <div class="container">
