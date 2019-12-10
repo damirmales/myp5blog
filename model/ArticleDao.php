@@ -12,52 +12,58 @@ use Model\Articles;
  *************************************************************************************/
 class ArticleDao extends PdoConstruct
 {
-    private function buildArticle($field)
+    private function buildArticle($field) // create an object Articles to allow acces to its properties    {
     {
         $article = new Articles($field);
-
         return $article;
     }
 
     /************ Add articles to database ***************/
-    public function setArticleToDb($objArt)
+    public function setArticleToDb($article)
     {
         $requete = $this->connection->prepare('
             INSERT INTO articles (articles_id,titre,chapo,auteur,contenu,rubrique,date_creation,date_mise_a_jour)
             VALUES (:id,:titre,:chapo,:auteur,:contenu,:rubrique,NOW(),NOW())
             ');
         $requete->bindValue(':id', NULL, \PDO::PARAM_INT);
-        $requete->bindValue(':titre', $objArt->getTitre(), \PDO::PARAM_STR);
-        $requete->bindValue(':chapo', $objArt->getChapo(), \PDO::PARAM_STR);
-        $requete->bindValue(':auteur', $objArt->getAuteur(), \PDO::PARAM_STR);
-        $requete->bindValue(':contenu', $objArt->getContenu(), \PDO::PARAM_STR);
-        $requete->bindValue(':rubrique', $objArt->getRubrique(), \PDO::PARAM_STR);
+        $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
+        $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
+        $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
+        $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
+        $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
         //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
         //$requete->bindValue(':date_mise_a_jour', $this->getDateMiseAJour(), \PDO::PARAM_INT);
         $affectedLines = $requete->execute();
-        return $affectedLines;
+
+        $lastId = $this->connection->lastInsertId();
+        $requete->closeCursor();
+        return $lastId; //$affectedLines;
     }
 
     public function updateArticleToDb($article)
     {
-        echo '<pre> updateArticleToDb :';
-        var_dump($article);
-        die();
-        $requete = $this->connection->prepare('
-            UPDATE articles (titre,chapo,auteur,contenu,rubrique,date_creation,date_mise_a_jour)
-            VALUES (:titre,:chapo,:auteur,:contenu,:rubrique,NOW(),NOW())
+
+        try {
+            $requete = $this->connection->prepare('
+            UPDATE articles
+            SET titre = :titre, chapo = :chapo, auteur = :auteur, contenu = :contenu, date_mise_a_jour = NOW()
             WHERE  articles_id = :id
             ');
-        $requete->bindValue(':id', $idArticle, \PDO::PARAM_INT);
-        $requete->bindValue(':titre', $objArt->getTitre(), \PDO::PARAM_STR);
-        $requete->bindValue(':chapo', $objArt->getChapo(), \PDO::PARAM_STR);
-        $requete->bindValue(':auteur', $objArt->getAuteur(), \PDO::PARAM_STR);
-        $requete->bindValue(':contenu', $objArt->getContenu(), \PDO::PARAM_STR);
-        $requete->bindValue(':rubrique', $objArt->getRubrique(), \PDO::PARAM_STR);
-        //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
-        //$requete->bindValue(':date_mise_a_jour', $this->getDateMiseAJour(), \PDO::PARAM_INT);
-        $affectedLines = $requete->execute();
-        return $affectedLines;
+            $requete->bindValue(':id', $article->getArticles_id(), \PDO::PARAM_INT);
+            $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
+            $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
+            $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
+            $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
+            // $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
+            //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
+            // $requete->bindValue(':date_mise_a_jour', $article->getDate_mise_a_jour(), \PDO::PARAM_INT);
+
+            $affectedLines = $requete->execute();
+            $requete->closeCursor();
+            return $affectedLines;
+        } catch (PDOException $e) {
+            echo $requete . "<br>" . $e->getMessage();
+        }
     }
 
 //----- Retourne la liste des articles pour affichage ------------
@@ -74,7 +80,6 @@ class ArticleDao extends PdoConstruct
         foreach ($listArticles as $article) {
             $articles[] = new Articles($article);
         }
-
         return $articles;
 
         $listArticles->closeCursor();
@@ -91,12 +96,10 @@ class ArticleDao extends PdoConstruct
             ORDER BY articles_id DESC'
         );
         $requete->execute([':id' => $idArticle]);
-        $article = $requete->fetch();
-
-        // echo '<pre>';var_dump($article);
-        $oneArticles = new Articles($article);
-
-        return $oneArticles;
+        $article = $requete->fetch(\PDO::FETCH_ASSOC); //si pas FETCH_ASSOC alors on recupere des numéros de colonne
+        $requete->closeCursor();
+        $oneArticle = new Articles($article);
+        return $oneArticle;
     }
 
     /*-------- Retourne la liste des articles selon la rubrique -------
@@ -113,6 +116,7 @@ class ArticleDao extends PdoConstruct
 
         $listArticles->execute();
         $articles = $listArticles->fetchAll();
+        $listArticles->closeCursor();
         return $articles;
     }
 
@@ -120,12 +124,18 @@ class ArticleDao extends PdoConstruct
 
     public function deleteArticle($idArticle)
     {
-        $commentaire = $this->connection->prepare('
-            DELETE 
-            FROM commentaires
-            WHERE Articles_articles_id = :id');
+        try {
+            $commentaire = $this->connection->prepare('
+                DELETE 
+                FROM commentaires
+                WHERE Articles_articles_id = :id');
 
-        $commentaire->execute([':id' => $idArticle]);
+            $commentaire->execute([':id' => $idArticle]);
+        }
+        catch (PDOException $e)
+        {
+            echo $commentaire . "<br>" . $e->getMessage();
+        }
 
         $article = $this->connection->prepare('
             DELETE 
@@ -133,7 +143,7 @@ class ArticleDao extends PdoConstruct
             WHERE articles_id = :id');
 
         $article->execute([':id' => $idArticle]);
-
+        $article->closeCursor();
         return $article;
 
     }

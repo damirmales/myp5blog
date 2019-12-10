@@ -5,21 +5,19 @@ namespace Model;
 
 	class Database	
 	{   
-		const DB_HOST = 'mysql:host=localhost;dbname=p5blog;charset=utf8';
-	    const DB_USER = 'root';
-	    const DB_PASS = '';
+		const DB_HOST = 'mysql:host=185.98.131.94;dbname=damir983633_2yn1hc;charset=utf8';
+	    const DB_USER = 'damir983633';
+	    const DB_PASS = 'sbjnhgvzqu';
 
 				public function getConnectDB()
 				{
+
 					try
 					{
 						$connectPDO = new \PDO(self::DB_HOST, self::DB_USER , self::DB_PASS);
 						$connectPDO->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-					//..NOTA..: se renseigner sur \PDO::FETCH_OBJ  pour récupérer un objet
-                        //$connectPDO->setFetchMode(\PDO::FETCH_OBJ );
-                        //$connectPDO->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
-					// on renvoi un objet de type PDOstatement qui contient la connexion à la bdd
+					
+					// on renvoi un objet de type PDOstatement qui contien la connexion à la bdd
 						return $connectPDO;
 										
 					}
@@ -31,6 +29,9 @@ namespace Model;
 
 				}
 	}	
+
+
+	
 
 
 ?>

@@ -1,5 +1,7 @@
 <?php ob_start(); ?>
 
+
+
    <!-- Blog Author -->
   <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
     <div class="overlay"></div>
@@ -14,6 +16,29 @@
       </div>
     </div>
   </header>
+
+<?php
+/******************************** gestion des messages selon les renseignements des formulaires ***********
+ * //************* mettre dans une classe Messages / success **********************
+ * /*****************************************************************************/
+if (!empty($_SESSION["user"]['bienvenu'])) {
+    echo '<br/><div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Bravo! </strong>'
+        . $_SESSION["user"]['nom'] . ' vous êtes membre du blog et vous pouvez commenter</div>';
+
+    unset($_SESSION["user"]['bienvenu']);
+}
+
+if (!empty($_SESSION["loginForm"])) {
+    echo '<br/><div class="alert alert-dark">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Attention! </strong>'
+        . $_SESSION["loginForm"] . '</div>';
+
+    unset($_SESSION["loginForm"]);
+}
+?>
 
 <?php foreach ($articles as $article) : ?>
   <div class="container">

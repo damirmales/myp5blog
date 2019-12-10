@@ -1,5 +1,7 @@
-  <?php ob_start();?>
+  <?php ob_start();
+  require_once('functions/functions.php');
 
+  ?>
   <!-- Page Header -->
   <header class="masthead" style="background-image: url('public/img/post-bg.jpg')">
     <div class="overlay"></div>
@@ -39,8 +41,8 @@
   <div class="container">
     <p>Ajouter un commentaire<br/>
 
-    <a href="index.php?route=register"> S'enregistrer</a></p>
-     <a href="index.php?route=connexion"> Se connecter</a></p>
+
+
 
   </div>
 

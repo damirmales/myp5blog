@@ -16,6 +16,28 @@ class Users extends PdoConstruct
     private $login;
     private $password;
 
+
+    public function __construct(array $datas)
+    {
+        $this->hydrate($datas);
+    }
+
+
+    public function hydrate(array $datas)
+    {
+        foreach ($datas as $key => $value)
+        {
+
+            $method = 'set'.ucfirst($key);
+
+            if (method_exists($this, $method))
+            {
+                $this->$method($value);
+            }
+        }
+    }
+
+
     /***************************************
      * @return mixed
      */
@@ -85,7 +107,7 @@ class Users extends PdoConstruct
      */
     public function getRole()
     {
-        return $this->email;
+        return $this->role;
     }
 
     /**
@@ -93,7 +115,7 @@ class Users extends PdoConstruct
      */
     public function setRole( $role ): void
     {
-        $this->email = $role;
+        $this->role = $role;
     }
 
     /**************************************
@@ -161,72 +183,10 @@ class Users extends PdoConstruct
     }
 
 
- 	//----- Check if user is registered------------
-			public function checkUserRecord($email)
-			{
-				
-				$userRecord = $this->connection->prepare('
-					SELECT id,nom,email
-					FROM Users
-					WHERE email = :email
-					');
-                // On lie la variable $email définie au-dessus au paramètre :email de la requête préparée
-                $userRecord->bindValue(':email', $email, \PDO::PARAM_STR);
 
-				$userRecord->execute();
-				$user = $userRecord->fetch();
 
-				return $user;
-			}
-//----- Check if user's login is in the DB ------------
 
-			public function checkUserLogin($loginUser)
-			{
-				
-				$userData = $this->connection->prepare('
-					SELECT *
-					FROM users
-					WHERE login = :loginUser
-					');
 
-				$userData->execute( [ ':loginUser' => $loginUser ] );
-				
-				$user = $userData->fetch();
 
-				return $user;
-
-			}
-
-	/************ Add user to database ***************/
-
-			public function addUserToDb()
-			{
-
-				$requete = $this->connection->prepare('
-					INSERT INTO users (id,nom,prenom,email,role,statut,token,login,password)
-					VALUES (:id,:nom,:prenom,:email,:role,:statut,:token,:login,:password)
-					');
-				$requete->bindValue(':id', NULL, \PDO::PARAM_INT);
-				$requete->bindValue(':nom', $this->getNom(), \PDO::PARAM_STR);
-				$requete->bindValue(':prenom', $this->getPrenom(), \PDO::PARAM_STR);
-				$requete->bindValue(':email', $this->getEmail(), \PDO::PARAM_STR);
-				$requete->bindValue(':role', $this->getRole(), \PDO::PARAM_STR);
-				$requete->bindValue(':statut', $this->getStatut(), \PDO::PARAM_INT);
-				$requete->bindValue(':token', $this->getToken(), \PDO::PARAM_STR);
-				$requete->bindValue(':login', $this->getLogin(), \PDO::PARAM_STR);
-				$requete->bindValue(':password', $this->hashPassword($this->getPassword()), \PDO::PARAM_STR);
-
-				$affectedLines = $requete->execute();
-
-				return $affectedLines;
-
-			}
-		/** encrypt password ********/
-			private function hashPassword($pswd)
-			{
-				$pwd_hashed = password_hash($pswd, PASSWORD_DEFAULT);
-				return $pwd_hashed;
-
-			}
 
  }

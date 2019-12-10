@@ -1,27 +1,17 @@
 <?php ob_start();
 $titre = "Nouvel article";
+
 ?>
 
 <div class="col-lg-8 col-md-10 mx-auto">
     <p>Un nouvel article</p>
 
     <?php
-    //============== mettre dans une classe Messages / warning ============
-    if (!empty($addArticleErrorMessage))
-    {
-    ?>
-<br/>
-    <div class="container alert alert-warning alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        ☝ <strong>Attention! </strong><br>
-        <?php
-        foreach ($addArticleErrorMessage as $err) {
+    if(!empty($addArticleErrorMessage)){
+        flashMessage($addArticleErrorMessage);
+    }
 
-            echo $err . '<br/>';
-        }
-        echo '</div>';
-        }
-        ?>
+    ?>
 
         <form action="index.php?route=addArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>
             <div class="control-group">
