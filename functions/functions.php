@@ -98,3 +98,9 @@ function flashMessage($mess)
 }
 
 }
+
+function checkDouble($field)
+{
+
+
+}

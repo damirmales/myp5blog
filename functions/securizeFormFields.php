@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 }*/
+
  function securizeFormFields($data)
 {
     foreach ($data as $key => $field)

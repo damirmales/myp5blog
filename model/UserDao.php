@@ -6,20 +6,20 @@ class UserDao extends PdoConstruct
 {
 
     //----- Check if user is registered------------
-    public function checkUserRecord($email)
+    public function checkUserEmail($email)
     {
 
-        $userRecord = $this->connection->prepare('
+        $userEmail = $this->connection->prepare('
 					SELECT id,nom,email
 					FROM users
 					WHERE email = :email
 					');
         // On lie la variable $email définie au-dessus au paramètre :email de la requête préparée
-        $userRecord->bindValue(':email', $email, \PDO::PARAM_STR);
+        $userEmail->bindValue(':email', $email, \PDO::PARAM_STR);
 
-        $userRecord->execute();
-        $user = $userRecord->fetch();
-
+        $userEmail->execute();
+        $user = $userEmail->fetch();
+        echo '<pre> Email'; var_dump($user);
         return $user;
     }
 //----- Check if user's login is in the DB ------------
@@ -36,7 +36,7 @@ class UserDao extends PdoConstruct
         $userData->execute( [ ':loginUser' => $loginUser ] );
 
         $user = $userData->fetch();
-
+echo '<pre> login'; var_dump($user);
         return $user;
 
     }

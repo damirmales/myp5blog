@@ -72,7 +72,8 @@
                     elseif (($_SESSION['user']['role'] == 'member')) {
                         ?>
                         <li class="nav-item">
-                            <a class="nav-link" href=""> ☑ Membre</a>
+                            <a class="" href="">/ ☑ Membre /</a>
+                            <a class="" href="index.php?route=deconnexion">/ se déconnecter /</a>
                         </li>
                         <?php
                     }
@@ -151,23 +152,13 @@
                 <?php
                 if (isset($_SESSION['user'])) {
 
-                    if (($_SESSION['user']['role'] != 'admin') && ($_SESSION['user']['role'] != 'member')) {
-                        echo $_SESSION['user']['role'];
+                    if (($_SESSION['user']['role'] != 'admin') ) {
+
 
                         ?>
-                        <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a>
-                        <?php
-                    } else {
-                        ?>
-                        <p class="admin text-center"><a href="index.php?route=deconnexion"> Deconnexion</a>;
-
+                        <p class="admin text-center"><a href="index.php?route=connexionAdmin"> Administration</a>
                         <?php
                     }
-                } else {
-                    ?>
-                    <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a>
-
-                    <?php
                 }
                 ?>
 

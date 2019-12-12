@@ -27,6 +27,10 @@ require_once('functions/functions.php');
 
                     <?php
 
+                    if (isset($_SESSION['registerFormOK'])) {
+                        echo $_SESSION['registerFormOK'];
+                        unset($_SESSION['registerFormOK']);
+                    }
 
                     if(!empty($contactErrorMessage)){
                         flashMessage($contactErrorMessage);

@@ -25,7 +25,6 @@ if(!empty($registerFormMessage)){
     flashMessage($registerFormMessage);
 }
 
-
 ?>
 
 <?php
@@ -36,8 +35,9 @@ if (!empty($_SESSION["registerFormOK"])) {
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Bravo! </strong>'
         . $_SESSION["registerFormOK"] . '</div>';
-
+    unset($_SESSION['registerFormOK']);
 }
+
 ?>
 
     <!-- Main Content -->
