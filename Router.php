@@ -94,7 +94,7 @@
 					{
 						$frontController = new FrontendController;							
 						$frontController->checkUser();
-					
+
 					}
 
 					elseif($get === 'register')// to the register form page
@@ -194,6 +194,9 @@
 			catch (Exception $e)
 			{
 				echo 'Erreur niveau Router :'. $e->getMessage();
+
+               // header('Location: index.php');
+              //  exit();
 			}
 		}
 

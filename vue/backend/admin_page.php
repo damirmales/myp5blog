@@ -1,6 +1,6 @@
 
 <?php ob_start();
-$titre = "Liste des pages";
+$titre = "Tableau de bord";
 ?>
     <!-- Main Content -->
 <div class="container">

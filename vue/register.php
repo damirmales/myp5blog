@@ -1,6 +1,6 @@
 <?php ob_start();
 require_once('functions/functions.php');
-$errs[] = "";
+
 ?>
 
 
@@ -24,6 +24,8 @@ $errs[] = "";
 if(!empty($registerFormMessage)){
     flashMessage($registerFormMessage);
 }
+
+
 ?>
 
 <?php

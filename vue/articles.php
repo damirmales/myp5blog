@@ -30,14 +30,14 @@ if (!empty($_SESSION["user"]['bienvenu'])) {
     unset($_SESSION["user"]['bienvenu']);
 }
 
-if (!empty($_SESSION["loginForm"])) {
+/*if (!empty($_SESSION["loginForm"])) {
     echo '<br/><div class="alert alert-dark">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Attention! </strong>'
         . $_SESSION["loginForm"] . '</div>';
 
     unset($_SESSION["loginForm"]);
-}
+} */
 ?>
 
 <?php foreach ($articles as $article) : ?>

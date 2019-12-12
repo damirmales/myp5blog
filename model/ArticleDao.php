@@ -43,7 +43,7 @@ class ArticleDao extends PdoConstruct
     public function updateArticleToDb($article)
     {
 
-        try {
+
             $requete = $this->connection->prepare('
             UPDATE articles
             SET titre = :titre, chapo = :chapo, auteur = :auteur, contenu = :contenu, date_mise_a_jour = NOW()
@@ -59,11 +59,9 @@ class ArticleDao extends PdoConstruct
             // $requete->bindValue(':date_mise_a_jour', $article->getDate_mise_a_jour(), \PDO::PARAM_INT);
 
             $affectedLines = $requete->execute();
-            $requete->closeCursor();
+
             return $affectedLines;
-        } catch (PDOException $e) {
-            echo $requete . "<br>" . $e->getMessage();
-        }
+
     }
 
 //----- Retourne la liste des articles pour affichage ------------
@@ -75,14 +73,16 @@ class ArticleDao extends PdoConstruct
             ORDER BY articles_id DESC');
 
         $listArticles->execute();
-        //echo '<pre>';var_dump($listArticles);
+
+
         $articles = [];
         foreach ($listArticles as $article) {
             $articles[] = new Articles($article);
         }
+        $listArticles->closeCursor();
         return $articles;
 
-        $listArticles->closeCursor();
+
 
     }
 

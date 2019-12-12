@@ -1,6 +1,6 @@
 <?php ob_start();
 require_once('functions/functions.php');
-$errs[] = "";
+
 ?>
 
    
@@ -21,20 +21,6 @@ $errs[] = "";
   </div>
 </header>
 
- <?php
- //============== mettre dans une classe Messages / warning ============
- /*if (!empty($connexionErrorMessage)){
-
-          echo '<br/><div class="container alert alert-warning alert-dismissible">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          ☝ <strong>Attention! </strong><br/>';
-          foreach ($connexionErrorMessage as $err) {
-             // echo '<pre> loginpage'; var_dump( $err); die();
-            echo $err.'<br/>';
-          }
-          echo '</div>';
-        } 
-   */    ?>
 
 <?php
 if (!empty($connexionErrorMessage)) {

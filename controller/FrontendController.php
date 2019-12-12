@@ -311,7 +311,8 @@ class FrontendController
 
 
                 //---- check if user is registered ---------
-                if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password'])) {
+                if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password']))
+                {
 
                     if ($checkUser['statut'] == 1) {
                         $_SESSION["user"]['role'] = $checkUser['role'];
@@ -340,11 +341,12 @@ class FrontendController
                         exit();
                     }
                 } else {
-                    echo "Vous n'êtes pas enregistré(e)";
-                    $_SESSION["loginForm"] = "Vous êtes pas notre member";
 
-                    header('Location: index.php');
-                    exit();
+                    //$_SESSION["loginForm"] = "Problème avec le login ou le mot de passe réessayez";
+                    $connexionErrorMessage['loginOrPass'] = setFlash("Attention !", "Problème avec le login ou le mot de passe réessayez", 'warning');
+
+                   // header('Location: index.php');
+                   // exit();
 
                 }
             }
@@ -376,8 +378,7 @@ class FrontendController
     /**********************************************************************************/
     /******************* Add user from register.php to database  **********************/
 
-    public
-    function addUser()
+    public function addUser()
     {
         unset($_SESSION["registerFormOK"]);
 
@@ -460,7 +461,7 @@ class FrontendController
 
                     $userDao = new UserDao();
                     $userInDb = $userDao->addUserToDb($user);
-                    echo 'userInDb :' . $userInDb;
+
 
                     //$result =$this->verifyToken();
 
@@ -491,13 +492,7 @@ class FrontendController
                 } 
             }
         }
-        /*	session_destroy();
-            echo "<pre>";
-            print_r($post)	 ;
-            print_r($_SESSION);
-            echo "error register";
-            print_r($registerFormMessage);
-*/
+
         require 'vue/register.php';
 
     }
@@ -505,24 +500,25 @@ class FrontendController
 //*********** check the token from the link validate in the user's email **************
     public function verifyToken()
     {
+        $registerMessage = [];
         if (isset($_GET['token']) && !empty($_GET['token'])) // if got user's token from email
         {
             $userToken = trim($_GET['token']);//token from email
 
-            $sql = "SELECT id,nom  FROM users WHERE  token = :token";
+         $newUser = new UserDao();
 
-            $stmt = $this->connection->prepare($sql);
+            $result = $newUser->fetchToken($userToken);
 
-            $stmt->bindParam(':token', $userToken);
-            $stmt->execute();
+            $noviUser = $newUser->validateUser($result['id']);
+;
+            if ($noviUser)
+            {
+                $registerMessage ['user']= setFlash("Super !", "Vous êtes inscrit ", "success"); // Store error message to be abvailable into register.php
 
-            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-            $newUser = new UserDao();
-            $newUser->validateUser($result['id']);
-            //return $result;
-            header('Location: index.php');
-            exit();
+            }
+            require_once 'vue/home.php';
+            //header('Location: index.php');
+            //exit();
         }
     }
 
