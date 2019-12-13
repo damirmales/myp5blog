@@ -1,5 +1,8 @@
 <?php
 session_start();
+//************ mettre dans un fichier config ************
+$_SESSION["registerFormOK"] = null;
+$_SESSION["registerFormKO"] = null;
 if (!isset($_SESSION['user']['role']))
 {
     $_SESSION['user']['role'] = null ;

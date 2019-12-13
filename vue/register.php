@@ -1,9 +1,10 @@
 <?php ob_start();
 require_once('functions/functions.php');
+require_once('services/Collection.php');
+use Services\Collection;
+$session = new Collection($_SESSION['register']);
 
 ?>
-
-
     <!-- Page Header -->
     <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
         <div class="overlay"></div>
@@ -36,6 +37,16 @@ if (!empty($_SESSION["registerFormOK"])) {
     <strong>Bravo! </strong>'
         . $_SESSION["registerFormOK"] . '</div>';
     unset($_SESSION['registerFormOK']);
+    $session->offsetUnset($offset);
+}
+
+if (!empty($_SESSION["registerFormKO"])) {
+
+    echo '<br/><div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Mince! </strong>'
+        . $_SESSION["registerFormKO"] . '</div>';
+    unset($_SESSION['registerFormKO']);
 }
 
 ?>
@@ -53,7 +64,7 @@ if (!empty($_SESSION["registerFormOK"])) {
                         <label for="nom">Nom </label>
                         <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
                         <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"
-                               value="<?= getFormData('register', 'nom') ?>">
+                               value="<?= $session->getKey('nom');?>">
                     </div>
                     <div class="form-group">
                         <label for="prenom">Prénom</label>

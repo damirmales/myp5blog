@@ -19,7 +19,7 @@ class UserDao extends PdoConstruct
 
         $userEmail->execute();
         $user = $userEmail->fetch();
-        echo '<pre> Email'; var_dump($user);
+
         return $user;
     }
 //----- Check if user's login is in the DB ------------
@@ -36,7 +36,7 @@ class UserDao extends PdoConstruct
         $userData->execute( [ ':loginUser' => $loginUser ] );
 
         $user = $userData->fetch();
-echo '<pre> login'; var_dump($user);
+
         return $user;
 
     }
@@ -63,7 +63,7 @@ echo '<pre> login'; var_dump($user);
 
         $affectedLines = $requete->execute();
         $count = $requete->rowCount();
-echo '<pre>'; var_dump($count);
+
 
         return $affectedLines;
 

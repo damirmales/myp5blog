@@ -10,6 +10,7 @@ use Model\Comments;
 use Model\Users;
 use Model\UserDao;
 use Services\Emails;
+use Services\Collection;
 use Services\ValidateForms;
 
 require_once('services/Emails.php');
@@ -208,11 +209,11 @@ class FrontendController
                 /***** Call class Emails to send contact form data*/
                 $sendEmail = new Emails();
 
-                $sendEmail->setNom($post['nom']);
+                /*$sendEmail->setNom($post['nom']);
                 $sendEmail->setPrenom($post['prenom']);
                 $sendEmail->setEmail($post['email']);
                 $sendEmail->setMessage($post['message']);
-
+*/
                 $email = $sendEmail->sendEmail();
 
                 $contactErrorMessage2 = setFlash("Magnifique !", 'Email envoyé', 'success');
@@ -445,7 +446,8 @@ class FrontendController
                     $userEmail = $userDao->checkUserEmail($post['email']);
 
                     if ($userLogin || $userEmail) {
-                        echo 'doublon';
+
+                        $_SESSION["registerFormKO"] = "La place est déjà prise veuillez choisir un autre login/email";
                     }
                     else {
 
@@ -470,14 +472,14 @@ class FrontendController
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
                         $_SESSION["registerFormOK"] = "email envoyé";
 
-                        header('Location: index.php');
-                        exit();
+                        //header('Location: index.php');
+                       // exit();
 
                     }
                 }
             }
         }
-        $_SESSION["registerFormOK"] = "ya un bleme";
+
         require 'vue/register.php';
 
     }

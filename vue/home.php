@@ -1,8 +1,12 @@
 <?php ob_start();
-require_once('functions/functions.php');
+use Services\Collection;
+
+require_once('services/Collection.php');
+
+$session = new Collection($_SESSION['input']);
+
 
 ?>
-
     <!-- Blog Author -->
     <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
         <div class="overlay"></div>
@@ -50,7 +54,7 @@ require_once('functions/functions.php');
                                 <label>Nom</label>
                                 <input type="text" class="form-control" placeholder="Nom" name="nom" id="nom" required
                                        data-validation-required-message="Entrez votre nom."
-                                       value="<?= getFormData('input', 'nom') ?>">
+                                       value="<?= $session->getKey('nom');//getFormData('input', 'nom') ?>">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -59,7 +63,7 @@ require_once('functions/functions.php');
                             <label>Prénom </label>
                             <input type="text" class="form-control" placeholder="Prénom " name="prenom" id="prenom"
                                    required data-validation-required-message="Entrez votre prénom"
-                                   value="<?= getFormData('input', 'prenom') ?>">
+                                   value="<?= $session->getKey('prenom'); ?>">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -70,7 +74,7 @@ require_once('functions/functions.php');
                             <label>Email</label>
                             <input type="email" class="form-control" placeholder="Email" name="email" id="email"
                                     data-validation-required-message="Entrez votre email."
-                                   value="<?= getFormData('input', 'email') ?>"  required>
+                                   value="<?= $session->getKey('email'); ?>"  required>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -80,7 +84,7 @@ require_once('functions/functions.php');
                             <label>Message</label>
                             <textarea rows="5" class="form-control" placeholder="Message" name="message" id="message"
                                       required data-validation-required-message="Entrez votre message."
-                                      value="<?= getFormData('input', 'message') ?>"></textarea>
+                                      value="<?= $session->getKey('message'); ?>"></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
