@@ -1,12 +1,8 @@
 <?php
 session_start();
-//************ mettre dans un fichier config ************
-$_SESSION["registerFormOK"] = null;
-$_SESSION["registerFormKO"] = null;
-if (!isset($_SESSION['user']['role']))
-{
-    $_SESSION['user']['role'] = null ;
-}
+require_once "configuration/config.php";
+
+
 
 // to display the error message
 ini_set('display_errors', 1);

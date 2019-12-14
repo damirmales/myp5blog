@@ -24,6 +24,7 @@ return array(
     'Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
     'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
+    'Services\\' => array($baseDir . '/services'),
     'Rubriques\\' => array($baseDir . '/rubriques'),
     'Public\\' => array($baseDir . '/public'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),

@@ -1,26 +1,30 @@
 <?php ob_start();
 $titre = "Modifier un article";
+use Services\Collection;
 
+require_once('services/Collection.php');
+
+//echo '<pre> editarticle'; var_dump($data->getKey('titre'));  die();
 ?>
 <div class="container">
 <div class="col-lg-8 col-md-10 mx-auto">
     <p>Vous pouvez modifier cet article</p>
 
     <?php
-
+/*
     if (isset($updateArticleErrorMessage) && !empty($updateArticleErrorMessage)) {
         flashMessage($updateArticleErrorMessage);
     }
-
+*/
     ?>
 
         <form action="index.php?route=updateArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>
-            <input type="hidden" name="articles_id" value="<?= $article->getArticles_id();?>">
+            <input type="hidden" name="articles_id" value="<?= $data->getKey('articles_id'); ?>">
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                     <label>titre</label>
                     <input type="text" class="form-control" placeholder="Titre" name="titre" id="titre"
-                           value="<?= htmlspecialchars($article->getTitre()); ?>" required
+                           value="<?= $data->getKey('titre'); ?>" required
                            data-validation-required-message="Entrez le titre.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -30,7 +34,7 @@ $titre = "Modifier un article";
                 <div class="form-group floating-label-form-group controls">
                     <label>Châpo</label>
                     <input type="text" class="form-control" placeholder="Châpo" name="chapo" id="chapo"
-                           value="<?= htmlspecialchars($article->getChapo()); ?>"" required
+                           value="<?= $data->getKey('chapo'); ?>" required
                            data-validation-required-message="Entrez le châpo.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -40,7 +44,7 @@ $titre = "Modifier un article";
                 <div class="form-group floating-label-form-group controls">
                     <label>Auteur</label>
                     <input type="text" class="form-control" placeholder="Auteur" name="auteur" id="auteur"
-                           value="<?= htmlspecialchars($article->getAuteur()); ?>"" required
+                           value="<?= $data->getKey('auteur'); ?>" required
                            data-validation-required-message="Entrez votre nom.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -51,7 +55,7 @@ $titre = "Modifier un article";
                     <label>Contenu</label>
                     <textarea rows="5" class="form-control" placeholder="Contenu" name="contenu" id="contenu"
                               required
-                              data-validation-required-message="Entrez le texte."><?= htmlspecialchars($article->getContenu()); ?></textarea>
+                              data-validation-required-message="Entrez le texte."><?=$data->getKey('contenu');?></textarea>
                     <p class="help-block text-danger"></p>
                 </div>
             </div>

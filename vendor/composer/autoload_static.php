@@ -44,6 +44,7 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\Console\\' => 26,
+            'Services\\' => 9,
         ),
         'R' => 
         array (
@@ -149,6 +150,10 @@ class ComposerStaticInit00c2591744aec49b360b03a92cc8f2dd
         'Symfony\\Component\\Console\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
+        ),
+        'Services\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/services',
         ),
         'Rubriques\\' => 
         array (

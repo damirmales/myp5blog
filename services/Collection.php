@@ -12,12 +12,14 @@ class Collection implements IteratorAggregate, \ArrayAccess
     public function __construct(array $items)
     {
         $this->items = $items;
+
     }
 
     public function getKey($key)
     {
+
         if ($this->hasKey($key))
-        {
+        {//echo '<pre> hasKey Collection =>'; var_dump($this->items[$key]); die();
             return $this->items[$key];
         }
         else

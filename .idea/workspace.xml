@@ -6,12 +6,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/configuration/config.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/UserDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Collection.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Collection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/create_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/create_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/edit_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/edit_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/show_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/show_article.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +165,8 @@
       <workItem from="1576043618472" duration="29678000" />
       <workItem from="1576129538146" duration="1568000" />
       <workItem from="1576135799165" duration="16828000" />
-      <workItem from="1576228387865" duration="14499000" />
+      <workItem from="1576228387865" duration="29813000" />
+      <workItem from="1576327735898" duration="5341000" />
     </task>
     <servers />
   </component>
@@ -197,18 +203,26 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1575478068712" />
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1576333368784">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1576333368784" />
     <state x="453" y="178" key="NewPhpClassDialog" timestamp="1576238976371">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="453" y="178" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1576238976371" />
+    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1576331874046">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1576331874046" />
     <state x="291" y="12" key="SettingsEditor" timestamp="1575496558583">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575496558583" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1576228907535">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1576327743293">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1576228907535" />
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1576327743293" />
     <state x="339" y="162" key="run.anything.popup" timestamp="1576074116309">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
