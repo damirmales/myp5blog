@@ -1,7 +1,7 @@
 <?php ob_start();
 use Services\Collection;
 
-require_once('services/Collection.php');
+//require_once('services/Collection.php');
 if (array_key_exists('input', $_SESSION))
 {
     $session = new Collection($_SESSION['input']);

@@ -19,3 +19,15 @@ $_SESSION['register']['email'] = null ;
 $_SESSION['register']['login'] = null ;
 $_SESSION['register']['password'] = null ;
 $_SESSION['register']['password2'] = null ;
+
+/********************** Utile pour le formulaire de creation d'articles de create_article.php ******************/
+$_SESSION['newArticle']['titre']= null ;
+$_SESSION['newArticle']['auteur']= null ;
+$_SESSION['newArticle']['chapo']= null ;
+$_SESSION['newArticle']['contenu']= null ;
+
+/********************** Utile pour le formulaire de creation de commentaire de commentForm.php ******************/
+$_SESSION['user']['nom']= "" ;
+$_SESSION['user']['email']= "" ;
+$_SESSION['user']['comment']= "" ;
+

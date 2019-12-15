@@ -71,7 +71,7 @@ class FrontendController
     {
         $nom = $_SESSION['user']['nom'];
         $email = $_SESSION['user']['email'];
-        $comment = $post['comment'];
+        $comment = $_SESSION['user']['comment'];
 
 
         $article = null;// init $article to use it as an array to display article datas
@@ -83,7 +83,7 @@ class FrontendController
         if (isset($post['commentFormBtn'])) {
 
             if (empty($post['comment'])) {
-                $commentErrorMessage ['contenu'] = setFlash("Attention !", "Commentaire non renseigné", 'warning');;;
+                $commentErrorMessage ['contenu'] = setFlash("Attention !", "Commentaire non renseigné", 'warning');
             }
 
             if (empty($commentErrorMessage)) {
@@ -93,6 +93,7 @@ class FrontendController
                 $newComment = new Comments($post);
                 $newComment->setPseudo($nom);
                 $newComment->setContenu($comment);
+                //echo "getPseudo".$newComment->getPseudo($nom);die();
 
                 $commentObj = new CommentDao;
                 $affectedLines = $commentObj->addCommentsToDb($articleId, $newComment); // id de l'article
@@ -102,8 +103,9 @@ class FrontendController
                     exit('Impossible d\'ajouter le commentaire !');
                 } else {
                     //$_SESSION['user']['role'] = 'member'; // intialize session to the logged user
-                    echo 'commentaire en attente de validation';
-                    /*header('Location: index.php?route=article&id=' . $articleId);
+
+                    $commentErrorMessage ['contenu'] = setFlash("Super !", "commentaire en attente de validation", 'Success');;;
+                    /* header('Location: index.php?route=article&id=' . $articleId);
                     exit();*/
                 }
 
@@ -171,7 +173,12 @@ class FrontendController
 
         //------------- sanitize input fields values -----------------------------
         $field = securizeFormFields($post);
-        saveFormData('input');
+        //saveFormData('input');
+        $_SESSION['input']['nom'] = $field['nom'] ;
+        $_SESSION['input']['prenom'] = $field['prenom'] ;
+        $_SESSION['input']['email'] = $field['email'] ;
+        $_SESSION['input']['message'] = $field['message'] ;
+
 
         if ($field['formContact'] == 'sent') {
 
@@ -316,6 +323,7 @@ class FrontendController
                     if ($checkUser['statut'] == 1) {
                         $_SESSION["user"]['role'] = $checkUser['role'];
                         $_SESSION["user"]['nom'] = $checkUser['nom'];
+                        echo '<pre> checkUser[\'nom\']'; var_dump($_SESSION["user"]['nom']);
                         $_SESSION["user"]['login'] = $checkUser['login'];
                         $_SESSION["user"]['email'] = $checkUser['email'];
                         $_SESSION["user"]['bienvenu'] = 1;
@@ -466,7 +474,7 @@ class FrontendController
 
                         $userEmail = $user->getEmail(); //"damir@romandie.com";
 
-                        $createUrlToken = createUrlWithToken($token);
+                        $createUrlToken = createUrlWithToken($token,$userEmail);
 
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class

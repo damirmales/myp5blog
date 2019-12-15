@@ -100,14 +100,27 @@ class BackendController
     {
 
 
-        $arrayOfinputs =  new Collection($_POST);
-
         $updateArticleErrorMessage = [];
         $post = securizeFormFields($_POST);
 
+
+
+
         if (isset($post['btn_update_article']))
         {
-            echo $arrayOfinputs->getKey('titre');
+
+            //*** store article's datas from database ****
+            $data = new Collection($post);
+            foreach ($data as $key=>$value)
+            {
+                //echo $key." ".$data[$key]."\n\t";
+                echo "btn foreach--> ".$key." -->".$data->getKey('titre');
+                echo "\n";
+                $editArticle[$key]=$value;
+            }
+
+            //echo '<pre> editarticle =>'; var_dump($arrayOfinputs); die();
+            echo "data".$data->getKey($key); die();
 
             if (empty($post['titre']))
             {
@@ -151,13 +164,9 @@ class BackendController
                 $articleUpdate = $articleDao->updateArticleToDb($article);
 
                 if ($articleUpdate) {
-
                     $this->showArticle($post['articles_id']);
-
                 }
             }
-
-
 
             require 'vue/backend/edit_article.php';
         }
@@ -167,12 +176,9 @@ class BackendController
 
     public function editListArticles()
     {
-
         $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
         $articlesEdited = $articles->getListArticles();
-
         require 'vue/backend/list_articles.php';
-
     }
 
     /**********************  display current article's datas to be modified ****************************/
@@ -182,28 +188,26 @@ class BackendController
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
 
-        $arrayArticle = (array) $article;
+        $arrayArticle = (array) $article; // l'objet est transmuté en tableau
 
 foreach ($arrayArticle as $key=>$value)
-{  $trimmed =  str_replace ( '*', "", $key);
-
-
+{  $trimmed =  str_replace ( '*', "", $key); // on vire l'étoile créée lors de la transmutation
     $changeArticle[$trimmed] = $value;
-
-
+    echo " data ".$changeArticle[$trimmed];        die();
 }
-
 
         //*** store article's datas from database ****
         $data = new Collection($changeArticle);
         foreach ($data as $key=>$value)
         {
            //echo $key." ".$data[$key]."\n\t";
-           // echo $key." ".$data->getKey($key);
-            $editArticle[$key]=$value;
+            echo " editarticleFOR -> ".$key." ".$data->getKey($key)." ";
+
         }
+
+
        // echo '<pre> editarticle :'; var_dump($data);
-       // echo '<pre> editarticle =>'; var_dump($data->getKey("titre"));
+        echo '<pre> editarticle =>'; var_dump($data->getKey($key));
         require_once 'vue/backend/edit_article.php';
 
     }
@@ -213,7 +217,6 @@ foreach ($arrayArticle as $key=>$value)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
-
         require 'vue/backend/show_article.php';
 
     }

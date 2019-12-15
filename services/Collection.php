@@ -19,7 +19,7 @@ class Collection implements IteratorAggregate, \ArrayAccess
     {
 
         if ($this->hasKey($key))
-        {//echo '<pre> hasKey Collection =>'; var_dump($this->items[$key]); die();
+        {//echo "<pre> hasKey Collection $key=>"; var_dump($this->items[$key]);
             return $this->items[$key];
         }
         else

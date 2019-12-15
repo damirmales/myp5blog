@@ -64,7 +64,8 @@
                     if (($_SESSION['user']['role'] == 'admin')) {
                         ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?route=admin"> ⚒ Admin</a>
+                            <a class="" href="index.php?route=admin"> ⚒ Admin</a>
+                            <a class="" href="index.php?route=deconnexion">/ Déconnexion /</a>
                         </li>
                         <?php
 
@@ -72,8 +73,8 @@
                     elseif (($_SESSION['user']['role'] == 'member')) {
                         ?>
                         <li class="nav-item">
-                            <a class="" href="">/ ☑ Membre /</a>
-                            <a class="" href="index.php?route=deconnexion">/ se déconnecter /</a>
+                            <a class="" >/ ☑ Membre /</a>
+                            <a class="" href="index.php?route=deconnexion">/ Se déconnecter /</a>
                         </li>
                         <?php
                     }

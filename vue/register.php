@@ -1,6 +1,6 @@
 <?php ob_start();
 require_once('functions/functions.php');
-require_once('services/Collection.php');
+//require_once('services/Collection.php');
 use Services\Collection;
 $session = new Collection($_SESSION['register']);
 
@@ -69,17 +69,17 @@ if (!empty($_SESSION["registerFormKO"])) {
                     <div class="form-group">
                         <label for="prenom">Prénom</label>
                         <input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"
-                               value="<?= getFormData('register', 'prenom') ?>">
+                               value="<?= $session->getKey('prenom');?>">
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">E-mail</label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email"
-                               value="<?= getFormData('register', 'email') ?>">
+                               value="<?= $session->getKey('email'); ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputLogin">Login</label>
                         <input type="input" class="form-control" id="login" aria-describedby="login" name="login"
-                               placeholder="Login" value="<?= getFormData('register', 'login') ?>">
+                               placeholder="Login" value="<?= $session->getKey('login'); ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputPassword">Mot de Passe</label>
