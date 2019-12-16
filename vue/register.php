@@ -1,10 +1,9 @@
 <?php ob_start();
 require_once('functions/functions.php');
-//require_once('services/Collection.php');
-use Services\Collection;
-$session = new Collection($_SESSION['register']);
 
 ?>
+
+
     <!-- Page Header -->
     <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
         <div class="overlay"></div>
@@ -36,19 +35,8 @@ if (!empty($_SESSION["registerFormOK"])) {
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Bravo! </strong>'
         . $_SESSION["registerFormOK"] . '</div>';
-    unset($_SESSION['registerFormOK']);
-    $session->offsetUnset($offset);
+
 }
-
-if (!empty($_SESSION["registerFormKO"])) {
-
-    echo '<br/><div class="alert alert-warning">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Mince! </strong>'
-        . $_SESSION["registerFormKO"] . '</div>';
-    unset($_SESSION['registerFormKO']);
-}
-
 ?>
 
     <!-- Main Content -->
@@ -64,22 +52,22 @@ if (!empty($_SESSION["registerFormKO"])) {
                         <label for="nom">Nom </label>
                         <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
                         <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"
-                               value="<?= $session->getKey('nom');?>">
+                               value="<?= getFormData('register', 'nom') ?>">
                     </div>
                     <div class="form-group">
                         <label for="prenom">Prénom</label>
                         <input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"
-                               value="<?= $session->getKey('prenom');?>">
+                               value="<?= getFormData('register', 'prenom') ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">E-mail</label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email"
-                               value="<?= $session->getKey('email'); ?>">
+                               value="<?= getFormData('register', 'email') ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputLogin">Login</label>
                         <input type="input" class="form-control" id="login" aria-describedby="login" name="login"
-                               placeholder="Login" value="<?= $session->getKey('login'); ?>">
+                               placeholder="Login" value="<?= getFormData('register', 'login') ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputPassword">Mot de Passe</label>

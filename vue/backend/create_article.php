@@ -1,9 +1,6 @@
 <?php ob_start();
 $titre = "Nouvel article";
-use Services\Collection;
-//require_once('services/Collection.php');
 
-$session = new Collection($_SESSION['newArticle']);
 ?>
 
 <div class="col-lg-8 col-md-10 mx-auto">
@@ -13,9 +10,6 @@ $session = new Collection($_SESSION['newArticle']);
     if(!empty($addArticleErrorMessage)){
         flashMessage($addArticleErrorMessage);
     }
-    if(!empty($messOk)){
-        flashMessage($messOk);
-    }
 
     ?>
 
@@ -24,7 +18,7 @@ $session = new Collection($_SESSION['newArticle']);
                 <div class="form-group floating-label-form-group controls">
                     <label>titre</label>
                     <input type="text" class="form-control" placeholder="Titre" name="titre" id="titre"
-                           value="<?= $session->getKey('titre'); ?>" required
+                           value="<?= getFormData('newArticle', 'titre') ?>" required
                            data-validation-required-message="Entrez le titre.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -34,7 +28,7 @@ $session = new Collection($_SESSION['newArticle']);
                 <div class="form-group floating-label-form-group controls">
                     <label>Châpo</label>
                     <input type="text" class="form-control" placeholder="Châpo" name="chapo" id="chapo"
-                           value="<?= $session->getKey('chapo');  ?>" required
+                           value="<?= getFormData('newArticle', 'chapo') ?>" required
                            data-validation-required-message="Entrez le châpo.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -44,7 +38,7 @@ $session = new Collection($_SESSION['newArticle']);
                 <div class="form-group floating-label-form-group controls">
                     <label>Auteur</label>
                     <input type="text" class="form-control" placeholder="Auteur" name="auteur" id="auteur"
-                           value="<?= $session->getKey('auteur'); ?>" required
+                           value="<?= getFormData('newArticle', 'auteur') ?>" required
                            data-validation-required-message="Entrez votre nom.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -63,7 +57,7 @@ $session = new Collection($_SESSION['newArticle']);
                 <div class="form-group floating-label-form-group controls">
                     <label>Contenu</label>
                     <textarea rows="5" class="form-control" placeholder="Contenu" name="contenu" id="contenu"
-                              value="<?= $session->getKey('contenu');?>" required
+                              value="<?= getFormData('newArticle', 'contenu') ?>" required
                               data-validation-required-message="Entrez le texte."></textarea>
                     <p class="help-block text-danger"></p>
                 </div>

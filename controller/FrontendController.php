@@ -71,7 +71,7 @@ class FrontendController
     {
         $nom = $_SESSION['user']['nom'];
         $email = $_SESSION['user']['email'];
-        $comment = $_SESSION['user']['comment'];
+        $comment = $post['comment'];
 
 
         $article = null;// init $article to use it as an array to display article datas
@@ -93,7 +93,6 @@ class FrontendController
                 $newComment = new Comments($post);
                 $newComment->setPseudo($nom);
                 $newComment->setContenu($comment);
-                //echo "getPseudo".$newComment->getPseudo($nom);die();
 
                 $commentObj = new CommentDao;
                 $affectedLines = $commentObj->addCommentsToDb($articleId, $newComment); // id de l'article
@@ -101,12 +100,11 @@ class FrontendController
                 if ($affectedLines === false) {
                     //die('Impossible d\'ajouter le commentaire !');
                     exit('Impossible d\'ajouter le commentaire !');
-                } else {
-                    //$_SESSION['user']['role'] = 'member'; // intialize session to the logged user
 
-                    $commentErrorMessage ['contenu'] = setFlash("Super !", "commentaire en attente de validation", 'Success');;;
-                    /* header('Location: index.php?route=article&id=' . $articleId);
-                    exit();*/
+                } else {
+                    $_SESSION['waitingValidation'] = setFlash("Super !", "le commentaire est en attente de validation", 'success');
+
+
                 }
 
             } else {
@@ -173,12 +171,7 @@ class FrontendController
 
         //------------- sanitize input fields values -----------------------------
         $field = securizeFormFields($post);
-        //saveFormData('input');
-        $_SESSION['input']['nom'] = $field['nom'] ;
-        $_SESSION['input']['prenom'] = $field['prenom'] ;
-        $_SESSION['input']['email'] = $field['email'] ;
-        $_SESSION['input']['message'] = $field['message'] ;
-
+        saveFormData('input');
 
         if ($field['formContact'] == 'sent') {
 
@@ -216,11 +209,11 @@ class FrontendController
                 /***** Call class Emails to send contact form data*/
                 $sendEmail = new Emails();
 
-                /*$sendEmail->setNom($post['nom']);
+                $sendEmail->setNom($post['nom']);
                 $sendEmail->setPrenom($post['prenom']);
                 $sendEmail->setEmail($post['email']);
                 $sendEmail->setMessage($post['message']);
-*/
+
                 $email = $sendEmail->sendEmail();
 
                 $contactErrorMessage2 = setFlash("Magnifique !", 'Email envoyé', 'success');
@@ -323,7 +316,6 @@ class FrontendController
                     if ($checkUser['statut'] == 1) {
                         $_SESSION["user"]['role'] = $checkUser['role'];
                         $_SESSION["user"]['nom'] = $checkUser['nom'];
-                        echo '<pre> checkUser[\'nom\']'; var_dump($_SESSION["user"]['nom']);
                         $_SESSION["user"]['login'] = $checkUser['login'];
                         $_SESSION["user"]['email'] = $checkUser['email'];
                         $_SESSION["user"]['bienvenu'] = 1;
@@ -351,7 +343,7 @@ class FrontendController
                 } else {
 
                     //$_SESSION["loginForm"] = "Problème avec le login ou le mot de passe réessayez";
-                    $connexionErrorMessage['loginOrPass'] = setFlash("Attention !", "Problème avec le login ou le mot de passe réessayez", 'warning');
+                    $connexionErrorMessage['loginOrPass'] = setFlash("Attention !", "Identifiants non correct", 'warning');
 
                     // header('Location: index.php');
                     // exit();
@@ -454,8 +446,8 @@ class FrontendController
                     $userEmail = $userDao->checkUserEmail($post['email']);
 
                     if ($userLogin || $userEmail) {
-
-                        $_SESSION["registerFormKO"] = "La place est déjà prise veuillez choisir un autre login/email";
+                   
+                        $_SESSION["registerFormOK"] = "ya un bleme";
                     }
                     else {
 
@@ -474,14 +466,14 @@ class FrontendController
 
                         $userEmail = $user->getEmail(); //"damir@romandie.com";
 
-                        $createUrlToken = createUrlWithToken($token,$userEmail);
+                        $createUrlToken = createUrlWithToken($token);
 
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
                         $_SESSION["registerFormOK"] = "email envoyé";
 
-                        //header('Location: index.php');
-                       // exit();
+                        header('Location: index.php');
+                        exit();
 
                     }
                 }

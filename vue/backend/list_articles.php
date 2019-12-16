@@ -23,8 +23,7 @@ $titre = "Liste des articles";
         </div>
      
     <a href="index.php?route=showArticle&id=<?= $article->getArticles_id() ?>">Voir l'article</a><br>
-    <a href="index.php?route=deleteArticle&id=<?= $article->getArticles_id() ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
-       <hr>
+      <hr>
   </div>
   </div>
   </div>

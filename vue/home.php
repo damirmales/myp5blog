@@ -1,15 +1,8 @@
 <?php ob_start();
-use Services\Collection;
-
-//require_once('services/Collection.php');
-if (array_key_exists('input', $_SESSION))
-{
-    $session = new Collection($_SESSION['input']);
-}
-
-
+require_once('functions/functions.php');
 
 ?>
+
     <!-- Blog Author -->
     <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
         <div class="overlay"></div>
@@ -34,10 +27,6 @@ if (array_key_exists('input', $_SESSION))
 
                     <?php
 
-                    if (isset($_SESSION['registerFormOK'])) {
-                        echo $_SESSION['registerFormOK'];
-                        unset($_SESSION['registerFormOK']);
-                    }
 
                     if(!empty($contactErrorMessage)){
                         flashMessage($contactErrorMessage);
@@ -57,7 +46,7 @@ if (array_key_exists('input', $_SESSION))
                                 <label>Nom</label>
                                 <input type="text" class="form-control" placeholder="Nom" name="nom" id="nom" required
                                        data-validation-required-message="Entrez votre nom."
-                                       value="<?= $session->getKey('nom');//getFormData('input', 'nom') ?>">
+                                       value="<?= getFormData('input', 'nom') ?>">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -66,7 +55,7 @@ if (array_key_exists('input', $_SESSION))
                             <label>Prénom </label>
                             <input type="text" class="form-control" placeholder="Prénom " name="prenom" id="prenom"
                                    required data-validation-required-message="Entrez votre prénom"
-                                   value="<?= $session->getKey('prenom'); ?>">
+                                   value="<?= getFormData('input', 'prenom') ?>">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -77,7 +66,7 @@ if (array_key_exists('input', $_SESSION))
                             <label>Email</label>
                             <input type="email" class="form-control" placeholder="Email" name="email" id="email"
                                     data-validation-required-message="Entrez votre email."
-                                   value="<?= $session->getKey('email'); ?>"  required>
+                                   value="<?= getFormData('input', 'email') ?>"  required>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -87,7 +76,7 @@ if (array_key_exists('input', $_SESSION))
                             <label>Message</label>
                             <textarea rows="5" class="form-control" placeholder="Message" name="message" id="message"
                                       required data-validation-required-message="Entrez votre message."
-                                      value="<?= $session->getKey('message'); ?>"></textarea>
+                                      value="<?= getFormData('input', 'message') ?>"></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>

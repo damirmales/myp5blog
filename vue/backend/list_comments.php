@@ -3,6 +3,11 @@ $titre = "Liste des commentaires";
 $row = 0;
 ?>
     <div class="container">
+        <?php /*if (isset($_SESSION['valideComment'])) {
+        flashMessage2($_SESSION['valideComment']);
+        unset($_SESSION['valideComment']);
+        } */
+        ?>
     <table class="table table-hover">
     <thead>
     <tr>

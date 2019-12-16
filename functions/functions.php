@@ -34,7 +34,7 @@ function generateToken()
 
 }
 
-function createUrlWithToken($token,$email)
+function createUrlWithToken($token)
 {
     $userId = 1; // test only
 

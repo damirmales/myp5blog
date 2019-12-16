@@ -21,6 +21,11 @@
         flashMessage($commentErrorMessage);
     }
 
+    if (!empty($_SESSION['waitingValidation'] )) {
+        flashMessage2($_SESSION['waitingValidation'] );
+        unset($_SESSION['waitingValidation']);
+    }
+
     ?>
 
     <form action="index.php?route=addComment&id=<?= $article->getArticles_id() ?>" method="post" name="commentForm">

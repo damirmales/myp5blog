@@ -7,13 +7,18 @@
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configuration/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/configuration/config.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Collection.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Collection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layout_gabarit.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_gabarit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/securizeFormFields.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/securizeFormFields.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/CommentDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/CommentDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/UserDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/create_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/create_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/edit_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/edit_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/list_articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_articles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/list_comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/show_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/show_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
     </list>
@@ -167,6 +172,8 @@
       <workItem from="1576228387865" duration="29813000" />
       <workItem from="1576327735898" duration="12678000" />
       <workItem from="1576417109931" duration="15099000" />
+      <workItem from="1576481667628" duration="13059000" />
+      <workItem from="1576509830295" duration="9095000" />
     </task>
     <servers />
   </component>
@@ -219,10 +226,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575496558583" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1576419519361">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1576509840191">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1576419519361" />
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1576509840191" />
     <state x="339" y="162" key="run.anything.popup" timestamp="1576074116309">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
