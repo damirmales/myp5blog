@@ -307,13 +307,15 @@ class FrontendController
             if (empty($connexionErrorMessage)) {
 
                 $userData = new UserDao();
-                $checkUser = $userData->checkUserLogin($_POST['login']);
+                $checkUser = $userData->checkUserLogin($field['login']);
 
 
                 //---- check if user is registered ---------
-                if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password'])) {
+                if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password']))
+                {
 
                     if ($checkUser['statut'] == 1) {
+
                         $_SESSION["user"]['role'] = $checkUser['role'];
                         $_SESSION["user"]['nom'] = $checkUser['nom'];
                         $_SESSION["user"]['login'] = $checkUser['login'];
@@ -327,7 +329,7 @@ class FrontendController
                             exit();
 
                         } else {
-                            $_SESSION["userName"] = "Vous êtes member";
+                            $_SESSION["userMember"] = setFlash("Bonjour !", "Vous êtes membre", 'success');
 
                             header('Location: index.php?route=liste');
                             exit();
@@ -446,13 +448,20 @@ class FrontendController
                     $userEmail = $userDao->checkUserEmail($post['email']);
 
                     if ($userLogin || $userEmail) {
-                   
-                        $_SESSION["registerFormOK"] = "ya un bleme";
+                       // echo 'userLogin'; print_r($userEmail); die();
+                        if ($userLogin)
+                        {
+                            $_SESSION["registerForm"]["login"] = setFlash("Attention !", "Login déjà pris", "warning");
+                        }
+                        if ($userEmail)
+                        {
+                            $_SESSION["registerForm"]["email"] = setFlash("Attention !", "Email déjà pris", "warning");
+                        }
+
                     }
                     else {
 
 
-                        echo '<pre> adduser';  var_dump($userLogin);
                         $token = generateToken();
 
                         //instancier la classe qui envoie les données des utilisateurs vers la bdd
@@ -466,14 +475,16 @@ class FrontendController
 
                         $userEmail = $user->getEmail(); //"damir@romandie.com";
 
-                        $createUrlToken = createUrlWithToken($token);
+                        $createUrlToken = createUrlWithToken($token,$userEmail);
 
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
-                        $_SESSION["registerFormOK"] = "email envoyé";
+                        $_SESSION["registerForm"]["OK"] = setFlash("Génial !", "Email envoyé", "success");
 
-                        header('Location: index.php');
-                        exit();
+                        require 'vue/register.php';
+
+                        //header('Location: index.php');
+                       // exit();
 
                     }
                 }

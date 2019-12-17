@@ -74,7 +74,6 @@ class ArticleDao extends PdoConstruct
 
         $listArticles->execute();
 
-
         $articles = [];
         foreach ($listArticles as $article) {
             $articles[] = new Articles($article);

@@ -10,7 +10,7 @@ class UserDao extends PdoConstruct
     {
 
         $userEmail = $this->connection->prepare('
-					SELECT id,nom,email
+					SELECT email
 					FROM users
 					WHERE email = :email
 					');
@@ -63,7 +63,7 @@ class UserDao extends PdoConstruct
 
         $affectedLines = $requete->execute();
         $count = $requete->rowCount();
-echo '<pre>'; var_dump($count);
+
 
         return $affectedLines;
 
