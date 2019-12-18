@@ -19,8 +19,8 @@ function getFormData($session, $key)
 //================ mettre dans services ou functions =================
 function saveFormData($index)
 {
-
-    foreach ($_POST as $key => $value) {
+$post =  securizeFormFields($_POST);
+    foreach ($post as $key => $value) {
         $_SESSION[$index] [$key] = $value;
 
     }

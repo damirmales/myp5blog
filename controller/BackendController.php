@@ -70,14 +70,14 @@ class BackendController
                 $addArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
             }
 
-            if (empty($_POST['contenu'])) {
+            if (empty($post['contenu'])) {
                 $addArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
             }
 
 
             if (empty($addArticleErrorMessage)) {
 
-                $article = new Articles($_POST);
+                $article = new Articles($post);
 
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleAdded = $articleDao->setArticleToDb($article);
@@ -127,20 +127,20 @@ class BackendController
                 $updateArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
             }
 
-            if (empty($_POST['contenu'])) {
+            if (empty($post['contenu'])) {
                 $updateArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
             }
 
             if (empty($updateArticleErrorMessage)) {
 
-                $article = new Articles($_POST);
+                $article = new Articles($post);
 
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleUpdate = $articleDao->updateArticleToDb($article);
 
                 if ($articleUpdate) {
 
-                    $this->showArticle($_POST['articles_id']);
+                    $this->showArticle($post['articles_id']);
 
                 }
             }
@@ -191,12 +191,12 @@ class BackendController
                 $updateArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
             }
 
-            if (empty($_POST['contenu'])) {
+            if (empty($post['contenu'])) {
                 $updateArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
             }
 
             if (empty($updateArticleErrorMessage)) {
-                $article = new Articles($_POST);
+                $article = new Articles($post);
 
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleUpdate = $articleDao->updateArticleToDb($article);
@@ -204,7 +204,7 @@ class BackendController
                 if ($articleUpdate) {
                     $_SESSION['updateArticle'] = setFlash("Super !", "Article mis à jour", 'success');
 
-                    $this->showArticle($_POST['articles_id']);
+                    $this->showArticle($post['articles_id']);
 
                 }
             }
