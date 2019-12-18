@@ -14,7 +14,6 @@ function checkFormFields($field, $index, $length)
         $errMsg .=  "\n\r  Le ".$index."  doit contenir seulement des caractères";
     }
 
- //echo '<pre> checkform'; var_dump($errMsg); die();
     return $errMsg;
 
 }

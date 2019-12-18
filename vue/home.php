@@ -26,8 +26,6 @@ require_once('functions/functions.php');
                 <br/>Vous pouvez me contactez par ce formulaire</p>
 
                     <?php
-
-
                     if(!empty($contactErrorMessage)){
                         flashMessage($contactErrorMessage);
                     }

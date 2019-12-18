@@ -120,7 +120,7 @@ class Comments
 
     public function hydrate(array $datas)
     {
-//echo '<pre> hydra'; var_dump($datas);
+
         foreach ($datas as $key => $value)
         {
             $method = 'set'.ucfirst($key);

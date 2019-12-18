@@ -54,9 +54,7 @@ class ArticleDao extends PdoConstruct
             $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
             $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
             $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
-            // $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
-            //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
-            // $requete->bindValue(':date_mise_a_jour', $article->getDate_mise_a_jour(), \PDO::PARAM_INT);
+
 
             $affectedLines = $requete->execute();
 

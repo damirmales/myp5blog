@@ -97,7 +97,7 @@ return $validUser;
 
         $stmt->bindParam(':token', $userToken);
         $stmt->execute();
-        //echo '<pre> userdao'; var_dump($stmt); die();
+
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         return $result;

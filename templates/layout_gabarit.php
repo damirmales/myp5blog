@@ -60,7 +60,7 @@
                     <a class="nav-link" href="index.php?route=contact">Contact</a>
                 </li>
                 <?php
-                if (isset($_SESSION['user'])) {
+               // if (isset($_SESSION['user'])) {
                     if (($_SESSION['user']['role'] == 'admin')) {
                         ?>
                         <li class="nav-item">
@@ -87,7 +87,7 @@
                         </li>
                         <?php
                     }
-                }
+               // }
 
                 ?>
             </ul>

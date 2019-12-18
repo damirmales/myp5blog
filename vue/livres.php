@@ -14,7 +14,6 @@
       </div>
     </div>
   </header>
-    
 
 
 <?php foreach ($rubriques as $article) :?>

@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (!(require_once "configuration/config.php"))
+if (!isset($_SESSION['user']['role']))
 {
-    require_once "configuration/config.php";
+    $_SESSION['user']['role'] = null ;
 }
 
 

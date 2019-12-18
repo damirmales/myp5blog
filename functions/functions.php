@@ -4,7 +4,7 @@ use Model\PdoConstruct;
 
 //*** Get an input value entered by user ***
 function getFormData($session, $key)
-{  //echo "getFormData : $key";
+{
     if (!empty($_SESSION[$session][$key])) {
 
         $value = $_SESSION[$session][$key];

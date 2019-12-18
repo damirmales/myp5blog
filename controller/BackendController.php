@@ -1,5 +1,4 @@
 <?php
-
 namespace Controller;
 
 use Model\ArticleDao;
@@ -7,8 +6,8 @@ use Model\Articles;
 use Model\CommentDao;
 use Model\Comments;
 
-require_once('functions/functions.php');
-require_once('functions/securizeFormFields.php');
+require_once 'functions/functions.php';
+require_once 'functions/securizeFormFields.php';
 
 class BackendController
 {
@@ -16,7 +15,7 @@ class BackendController
 
     public function admin()
     {
-//!!!!!!!!!!!!!!! verifier l existence de la session !!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!! verifier l existence de la session !!!!!!!!!!!!!!
 
         if ($_SESSION["user"]['role'] != 'admin') {
 
@@ -24,9 +23,7 @@ class BackendController
             exit();
 
         }
-
-        require 'vue/backend/admin_page.php';
-
+        include 'vue/backend/admin_page.php';
 
     }
     //*****************************************************************
@@ -35,14 +32,13 @@ class BackendController
 
     public function createArticle()
     {
-        require 'vue/backend/create_article.php';//call addArticle() when form would be completed
+        include 'vue/backend/create_article.php';//call addArticle() when form will be completed
     }
 
     public function addArticle() //
     {
         $addArticleErrorMessage = [];// Store error message to be available into create_article
         $post = securizeFormFields($_POST);
-        $messOk = "";
 
         if (isset($post['btn_creer_article'])) {
 
@@ -90,7 +86,20 @@ class BackendController
             }
         }
         saveFormData('newArticle');
-        require 'vue/backend/create_article.php';
+        include 'vue/backend/create_article.php';
+    }
+
+    /**********************
+     * 
+     * display article  
+     ****************************/
+    public function showArticle($idArticle)
+    {
+        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $article = $getArticle->getSingleArticle($idArticle);
+
+        include 'vue/backend/show_article.php';
+
     }
 
     public function updateArticle2()
@@ -146,32 +155,26 @@ class BackendController
             }
 
             //saveFormData('newArticle');
-            require 'vue/backend/edit_article.php';
+            include 'vue/backend/edit_article.php';
         }
     }
 
     public function updateArticle()
     {
-
         $updateArticleErrorMessage = [];
         $post = securizeFormFields($_POST);
 
-        if (isset($post['btn_update_article']))
-        {
+        if (isset($post['btn_update_article'])) {
 
-
-            if (empty($post['titre']))
-            {
+            if (empty($post['titre'])) {
 
                 $updateArticleErrorMessage['titre'] = setFlash("Attention !", "Manque le titre", 'warning');
-                //echo '<pre> updateArticle'; var_dump($updateArticleErrorMessage['titre']);
+
             }
-            elseif (strlen($post['titre']) < 3)
-            {
+            elseif (strlen($post['titre']) < 3) {
                 $updateArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
             }
-            elseif (strlen($post['titre']) > 45)
-            {
+            elseif (strlen($post['titre']) > 45) {
                 $updateArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
             }
 
@@ -212,11 +215,9 @@ class BackendController
             $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
             $article = $getArticle->getSingleArticle($post['articles_id']);
 
-            require 'vue/backend/edit_article.php';
+            include 'vue/backend/edit_article.php';
         }
     }
-
-
 
     public function editListArticles()
     {
@@ -224,31 +225,20 @@ class BackendController
         $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
         $articlesEdited = $articles->getListArticles();
 
-        require 'vue/backend/list_articles.php';
+        include 'vue/backend/list_articles.php';
 
     }
 
-    /**********************  display current article's datas to be modified ****************************/
+    /**********************
+     * 
+     * display current article's datas to be modified 
+     ****************************/
     public function editArticle($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
-        //echo '<pre> editarticle'; var_dump($article);
-
-        require_once 'vue/backend/edit_article.php';
-
+        include_once 'vue/backend/edit_article.php';
     }
-
-    /**********************  display article  ****************************/
-    public function showArticle($idArticle)
-    {
-        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $article = $getArticle->getSingleArticle($idArticle);
-
-        require 'vue/backend/show_article.php';
-
-    }
-
 
     public function deleteArticle($idArticle)
     {
@@ -265,21 +255,11 @@ class BackendController
     //******************** Manage comments  ************************
     //*****************************************************************
 
-    public function editListComments()
-    {
-        $comments = new CommentDao(); //////////// voir gestion instance en Singleton
-        $commentEdited = $comments->getListComments();
-
-
-
-        require 'vue/backend/list_comments.php';
-    }
-
     public function showComment($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
-        require 'vue/backend/show_article.php';
+        include 'vue/backend/show_article.php';
     }
 
     public function deleteComment($idComment)
@@ -288,19 +268,27 @@ class BackendController
         $commentDeleted = $comment->deleteComment($idComment);
 
         if ($commentDeleted) {
-            //echo '<pre> getlist';var_dump($commentDeleted); die();
+
             $this->editListComments();
-            //require 'vue/backend/list_comments.php';
-            //header('Location:index.php?route=listComments');
-            //exit();
+
         }
+    }
+
+    public function editListComments()
+    {
+        $comments = new CommentDao(); //////////// voir gestion instance en Singleton
+        $commentEdited = $comments->getListComments();
+
+
+
+        include 'vue/backend/list_comments.php';
     }
 
     public function validateComment($idComment)
     {
         $getComment = new CommentDao(); //////////// voir gestion instance en Singleton
         $comment = $getComment->validateComment($idComment);
-  $this->editListComments();
+        $this->editListComments();
     }
 }
 

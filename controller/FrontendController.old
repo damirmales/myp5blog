@@ -13,52 +13,40 @@ use Services\Emails;
 use Services\Collection;
 use Services\ValidateForms;
 
-require_once 'services/Emails.php';
-require_once 'services/ValidateForms.php';
-require_once 'functions/functions.php';
-require_once 'functions/securizeFormFields.php';
-require_once 'functions/checkFormFields.php';
+require_once('services/Emails.php');
+require_once('services/ValidateForms.php');
+require_once('functions/functions.php');
+require_once('functions/securizeFormFields.php');
+require_once('functions/checkFormFields.php');
 
 class FrontendController
 {
 
-    /*******************
-     * 
-     * home management 
-     **********************/
+    /******************* home management **********************/
     public function home()
     {
-        include 'vue/home.php';
+        require 'vue/home.php';
     }
 
-    /*******************
-     * 
-     * cv  
-     **********************/
+    /******************* cv  **********************/
     public function cv()
     {
-        include 'vue/cv.php';
+        require 'vue/cv.php';
     }
 
-    /*******************
-     * 
-     * contact from top menu  
-     **********************/
+    /******************* contact from top menu  **********************/
     public function contact()
     {
-        include 'vue/home.php';
+        require 'vue/home.php';
     }
 
-    /*******************
-     * 
-     * Front articles.php management 
-     **********************/
+    /******************* Front articles.php management **********************/
 
     public function pullListeArticles() // get all articles
     {
         $reqArticles = new ArticleDao(); //////////// voir gestion instance en Singleton
         $articles = $reqArticles->getListArticles();
-        include 'vue/articles.php';
+        require 'vue/articles.php';
     }
 
     public function getArticle($id) // get one article
@@ -67,13 +55,10 @@ class FrontendController
         $article = $reqArticle->getSingleArticle($id);
         $comments = $this->getComments($id); // insérer les commentaires avec l'article
 
-        include 'vue/commentForm.php';
+        require 'vue/commentForm.php';
     }
 
-    /*******************
-     * 
-     * Front comments management 
-     **********************/
+    /******************* Front comments management **********************/
 
     public function getComments($id)
     {
@@ -142,13 +127,10 @@ class FrontendController
             $comments->getCommentsFromDb($articleId);
         }
 
-        include 'vue/commentForm.php';
+        require 'vue/commentForm.php';
     }
 
-    /*******************
-     * 
-     * Front articles.php categories management 
-     **********************/
+    /******************* Front articles.php categories management **********************/
 
     public function getCategoryArticles($rubriq)
     {
@@ -159,10 +141,10 @@ class FrontendController
 
         // Associer la vue correspondante à la rubrique sélectionnée
         if ($rubriq == "livres") {
-            include 'vue/livres.php';
+            require 'vue/livres.php';
 
         } elseif ($rubriq == "fromages") {
-            include 'vue/fromages.php';
+            require 'vue/fromages.php';
 
         } else {
             header('Location: index.php');
@@ -171,17 +153,11 @@ class FrontendController
 
     }
     /******************************************************************/
-    /*******************
-     * 
-     * Form contact management 
-     **********************/
+    /******************* Form contact management **********************/
 
     public function addContact($post)
     {
-        /********
-* 
- * Contact form check 
-****************/
+       /******** Contact form check ****************/
         $contactErrorMessage = [];// Store error message to be available into home.php
         $contactErrorMessage2 = "";// Store error message to be available into home.php
 
@@ -219,10 +195,7 @@ class FrontendController
 
             if (empty($contactErrorMessage)) {
 
-                /*****
-* 
- * Call class Emails to send contact form data
-*/
+                /***** Call class Emails to send contact form data*/
                 $sendEmail = new Emails();
                 $sendEmail->setNom($post['nom']);
                 $sendEmail->setPrenom($post['prenom']);
@@ -235,13 +208,13 @@ class FrontendController
 
             }
         }
-        include_once 'vue/home.php';
+        require_once 'vue/home.php';
     }
     //********** acces admin login page *************
 
     public function logUser()
     {
-        include 'vue/login.php';
+        require 'vue/login.php';
 
     }
 
@@ -250,7 +223,7 @@ class FrontendController
     public function logAdmin()
     {
 
-        include 'vue/logAdmin.php';
+        require 'vue/logAdmin.php';
 
     }
 
@@ -259,7 +232,7 @@ class FrontendController
     public
     function register()
     {
-        include 'vue/register.php';
+        require 'vue/register.php';
 
     }
 
@@ -273,10 +246,7 @@ class FrontendController
     }
 
     /**************************************************************************/
-    /*******************
-     * 
-     * Before login check user presence in database 
-     *********/
+    /******************* Before login check user presence in database *********/
 
     //---- from login.php ---------
 
@@ -307,7 +277,8 @@ class FrontendController
 
 
                 //---- check if user is registered ---------
-                if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password'])) {
+                if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password']))
+                {
 
                     if ($checkUser['statut'] == 1) {
                         $_SESSION["user"]['role'] = $checkUser['role'];
@@ -347,7 +318,7 @@ class FrontendController
             }
 
         }
-        include_once 'vue/login.php';
+        require_once 'vue/login.php';
     }
 
 
@@ -370,20 +341,14 @@ class FrontendController
     }
 
     /**********************************************************************************/
-    /*******************
-     * 
-     * Add user from register.php to database  
-     **********************/
+    /******************* Add user from register.php to database  **********************/
 
     public function addUser()
     {
         unset($_SESSION["registerFormOK"]);
 
         $post = securizeFormFields($_POST);
-        /********
-* 
- * Contact form check 
-****************/
+        /******** Contact form check ****************/
 
         $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs dans les champs du formulaire
 
@@ -448,10 +413,12 @@ class FrontendController
 
                     if ($userLogin || $userEmail) {
 
-                        if ($userLogin) {
+                        if ($userLogin)
+                        {
                             $_SESSION["registerForm"]["login"] = setFlash("Attention !", "Login déjà pris", "warning");
                         }
-                        if ($userEmail) {
+                        if ($userEmail)
+                        {
                             $_SESSION["registerForm"]["email"] = setFlash("Attention !", "Email déjà pris", "warning");
                         }
 
@@ -472,27 +439,27 @@ class FrontendController
 
                         $userEmail = $user->getEmail(); //"damir@romandie.com";
 
-                        $createUrlToken = createUrlWithToken($token, $userEmail);
+                        $createUrlToken = createUrlWithToken($token,$userEmail);
 
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
                         $_SESSION["registerForm"]["OK"] = setFlash("Génial !", "Email envoyé", "success");
 
-                        include 'vue/register.php';
+                        require 'vue/register.php';
 
                         //header('Location: index.php');
-                        // exit();
+                       // exit();
 
                     }
                 }
             }
         }
 
-        include 'vue/register.php';
+        require 'vue/register.php';
 
     }
 
-    //*********** check the token from the link validate in the user's email **************
+//*********** check the token from the link validate in the user's email **************
     public function verifyToken()
     {
         $registerMessage = [];
@@ -509,7 +476,7 @@ class FrontendController
                 $registerMessage ['user'] = setFlash("Super !", "Vous êtes inscrit ", "success"); // Store error message to be abvailable into register.php
 
             }
-            include_once 'vue/home.php';
+            require_once 'vue/home.php';
             //header('Location: index.php');
             //exit();
         }

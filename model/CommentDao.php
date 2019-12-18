@@ -64,14 +64,14 @@ class CommentDao extends PdoConstruct
         foreach ($requete as $comment) {
             $comments[] = new Comments($comment);
         }
-       // echo '<pre> getlist'; var_dump($comments);
+
         return $comments;
     }
 
     //---------- efface le commentaire en fonction du numéro d'id fournit ----------
 
     public function deleteComment($idComment)
-    {//echo '<pre> deleteComment'; var_dump($idComment);
+    {
         $commentaire = $this->connection->prepare('
             DELETE 
             FROM commentaires
