@@ -75,10 +75,9 @@ class CommentDao extends PdoConstruct
         $commentaire = $this->connection->prepare('
             DELETE 
             FROM commentaires
-            WHERE Articles_articles_id = :id');
+            WHERE commentaire_id = :id');
 
         $commentaire->execute([':id' => $idComment]);
-
         return $commentaire;
 
     }

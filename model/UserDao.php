@@ -6,20 +6,20 @@ class UserDao extends PdoConstruct
 {
 
     //----- Check if user is registered------------
-    public function checkUserRecord($email)
+    public function checkUserEmail($email)
     {
 
-        $userRecord = $this->connection->prepare('
-					SELECT id,nom,email
+        $userEmail = $this->connection->prepare('
+					SELECT email
 					FROM users
 					WHERE email = :email
 					');
         // On lie la variable $email définie au-dessus au paramètre :email de la requête préparée
-        $userRecord->bindValue(':email', $email, \PDO::PARAM_STR);
+        $userEmail->bindValue(':email', $email, \PDO::PARAM_STR);
 
-        $userRecord->execute();
-        $user = $userRecord->fetch();
-
+        $userEmail->execute();
+        $user = $userEmail->fetch();
+   
         return $user;
     }
 //----- Check if user's login is in the DB ------------
@@ -45,8 +45,7 @@ class UserDao extends PdoConstruct
 
     public function addUserToDb($user)
     {
-        try
-        {
+
         $requete = $this->connection->prepare('
 					INSERT INTO users (id,nom,prenom,email,role,statut,token,login,password)
 					VALUES (:id,:nom,:prenom,:email,:role,:statut,:token,:login,:password)
@@ -63,11 +62,8 @@ class UserDao extends PdoConstruct
 
 
         $affectedLines = $requete->execute();
-        }
-        catch(Exception $e){
-        print_r($e->getMessage());
-       
-    }
+        $count = $requete->rowCount();
+
 
         return $affectedLines;
 
@@ -87,7 +83,25 @@ class UserDao extends PdoConstruct
             SET statut = 1 
             WHERE id = :id');
 
-        $commentaire->execute([':id' => $idUser]);
-
+      $validUser = $commentaire->execute([':id' => $idUser]);
+return $validUser;
     }
+
+    //*********** check the token from the link validate in the user's email **************
+    public function fetchToken($userToken)
+    {
+
+        $sql = "SELECT id,nom  FROM users WHERE  token = :token";
+
+        $stmt = $this->connection->prepare($sql);
+
+        $stmt->bindParam(':token', $userToken);
+        $stmt->execute();
+        //echo '<pre> userdao'; var_dump($stmt); die();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+
 }

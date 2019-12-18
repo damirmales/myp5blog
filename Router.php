@@ -81,22 +81,33 @@
 		     		elseif($get === 'connexion') // go to login.php form page
 					{
 						$frontController = new FrontendController;							
-						$frontController->logAdmin();
+						$frontController->logUser();
 					
 					}
+					elseif($get === 'connexionAdmin') // go to logAdmin.php form page
+                    {
+                        $frontController = new FrontendController;
+                        $frontController->logAdmin();
+
+                    }
 					elseif($get === 'deconnexion')
 					{
 						$frontController = new FrontendController;							
 						$frontController->logOff();
 					
 					}
-					elseif($get === 'pageAdmin') // from login.php check admin data to login
+					elseif($get === 'pageUser') // from login.php check admin data to login
 					{
 						$frontController = new FrontendController;							
 						$frontController->checkUser();
-					
-					}
 
+					}
+                    elseif($get === 'pageAdmin') // from login.php check admin data to login
+                    {
+                        $frontController = new FrontendController;
+                        $frontController->checkUser();
+
+                    }
 					elseif($get === 'register')// to the register form page
 					{
 						$frontController = new FrontendController;							
@@ -194,6 +205,9 @@
 			catch (Exception $e)
 			{
 				echo 'Erreur niveau Router :'. $e->getMessage();
+
+               // header('Location: index.php');
+              //  exit();
 			}
 		}
 

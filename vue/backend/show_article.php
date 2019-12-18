@@ -7,7 +7,14 @@
   <!-- Article Content -->
   <article>
     <div class="container">
-      
+        <?php
+
+if (isset($_SESSION['updateArticle'])) {
+    flashMessage2($_SESSION['updateArticle']);
+unset($_SESSION['updateArticle']);
+}
+
+        ?>
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
                   <div class="post-heading">

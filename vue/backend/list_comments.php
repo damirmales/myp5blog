@@ -2,19 +2,20 @@
 $titre = "Liste des commentaires";
 $row = 0;
 ?>
-    <div class="container">
-    <table class="table table-hover">
-    <thead>
+    <div class="container table-responsive ">
+
+    <table class="table  table-hover table-striped">
+    <thead class="bg-primary text-white text-center">
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Auteur du commentaire</th>
-        <th scope="col">Contenu du Commentaire</th>
+        <th scope="col">Auteur</th>
+        <th scope="col">Contenu </th>
         <th scope="col">Action</th>
     </tr>
     </thead>
     <tbody>
 <?php
-foreach ($commentEdited as $comment) : //echo '<pre> list_ '; var_dump($comment->getCommentaire_id());
+foreach ($commentEdited as $comment) :
     ?>
 
         <tr>
@@ -22,9 +23,9 @@ foreach ($commentEdited as $comment) : //echo '<pre> list_ '; var_dump($comment-
             <td><?php echo htmlspecialchars($comment->getPseudo()); ?></td>
             <td><?= htmlspecialchars($comment->getContenu()); ?></td>
             <td><a href="index.php?route=deleteComment&id=<?= $comment->getCommentaire_id(); ?>"
-                    onclick="return window.confirm(`Êtes vous sur de vouloir supprimer ce commentaire ?!`)">--> Supprimer</a>
+                    onclick="return window.confirm(`Êtes vous sur de vouloir supprimer ce commentaire ?!`)"> ✄ Supprimer</a>
             <br/>
-                <a href="index.php?route=validateComment&id=<?= $comment->getCommentaire_id(); ?>">--> Autoriser la publication</a>
+                <a href="index.php?route=validateComment&id=<?= $comment->getCommentaire_id(); ?>"> ✌ Autoriser la publication</a>
             </td>
         </tr>
 

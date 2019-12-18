@@ -1,6 +1,6 @@
 <?php ob_start();
 require_once('functions/functions.php');
-$errs[] = "";
+
 ?>
 
 
@@ -24,19 +24,25 @@ $errs[] = "";
 if(!empty($registerFormMessage)){
     flashMessage($registerFormMessage);
 }
-?>
+if(!empty($_SESSION["registerForm"]["login"])){
 
-<?php
-//============== mettre dans une classe Messages / success ============
-if (!empty($_SESSION["registerFormOK"])) {
+    flashMessage2($_SESSION["registerForm"]["login"]);
+    unset($_SESSION["registerForm"]["login"]);
+}
+if(!empty($_SESSION["registerForm"]["email"])){
 
-    echo '<br/><div class="alert alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Bravo! </strong>'
-        . $_SESSION["registerFormOK"] . '</div>';
+    flashMessage2($_SESSION["registerForm"]["email"]);
+    unset($_SESSION["registerForm"]["email"]);
+}
 
+if(!empty($_SESSION["registerForm"]["OK"])){
+
+    flashMessage2($_SESSION["registerForm"]["OK"]);
+    unset($_SESSION["registerForm"]["OK"]);
 }
 ?>
+
+
 
     <!-- Main Content -->
     <div class="container">

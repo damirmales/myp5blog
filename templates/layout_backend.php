@@ -46,18 +46,16 @@
     <?= $content; ?>
       
 
-
-
-
   <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
 
-          </ul>
-          <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
-        </div>
+          <div class="col-lg-8 col-md-10 mx-auto">
+
+              <p class="text-center" ><a  href="index.php?route=deconnexion">se déconnecter</a></p>
+              <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
+          </div>
       </div>
     </div>
   </footer>

@@ -3,15 +3,17 @@ require_once('functions/functions.php');
 
 ?>
 
+   
+
 <!-- Page Header -->
-<header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
+<header class="masthead" style="background-image: url('public/img/about-bg.jpg')">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="page-heading">
-          <h1>login page</h1>
-          <span class="subheading">accès aux membres</span>
+          <h1>login page admin</h1>
+          <span class="subheading">accès aux admins</span>
           <a class="nav-link" href="index.php">Accueil</a>
         </div>
       </div>
@@ -19,17 +21,19 @@ require_once('functions/functions.php');
   </div>
 </header>
 
+
 <?php
 if (!empty($connexionErrorMessage)) {
     flashMessage($connexionErrorMessage);
 }
+
 ?>
 
 <!-- Main Content -->
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
-     <form action="index.php?route=pageUser" method="post" name="loginForm" id="loginForm">
+     <form action="index.php?route=pageAdmin" method="post" name="loginForm" id="loginForm">
          <input type="hidden" name="formLogin" value="sent">
       <div class="form-group">
         <label for="inputLogin">Login</label>

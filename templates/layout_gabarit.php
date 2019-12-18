@@ -1,6 +1,6 @@
-  <!DOCTYPE html>
-  <html lang="fr">
-  <head>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,173 +14,173 @@
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet' ?>" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
 
     <!-- Custom styles for this template -->
     <link href="public/css/clean-blog.min.css" rel="stylesheet">
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
         <a class="navbar-brand" href="index.php">Damir Males</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fas fa-bars"></i>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.php">Accueil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.php?route=liste">Tous les articles</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Rubriques</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="index.php?route=livres">Livres</a>
-                <a class="dropdown-item" href="index.php?route=fromages">Fromages</a>
-                  <!--<a class="dropdown-item" href="index.php?route=fromages">Autres</a>-->
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.php?route=cv">CV</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.php?route=contact">Contact</a>
-            </li>
-              <?php
-              if(isset($_SESSION['user']) )
-              {
-                  if (($_SESSION['user']['role'] == 'admin')) {
-                      ?>
-                      <li class="nav-item">
-                          <a class="nav-link" href="index.php?route=admin"> ⚒ Admin</a>
-                      </li>
-                      <?php
-
-                  }
-
-                  if (($_SESSION['user']['role'] == 'member'))
-                  {
-                      ?>
-                      <li class="nav-item">
-                          <a class="nav-link" href=""> ☑ Membre</a>
-                      </li>
-                      <?php
-                  }
-              }
-              ?>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <?= $content;?>
-
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <!--<ul class="list-inline text-center">
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-            </ul>
-            //-->
-            <div class="footer-social my-5">
-              <div class="container">
-                <div class="d-flex justify-content-center">
-                  <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-github" href="https://github.com/blackrockdigital">
-                    <i class="fab fa-github"></i>
-                  </a>
-
-
-                  <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-twitter" href="https://twitter.com/sbootstrap">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                  <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-facebook" href="https://www.facebook.com/StartBootstrap/">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <?php
-            if(isset($_SESSION['user']) )
-            {
-             
-              if(($_SESSION['user']['role'] != 'admin' ) && ($_SESSION['user']['role'] != 'member' ))
-                { echo $_SESSION['user']['role'];
-
-              ?>
-              <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a><br/>
-                Pas encore membre?  <a href="index.php?route=register"> S'enregistrer</a></p>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?route=liste">Tous les articles</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">Rubriques</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="index.php?route=livres">Livres</a>
+                        <a class="dropdown-item" href="index.php?route=fromages">Fromages</a>
+                        <!--<a class="dropdown-item" href="index.php?route=fromages">Autres</a>-->
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?route=cv">CV</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?route=contact">Contact</a>
+                </li>
                 <?php
-              }
-              else
-              {
+                if (isset($_SESSION['user'])) {
+                    if (($_SESSION['user']['role'] == 'admin')) {
+                        ?>
+                        <li class="nav-item">
+                            <a class="" href="index.php?route=admin"> ⚒ Admin</a>
+                            <a class="" href="index.php?route=deconnexion">/ Déconnexion /</a>
+                        </li>
+                        <?php
+
+                    }
+                    elseif (($_SESSION['user']['role'] == 'member')) {
+                        ?>
+                        <li class="nav-item">
+                            <a class="" >/ ☑ Membre /</a>
+                            <a class="" href="index.php?route=deconnexion">/ Se déconnecter /</a>
+                        </li>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <li class="nav-item">
+                            <a class="" href="index.php?route=register">/ s'enregistrer /</a>
+                            <a class="" href="index.php?route=connexion">/ se connecter /</a>
+                        </li>
+                        <?php
+                    }
+                }
+
                 ?>
-                <p class="admin text-center"><a href="index.php?route=deconnexion"> Deconnexion</a>;
+            </ul>
+        </div>
+    </div>
+</nav>
 
-                  <?php
-                } 
-              }
-              else
-              {
-                ?>  
-                <p class="admin text-center"><a href="index.php?route=connexion"> Connexion</a><br/>
-                  Pas encore membre?  <a href="index.php?route=register"> S'enregistrer</a></p>
+<?= $content; ?>
 
-                  <?php  
-                } 
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <!--<ul class="list-inline text-center">
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                //-->
+                <div class="footer-social my-5">
+                    <div class="container">
+                        <div class="d-flex justify-content-center">
+                            <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-github"
+                               href="https://github.com/blackrockdigital">
+                                <i class="fab fa-github"></i>
+                            </a>
+
+
+                            <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-twitter"
+                               href="https://twitter.com/sbootstrap">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-facebook"
+                               href="https://www.facebook.com/StartBootstrap/">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <?php
+                if (isset($_SESSION['user'])) {
+
+                    if (($_SESSION['user']['role'] != 'admin') ) {
+
+
+                        ?>
+                        <p class="admin text-center"><a href="index.php?route=connexionAdmin"> Administration</a>
+                        <?php
+                    }
+                }
                 ?>
 
                 <p class="copyright text-muted">Copyright &copy; Damir Blog 2019</p>
-              </div>
             </div>
-          </div>
-        </footer>
+        </div>
+    </div>
+</footer>
 
 
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Contact Form JavaScript -->
-        <script src="public/js/jqBootstrapValidation.js"></script>
-        <!-- <script src="public/js/contact_me.js"></script> -->
+<!-- Contact Form JavaScript -->
+<script src="public/js/jqBootstrapValidation.js"></script>
+<!-- <script src="public/js/contact_me.js"></script> -->
 
-        <!-- Custom scripts for this template -->
-        <script src="public/js/clean-blog.min.js"></script>
+<!-- Custom scripts for this template -->
+<script src="public/js/clean-blog.min.js"></script>
 
-      </body>
+</body>
 
-      </html>
+</html>

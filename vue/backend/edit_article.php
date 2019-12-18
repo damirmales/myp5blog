@@ -1,13 +1,15 @@
 <?php ob_start();
 $titre = "Modifier un article";
-$messOk="";
+
 ?>
+<div class="container">
 <div class="col-lg-8 col-md-10 mx-auto">
     <p>Vous pouvez modifier cet article</p>
 
     <?php
-    if(isset($addArticleErrorMessage) && empty($addArticleErrorMessage)){
-        flashMessage2($messOk);
+
+    if (isset($updateArticleErrorMessage) && !empty($updateArticleErrorMessage)) {
+        flashMessage($updateArticleErrorMessage);
     }
 
     ?>
@@ -57,11 +59,12 @@ $messOk="";
             <br>
             <div id="success"></div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" name="btn_creer_article" id="sendMessageButton">Envoyez
+                <button type="submit" class="btn btn-primary" name="btn_update_article" id="sendMessageButton">Envoyez
                 </button>
             </div>
         </form>
     </div>
+</div>
     <hr>
 
     <?php $content = ob_get_clean(); ?>

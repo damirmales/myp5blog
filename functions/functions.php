@@ -6,7 +6,9 @@ use Model\PdoConstruct;
 function getFormData($session, $key)
 {  //echo "getFormData : $key";
     if (!empty($_SESSION[$session][$key])) {
+
         $value = $_SESSION[$session][$key];
+
         unset ($_SESSION[$session][$key]);
         return htmlspecialchars($value);
     }
@@ -17,8 +19,8 @@ function getFormData($session, $key)
 //================ mettre dans services ou functions =================
 function saveFormData($index)
 {
-
-    foreach ($_POST as $key => $value) {
+$post =  securizeFormFields($_POST);
+    foreach ($post as $key => $value) {
         $_SESSION[$index] [$key] = $value;
 
     }
@@ -32,7 +34,7 @@ function generateToken()
 
 }
 
-function createUrlWithToken($token)
+function createUrlWithToken($token,$email)
 {
     $userId = 1; // test only
 
@@ -79,8 +81,8 @@ function setFlash($titre, $message, $type)
 
 function flashMessage2($mess)
 {
-    echo '<div class="container alerte alert-' . $msg['type'] . '">' . $msg['titre'] . '
-<button type="button" class="close" data-dismiss="alert">&times;</button>' . $msg['message'] .
+    echo '<div class="container alerte alert-' . $mess['type'] . '">' . $mess['titre'] . '
+<button type="button" class="close" data-dismiss="alert">&times;</button>' . $mess['message'] .
         '</div>';
     unset($mess);
 }
@@ -94,5 +96,11 @@ function flashMessage($mess)
     unset($mess);
 
 }
+
+}
+
+function checkDouble($field)
+{
+
 
 }

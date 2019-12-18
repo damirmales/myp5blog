@@ -108,8 +108,8 @@ class Emails
 		$prenom = $this->getPrenom('prenom');
 		$nom = $this->getNom('nom'); 
 		$email = $this->getEmail('email');
-		$message   = '$email : '.$userEmail;
-		$message   .= '$token : '. $UrlToken ;
+		$message   = 'email : '.$userEmail;
+		$message   .= 'token : '. $UrlToken ;
 
 
 		$emailTo = $userEmail;
