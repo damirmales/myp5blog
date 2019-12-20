@@ -3,28 +3,28 @@ namespace Services;
 
 class Session
 {
-    private $session;
+    public $session;
 
     public function __construct($session)
     {
         $this->session = $session;
     }
 
-    public function set($name, $value)
+    public function set($name,$key, $value)
     {
-        $_SESSION[$name] = $value;
+        $session[$name][$key] = $value;
     }
 
-    public function get($name)
+    public function get($name,$key)
     {
-        if(isset($_SESSION[$name])) {
-            return $_SESSION[$name];
+        if(isset($session[$name][$key])) {
+            return $session[$name][$key];
         }
     }
 
     public function show($name)
     {
-        if(isset($_SESSION[$name]))
+        if(isset($session[$name]))
         {
             $key = $this->get($name);
             $this->remove($name);
@@ -32,9 +32,9 @@ class Session
         }
     }
 
-    public function remove($name)
+    public function remove($name,$key)
     {
-        unset($_SESSION[$name]);
+        unset($session[$name][$key]);
     }
 
     public function stop()

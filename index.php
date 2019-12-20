@@ -1,5 +1,14 @@
 <?php
 session_start();
+/*use Services\Session;
+
+$newSession = new Session($_SESSION);
+
+if (!$newSession->get('user','role'))
+{
+    echo 'pas de newSession';
+}
+*/
 if (!isset($_SESSION['user']['role']))
 {
     $_SESSION['user']['role'] = null ;

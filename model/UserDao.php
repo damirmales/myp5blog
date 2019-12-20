@@ -9,11 +9,13 @@ class UserDao extends PdoConstruct
     public function checkUserEmail($email)
     {
 
-        $userEmail = $this->connection->prepare('
+        $userEmail = $this->connection->prepare(
+            '
 					SELECT email
 					FROM users
 					WHERE email = :email
-					');
+					'
+        );
         // On lie la variable $email définie au-dessus au paramètre :email de la requête préparée
         $userEmail->bindValue(':email', $email, \PDO::PARAM_STR);
 
@@ -22,18 +24,20 @@ class UserDao extends PdoConstruct
    
         return $user;
     }
-//----- Check if user's login is in the DB ------------
+    //----- Check if user's login is in the DB ------------
 
     public function checkUserLogin($loginUser)
     {
 
-        $userData = $this->connection->prepare('
+        $userData = $this->connection->prepare(
+            '
 					SELECT *
 					FROM users
 					WHERE login = :loginUser
-					');
+					'
+        );
 
-        $userData->execute( [ ':loginUser' => $loginUser ] );
+        $userData->execute([ ':loginUser' => $loginUser ]);
 
         $user = $userData->fetch();
 
@@ -41,16 +45,21 @@ class UserDao extends PdoConstruct
 
     }
 
-    /************ Add user to database ***************/
+    /************
+     * 
+     * Add user to database 
+     ***************/
 
     public function addUserToDb($user)
     {
 
-        $requete = $this->connection->prepare('
+        $requete = $this->connection->prepare(
+            '
 					INSERT INTO users (id,nom,prenom,email,role,statut,token,login,password)
 					VALUES (:id,:nom,:prenom,:email,:role,:statut,:token,:login,:password)
-					');
-        $requete->bindValue(':id', NULL, \PDO::PARAM_INT);
+					'
+        );
+        $requete->bindValue(':id', null, \PDO::PARAM_INT);
         $requete->bindValue(':nom', $user->getNom(), \PDO::PARAM_STR);
         $requete->bindValue(':prenom', $user->getPrenom(), \PDO::PARAM_STR);
         $requete->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
@@ -68,7 +77,10 @@ class UserDao extends PdoConstruct
         return $affectedLines;
 
     }
-    /** encrypt password ********/
+    /**
+     * 
+     * encrypt password 
+     ********/
     private function hashPassword($pswd)
     {
         $pwd_hashed = password_hash($pswd, PASSWORD_DEFAULT);
@@ -78,13 +90,15 @@ class UserDao extends PdoConstruct
 
     public function validateUser($idUser)
     {
-        $commentaire = $this->connection->prepare('
+        $commentaire = $this->connection->prepare(
+            '
             UPDATE  users
             SET statut = 1 
-            WHERE id = :id');
+            WHERE id = :id'
+        );
 
-      $validUser = $commentaire->execute([':id' => $idUser]);
-return $validUser;
+        $validUser = $commentaire->execute([':id' => $idUser]);
+        return $validUser;
     }
 
     //*********** check the token from the link validate in the user's email **************

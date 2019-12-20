@@ -1,15 +1,17 @@
 <?php
 namespace Model;
 
-
 /*********************************************/
-/************ Manage comments ***************/
+/************
+ * 
+ * Manage comments 
+ ***************/
 /*********************************************/
 
 class Comments
 {
 
- 	protected $commentaire_id;
+    protected $commentaire_id;
     protected $pseudo;
     protected $contenu;
     protected $date_ajout;
@@ -34,8 +36,8 @@ class Comments
     }
 
      /**
-     * @return mixed
-     */
+      * @return mixed
+      */
     public function getPseudo()
     {
         return $this->pseudo;
@@ -48,7 +50,7 @@ class Comments
     {
         $this->pseudo = $pseudo;
     }
- /**
+    /**
      * @return mixed
      */
     public function getContenu()
@@ -81,8 +83,8 @@ class Comments
     }
 
      /**
-     * @return mixed
-     */
+      * @return mixed
+      */
     public function getValidation()
     {
         return $this->validation;
@@ -96,8 +98,8 @@ class Comments
         $this->validation = $validation;
     }
      /**
-     * @return mixed
-     */
+      * @return mixed
+      */
     public function getDate_validation()
     {
         return $this->date_validation;
@@ -125,16 +127,15 @@ class Comments
         {
             $method = 'set'.ucfirst($key);
 
-            if (method_exists($this, $method))
-            {
+            if (method_exists($this, $method)) {
                 $this->$method($value);
 
             }
         }
     }
 
-	
-}		
+    
+}        
 
 
 

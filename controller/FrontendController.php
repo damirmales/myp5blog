@@ -11,6 +11,7 @@ use Model\Users;
 use Model\UserDao;
 use Services\Emails;
 use Services\Collection;
+use Services\ImportPage;
 use Services\ValidateForms;
 
 require_once 'services/Emails.php';
@@ -259,7 +260,8 @@ class FrontendController
     public
     function register()
     {
-        include 'vue/register.php';
+
+         ImportPage::getPage(include 'vue/register.php');
 
     }
 
@@ -282,6 +284,7 @@ class FrontendController
 
     public function checkUser()
     {
+        //$newSession = new Session($_SESSION["user"]['role']);
 
         $connexionErrorMessage = [];// Store error message to be available into login.php
         //------------- sanitize input fields values -----------------------------

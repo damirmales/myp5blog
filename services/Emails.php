@@ -5,14 +5,14 @@ namespace Services;
 
 class Emails
 {
-	private $nom;
+    private $nom;
     private $prenom;
     private $email;
     private $message;
 
      /**************************************
-     * @return mixed
-     */
+      * @return mixed
+      */
     public function getNom()
     {
         return $this->nom;
@@ -75,82 +75,82 @@ class Emails
     }
 
 
-	public function sendEmail()
-	{
-		$prenom = $this->getPrenom('prenom');
-		$nom = $this->getNom('nom'); 
-		$email = $this->getEmail('email');
+    public function sendEmail()
+    {
+        $prenom = $this->getPrenom('prenom');
+        $nom = $this->getNom('nom'); 
+        $email = $this->getEmail('email');
 
-		$message   = 'email : '.$email.' - ';
-		$message   .= 'nom : '.$prenom.' '.$nom." - " ;
+        $message   = 'email : '.$email.' - ';
+        $message   .= 'nom : '.$prenom.' '.$nom." - " ;
         $message .= 'message : '.$this->getMessage('message');
 
-		$emailTo = "damir@romandie.com";
-		$subject = "Contact";
-		$emailFrom = $this->getEmail('email'); 
+        $emailTo = "damir@romandie.com";
+        $subject = "Contact";
+        $emailFrom = $this->getEmail('email'); 
 
-		$headers   = 'MIME-Version: 1.0' . "\r\n";
-		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+        $headers   = 'MIME-Version: 1.0' . "\r\n";
+        $headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
-		//---- envoi email
-		$success = mail($emailTo, $subject, $message, $headers);
+        //---- envoi email
+        $success = mail($emailTo, $subject, $message, $headers);
 
-       // echo '<pre>'; var_dump($success);
+          // echo '<pre>'; var_dump($success);
         //$_SESSION["contactForm"] = "email  envoyé";
-		return $success;	
+        return $success;    
 
-	}
-	
-//---- send email with token to register a new user ----------
-		public function tokenEmail($userEmail,$UrlToken)
-	{
+    }
+    
+    //---- send email with token to register a new user ----------
+    public function tokenEmail($userEmail,$UrlToken)
+    {
 
-		$prenom = $this->getPrenom('prenom');
-		$nom = $this->getNom('nom'); 
-		$email = $this->getEmail('email');
-		$message   = 'email : '.$userEmail;
-		$message   .= 'token : '. $UrlToken ;
-
-
-		$emailTo = $userEmail;
-		$subject = "confirmez votre email";
-		$emailFrom = $this->getEmail('email'); 
-
-		$headers   = 'MIME-Version: 1.0' . "\r\n";
-		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+        $prenom = $this->getPrenom('prenom');
+        $nom = $this->getNom('nom'); 
+        $email = $this->getEmail('email');
+        $message   = 'email : '.$userEmail;
+        $message   .= 'token : '. $UrlToken ;
 
 
-		// envoi email 
-		$success = mail($emailTo, $subject, $message, $headers);
-		return $success;	
+        $emailTo = $userEmail;
+        $subject = "confirmez votre email";
+        $emailFrom = $this->getEmail('email'); 
 
-	}
+        $headers   = 'MIME-Version: 1.0' . "\r\n";
+        $headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
 
-	/*public function swiftMailer()
-	{
+        // envoi email 
+        $success = mail($emailTo, $subject, $message, $headers);
+        return $success;    
 
-// Create the Transport
-		$transport = (new \Swift_SmtpTransport('smtp.gmail.com', 25))
-		//$transport = (new \Swift_SmtpTransport('mail07.lwspanel.com', 465))
-		->setUsername('your username')
-		->setPassword('your password')
-		;
+    }
 
-// Create the Mailer using your created Transport
-		$mailer = new \Swift_Mailer($transport);
 
-// Create a message
-		$message = (new \Swift_Message('Wonderful Subject'))
-		->setFrom(['john@doe.com' => 'John Doe'])
-		->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
-		->setBody('Here is the message itself')
-		;
+    /*public function swiftMailer()
+    {
 
-// Send the message
-		$result = $mailer->send($message);
+    // Create the Transport
+    $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 25))
+    //$transport = (new \Swift_SmtpTransport('mail07.lwspanel.com', 465))
+    ->setUsername('your username')
+    ->setPassword('your password')
+    ;
 
-	} */
+    // Create the Mailer using your created Transport
+    $mailer = new \Swift_Mailer($transport);
+
+    // Create a message
+    $message = (new \Swift_Message('Wonderful Subject'))
+    ->setFrom(['john@doe.com' => 'John Doe'])
+    ->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
+    ->setBody('Here is the message itself')
+    ;
+
+    // Send the message
+    $result = $mailer->send($message);
+
+    } */
 
 
 }

@@ -33,7 +33,7 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
               <h1>Page d'administration du blog</h1>
-              <span class="subheading"><?= $titre; ?></span>
+              <span class="subheading"><?php echo $titre; ?></span>
                 <a class="nav-link" href="index.php?route=admin">tableau de bord</a>
               <a class="nav-link" href="index.php">Accueil du blog</a>
             </div>
@@ -43,7 +43,7 @@
     </header>
 
 
-    <?= $content; ?>
+    <?php echo $content; ?>
       
 
   <!-- Footer -->

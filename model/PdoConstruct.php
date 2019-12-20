@@ -4,16 +4,16 @@ use Model\Database;
 
 class PdoConstruct extends Database
 {
-	
+    
 
-		protected $connection;
+    protected $connection;
 
-		public function __construct()
-		{
+    public function __construct()
+    {
 
-			$this->connection = $this->getConnectDB();
-			
-		}
+        $this->connection = $this->getConnectDB();
+            
+    }
 
 
 

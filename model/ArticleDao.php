@@ -6,7 +6,9 @@ use Model\PdoConstruct;
 use Model\Articles;
 
 
-/****** **************************************************************************
+/******
+ * 
+ * **************************************************************************
  * Cette classe gère la collecte des données pour afficher la liste des articles
  * et chaque article en particulier
  *************************************************************************************/
@@ -18,14 +20,19 @@ class ArticleDao extends PdoConstruct
         return $article;
     }
 
-    /************ Add articles to database ***************/
+    /************
+     * 
+     * Add articles to database 
+     ***************/
     public function setArticleToDb($article)
     {
-        $requete = $this->connection->prepare('
+        $requete = $this->connection->prepare(
+            '
             INSERT INTO articles (articles_id,titre,chapo,auteur,contenu,rubrique,date_creation,date_mise_a_jour)
             VALUES (:id,:titre,:chapo,:auteur,:contenu,:rubrique,NOW(),NOW())
-            ');
-        $requete->bindValue(':id', NULL, \PDO::PARAM_INT);
+            '
+        );
+        $requete->bindValue(':id', null, \PDO::PARAM_INT);
         $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
         $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
         $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
@@ -44,11 +51,13 @@ class ArticleDao extends PdoConstruct
     {
 
 
-            $requete = $this->connection->prepare('
+            $requete = $this->connection->prepare(
+                '
             UPDATE articles
             SET titre = :titre, chapo = :chapo, auteur = :auteur, contenu = :contenu, date_mise_a_jour = NOW()
             WHERE  articles_id = :id
-            ');
+            '
+            );
             $requete->bindValue(':id', $article->getArticles_id(), \PDO::PARAM_INT);
             $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
             $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
@@ -62,13 +71,15 @@ class ArticleDao extends PdoConstruct
 
     }
 
-//----- Retourne la liste des articles pour affichage ------------
+    //----- Retourne la liste des articles pour affichage ------------
     public function getListArticles()
     {
-        $listArticles = $this->connection->prepare('
+        $listArticles = $this->connection->prepare(
+            '
             SELECT *
             FROM articles
-            ORDER BY articles_id DESC');
+            ORDER BY articles_id DESC'
+        );
 
         $listArticles->execute();
 
@@ -83,10 +94,11 @@ class ArticleDao extends PdoConstruct
 
     }
 
-//----- Retourne un article particulier pour affichage ------------
+    //----- Retourne un article particulier pour affichage ------------
     public function getSingleArticle($idArticle)
     {
-        $requete = $this->connection->prepare('
+        $requete = $this->connection->prepare(
+            '
             SELECT *
             FROM articles
             WHERE  articles_id = :id
@@ -104,7 +116,8 @@ class ArticleDao extends PdoConstruct
     public function getArticlesByCategory($rubrique)
     {
         //$connection = $this->getConnectDB();
-        $listArticles = $this->connection->prepare('
+        $listArticles = $this->connection->prepare(
+            '
             SELECT articles_id, titre, chapo, auteur,contenu, rubrique, date_creation, date_mise_a_jour 
             FROM articles
             WHERE rubrique = "' . $rubrique . '" 
@@ -117,15 +130,17 @@ class ArticleDao extends PdoConstruct
         return $articles;
     }
 
-//---------- efface l'article en fonction du numéro d'id fournit ----------
+    //---------- efface l'article en fonction du numéro d'id fournit ----------
 
     public function deleteArticle($idArticle)
     {
         try {
-            $commentaire = $this->connection->prepare('
+            $commentaire = $this->connection->prepare(
+                '
                 DELETE 
                 FROM commentaires
-                WHERE Articles_articles_id = :id');
+                WHERE Articles_articles_id = :id'
+            );
 
             $commentaire->execute([':id' => $idArticle]);
         }
@@ -134,10 +149,12 @@ class ArticleDao extends PdoConstruct
             echo $commentaire . "<br>" . $e->getMessage();
         }
 
-        $article = $this->connection->prepare('
+        $article = $this->connection->prepare(
+            '
             DELETE 
             FROM articles
-            WHERE articles_id = :id');
+            WHERE articles_id = :id'
+        );
 
         $article->execute([':id' => $idArticle]);
         $article->closeCursor();

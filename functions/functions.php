@@ -9,7 +9,7 @@ function getFormData($session, $key)
 
         $value = $_SESSION[$session][$key];
 
-        unset ($_SESSION[$session][$key]);
+        unset($_SESSION[$session][$key]);
         return htmlspecialchars($value);
     }
     return null;
@@ -19,7 +19,7 @@ function getFormData($session, $key)
 //================ mettre dans services ou functions =================
 function saveFormData($index)
 {
-$post =  securizeFormFields($_POST);
+    $post =  securizeFormFields($_POST);
     foreach ($post as $key => $value) {
         $_SESSION[$index] [$key] = $value;
 
@@ -55,11 +55,13 @@ function getUserEmailandId() // Nota : voir si doublon avec checkUserLogin($logi
     {
         $connection = new PdoConstruct;
 
-        $userData = $this->connection->prepare('
+        $userData = $this->connection->prepare(
+            '
                 SELECT email, token
                 FROM users
                 WHERE id = $userId
-                ');
+                '
+        );
 
         $userData->execute();
 
@@ -88,14 +90,15 @@ function flashMessage2($mess)
 }
 
 function flashMessage($mess)
-{ foreach ($mess as $msg)
 {
-    echo '<div class="container alerte alert-' . $msg['type'] . '">' . $msg['titre'] . '
+    foreach ($mess as $msg)
+    {
+        echo '<div class="container alerte alert-' . $msg['type'] . '">' . $msg['titre'] . '
 <button type="button" class="close" data-dismiss="alert">&times;</button>' . $msg['message'] .
         '</div>';
-    unset($mess);
+        unset($mess);
 
-}
+    }
 
 }
 

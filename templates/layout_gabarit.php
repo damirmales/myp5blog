@@ -60,34 +60,34 @@
                     <a class="nav-link" href="index.php?route=contact">Contact</a>
                 </li>
                 <?php
-               // if (isset($_SESSION['user'])) {
-                    if (($_SESSION['user']['role'] == 'admin')) {
-                        ?>
+                // if (isset($_SESSION['user'])) {
+                if (($_SESSION['user']['role'] == 'admin')) {
+                    ?>
                         <li class="nav-item">
                             <a class="" href="index.php?route=admin"> ⚒ Admin</a>
                             <a class="" href="index.php?route=deconnexion">/ Déconnexion /</a>
                         </li>
-                        <?php
+                    <?php
 
-                    }
-                    elseif (($_SESSION['user']['role'] == 'member')) {
-                        ?>
+                }
+                elseif (($_SESSION['user']['role'] == 'member')) {
+                    ?>
                         <li class="nav-item">
                             <a class="" >/ ☑ Membre /</a>
                             <a class="" href="index.php?route=deconnexion">/ Se déconnecter /</a>
                         </li>
-                        <?php
-                    }
-                    else
-                    {
-                        ?>
+                    <?php
+                }
+                else
+                {
+                    ?>
                         <li class="nav-item">
                             <a class="" href="index.php?route=register">/ s'enregistrer /</a>
                             <a class="" href="index.php?route=connexion">/ se connecter /</a>
                         </li>
-                        <?php
-                    }
-               // }
+                    <?php
+                }
+                // }
 
                 ?>
             </ul>
@@ -95,7 +95,7 @@
     </div>
 </nav>
 
-<?= $content; ?>
+<?php echo $content; ?>
 
 <!-- Footer -->
 <footer>

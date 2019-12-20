@@ -1,7 +1,9 @@
 <?php
 namespace Model;
 
-/****** **************************************************************************
+/******
+ * 
+ * **************************************************************************
 Cette classe gère les données liées à l'affichage des articles
  *************************************************************************************/
 class Articles
@@ -29,8 +31,7 @@ class Articles
 
             $method = 'set'.ucfirst($key);
 
-            if (method_exists($this, $method))
-            {
+            if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }

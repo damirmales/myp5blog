@@ -3,10 +3,10 @@ namespace Model;
 use Model\PdoConstruct;
 
 class Users extends PdoConstruct
- {
+{
 
-	
-	private $id;
+    
+    private $id;
     private $nom;
     private $prenom;
     private $email;
@@ -30,8 +30,7 @@ class Users extends PdoConstruct
 
             $method = 'set'.ucfirst($key);
 
-            if (method_exists($this, $method))
-            {
+            if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }
@@ -183,4 +182,4 @@ class Users extends PdoConstruct
     }
 
 
- }
+}
