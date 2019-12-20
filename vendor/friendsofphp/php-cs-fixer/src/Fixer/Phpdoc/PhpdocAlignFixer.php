@@ -197,21 +197,21 @@ EOF;
              * By default, all tags apart from @property and @method will be aligned for backwards compatibility
              * @TODO 3.0 Align all available tags by default
              */
-            ->setDefault([
+            ->setDefault(
+                [
                 'param',
                 'return',
                 'throws',
                 'type',
                 'var',
-            ])
-        ;
+                ]
+            );
 
         $align = new FixerOptionBuilder('align', 'Align comments');
         $align
             ->setAllowedTypes(['string'])
             ->setAllowedValues([self::ALIGN_LEFT, self::ALIGN_VERTICAL])
-            ->setDefault(self::ALIGN_VERTICAL)
-        ;
+            ->setDefault(self::ALIGN_VERTICAL);
 
         return new FixerConfigurationResolver([$tags->getOption(), $align->getOption()]);
     }

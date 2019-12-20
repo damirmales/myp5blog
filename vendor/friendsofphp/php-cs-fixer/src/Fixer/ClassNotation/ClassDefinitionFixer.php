@@ -123,7 +123,8 @@ interface Bar extends
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new AliasedFixerOptionBuilder(
                 new FixerOptionBuilder('multi_line_extends_each_single_line', 'Whether definitions should be multiline.'),
                 'multiLineExtendsEachSingleLine'
@@ -145,7 +146,8 @@ interface Bar extends
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -433,10 +435,12 @@ interface Bar extends
 
             if (!$isOnOwnLine) {
                 if ($tokens[$breakAtIndex - 1]->isWhitespace()) {
-                    $tokens[$breakAtIndex - 1] = new Token([
+                    $tokens[$breakAtIndex - 1] = new Token(
+                        [
                         T_WHITESPACE,
                         $this->whitespacesConfig->getLineEnding().$this->whitespacesConfig->getIndent(),
-                    ]);
+                        ]
+                    );
                 } else {
                     $tokens->insertAt($breakAtIndex, new Token([T_WHITESPACE, $this->whitespacesConfig->getLineEnding().$this->whitespacesConfig->getIndent()]));
                 }

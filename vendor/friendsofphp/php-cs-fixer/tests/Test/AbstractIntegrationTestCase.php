@@ -149,7 +149,9 @@ abstract class AbstractIntegrationTestCase extends TestCase
         $factory = static::createIntegrationCaseFactory();
         $tests = [];
 
-        /** @var SplFileInfo $file */
+        /**
+ * @var SplFileInfo $file 
+*/
         foreach (Finder::create()->files()->in($fixturesDir) as $file) {
             if ('test' !== $file->getExtension()) {
                 continue;
@@ -324,12 +326,16 @@ abstract class AbstractIntegrationTestCase extends TestCase
         if ($fixedInputCode !== $fixedInputCodeWithReversedFixers) {
             static::assertGreaterThan(
                 1,
-                \count(array_unique(array_map(
-                    static function (FixerInterface $fixer) {
-                        return $fixer->getPriority();
-                    },
-                    static::createFixers($case)
-                ))),
+                \count(
+                    array_unique(
+                        array_map(
+                            static function (FixerInterface $fixer) {
+                                return $fixer->getPriority();
+                            },
+                            static::createFixers($case)
+                        )
+                    )
+                ),
                 sprintf(
                     'Rules priorities are not differential enough. If rules would be used in reverse order then final output would be different than the expected one. For that, different priorities must be set up for used rules to ensure stable order of them. In "%s".',
                     $case->getFileName()
@@ -353,8 +359,7 @@ abstract class AbstractIntegrationTestCase extends TestCase
             ->setWhitespacesConfig(
                 new WhitespacesFixerConfig($config['indent'], $config['lineEnding'])
             )
-            ->getFixers()
-        ;
+            ->getFixers();
     }
 
     /**
@@ -385,16 +390,13 @@ abstract class AbstractIntegrationTestCase extends TestCase
                 $linterProphecy = $this->prophesize(\PhpCsFixer\Linter\LinterInterface::class);
                 $linterProphecy
                     ->lintSource(Argument::type('string'))
-                    ->willReturn($this->prophesize(\PhpCsFixer\Linter\LintingResultInterface::class)->reveal())
-                ;
+                    ->willReturn($this->prophesize(\PhpCsFixer\Linter\LintingResultInterface::class)->reveal());
                 $linterProphecy
                     ->lintFile(Argument::type('string'))
-                    ->willReturn($this->prophesize(\PhpCsFixer\Linter\LintingResultInterface::class)->reveal())
-                ;
+                    ->willReturn($this->prophesize(\PhpCsFixer\Linter\LintingResultInterface::class)->reveal());
                 $linterProphecy
                     ->isAsync()
-                    ->willReturn(false)
-                ;
+                    ->willReturn(false);
 
                 $linter = $linterProphecy->reveal();
             } else {
@@ -414,11 +416,15 @@ abstract class AbstractIntegrationTestCase extends TestCase
      */
     private static function createIsIdenticalStringConstraint($expected)
     {
-        $candidates = array_filter([
+        $candidates = array_filter(
+            [
             'PhpCsFixer\PhpunitConstraintIsIdenticalString\Constraint\IsIdenticalString',
             'PHPUnit\Framework\Constraint\IsIdentical',
             'PHPUnit_Framework_Constraint_IsIdentical',
-        ], function ($className) { return class_exists($className); });
+            ], function ($className) {
+                return class_exists($className); 
+            }
+        );
 
         if (empty($candidates)) {
             throw new \RuntimeException('PHPUnit not installed?!');

@@ -33,7 +33,8 @@ final class PhpdocIndentFixer extends AbstractFixer
     {
         return new FixerDefinition(
             'Docblocks should have the same indentation as the documented subject.',
-            [new CodeSample('<?php
+            [new CodeSample(
+                '<?php
 class DocBlocks
 {
 /**
@@ -41,7 +42,8 @@ class DocBlocks
  */
     const INDENT = 1;
 }
-')]
+'
+            )]
         );
     }
 
@@ -90,8 +92,7 @@ class DocBlocks
             $prevToken = $tokens[$prevIndex];
 
             // ignore inline docblocks
-            if (
-                $prevToken->isGivenKind(T_OPEN_TAG)
+            if ($prevToken->isGivenKind(T_OPEN_TAG)
                 || ($prevToken->isWhitespace(" \t") && !$tokens[$index - 2]->isGivenKind(T_OPEN_TAG))
                 || $prevToken->equalsAny([';', ',', '{', '('])
             ) {

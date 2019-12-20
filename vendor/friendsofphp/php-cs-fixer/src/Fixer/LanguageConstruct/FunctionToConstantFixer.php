@@ -142,19 +142,23 @@ final class FunctionToConstantFixer extends AbstractFixer implements Configurati
     {
         $functionNames = array_keys(self::$availableFunctions);
 
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('functions', 'List of function names to fix.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset($functionNames)])
-                ->setDefault([
+                ->setDefault(
+                    [
                     'get_class',
                     'php_sapi_name',
                     'phpversion',
                     'pi',
                     // TODO on v3.0 add 'get_called_class' here
-                ])
+                    ]
+                )
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**

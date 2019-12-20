@@ -38,7 +38,9 @@ class VersionParser
      */
     private static $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)((?:[.-]?\d+)*+)?)?([.-]?dev)?';
 
-    /** @var array */
+    /**
+     * @var array 
+     */
     private static $stabilities = array('stable', 'RC', 'beta', 'alpha', 'dev');
 
     /**
@@ -132,7 +134,7 @@ class VersionParser
                 . (!empty($matches[3]) ? $matches[3] : '.0')
                 . (!empty($matches[4]) ? $matches[4] : '.0');
             $index = 5;
-        // match date(time) based versioning
+            // match date(time) based versioning
         } elseif (preg_match('{^v?(\d{4}(?:[.:-]?\d{2}){1,6}(?:[.:-]?\d{1,3})?)' . self::$modifierRegex . '$}i', $version, $matches)) {
             $version = preg_replace('{\D}', '.', $matches[1]);
             $index = 2;
@@ -273,10 +275,12 @@ class VersionParser
             && substr($b, 0, 3) === '[>=' && (false !== ($posB = strpos($b, '<', 4)))
             && substr($a, $posA + 2, -1) === substr($b, 4, $posB - 5)
         ) {
-            $constraint = new MultiConstraint(array(
+            $constraint = new MultiConstraint(
+                array(
                 new Constraint('>=', substr($a, 4, $posA - 5)),
                 new Constraint('<', substr($b, $posB + 2, -1)),
-            ));
+                )
+            );
         } else {
             $constraint = new MultiConstraint($orGroups, false);
         }
@@ -482,10 +486,10 @@ class VersionParser
      *
      * Support function for {@link parseConstraint()}
      *
-     * @param array $matches Array with version parts in array indexes 1,2,3,4
-     * @param int $position 1,2,3,4 - which segment of the version to increment/decrement
-     * @param int $increment
-     * @param string $pad The string to pad version parts after $position
+     * @param array  $matches   Array with version parts in array indexes 1,2,3,4
+     * @param int    $position  1,2,3,4 - which segment of the version to increment/decrement
+     * @param int    $increment
+     * @param string $pad       The string to pad version parts after $position
      *
      * @return string The new version
      */
@@ -524,17 +528,17 @@ class VersionParser
         $stability = strtolower($stability);
 
         switch ($stability) {
-            case 'a':
-                return 'alpha';
-            case 'b':
-                return 'beta';
-            case 'p':
-            case 'pl':
-                return 'patch';
-            case 'rc':
-                return 'RC';
-            default:
-                return $stability;
+        case 'a':
+            return 'alpha';
+        case 'b':
+            return 'beta';
+        case 'p':
+        case 'pl':
+            return 'patch';
+        case 'rc':
+            return 'RC';
+        default:
+            return $stability;
         }
     }
 }

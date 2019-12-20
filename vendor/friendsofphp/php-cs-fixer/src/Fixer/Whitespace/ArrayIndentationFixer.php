@@ -70,8 +70,7 @@ final class ArrayIndentationFixer extends AbstractFixer implements WhitespacesAw
 
             foreach ($array['braces'] as $index => $braces) {
                 $currentIndentLevel = $indentLevel;
-                if (
-                    $braces['starts_with_closing']
+                if ($braces['starts_with_closing']
                     && !$scopes[$currentScope]['unindented']
                     && !$this->isClosingLineWithMeaningfulContent($tokens, $index)
                 ) {
@@ -189,11 +188,8 @@ final class ArrayIndentationFixer extends AbstractFixer implements WhitespacesAw
                 continue;
             }
 
-            if (
-                null !== $currentArray && (
-                    ($token->equals('(') && !$tokens[$tokens->getPrevMeaningfulToken($index)]->isGivenKind(T_ARRAY))
-                    || $token->equals('{')
-                )
+            if (null !== $currentArray && (                ($token->equals('(') && !$tokens[$tokens->getPrevMeaningfulToken($index)]->isGivenKind(T_ARRAY))
+                || $token->equals('{'))
             ) {
                 $endIndex = $tokens->findBlockEnd(
                     $token->equals('{') ? Tokens::BLOCK_TYPE_CURLY_BRACE : Tokens::BLOCK_TYPE_PARENTHESIS_BRACE,

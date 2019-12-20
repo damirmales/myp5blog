@@ -111,12 +111,9 @@ $f = function () {};
             // fix single-line whitespace before {
             // eg: `function foo(){}` => `function foo() {}`
             // eg: `function foo()   {}` => `function foo() {}`
-            if (
-                $tokens[$startBraceIndex]->equals('{') &&
-                (
-                    !$tokens[$startBraceIndex - 1]->isWhitespace() ||
-                    $tokens[$startBraceIndex - 1]->isWhitespace($this->singleLineWhitespaceOptions)
-                )
+            if ($tokens[$startBraceIndex]->equals('{') 
+                && (                !$tokens[$startBraceIndex - 1]->isWhitespace() 
+                || $tokens[$startBraceIndex - 1]->isWhitespace($this->singleLineWhitespaceOptions))
             ) {
                 $tokens->ensureWhitespaceAtIndex($startBraceIndex - 1, 1, ' ');
             }
@@ -177,12 +174,14 @@ $f = function () {};
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('closure_function_spacing', 'Spacing to use before open parenthesis for closures.'))
                 ->setDefault(self::SPACING_ONE)
                 ->setAllowedValues($this->supportedSpacings)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     private function fixParenthesisInnerEdge(Tokens $tokens, $start, $end)

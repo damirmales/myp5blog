@@ -235,7 +235,8 @@ use Bar;
     {
         $supportedSortTypes = $this->supportedSortTypes;
 
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new AliasedFixerOptionBuilder(
                 new FixerOptionBuilder('sort_algorithm', 'whether the statements should be sorted alphabetically or by length, or not sorted'),
                 'sortAlgorithm'
@@ -248,32 +249,39 @@ use Bar;
                 'importsOrder'
             ))
                 ->setAllowedTypes(['array', 'null'])
-                ->setAllowedValues([static function ($value) use ($supportedSortTypes) {
-                    if (null !== $value) {
-                        $missing = array_diff($supportedSortTypes, $value);
-                        if (\count($missing)) {
-                            throw new InvalidOptionsException(sprintf(
-                                'Missing sort %s "%s".',
-                                1 === \count($missing) ? 'type' : 'types',
-                                implode('", "', $missing)
-                            ));
+                ->setAllowedValues(
+                    [static function ($value) use ($supportedSortTypes) {
+                        if (null !== $value) {
+                            $missing = array_diff($supportedSortTypes, $value);
+                            if (\count($missing)) {
+                                throw new InvalidOptionsException(
+                                    sprintf(
+                                        'Missing sort %s "%s".',
+                                        1 === \count($missing) ? 'type' : 'types',
+                                        implode('", "', $missing)
+                                    )
+                                );
+                            }
+
+                            $unknown = array_diff($value, $supportedSortTypes);
+                            if (\count($unknown)) {
+                                throw new InvalidOptionsException(
+                                    sprintf(
+                                        'Unknown sort %s "%s".',
+                                        1 === \count($unknown) ? 'type' : 'types',
+                                        implode('", "', $unknown)
+                                    )
+                                );
+                            }
                         }
 
-                        $unknown = array_diff($value, $supportedSortTypes);
-                        if (\count($unknown)) {
-                            throw new InvalidOptionsException(sprintf(
-                                'Unknown sort %s "%s".',
-                                1 === \count($unknown) ? 'type' : 'types',
-                                implode('", "', $unknown)
-                            ));
-                        }
-                    }
-
-                    return true;
-                }])
+                        return true;
+                    }]
+                )
                 ->setDefault(null)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -406,10 +414,9 @@ use Bar;
                                 }
 
                                 // if there is any line ending inside the group import, it should be indented properly
-                                if (
-                                    '' === $firstIndent &&
-                                    $namespaceTokens[$k2]->isWhitespace() &&
-                                    false !== strpos($namespaceTokens[$k2]->getContent(), $lineEnding)
+                                if ('' === $firstIndent 
+                                    && $namespaceTokens[$k2]->isWhitespace() 
+                                    && false !== strpos($namespaceTokens[$k2]->getContent(), $lineEnding)
                                 ) {
                                     $lastIndent = $lineEnding;
                                     $firstIndent = $lineEnding.$this->whitespacesConfig->getIndent();

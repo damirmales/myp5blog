@@ -108,12 +108,14 @@ final class NoMixedEchoPrintFixer extends AbstractFixer implements Configuration
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('use', 'The desired language construct.'))
                 ->setAllowedValues(['print', 'echo'])
                 ->setDefault('echo')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**

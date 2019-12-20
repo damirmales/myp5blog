@@ -72,11 +72,13 @@ class FileCacheReader implements Reader
      */
     public function __construct(Reader $reader, $cacheDir, $debug = false, $umask = 0002)
     {
-        if ( ! is_int($umask)) {
-            throw new \InvalidArgumentException(sprintf(
-                'The parameter umask must be an integer, was: %s',
-                gettype($umask)
-            ));
+        if (! is_int($umask)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'The parameter umask must be an integer, was: %s',
+                    gettype($umask)
+                )
+            );
         }
 
         $this->reader = $reader;
@@ -95,7 +97,7 @@ class FileCacheReader implements Reader
      */
     public function getClassAnnotations(\ReflectionClass $class)
     {
-        if ( ! isset($this->classNameHashes[$class->name])) {
+        if (! isset($this->classNameHashes[$class->name])) {
             $this->classNameHashes[$class->name] = sha1($class->name);
         }
         $key = $this->classNameHashes[$class->name];
@@ -113,7 +115,8 @@ class FileCacheReader implements Reader
 
         if ($this->debug
             && (false !== $filename = $class->getFileName())
-            && filemtime($path) < filemtime($filename)) {
+            && filemtime($path) < filemtime($filename)
+        ) {
             @unlink($path);
 
             $annot = $this->reader->getClassAnnotations($class);
@@ -130,7 +133,7 @@ class FileCacheReader implements Reader
     public function getPropertyAnnotations(\ReflectionProperty $property)
     {
         $class = $property->getDeclaringClass();
-        if ( ! isset($this->classNameHashes[$class->name])) {
+        if (! isset($this->classNameHashes[$class->name])) {
             $this->classNameHashes[$class->name] = sha1($class->name);
         }
         $key = $this->classNameHashes[$class->name].'$'.$property->getName();
@@ -148,7 +151,8 @@ class FileCacheReader implements Reader
 
         if ($this->debug
             && (false !== $filename = $class->getFilename())
-            && filemtime($path) < filemtime($filename)) {
+            && filemtime($path) < filemtime($filename)
+        ) {
             @unlink($path);
 
             $annot = $this->reader->getPropertyAnnotations($property);
@@ -165,7 +169,7 @@ class FileCacheReader implements Reader
     public function getMethodAnnotations(\ReflectionMethod $method)
     {
         $class = $method->getDeclaringClass();
-        if ( ! isset($this->classNameHashes[$class->name])) {
+        if (! isset($this->classNameHashes[$class->name])) {
             $this->classNameHashes[$class->name] = sha1($class->name);
         }
         $key = $this->classNameHashes[$class->name].'#'.$method->getName();
@@ -183,7 +187,8 @@ class FileCacheReader implements Reader
 
         if ($this->debug
             && (false !== $filename = $class->getFilename())
-            && filemtime($path) < filemtime($filename)) {
+            && filemtime($path) < filemtime($filename)
+        ) {
             @unlink($path);
 
             $annot = $this->reader->getMethodAnnotations($method);

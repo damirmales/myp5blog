@@ -104,7 +104,7 @@ class EmailLexer extends AbstractLexer
     }
 
     /**
-     * @param string $type
+     * @param  string $type
      * @throws \UnexpectedValueException
      * @return boolean
      */
@@ -174,7 +174,7 @@ class EmailLexer extends AbstractLexer
     /**
      * Retrieve token type. Also processes the token value if necessary.
      *
-     * @param string $value
+     * @param  string $value
      * @throws \InvalidArgumentException
      * @return integer
      */
@@ -206,7 +206,7 @@ class EmailLexer extends AbstractLexer
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return bool
      */
     protected function isNullType($value)
@@ -219,7 +219,7 @@ class EmailLexer extends AbstractLexer
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return bool
      */
     protected function isUTF8Invalid($value)

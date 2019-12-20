@@ -84,8 +84,7 @@ final class NoLeadingImportSlashFixer extends AbstractFixer
     {
         $previousIndex = $tokens->getPrevNonWhitespace($index);
 
-        if (
-            $previousIndex < $index - 1
+        if ($previousIndex < $index - 1
             || $tokens[$previousIndex]->isComment()
         ) {
             $tokens->clearAt($index);

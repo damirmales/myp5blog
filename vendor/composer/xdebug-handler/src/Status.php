@@ -15,7 +15,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
 /**
- * @author John Stevenson <john-stevenson@blueyonder.co.uk>
+ * @author   John Stevenson <john-stevenson@blueyonder.co.uk>
  * @internal
  */
 class Status
@@ -39,7 +39,7 @@ class Status
      * Constructor
      *
      * @param string $envAllowXdebug Prefixed _ALLOW_XDEBUG name
-     * @param bool $debug Whether debug output is required
+     * @param bool   $debug          Whether debug output is required
      */
     public function __construct($envAllowXdebug, $debug)
     {
@@ -62,7 +62,7 @@ class Status
     /**
      * Calls a handler method to report a message
      *
-     * @param string $op The handler constant
+     * @param string      $op   The handler constant
      * @param null|string $data Data required by the handler
      */
     public function report($op, $data)

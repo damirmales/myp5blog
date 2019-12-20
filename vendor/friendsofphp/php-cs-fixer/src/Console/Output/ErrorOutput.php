@@ -47,10 +47,12 @@ final class ErrorOutput
      */
     public function listErrors($process, array $errors)
     {
-        $this->output->writeln(['', sprintf(
-            'Files that were not fixed due to errors reported during %s:',
-            $process
-        )]);
+        $this->output->writeln(
+            ['', sprintf(
+                'Files that were not fixed due to errors reported during %s:',
+                $process
+            )]
+        );
 
         $showDetails = $this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE;
         $showTrace = $this->output->getVerbosity() >= OutputInterface::VERBOSITY_DEBUG;
@@ -106,11 +108,13 @@ final class ErrorOutput
 
                 $diff = $error->getDiff();
                 if (!empty($diff)) {
-                    $diffFormatter = new DiffConsoleFormatter($this->isDecorated, sprintf(
-                        '<comment>      ---------- begin diff ----------</comment>%s%%s%s<comment>      ----------- end diff -----------</comment>',
-                        PHP_EOL,
-                        PHP_EOL
-                    ));
+                    $diffFormatter = new DiffConsoleFormatter(
+                        $this->isDecorated, sprintf(
+                            '<comment>      ---------- begin diff ----------</comment>%s%%s%s<comment>      ----------- end diff -----------</comment>',
+                            PHP_EOL,
+                            PHP_EOL
+                        )
+                    );
 
                     $this->output->writeln($diffFormatter->format($diff));
                 }
@@ -124,12 +128,14 @@ final class ErrorOutput
     private function outputTrace(array $trace)
     {
         if (isset($trace['class'], $trace['type'], $trace['function'])) {
-            $this->output->writeln(sprintf(
-                '      <comment>%s</comment>%s<comment>%s()</comment>',
-                $this->prepareOutput($trace['class']),
-                $this->prepareOutput($trace['type']),
-                $this->prepareOutput($trace['function'])
-            ));
+            $this->output->writeln(
+                sprintf(
+                    '      <comment>%s</comment>%s<comment>%s()</comment>',
+                    $this->prepareOutput($trace['class']),
+                    $this->prepareOutput($trace['type']),
+                    $this->prepareOutput($trace['function'])
+                )
+            );
         } elseif (isset($trace['function'])) {
             $this->output->writeln(sprintf('      <comment>%s()</comment>', $this->prepareOutput($trace['function'])));
         }

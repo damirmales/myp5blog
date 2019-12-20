@@ -188,11 +188,10 @@ final class VoidReturnFixer extends AbstractFixer
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
         for ($i = $startIndex; $i < $endIndex; ++$i) {
-            if (
-                // skip anonymous classes
-                ($tokens[$i]->isGivenKind(T_CLASS) && $tokensAnalyzer->isAnonymousClass($i)) ||
-                 // skip lambda functions
-                ($tokens[$i]->isGivenKind(T_FUNCTION) && $tokensAnalyzer->isLambda($i))
+            if (// skip anonymous classes
+                ($tokens[$i]->isGivenKind(T_CLASS) && $tokensAnalyzer->isAnonymousClass($i)) 
+                // skip lambda functions
+                || ($tokens[$i]->isGivenKind(T_FUNCTION) && $tokensAnalyzer->isLambda($i))
             ) {
                 $i = $tokens->getNextTokenOfKind($i, ['{']);
                 $i = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $i);
@@ -224,11 +223,13 @@ final class VoidReturnFixer extends AbstractFixer
     private function fixFunctionDefinition(Tokens $tokens, $index)
     {
         $endFuncIndex = $tokens->getPrevTokenOfKind($index, [')']);
-        $tokens->insertAt($endFuncIndex + 1, [
+        $tokens->insertAt(
+            $endFuncIndex + 1, [
             new Token([CT::T_TYPE_COLON, ':']),
             new Token([T_WHITESPACE, ' ']),
             new Token([T_STRING, 'void']),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -243,14 +244,16 @@ final class VoidReturnFixer extends AbstractFixer
     {
         do {
             $index = $tokens->getPrevNonWhitespace($index);
-        } while ($tokens[$index]->isGivenKind([
+        } while ($tokens[$index]->isGivenKind(
+            [
             T_ABSTRACT,
             T_FINAL,
             T_PRIVATE,
             T_PROTECTED,
             T_PUBLIC,
             T_STATIC,
-        ]));
+            ]
+        ));
 
         if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
             return [];

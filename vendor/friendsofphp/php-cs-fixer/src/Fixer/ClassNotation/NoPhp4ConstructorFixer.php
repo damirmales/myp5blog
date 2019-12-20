@@ -32,14 +32,16 @@ final class NoPhp4ConstructorFixer extends AbstractFixer
         return new FixerDefinition(
             'Convert PHP4-style constructors to `__construct`.',
             [
-                new CodeSample('<?php
+                new CodeSample(
+                    '<?php
 class Foo
 {
     public function Foo($bar)
     {
     }
 }
-'),
+'
+                ),
             ],
             null,
             'Risky when old style constructor being fixed is overridden or overrides parent one.'
@@ -200,12 +202,14 @@ class Foo
             $parentClass = $tokens[$parentIndex]->getContent();
 
             // using parent::ParentClassName() or ParentClassName::ParentClassName()
-            $parentSeq = $tokens->findSequence([
+            $parentSeq = $tokens->findSequence(
+                [
                 [T_STRING],
                 [T_DOUBLE_COLON],
                 [T_STRING, $parentClass],
                 '(',
-            ], $classStart, $classEnd, [2 => false]);
+                ], $classStart, $classEnd, [2 => false]
+            );
 
             if (null !== $parentSeq) {
                 // we only need indexes
@@ -220,26 +224,32 @@ class Foo
             }
 
             // using $this->ParentClassName()
-            $parentSeq = $tokens->findSequence([
+            $parentSeq = $tokens->findSequence(
+                [
                 [T_VARIABLE, '$this'],
                 [T_OBJECT_OPERATOR],
                 [T_STRING, $parentClass],
                 '(',
-            ], $classStart, $classEnd, [2 => false]);
+                ], $classStart, $classEnd, [2 => false]
+            );
 
             if (null !== $parentSeq) {
                 // we only need indexes
                 $parentSeq = array_keys($parentSeq);
 
                 // replace call with parent::__construct()
-                $tokens[$parentSeq[0]] = new Token([
+                $tokens[$parentSeq[0]] = new Token(
+                    [
                     T_STRING,
                     'parent',
-                ]);
-                $tokens[$parentSeq[1]] = new Token([
+                    ]
+                );
+                $tokens[$parentSeq[1]] = new Token(
+                    [
                     T_DOUBLE_COLON,
                     '::',
-                ]);
+                    ]
+                );
                 $tokens[$parentSeq[2]] = new Token([T_STRING, '__construct']);
             }
         }
@@ -345,11 +355,13 @@ class Foo
      */
     private function findFunction(Tokens $tokens, $name, $startIndex, $endIndex)
     {
-        $function = $tokens->findSequence([
+        $function = $tokens->findSequence(
+            [
             [T_FUNCTION],
             [T_STRING, $name],
             '(',
-        ], $startIndex, $endIndex, false);
+            ], $startIndex, $endIndex, false
+        );
 
         if (null === $function) {
             return null;

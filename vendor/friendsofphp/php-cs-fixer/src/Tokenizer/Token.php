@@ -57,17 +57,21 @@ class Token
     {
         if (\is_array($token)) {
             if (!\is_int($token[0])) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Id must be an int, got "%s".',
-                    \is_object($token[0]) ? \get_class($token[0]) : \gettype($token[0])
-                ));
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Id must be an int, got "%s".',
+                        \is_object($token[0]) ? \get_class($token[0]) : \gettype($token[0])
+                    )
+                );
             }
 
             if (!\is_string($token[1])) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Content must be a string, got "%s".',
-                    \is_object($token[1]) ? \get_class($token[1]) : \gettype($token[1])
-                ));
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Content must be a string, got "%s".',
+                        \is_object($token[1]) ? \get_class($token[1]) : \gettype($token[1])
+                    )
+                );
             }
 
             if ('' === $token[1]) {
@@ -85,10 +89,12 @@ class Token
             $this->isArray = false;
             $this->content = $token;
         } else {
-            throw new \InvalidArgumentException(sprintf(
-                'Cannot recognize input value as valid Token prototype, got "%s".',
-                \is_object($token) ? \get_class($token) : \gettype($token)
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Cannot recognize input value as valid Token prototype, got "%s".',
+                    \is_object($token) ? \get_class($token) : \gettype($token)
+                )
+            );
         }
     }
 
@@ -323,7 +329,8 @@ class Token
         static $keywords = null;
 
         if (null === $keywords) {
-            $keywords = self::getTokenKindsForNames(['T_ABSTRACT', 'T_ARRAY', 'T_AS', 'T_BREAK', 'T_CALLABLE', 'T_CASE',
+            $keywords = self::getTokenKindsForNames(
+                ['T_ABSTRACT', 'T_ARRAY', 'T_AS', 'T_BREAK', 'T_CALLABLE', 'T_CASE',
                 'T_CATCH', 'T_CLASS', 'T_CLONE', 'T_CONST', 'T_CONTINUE', 'T_DECLARE', 'T_DEFAULT', 'T_DO',
                 'T_ECHO', 'T_ELSE', 'T_ELSEIF', 'T_EMPTY', 'T_ENDDECLARE', 'T_ENDFOR', 'T_ENDFOREACH',
                 'T_ENDIF', 'T_ENDSWITCH', 'T_ENDWHILE', 'T_EVAL', 'T_EXIT', 'T_EXTENDS', 'T_FINAL',
@@ -333,7 +340,8 @@ class Token
                 'T_NAMESPACE', 'T_NEW', 'T_PRINT', 'T_PRIVATE', 'T_PROTECTED', 'T_PUBLIC', 'T_REQUIRE',
                 'T_REQUIRE_ONCE', 'T_RETURN', 'T_STATIC', 'T_SWITCH', 'T_THROW', 'T_TRAIT', 'T_TRY',
                 'T_UNSET', 'T_USE', 'T_VAR', 'T_WHILE', 'T_YIELD', 'T_YIELD_FROM',
-            ]) + [
+                ]
+            ) + [
                 CT::T_ARRAY_TYPEHINT => CT::T_ARRAY_TYPEHINT,
                 CT::T_CLASS_CONSTANT => CT::T_CLASS_CONSTANT,
                 CT::T_CONST_IMPORT => CT::T_CONST_IMPORT,
@@ -341,7 +349,7 @@ class Token
                 CT::T_NAMESPACE_OPERATOR => CT::T_NAMESPACE_OPERATOR,
                 CT::T_USE_TRAIT => CT::T_USE_TRAIT,
                 CT::T_USE_LAMBDA => CT::T_USE_LAMBDA,
-            ];
+                ];
         }
 
         return $keywords;

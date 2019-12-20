@@ -101,12 +101,14 @@ final class ArraySyntaxFixer extends AbstractFixer implements ConfigurationDefin
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('syntax', 'Whether to use the `long` or `short` array syntax.'))
                 ->setAllowedValues(['long', 'short'])
                 ->setDefault('long')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**

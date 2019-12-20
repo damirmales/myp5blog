@@ -68,12 +68,14 @@ final class IncrementStyleFixer extends AbstractFixer implements ConfigurationDe
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('style', 'Whether to use pre- or post-increment and decrement operators.'))
                 ->setAllowedValues([self::STYLE_PRE, self::STYLE_POST])
                 ->setDefault(self::STYLE_PRE)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -131,7 +133,8 @@ final class IncrementStyleFixer extends AbstractFixer implements ConfigurationDe
         $nextIndex = $tokens->getNextMeaningfulToken($index);
         $nextToken = $tokens[$nextIndex];
 
-        while ($nextToken->equalsAny([
+        while ($nextToken->equalsAny(
+            [
             '$',
             '[',
             [CT::T_DYNAMIC_PROP_BRACE_OPEN],
@@ -140,7 +143,8 @@ final class IncrementStyleFixer extends AbstractFixer implements ConfigurationDe
             [T_STATIC],
             [T_STRING],
             [T_VARIABLE],
-        ])) {
+            ]
+        )) {
             $blockType = Tokens::detectBlockType($nextToken);
             if (null !== $blockType) {
                 $nextIndex = $tokens->findBlockEnd($blockType['type'], $nextIndex);

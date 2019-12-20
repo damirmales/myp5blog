@@ -1,7 +1,6 @@
 <?php
 namespace Model;
 /****
- * 
  * Cette classe permet de gérer la connexion à la base de données 
  *****************/
 

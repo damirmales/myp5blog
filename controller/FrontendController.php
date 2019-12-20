@@ -24,7 +24,6 @@ class FrontendController
 {
 
     /*******************
-     * 
      * home management 
      **********************/
     public function home()
@@ -33,7 +32,6 @@ class FrontendController
     }
 
     /*******************
-     * 
      * cv  
      **********************/
     public function cv()
@@ -42,7 +40,6 @@ class FrontendController
     }
 
     /*******************
-     * 
      * contact from top menu  
      **********************/
     public function contact()
@@ -51,7 +48,6 @@ class FrontendController
     }
 
     /*******************
-     * 
      * Front articles.php management 
      **********************/
 
@@ -72,7 +68,6 @@ class FrontendController
     }
 
     /*******************
-     * 
      * Front comments management 
      **********************/
 
@@ -147,7 +142,6 @@ class FrontendController
     }
 
     /*******************
-     * 
      * Front articles.php categories management 
      **********************/
 
@@ -173,14 +167,12 @@ class FrontendController
     }
     /******************************************************************/
     /*******************
-     * 
      * Form contact management 
      **********************/
 
     public function addContact($post)
     {
         /********
-* 
  * Contact form check 
 ****************/
         $contactErrorMessage = [];// Store error message to be available into home.php
@@ -221,7 +213,6 @@ class FrontendController
             if (empty($contactErrorMessage)) {
 
                 /*****
-* 
  * Call class Emails to send contact form data
 */
                 $sendEmail = new Emails();
@@ -276,7 +267,6 @@ class FrontendController
 
     /**************************************************************************/
     /*******************
-     * 
      * Before login check user presence in database 
      *********/
 
@@ -374,7 +364,6 @@ class FrontendController
 
     /**********************************************************************************/
     /*******************
-     * 
      * Add user from register.php to database  
      **********************/
 
@@ -384,7 +373,6 @@ class FrontendController
 
         $post = securizeFormFields($_POST);
         /********
-* 
  * Contact form check 
 ****************/
 
@@ -470,7 +458,7 @@ class FrontendController
                         $user->setToken($token);
 
 
-                        $userInDb = $userDao->addUserToDb($user);
+                        $userDao->addUserToDb($user);
 
 
                         $userEmail = $user->getEmail(); //"damir@romandie.com";

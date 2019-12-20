@@ -72,14 +72,16 @@ final class StringLineEndingFixer extends AbstractFixer implements WhitespacesAw
                 continue;
             }
 
-            $tokens[$tokenIndex] = new Token([
+            $tokens[$tokenIndex] = new Token(
+                [
                 $token->getId(),
                 Preg::replace(
                     '#\R#u',
                     $ending,
                     $token->getContent()
                 ),
-            ]);
+                ]
+            );
         }
     }
 }

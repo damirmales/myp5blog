@@ -98,13 +98,15 @@ final class Example
     {
         $values = ['const', 'property'];
 
-        return new FixerConfigurationResolverRootless('elements', [
+        return new FixerConfigurationResolverRootless(
+            'elements', [
             (new FixerOptionBuilder('elements', 'List of strings which element should be modified.'))
                 ->setDefault($values)
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset($values)])
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 
     /**

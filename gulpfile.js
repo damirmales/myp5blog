@@ -26,97 +26,134 @@ const banner = ['/*!\n',
 ].join('');
 
 // BrowserSync
-function browserSync(done) {
-  browsersync.init({
-    server: {
-      baseDir: "./"
-    },
-    port: 3000
-  });
-  done();
+function browserSync(done)
+{
+    browsersync.init(
+        {
+            server: {
+                baseDir: "./"
+            },
+            port: 3000
+        }
+    );
+    done();
 }
 
 // BrowserSync reload
-function browserSyncReload(done) {
-  browsersync.reload();
-  done();
+function browserSyncReload(done)
+{
+    browsersync.reload();
+    done();
 }
 
 // Clean vendor
-function clean() {
-  return del(["./vendor/"]);
+function clean()
+{
+    return del(["./vendor/"]);
 }
 
 // Bring third party dependencies from node_modules into vendor directory
-function modules() {
-  // Bootstrap
-  var bootstrap = gulp.src('./node_modules/bootstrap/dist/**/*')
+function modules()
+{
+    // Bootstrap
+    var bootstrap = gulp.src('./node_modules/bootstrap/dist/**/*')
     .pipe(gulp.dest('./vendor/bootstrap'));
-  // Font Awesome CSS
-  var fontAwesomeCSS = gulp.src('./node_modules/@fortawesome/fontawesome-free/css/**/*')
+    // Font Awesome CSS
+    var fontAwesomeCSS = gulp.src('./node_modules/@fortawesome/fontawesome-free/css/**/*')
     .pipe(gulp.dest('./vendor/fontawesome-free/css'));
-  // Font Awesome Webfonts
-  var fontAwesomeWebfonts = gulp.src('./node_modules/@fortawesome/fontawesome-free/webfonts/**/*')
+    // Font Awesome Webfonts
+    var fontAwesomeWebfonts = gulp.src('./node_modules/@fortawesome/fontawesome-free/webfonts/**/*')
     .pipe(gulp.dest('./vendor/fontawesome-free/webfonts'));
-  // jQuery
-  var jquery = gulp.src([
-      './node_modules/jquery/dist/*',
-      '!./node_modules/jquery/dist/core.js'
-    ])
+    // jQuery
+    var jquery = gulp.src(
+        [
+        './node_modules/jquery/dist/*',
+        '!./node_modules/jquery/dist/core.js'
+        ]
+    )
     .pipe(gulp.dest('./vendor/jquery'));
-  return merge(bootstrap, fontAwesomeCSS, fontAwesomeWebfonts, jquery);
+    return merge(bootstrap, fontAwesomeCSS, fontAwesomeWebfonts, jquery);
 }
 
 // CSS task
-function css() {
-  return gulp
+function css()
+{
+    return gulp
     .src("./scss/**/*.scss")
     .pipe(plumber())
-    .pipe(sass({
-      outputStyle: "expanded",
-      includePaths: "./node_modules",
-    }))
+    .pipe(
+        sass(
+            {
+                outputStyle: "expanded",
+                includePaths: "./node_modules",
+            }
+        )
+    )
     .on("error", sass.logError)
-    .pipe(autoprefixer({
-      cascade: false
-    }))
-    .pipe(header(banner, {
-      pkg: pkg
-    }))
+    .pipe(
+        autoprefixer(
+            {
+                cascade: false
+            }
+        )
+    )
+    .pipe(
+        header(
+            banner, {
+                pkg: pkg
+            }
+        )
+    )
     .pipe(gulp.dest("./css"))
-    .pipe(rename({
-      suffix: ".min"
-    }))
+    .pipe(
+        rename(
+            {
+                suffix: ".min"
+            }
+        )
+    )
     .pipe(cleanCSS())
     .pipe(gulp.dest("./css"))
     .pipe(browsersync.stream());
 }
 
 // JS task
-function js() {
-  return gulp
-    .src([
-      './js/*.js',
-      '!./js/*.min.js',
-      '!./js/contact_me.js',
-      '!./js/jqBootstrapValidation.js'
-    ])
+function js()
+{
+    return gulp
+    .src(
+        [
+        './js/*.js',
+        '!./js/*.min.js',
+        '!./js/contact_me.js',
+        '!./js/jqBootstrapValidation.js'
+        ]
+    )
     .pipe(uglify())
-    .pipe(header(banner, {
-      pkg: pkg
-    }))
-    .pipe(rename({
-      suffix: '.min'
-    }))
+    .pipe(
+        header(
+            banner, {
+                pkg: pkg
+            }
+        )
+    )
+    .pipe(
+        rename(
+            {
+                suffix: '.min'
+            }
+        )
+    )
     .pipe(gulp.dest('./js'))
     .pipe(browsersync.stream());
 }
 
 // Watch files
-function watchFiles() {
-  gulp.watch("./scss/**/*", css);
-  gulp.watch(["./js/**/*", "!./js/**/*.min.js"], js);
-  gulp.watch("./**/*.html", browserSyncReload);
+function watchFiles()
+{
+    gulp.watch("./scss/**/*", css);
+    gulp.watch(["./js/**/*", "!./js/**/*.min.js"], js);
+    gulp.watch("./**/*.html", browserSyncReload);
 }
 
 // Define complex tasks

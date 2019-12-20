@@ -35,18 +35,30 @@ final class HeaderCommentFixer extends AbstractFixer implements ConfigurationDef
     const HEADER_PHPDOC = 'PHPDoc';
     const HEADER_COMMENT = 'comment';
 
-    /** @deprecated will be removed in 3.0 */
+    /**
+ * @deprecated will be removed in 3.0 
+*/
     const HEADER_LOCATION_AFTER_OPEN = 1;
-    /** @deprecated will be removed in 3.0 */
+    /**
+ * @deprecated will be removed in 3.0 
+*/
     const HEADER_LOCATION_AFTER_DECLARE_STRICT = 2;
 
-    /** @deprecated will be removed in 3.0 */
+    /**
+ * @deprecated will be removed in 3.0 
+*/
     const HEADER_LINE_SEPARATION_BOTH = 1;
-    /** @deprecated will be removed in 3.0 */
+    /**
+ * @deprecated will be removed in 3.0 
+*/
     const HEADER_LINE_SEPARATION_TOP = 2;
-    /** @deprecated will be removed in 3.0 */
+    /**
+ * @deprecated will be removed in 3.0 
+*/
     const HEADER_LINE_SEPARATION_BOTTOM = 3;
-    /** @deprecated will be removed in 3.0 */
+    /**
+ * @deprecated will be removed in 3.0 
+*/
     const HEADER_LINE_SEPARATION_NONE = 4;
 
     /**
@@ -161,20 +173,23 @@ echo 1;
     {
         $fixerName = $this->getName();
 
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('header', 'Proper header content.'))
                 ->setAllowedTypes(['string'])
-                ->setNormalizer(static function (Options $options, $value) use ($fixerName) {
-                    if ('' === trim($value)) {
-                        return '';
-                    }
+                ->setNormalizer(
+                    static function (Options $options, $value) use ($fixerName) {
+                        if ('' === trim($value)) {
+                            return '';
+                        }
 
-                    if (false !== strpos($value, '*/')) {
-                        throw new InvalidFixerConfigurationException($fixerName, 'Cannot use \'*/\' in header.');
-                    }
+                        if (false !== strpos($value, '*/')) {
+                            throw new InvalidFixerConfigurationException($fixerName, 'Cannot use \'*/\' in header.');
+                        }
 
-                    return $value;
-                })
+                        return $value;
+                    }
+                )
                 ->getOption(),
             (new AliasedFixerOptionBuilder(
                 new FixerOptionBuilder('comment_type', 'Comment syntax type.'),
@@ -191,7 +206,8 @@ echo 1;
                 ->setAllowedValues(['both', 'top', 'bottom', 'none'])
                 ->setDefault('both')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**

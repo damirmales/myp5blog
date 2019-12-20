@@ -287,8 +287,7 @@ final class ReturnAssignmentFixer extends AbstractFixer
             $fistLinebreakPos = strrpos($content, "\n");
             $content = false === $fistLinebreakPos
                 ? ' '
-                : substr($content, $fistLinebreakPos)
-            ;
+                : substr($content, $fistLinebreakPos);
 
             $tokens[$returnIndex - 1] = new Token([T_WHITESPACE, $content]);
         }
@@ -303,8 +302,7 @@ final class ReturnAssignmentFixer extends AbstractFixer
         ++$inserted;
 
         // use the original indent of the var assignment for the new return statement
-        if (
-            null !== $originalIndent
+        if (null !== $originalIndent
             && $tokens[$assignVarIndex - 1]->isWhitespace()
             && $originalIndent !== $tokens[$assignVarIndex - 1]->getContent()
         ) {

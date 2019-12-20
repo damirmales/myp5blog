@@ -143,8 +143,7 @@ $foo->__INVOKE(1);
                 continue;
             }
 
-            if (
-                ('__callstatic' === $name || '__set_state' === $name)
+            if (('__callstatic' === $name || '__set_state' === $name)
                 && $this->isStaticMethodCall($tokens, $index)
             ) {
                 $this->setTokenToCorrectCasing($tokens, $index, $nameInCorrectCasing);

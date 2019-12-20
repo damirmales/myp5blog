@@ -37,7 +37,9 @@ abstract class Parser
 
     abstract public function parse($str);
 
-    /** @return int */
+    /**
+     * @return int 
+     */
     public function getOpenedParenthesis()
     {
         return $this->openedParenthesis;
@@ -49,7 +51,8 @@ abstract class Parser
     protected function validateQuotedPair()
     {
         if (!($this->lexer->token['type'] === EmailLexer::INVALID
-            || $this->lexer->token['type'] === EmailLexer::C_DEL)) {
+            || $this->lexer->token['type'] === EmailLexer::C_DEL)
+        ) {
             throw new ExpectingQPair();
         }
 
@@ -128,11 +131,11 @@ abstract class Parser
             return false;
         }
 
-        if ($this->lexer->token['type'] === EmailLexer::S_SP ||
-            $this->lexer->token['type'] === EmailLexer::S_HTAB ||
-            $this->lexer->token['type'] === EmailLexer::S_CR ||
-            $this->lexer->token['type'] === EmailLexer::S_LF ||
-            $this->lexer->token['type'] === EmailLexer::CRLF
+        if ($this->lexer->token['type'] === EmailLexer::S_SP 
+            || $this->lexer->token['type'] === EmailLexer::S_HTAB 
+            || $this->lexer->token['type'] === EmailLexer::S_CR 
+            || $this->lexer->token['type'] === EmailLexer::S_LF 
+            || $this->lexer->token['type'] === EmailLexer::CRLF
         ) {
             return true;
         }
@@ -145,8 +148,8 @@ abstract class Parser
         $previous = $this->lexer->getPrevious();
 
         if ($previous['type'] === EmailLexer::S_BACKSLASH
-            &&
-            $this->lexer->token['type'] !== EmailLexer::GENERIC
+            
+            && $this->lexer->token['type'] !== EmailLexer::GENERIC
         ) {
             return true;
         }

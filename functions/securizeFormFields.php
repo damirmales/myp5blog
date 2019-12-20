@@ -1,7 +1,8 @@
 <?php
 
- function securizeFormFields($data)
-{ 
+function securizeFormFields($data)
+{
+    $arrayField = null;
     foreach ($data as $key => $field)
     {
         $field = trim($field);
@@ -10,6 +11,7 @@
 
         $arrayField[$key]=$field;
     }
+
     return $arrayField;
 }
 

@@ -7,8 +7,8 @@ class ImportPage
 {
 
     public static function getPage($pathPage)
-{
+    {
 
-    return $pathPage;
-}
+        return $pathPage;
+    }
 }

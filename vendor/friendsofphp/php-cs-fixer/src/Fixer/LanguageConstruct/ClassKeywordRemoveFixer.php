@@ -134,9 +134,11 @@ $className = Baz::class;
                     explode(',', $tokens->generatePartialCode($index + 1, $groupEndIndex - 1))
                 );
                 foreach ($groupImports as $groupImport) {
-                    $groupImportParts = array_map(static function ($import) {
-                        return trim($import);
-                    }, explode(' as ', $groupImport));
+                    $groupImportParts = array_map(
+                        static function ($import) {
+                            return trim($import);
+                        }, explode(' as ', $groupImport)
+                    );
                     if (2 === \count($groupImportParts)) {
                         $this->imports[$groupImportParts[1]] = $import.$groupImportParts[0];
                     } else {
@@ -217,10 +219,14 @@ $className = Baz::class;
             }
         }
 
-        $tokens->insertAt($classBeginIndex, new Token([
-            T_CONSTANT_ENCAPSED_STRING,
-            "'".$this->makeClassFQN($classImport, $classString)."'",
-        ]));
+        $tokens->insertAt(
+            $classBeginIndex, new Token(
+                [
+                T_CONSTANT_ENCAPSED_STRING,
+                "'".$this->makeClassFQN($classImport, $classString)."'",
+                ]
+            )
+        );
     }
 
     /**
@@ -244,9 +250,11 @@ $className = Baz::class;
             return $classImport;
         }
 
-        return implode('\\', array_merge(
-            \array_slice($classImportArray, 0, $classImportLength - $classStringLength + 1),
-            $classStringArray
-        ));
+        return implode(
+            '\\', array_merge(
+                \array_slice($classImportArray, 0, $classImportLength - $classStringLength + 1),
+                $classStringArray
+            )
+        );
     }
 }

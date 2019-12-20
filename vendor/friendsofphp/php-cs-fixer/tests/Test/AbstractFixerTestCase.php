@@ -139,9 +139,15 @@ abstract class AbstractFixerTestCase extends TestCase
 
             static::assertSame(
                 \count($tokens),
-                \count(array_unique(array_map(static function (Token $token) {
-                    return spl_object_hash($token);
-                }, $tokens->toArray()))),
+                \count(
+                    array_unique(
+                        array_map(
+                            static function (Token $token) {
+                                return spl_object_hash($token);
+                            }, $tokens->toArray()
+                        )
+                    )
+                ),
                 'Token items inside Tokens collection must be unique.'
             );
 
@@ -194,8 +200,7 @@ abstract class AbstractFixerTestCase extends TestCase
                 $linterProphecy = $this->prophesize(\PhpCsFixer\Linter\LinterInterface::class);
                 $linterProphecy
                     ->lintSource(Argument::type('string'))
-                    ->willReturn($this->prophesize(\PhpCsFixer\Linter\LintingResultInterface::class)->reveal())
-                ;
+                    ->willReturn($this->prophesize(\PhpCsFixer\Linter\LintingResultInterface::class)->reveal());
 
                 $linter = $linterProphecy->reveal();
             } else {
@@ -215,11 +220,15 @@ abstract class AbstractFixerTestCase extends TestCase
      */
     private static function createIsIdenticalStringConstraint($expected)
     {
-        $candidates = array_filter([
+        $candidates = array_filter(
+            [
             'PhpCsFixer\PhpunitConstraintIsIdenticalString\Constraint\IsIdenticalString',
             'PHPUnit\Framework\Constraint\IsIdentical',
             'PHPUnit_Framework_Constraint_IsIdentical',
-        ], function ($className) { return class_exists($className); });
+            ], function ($className) {
+                return class_exists($className); 
+            }
+        );
 
         if (empty($candidates)) {
             throw new \RuntimeException('PHPUnit not installed?!');

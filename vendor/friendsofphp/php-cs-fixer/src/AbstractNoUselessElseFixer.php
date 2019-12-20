@@ -48,9 +48,8 @@ abstract class AbstractNoUselessElseFixer extends AbstractFixer
                 $previous = $tokens->getPrevMeaningfulToken($previous);
             }
 
-            if (
-                !$tokens[$previous]->equals(';') ||                              // 'if' block doesn't end with semicolon, keep 'else'
-                $tokens[$tokens->getPrevMeaningfulToken($previous)]->equals('{') // empty 'if' block, keep 'else'
+            if (!$tokens[$previous]->equals(';')                               // 'if' block doesn't end with semicolon, keep 'else'
+                || $tokens[$tokens->getPrevMeaningfulToken($previous)]->equals('{') // empty 'if' block, keep 'else'
             ) {
                 return false;
             }
@@ -70,8 +69,7 @@ abstract class AbstractNoUselessElseFixer extends AbstractFixer
                 ]
             );
 
-            if (
-                null === $candidateIndex
+            if (null === $candidateIndex
                 || $tokens[$candidateIndex]->equalsAny([';', [T_CLOSE_TAG], [T_IF]])
                 || $this->isInConditional($tokens, $candidateIndex, $previousBlockStart)
                 || $this->isInConditionWithoutBraces($tokens, $candidateIndex, $previousBlockStart)

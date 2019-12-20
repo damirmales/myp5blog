@@ -9,6 +9,8 @@ $version = [
     'codename' => PhpCsFixer\Console\Application::VERSION_CODENAME,
 ];
 
-echo json_encode([
+echo json_encode(
+    [
     'version' => $version,
-], JSON_PRETTY_PRINT);
+    ], JSON_PRETTY_PRINT
+);

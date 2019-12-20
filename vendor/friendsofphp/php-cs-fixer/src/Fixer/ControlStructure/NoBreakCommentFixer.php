@@ -70,10 +70,12 @@ switch ($foo) {
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('comment_text', 'The text to use in the added comment and to detect it.'))
                 ->setAllowedTypes(['string'])
-                ->setAllowedValues([
+                ->setAllowedValues(
+                    [
                     static function ($value) {
                         if (\is_string($value) && Preg::match('/\R/', $value)) {
                             throw new InvalidOptionsException('The comment text must not contain new lines.');
@@ -81,13 +83,17 @@ switch ($foo) {
 
                         return true;
                     },
-                ])
-                ->setNormalizer(static function (Options $options, $value) {
-                    return rtrim($value);
-                })
+                    ]
+                )
+                ->setNormalizer(
+                    static function (Options $options, $value) {
+                        return rtrim($value);
+                    }
+                )
                 ->setDefault('no break')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -151,10 +157,12 @@ switch ($foo) {
                     } else {
                         $text = $this->configuration['comment_text'];
 
-                        $tokens[$commentPosition] = new Token([
+                        $tokens[$commentPosition] = new Token(
+                            [
                             $tokens[$commentPosition]->getId(),
                             str_ireplace($text, $text, $tokens[$commentPosition]->getContent()),
-                        ]);
+                            ]
+                        );
 
                         $this->ensureNewLineAt($tokens, $commentPosition);
                     }

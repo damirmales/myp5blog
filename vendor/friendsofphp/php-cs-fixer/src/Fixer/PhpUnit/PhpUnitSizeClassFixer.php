@@ -66,12 +66,14 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('group', 'Define a specific group to be used in case no group is already in use'))
                 ->setAllowedValues(['small', 'medium', 'large'])
                 ->setDefault('small')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -270,10 +272,12 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
      */
     private function filterDocBlock(DocBlock $doc)
     {
-        return array_filter([
+        return array_filter(
+            [
             $doc->getAnnotationsOfType('small'),
             $doc->getAnnotationsOfType('large'),
             $doc->getAnnotationsOfType('medium'),
-        ]);
+            ]
+        );
     }
 }

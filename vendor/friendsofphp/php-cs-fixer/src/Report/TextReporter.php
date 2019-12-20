@@ -78,11 +78,13 @@ final class TextReporter implements ReporterInterface
             return '';
         }
 
-        $diffFormatter = new DiffConsoleFormatter($isDecoratedOutput, sprintf(
-            '<comment>      ---------- begin diff ----------</comment>%s%%s%s<comment>      ----------- end diff -----------</comment>',
-            PHP_EOL,
-            PHP_EOL
-        ));
+        $diffFormatter = new DiffConsoleFormatter(
+            $isDecoratedOutput, sprintf(
+                '<comment>      ---------- begin diff ----------</comment>%s%%s%s<comment>      ----------- end diff -----------</comment>',
+                PHP_EOL,
+                PHP_EOL
+            )
+        );
 
         return PHP_EOL.$diffFormatter->format($fixResult['diff']).PHP_EOL;
     }

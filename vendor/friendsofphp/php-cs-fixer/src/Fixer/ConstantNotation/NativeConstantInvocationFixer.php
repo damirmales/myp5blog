@@ -144,7 +144,11 @@ namespace {
 
         $caseInsensitiveConstantsToEscape = array_diff(
             array_unique($caseInsensitiveConstantsToEscape),
-            array_map(function ($function) { return strtolower($function); }, $uniqueConfiguredExclude)
+            array_map(
+                function ($function) {
+                    return strtolower($function); 
+                }, $uniqueConfiguredExclude
+            )
         );
 
         // Store the cache
@@ -169,7 +173,9 @@ namespace {
         $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
 
         // 'scope' is 'namespaced' here
-        /** @var NamespaceAnalysis $namespace */
+        /**
+ * @var NamespaceAnalysis $namespace 
+*/
         foreach (array_reverse($namespaces) as $namespace) {
             if ('' === $namespace->getFullName()) {
                 continue;
@@ -187,17 +193,20 @@ namespace {
         $constantChecker = static function ($value) {
             foreach ($value as $constantName) {
                 if (!\is_string($constantName) || '' === trim($constantName) || trim($constantName) !== $constantName) {
-                    throw new InvalidOptionsException(sprintf(
-                        'Each element must be a non-empty, trimmed string, got "%s" instead.',
-                        \is_object($constantName) ? \get_class($constantName) : \gettype($constantName)
-                    ));
+                    throw new InvalidOptionsException(
+                        sprintf(
+                            'Each element must be a non-empty, trimmed string, got "%s" instead.',
+                            \is_object($constantName) ? \get_class($constantName) : \gettype($constantName)
+                        )
+                    );
                 }
             }
 
             return true;
         };
 
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('fix_built_in', 'Whether to fix constants returned by `get_defined_constants`. User constants are not accounted in this list and must be specified in the include one.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(true)
@@ -216,7 +225,8 @@ namespace {
                 ->setAllowedValues(['all', 'namespaced'])
                 ->setDefault('all')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**

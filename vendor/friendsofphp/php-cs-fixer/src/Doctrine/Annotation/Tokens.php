@@ -106,11 +106,13 @@ final class Tokens extends \SplFixedArray
 
                     $missingTextLength = $token['position'] - $lastTokenEndIndex;
                     if ($missingTextLength > 0) {
-                        $tokens[] = new Token(DocLexer::T_NONE, substr(
-                            $content,
-                            $nextAtPosition + $lastTokenEndIndex,
-                            $missingTextLength
-                        ));
+                        $tokens[] = new Token(
+                            DocLexer::T_NONE, substr(
+                                $content,
+                                $nextAtPosition + $lastTokenEndIndex,
+                                $missingTextLength
+                            )
+                        );
                     }
 
                     $tokens[] = new Token($token['type'], $token['value']);
@@ -194,8 +196,7 @@ final class Tokens extends \SplFixedArray
         if (isset($this[$index + 2])) {
             if ($this[$index + 2]->isType(DocLexer::T_OPEN_PARENTHESIS)) {
                 $currentIndex = $index + 2;
-            } elseif (
-                isset($this[$index + 3])
+            } elseif (isset($this[$index + 3])
                 && $this[$index + 2]->isType(DocLexer::T_NONE)
                 && $this[$index + 3]->isType(DocLexer::T_OPEN_PARENTHESIS)
                 && Preg::match('/^(\R\s*\*\s*)*\s*$/', $this[$index + 2]->getContent())
@@ -294,10 +295,12 @@ final class Tokens extends \SplFixedArray
                 $type = \get_class($token);
             }
 
-            throw new \InvalidArgumentException(sprintf(
-                'Token must be an instance of PhpCsFixer\\Doctrine\\Annotation\\Token, %s given.',
-                $type
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Token must be an instance of PhpCsFixer\\Doctrine\\Annotation\\Token, %s given.',
+                    $type
+                )
+            );
         }
 
         if (null === $index) {

@@ -101,19 +101,23 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('use_escape_sequences_in_strings', 'Whether characters should be replaced with escape sequences in strings.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false) // @TODO 3.0 change to true
-                ->setNormalizer(static function (Options $options, $value) {
-                    if (\PHP_VERSION_ID < 70000 && $value) {
-                        throw new InvalidOptionsForEnvException('Escape sequences require PHP 7.0+.');
-                    }
+                ->setNormalizer(
+                    static function (Options $options, $value) {
+                        if (\PHP_VERSION_ID < 70000 && $value) {
+                            throw new InvalidOptionsForEnvException('Escape sequences require PHP 7.0+.');
+                        }
 
-                    return $value;
-                })
+                        return $value;
+                    }
+                )
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -131,8 +135,7 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
         foreach ($tokens as $index => $token) {
             $content = $token->getContent();
 
-            if (
-                $this->configuration['use_escape_sequences_in_strings']
+            if ($this->configuration['use_escape_sequences_in_strings']
                 && $token->isGivenKind([T_CONSTANT_ENCAPSED_STRING, T_ENCAPSED_AND_WHITESPACE])
             ) {
                 if (!Preg::match('/'.implode('|', array_keys($escapeSequences)).'/', $content)) {

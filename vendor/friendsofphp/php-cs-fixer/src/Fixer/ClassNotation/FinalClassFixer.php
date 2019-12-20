@@ -50,10 +50,12 @@ class MyApp {}
     protected function createProxyFixers()
     {
         $fixer = new FinalInternalClassFixer();
-        $fixer->configure([
+        $fixer->configure(
+            [
             'annotation-white-list' => [],
             'consider-absent-docblock-as-internal-class' => true,
-        ]);
+            ]
+        );
 
         return [$fixer];
     }

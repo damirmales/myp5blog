@@ -38,7 +38,7 @@ class BackendController
     public function addArticle() //
     {
         $addArticleErrorMessage = [];// Store error message to be available into create_article
-        $post = securizeFormFields($_POST);
+        $post = securizeFormFields($_POST,);
 
         if (isset($post['btn_creer_article'])) {
 
@@ -106,7 +106,7 @@ class BackendController
     {
 
         $updateArticleErrorMessage = [];
-        $post = securizeFormFields($_POST);
+        $post = securizeFormFields($_POST,);
         if (isset($post['btn_update_article'])) {
 
 
@@ -162,7 +162,7 @@ class BackendController
     public function updateArticle()
     {
         $updateArticleErrorMessage = [];
-        $post = securizeFormFields($_POST);
+        $post = securizeFormFields($_POST,);
 
         if (isset($post['btn_update_article'])) {
 

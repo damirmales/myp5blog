@@ -134,7 +134,8 @@ final class FinalInternalClassFixer extends AbstractFixer implements Configurati
             return $newValue;
         };
 
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('annotation-white-list', 'Class level annotations tags that must be set in order to fix the class. (case insensitive)'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues($annotationsAsserts)
@@ -151,7 +152,8 @@ final class FinalInternalClassFixer extends AbstractFixer implements Configurati
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**

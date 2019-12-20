@@ -81,7 +81,8 @@ function foo () {
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder(
                 'strategy',
                 'Forbid multi-line whitespace or move the semicolon to the new line for chained calls.'
@@ -89,7 +90,8 @@ function foo () {
                 ->setAllowedValues([self::STRATEGY_NO_MULTI_LINE, self::STRATEGY_NEW_LINE_FOR_CHAINED_CALLS])
                 ->setDefault(self::STRATEGY_NO_MULTI_LINE)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -249,7 +251,8 @@ function foo () {
             // must be the variable of the first call in the chain
             if ($tokens[$index]->isGivenKind([T_VARIABLE, T_RETURN, T_STRING]) && 0 === $closingBrackets) {
                 if ($tokens[--$index]->isGivenKind(T_WHITESPACE)
-                    || $tokens[$index]->isGivenKind(T_OPEN_TAG)) {
+                    || $tokens[$index]->isGivenKind(T_OPEN_TAG)
+                ) {
                     return $this->getIndentAt($tokens, $index);
                 }
             }

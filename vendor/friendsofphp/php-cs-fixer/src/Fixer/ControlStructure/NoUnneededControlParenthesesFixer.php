@@ -171,10 +171,12 @@ yield(2);
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless('statements', [
+        return new FixerConfigurationResolverRootless(
+            'statements', [
             (new FixerOptionBuilder('statements', 'List of control statements to fix.'))
                 ->setAllowedTypes(['array'])
-                ->setDefault([
+                ->setDefault(
+                    [
                     'break',
                     'clone',
                     'continue',
@@ -182,8 +184,10 @@ yield(2);
                     'return',
                     'switch_case',
                     'yield',
-                ])
+                    ]
+                )
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 }

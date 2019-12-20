@@ -87,11 +87,13 @@ final class ImplodeCallFixer extends AbstractFixer
 
             if (1 === \count($argumentsIndices)) {
                 $firstArgumentIndex = key($argumentsIndices);
-                $tokens->insertAt($firstArgumentIndex, [
+                $tokens->insertAt(
+                    $firstArgumentIndex, [
                     new Token([T_CONSTANT_ENCAPSED_STRING, "''"]),
                     new Token(','),
                     new Token([T_WHITESPACE, ' ']),
-                ]);
+                    ]
+                );
 
                 continue;
             }

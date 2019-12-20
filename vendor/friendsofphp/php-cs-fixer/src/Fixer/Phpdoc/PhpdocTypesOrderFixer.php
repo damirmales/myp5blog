@@ -97,7 +97,8 @@ final class PhpdocTypesOrderFixer extends AbstractFixer implements Configuration
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('sort_algorithm', 'The sorting algorithm to apply.'))
                 ->setAllowedValues(['alpha', 'none'])
                 ->setDefault('alpha')
@@ -106,7 +107,8 @@ final class PhpdocTypesOrderFixer extends AbstractFixer implements Configuration
                 ->setAllowedValues(['always_first', 'always_last', 'none'])
                 ->setDefault('always_first')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     protected function applyFix(\SplFileInfo $file, Tokens $tokens)
@@ -131,13 +133,19 @@ final class PhpdocTypesOrderFixer extends AbstractFixer implements Configuration
 
                 // fix @method parameters types
                 $line = $doc->getLine($annotation->getStart());
-                $line->setContent(Preg::replaceCallback('/(@method\s+.+?\s+\w+\()(.*)\)/', function (array $matches) {
-                    $sorted = Preg::replaceCallback('/((?:^|,)\s*)([^\s]+)/', function (array $matches) {
-                        return $matches[1].$this->sortJoinedTypes($matches[2]);
-                    }, $matches[2]);
+                $line->setContent(
+                    Preg::replaceCallback(
+                        '/(@method\s+.+?\s+\w+\()(.*)\)/', function (array $matches) {
+                            $sorted = Preg::replaceCallback(
+                                '/((?:^|,)\s*)([^\s]+)/', function (array $matches) {
+                                    return $matches[1].$this->sortJoinedTypes($matches[2]);
+                                }, $matches[2]
+                            );
 
-                    return $matches[1].$sorted.')';
-                }, $line->getContent()));
+                            return $matches[1].$sorted.')';
+                        }, $line->getContent()
+                    )
+                );
             }
 
             $tokens[$index] = new Token([T_DOC_COMMENT, $doc->getContent()]);
@@ -152,15 +160,19 @@ final class PhpdocTypesOrderFixer extends AbstractFixer implements Configuration
     private function sortTypes(array $types)
     {
         foreach ($types as $index => $type) {
-            $types[$index] = Preg::replaceCallback('/^([^<]+)<(?:([\w\|]+?)(,\s*))?(.*)>$/', function (array $matches) {
-                return $matches[1].'<'.$this->sortJoinedTypes($matches[2]).$matches[3].$this->sortJoinedTypes($matches[4]).'>';
-            }, $type);
+            $types[$index] = Preg::replaceCallback(
+                '/^([^<]+)<(?:([\w\|]+?)(,\s*))?(.*)>$/', function (array $matches) {
+                    return $matches[1].'<'.$this->sortJoinedTypes($matches[2]).$matches[3].$this->sortJoinedTypes($matches[4]).'>';
+                }, $type
+            );
         }
 
         if ('alpha' === $this->configuration['sort_algorithm']) {
             $types = Utils::stableSort(
                 $types,
-                static function ($type) { return $type; },
+                static function ($type) {
+                    return $type; 
+                },
                 static function ($typeA, $typeB) {
                     $regexp = '/^\\??\\\?/';
 

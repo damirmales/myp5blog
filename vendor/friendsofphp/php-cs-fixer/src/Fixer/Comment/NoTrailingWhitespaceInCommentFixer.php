@@ -31,10 +31,12 @@ final class NoTrailingWhitespaceInCommentFixer extends AbstractFixer
     {
         return new FixerDefinition(
             'There MUST be no trailing spaces inside comment or PHPDoc.',
-            [new CodeSample('<?php
+            [new CodeSample(
+                '<?php
 // This is '.'
 // a comment. '.'
-')]
+'
+            )]
         );
     }
 

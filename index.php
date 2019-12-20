@@ -9,12 +9,10 @@ if (!$newSession->get('user','role'))
     echo 'pas de newSession';
 }
 */
-if (!isset($_SESSION['user']['role']))
-{
+
+/*if (!isset($_SESSION['user']['role'])) {
     $_SESSION['user']['role'] = null ;
-}
-
-
+}*/
 
 // to display the error message
 ini_set('display_errors', 1);

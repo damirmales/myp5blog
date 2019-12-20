@@ -113,8 +113,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
 
                 $operatorIndex = $tokens->getPrevMeaningfulToken($methodIndex);
                 $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
-                if (
-                    !($tokens[$operatorIndex]->equals([T_OBJECT_OPERATOR, '->']) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this']))
+                if (!($tokens[$operatorIndex]->equals([T_OBJECT_OPERATOR, '->']) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this']))
                     && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STRING, 'self']))
                     && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STATIC, 'static']))
                 ) {
@@ -142,17 +141,21 @@ final class MyTest extends \PHPUnit_Framework_TestCase
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless('assertions', [
+        return new FixerConfigurationResolverRootless(
+            'assertions', [
             (new FixerOptionBuilder('assertions', 'List of assertion methods to fix.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(array_keys(self::$assertionMap))])
-                ->setDefault([
+                ->setDefault(
+                    [
                     'assertAttributeEquals',
                     'assertAttributeNotEquals',
                     'assertEquals',
                     'assertNotEquals',
-                ])
+                    ]
+                )
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 }

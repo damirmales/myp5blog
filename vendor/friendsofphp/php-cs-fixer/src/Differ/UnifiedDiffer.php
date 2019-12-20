@@ -27,10 +27,14 @@ final class UnifiedDiffer implements DifferInterface
 
     public function __construct()
     {
-        $this->differ = new Differ(new StrictUnifiedDiffOutputBuilder([
-            'fromFile' => 'Original',
-            'toFile' => 'New',
-        ]));
+        $this->differ = new Differ(
+            new StrictUnifiedDiffOutputBuilder(
+                [
+                'fromFile' => 'Original',
+                'toFile' => 'New',
+                ]
+            )
+        );
     }
 
     /**

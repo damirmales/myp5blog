@@ -24,8 +24,7 @@ class Session
 
     public function show($name)
     {
-        if(isset($session[$name]))
-        {
+        if(isset($session[$name])) {
             $key = $this->get($name);
             $this->remove($name);
             return $key;

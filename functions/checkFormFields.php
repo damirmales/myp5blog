@@ -2,7 +2,8 @@
 
 
 function checkFormFields($field, $index, $length)
-{global  $errMsg ;
+{
+    global  $errMsg ;
     if (strlen($field) > $length) {
 
         $errMsg = "Le ".$index." ne doit pas exceder 45 c.\n\r";
