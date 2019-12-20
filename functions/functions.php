@@ -3,6 +3,11 @@
 use Model\PdoConstruct;
 
 //*** Get an input value entered by user ***
+/**
+ * @param $session
+ * @param $key
+ * @return string|null
+ */
 function getFormData($session, $key)
 {
     if (!empty($_SESSION[$session][$key])) {
@@ -26,6 +31,9 @@ function saveFormData($index)
     }
 }
 
+/**
+ * @return string
+ */
 function generateToken()
 {
 
@@ -34,7 +42,12 @@ function generateToken()
 
 }
 
-function createUrlWithToken($token,$email)
+/**
+ * @param $token
+ * @param $email
+ * @return string
+ */
+function createUrlWithToken($token, $email)
 {
     $userId = 1; // test only
 
@@ -49,28 +62,12 @@ function createUrlWithToken($token,$email)
 }
 
 
-// get user email and id from users table
-function getUserEmailandId() // Nota : voir si doublon avec checkUserLogin($loginUser) de la classe AdminUsers ou checkUserRecord() de la classe Users
-{
-    {
-        $connection = new PdoConstruct;
-
-        $userData = $this->connection->prepare(
-            '
-                SELECT email, token
-                FROM users
-                WHERE id = $userId
-                '
-        );
-
-        $userData->execute();
-
-        $userEmail = $userData->fetch();
-
-        return $userEmail;
-    }
-}
-
+/**
+ * @param $titre
+ * @param $message
+ * @param $type
+ * @return array
+ */
 function setFlash($titre, $message, $type)
 {
     $mess = [
@@ -102,8 +99,4 @@ function flashMessage($mess)
 
 }
 
-function checkDouble($field)
-{
 
-
-}

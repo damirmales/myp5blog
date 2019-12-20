@@ -12,19 +12,19 @@ class Session
 
     public function set($name,$key, $value)
     {
-        $session[$name][$key] = $value;
+        $this->session[$name][$key] = $value;
     }
 
     public function get($name,$key)
     {
-        if(isset($session[$name][$key])) {
-            return $session[$name][$key];
+        if(isset($this->session[$name][$key])) {
+            return $this->session[$name][$key];
         }
     }
 
     public function show($name)
     {
-        if(isset($session[$name])) {
+        if(isset($this->session[$name])) {
             $key = $this->get($name);
             $this->remove($name);
             return $key;
@@ -33,7 +33,7 @@ class Session
 
     public function remove($name,$key)
     {
-        unset($session[$name][$key]);
+        unset($this->session[$name][$key]);
     }
 
     public function stop()

@@ -195,9 +195,9 @@ class FrontendController
             if (empty($field['prenom'])) {
                 $contactErrorMessage['prenom'] = setFlash("Attention !", "prenom non renseigné", "warning"); // Store error message to be abvailable into register.php
             } elseif (strlen($field['prenom']) < 3) {
-                $contactErrorMessage['prenom'] = setFlash("Attention !", 'Votre prenom doit faire plus de 3 caractères', 'warning');
+                $contactErrorMessage['prenom'] = setFlash("Attention !", 'Votre prénom doit faire plus de 3 caractères', 'warning');
             } elseif (strlen($field['prenom']) > 45) {
-                $contactErrorMessage['prenom'] = setFlash("Attention !", 'Votre prenom doit faire moins de 45 caractères', 'warning');
+                $contactErrorMessage['prenom'] = setFlash("Attention !", 'Votre prénom doit faire moins de 45 caractères', 'warning');
             }
 
             if (empty($field['email'])) {
@@ -382,7 +382,7 @@ class FrontendController
 
             if ($post['formRegister'] == 'sent') {
                 if (empty($post['nom'])) {
-                    $registerFormMessage['nom'] = setFlash("Attention !", "rien ds le nom", "warning"); // Store error message to be abvailable into register.php
+                    $registerFormMessage['nom'] = setFlash("Attention !", "Manque le nom", "warning"); // Store error message to be abvailable into register.php
                 } elseif (strlen($post['nom']) < 3) {
                     $registerFormMessage['nom'] = setFlash("Attention !", 'Votre nom doit faire plus de 3 caractères', 'warning');
                 } elseif (strlen($post['nom']) > 45) {
@@ -391,16 +391,16 @@ class FrontendController
 
                 if (empty($post['prenom'])) {
 
-                    $registerFormMessage['prenom'] = setFlash("Attention !", "rien ds le prenom", "warning"); // Store error message to be abvailable into register.php
+                    $registerFormMessage['prenom'] = setFlash("Attention !", "Manque le prénom", "warning"); // Store error message to be abvailable into register.php
 
                 } elseif (strlen($post['prenom']) < 3) {
-                    $registerFormMessage['prenom'] = setFlash("Attention !", 'Votre prenom doit faire plus de 3 caractères', 'warning');
+                    $registerFormMessage['prenom'] = setFlash("Attention !", 'Votre prénom doit faire plus de 3 caractères', 'warning');
                 } elseif (strlen($post['prenom']) > 45) {
-                    $registerFormMessage['prenom'] = setFlash("Attention !", 'Votre prenom doit faire moins de 45 caractères', 'warning');
+                    $registerFormMessage['prenom'] = setFlash("Attention !", 'Votre prénom doit faire moins de 45 caractères', 'warning');
                 }
 
                 if (empty($post['email'])) {
-                    $registerFormMessage['email'] = setFlash("Attention !", "rien ds le email", "warning"); // Store error message to be abvailable into register.php
+                    $registerFormMessage['email'] = setFlash("Attention !", "Manque l'email", "warning"); // Store error message to be abvailable into register.php
 
                 } elseif (!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
                     $registerFormMessage['email'] = setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", "warning");
@@ -408,22 +408,22 @@ class FrontendController
                 }
 
                 if (empty($post['login'])) {
-                    $registerFormMessage['login'] = setFlash("Attention !", "rien ds le login", "warning"); // Store error message to be abvailable into register.php
+                    $registerFormMessage['login'] = setFlash("Attention !", "Manque le login", "warning"); // Store error message to be abvailable into register.php
 
                 }
 
                 if (empty($post['password'])) {
-                    $registerFormMessage['password'] = setFlash("Attention !", "rien ds le Mot de passe ", "warning"); // Store error message to be abvailable into register.php
+                    $registerFormMessage['password'] = setFlash("Attention !", "Manque le Mot de passe ", "warning"); // Store error message to be abvailable into register.php
 
                 }
 
                 if (empty($post['password2'])) {
-                    $registerFormMessage ['password2'] = setFlash("Attention !", "rien ds le répéter mot de passe ", "warning"); // Store error message to be abvailable into register.php
+                    $registerFormMessage ['password2'] = setFlash("Attention !", "Il faut répéter mot de passe ", "warning"); // Store error message to be abvailable into register.php
 
                 }
 
                 if (($post['password2']) !== ($post['password'])) {
-                    $registerFormMessage['password12'] = setFlash("Attention !", "les champs des mots de passe doivent être identiques", "warning"); // Store error message to be abvailable into register.php
+                    $registerFormMessage['password12'] = setFlash("Attention !", "Les champs des mots de passe doivent être identiques", "warning"); // Store error message to be abvailable into register.php
 
                 }
 

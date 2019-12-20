@@ -1,3 +1,8 @@
+<?php
+$sessionUserRole = $_SESSION['user']['role'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -61,7 +66,7 @@
                 </li>
                 <?php
                 // if (isset($_SESSION['user'])) {
-                if (($_SESSION['user']['role'] == 'admin')) {
+                if (($sessionUserRole == 'admin')) {
                     ?>
                         <li class="nav-item">
                             <a class="" href="index.php?route=admin"> ⚒ Admin</a>
@@ -70,7 +75,7 @@
                     <?php
 
                 }
-                elseif (($_SESSION['user']['role'] == 'member')) {
+                elseif (($sessionUserRole == 'member')) {
                     ?>
                         <li class="nav-item">
                             <a class="" >/ ☑ Membre /</a>
@@ -127,7 +132,7 @@
                 <?php
                 if (isset($_SESSION['user'])) {
 
-                    if (($_SESSION['user']['role'] != 'admin') ) {
+                    if ($sessionUserRole != 'admin')  {
 
 
                         ?>
