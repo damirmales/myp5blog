@@ -251,7 +251,6 @@ class FrontendController
     public
     function register()
     {
-
          ImportPage::getPage(include 'vue/register.php');
 
     }

@@ -1,5 +1,12 @@
 <?php
-$sessionUserRole = $_SESSION['user']['role'];
+if (!isset($sessionUserRole))
+    {
+        $sessionUserRole=null;
+    }
+else
+{
+    $sessionUserRole = $_SESSION['user']['role'];
+}
 
 ?>
 

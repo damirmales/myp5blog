@@ -1,7 +1,6 @@
 <?php
 namespace Services;
-//require __DIR__ . '/vendor/autoload.php';
-//require 'vendor/autoload.php';
+
 
 class Emails
 {

@@ -2,8 +2,6 @@
 require_once('functions/functions.php');
 
 ?>
-
-
     <!-- Page Header -->
     <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
         <div class="overlay"></div>
