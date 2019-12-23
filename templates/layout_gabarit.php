@@ -1,11 +1,11 @@
 <?php
-if (!isset($sessionUserRole))
+if (!isset($_SESSION["user"]['role']))
     {
-        $sessionUserRole=null;
+        $_SESSION["user"]['role']=null;
     }
 else
 {
-    $sessionUserRole = $_SESSION['user']['role'];
+    $_SESSION["user"]['role'];
 }
 
 ?>
@@ -73,7 +73,7 @@ else
                 </li>
                 <?php
                 // if (isset($_SESSION['user'])) {
-                if (($sessionUserRole == 'admin')) {
+                if (($_SESSION["user"]['role'] == 'admin')) {
                     ?>
                         <li class="nav-item">
                             <a class="" href="index.php?route=admin"> ⚒ Admin</a>
@@ -82,7 +82,7 @@ else
                     <?php
 
                 }
-                elseif (($sessionUserRole == 'member')) {
+                elseif (($_SESSION["user"]['role'] == 'member')) {
                     ?>
                         <li class="nav-item">
                             <a class="" >/ ☑ Membre /</a>
@@ -137,9 +137,9 @@ else
                 </div>
 
                 <?php
-                if (isset($_SESSION['user'])) {
+                if (isset($_SESSION["user"]['role'])) {
 
-                    if ($sessionUserRole != 'admin')  {
+                    if ($_SESSION["user"]['role'] != 'admin')  {
 
 
                         ?>

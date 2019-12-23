@@ -297,7 +297,6 @@ class FrontendController
                 $userData = new UserDao();
                 $checkUser = $userData->checkUserLogin($field['login']);
 
-
                 //---- check if user is registered ---------
                 if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password'])) {
 
@@ -309,13 +308,14 @@ class FrontendController
                         $_SESSION["user"]['bienvenu'] = 1;
 
                         //------ check if user is admin --------
-                        if ($checkUser['role'] == 'admin') {
+                        if ($_SESSION["user"]['role'] == 'admin') {
 
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
                             exit();
 
                         } else {
-                            $_SESSION["userMember"] = setFlash("Bonjour !", "Vous êtes membre", 'success');
+
+                            $_SESSION["userMember"] = setFlash("Bonjour !", "Vous êtes membre du blog", 'success');
 
                             header('Location: index.php?route=liste');
                             exit();

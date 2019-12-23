@@ -211,12 +211,17 @@ class BackendController
 
                 }
             }
+        else
+            {
+                $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+                $article = $getArticle->getSingleArticle($post['articles_id']);
 
-            $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
-            $article = $getArticle->getSingleArticle($post['articles_id']);
+                include 'vue/backend/edit_article.php';
+            }
 
-            include 'vue/backend/edit_article.php';
+
         }
+
     }
 
     public function editListArticles()
