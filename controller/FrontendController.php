@@ -317,6 +317,7 @@ class FrontendController
 
                             $_SESSION["userMember"] = setFlash("Bonjour !", "Vous êtes membre du blog", 'success');
 
+
                             header('Location: index.php?route=liste');
                             exit();
                         }

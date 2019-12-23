@@ -25,8 +25,9 @@
 if (!empty($_SESSION["userMember"]))
 {
     flashMessage2($_SESSION["userMember"]);
-}
 
+}
+unset($_SESSION["userMember"]);
 /*if (!empty($_SESSION["user"]['bienvenu'])) {
     echo '<br/><div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
