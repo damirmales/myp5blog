@@ -33,7 +33,9 @@ else
 
     <!-- Custom styles for this template -->
     <link href="public/css/clean-blog.min.css" rel="stylesheet">
-
+    <!-- Custom styles for this template -->
+    <link href="public/css/clean-blog.min.css" rel="stylesheet">
+    <!-- add style.css pour le tableau des comments -->
 </head>
 
 <body>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Services;
 
 
@@ -9,20 +10,30 @@ class Emails
     private $email;
     private $message;
 
-     /**************************************
-      * @return mixed
-      */
-    public function getNom()
+    public function sendEmail()
     {
-        return $this->nom;
-    }
+        $prenom = $this->getPrenom('prenom');
+        $nom = $this->getNom('nom');
+        $email = $this->getEmail('email');
 
-    /**
-     * @param mixed $nom
-     */
-    public function setNom( $nom ): void
-    {
-        $this->nom = $nom;
+        $message = 'email : ' . $email . ' - ';
+        $message .= 'nom : ' . $prenom . ' ' . $nom . " - ";
+        $message .= 'message : ' . $this->getMessage('message');
+
+        $emailTo = "damir@romandie.com";
+        $subject = "Contact";
+        $emailFrom = $this->getEmail('email');
+
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+
+        //---- envoi email
+        $success = mail($emailTo, $subject, $message, $headers);
+
+        // echo '<pre>'; var_dump($success);
+        //$_SESSION["contactForm"] = "email  envoyé";
+        return $success;
+
     }
 
     /**************************************
@@ -36,9 +47,25 @@ class Emails
     /**
      * @param mixed $prenom
      */
-    public function setPrenom( $prenom ): void
+    public function setPrenom($prenom): void
     {
         $this->prenom = $prenom;
+    }
+
+    /**************************************
+     * @return mixed
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @param mixed $nom
+     */
+    public function setNom($nom): void
+    {
+        $this->nom = $nom;
     }
 
     /**************************************
@@ -52,7 +79,7 @@ class Emails
     /**
      * @param mixed $email
      */
-    public function setEmail( $email ): void
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -68,60 +95,34 @@ class Emails
     /**
      * @param mixed $message
      */
-    public function setMessage( $message ): void
+    public function setMessage($message): void
     {
         $this->message = $message;
     }
 
-
-    public function sendEmail()
-    {
-        $prenom = $this->getPrenom('prenom');
-        $nom = $this->getNom('nom'); 
-        $email = $this->getEmail('email');
-
-        $message   = 'email : '.$email.' - ';
-        $message   .= 'nom : '.$prenom.' '.$nom." - " ;
-        $message .= 'message : '.$this->getMessage('message');
-
-        $emailTo = "damir@romandie.com";
-        $subject = "Contact";
-        $emailFrom = $this->getEmail('email'); 
-
-        $headers   = 'MIME-Version: 1.0' . "\r\n";
-        $headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-
-        //---- envoi email
-        $success = mail($emailTo, $subject, $message, $headers);
-
-          // echo '<pre>'; var_dump($success);
-        //$_SESSION["contactForm"] = "email  envoyé";
-        return $success;    
-
-    }
-    
     //---- send email with token to register a new user ----------
-    public function tokenEmail($userEmail,$UrlToken)
+
+    public function tokenEmail($userEmail, $UrlToken)
     {
 
         $prenom = $this->getPrenom('prenom');
-        $nom = $this->getNom('nom'); 
+        $nom = $this->getNom('nom');
         $email = $this->getEmail('email');
-        $message   = 'email : '.$userEmail;
-        $message   .= 'token : '. $UrlToken ;
+        $message = 'email : ' . $userEmail;
+        $message .= 'token : ' . $UrlToken;
 
 
         $emailTo = $userEmail;
         $subject = "confirmez votre email";
-        $emailFrom = $this->getEmail('email'); 
+        $emailFrom = $this->getEmail('email');
 
-        $headers   = 'MIME-Version: 1.0' . "\r\n";
-        $headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
 
         // envoi email 
         $success = mail($emailTo, $subject, $message, $headers);
-        return $success;    
+        return $success;
 
     }
 

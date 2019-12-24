@@ -17,32 +17,27 @@ require_once('functions/functions.php');
             </div>
         </div>
     </header>
-
 <?php
-if(!empty($registerFormMessage)){
+if (!empty($registerFormMessage)) {
     flashMessage($registerFormMessage);
 }
-if(!empty($_SESSION["registerForm"]["login"])){
+if (!empty($_SESSION["registerForm"]["login"])) {
 
     flashMessage2($_SESSION["registerForm"]["login"]);
     unset($_SESSION["registerForm"]["login"]);
 }
-if(!empty($_SESSION["registerForm"]["email"])){
+if (!empty($_SESSION["registerForm"]["email"])) {
 
     flashMessage2($_SESSION["registerForm"]["email"]);
     unset($_SESSION["registerForm"]["email"]);
 }
 
-if(!empty($_SESSION["registerForm"]["OK"])){
+if (!empty($_SESSION["registerForm"]["OK"])) {
 
     flashMessage2($_SESSION["registerForm"]["OK"]);
     unset($_SESSION["registerForm"]["OK"]);
 }
-?>
-
-
-
-    <!-- Main Content -->
+?>    <!-- Main Content -->
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
@@ -88,9 +83,7 @@ if(!empty($_SESSION["registerForm"]["OK"])){
             </div>
         </div>
     </div>
-
     <hr>
 
 <?php $content = ob_get_clean(); ?>
-
 <?php require 'templates/layout_gabarit.php'; ?>

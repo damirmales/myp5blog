@@ -2,3 +2,9 @@ node_modules
 .idea/
 /vendor/
 
+/recycle/
+myp5blog.clpprj
+myp5blog.sublime-project
+myp5blog.sublime-workspace
+myp5blog_clcs.csprj
+gulpfile.js

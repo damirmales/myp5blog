@@ -1,22 +1,20 @@
 <?php
-namespace Model;
 
+namespace Model;
 /*********************************************/
 /************
- * Manage comments 
+ * Manage comments
  ***************/
 /*********************************************/
 
 class Comments
 {
-
     protected $commentaire_id;
     protected $pseudo;
     protected $contenu;
     protected $date_ajout;
     protected $validation;
     protected $date_validation;
-
 
     /**
      * @return mixed
@@ -29,14 +27,14 @@ class Comments
     /**
      * @param mixed $commentaire_id
      */
-    public function setCommentaire_id( $commentaire_id ): void
+    public function setCommentaire_id($commentaire_id): void
     {
         $this->commentaire_id = $commentaire_id;
     }
 
-     /**
-      * @return mixed
-      */
+    /**
+     * @return mixed
+     */
     public function getPseudo()
     {
         return $this->pseudo;
@@ -45,10 +43,11 @@ class Comments
     /**
      * @param mixed $pseudo
      */
-    public function setPseudo( $pseudo ): void
+    public function setPseudo($pseudo): void
     {
         $this->pseudo = $pseudo;
     }
+
     /**
      * @return mixed
      */
@@ -60,7 +59,7 @@ class Comments
     /**
      * @param mixed $contenu
      */
-    public function setContenu( $contenu ): void
+    public function setContenu($contenu): void
     {
         $this->contenu = $contenu;
     }
@@ -76,14 +75,14 @@ class Comments
     /**
      * @param mixed $date_ajout
      */
-    public function setDate_ajout( $date_ajout ): void
+    public function setDate_ajout($date_ajout): void
     {
         $this->date_ajout = $date_ajout;
     }
 
-     /**
-      * @return mixed
-      */
+    /**
+     * @return mixed
+     */
     public function getValidation()
     {
         return $this->validation;
@@ -92,13 +91,14 @@ class Comments
     /**
      * @param mixed $validation
      */
-    public function setValidation( $validation ): void
+    public function setValidation($validation): void
     {
         $this->validation = $validation;
     }
-     /**
-      * @return mixed
-      */
+
+    /**
+     * @return mixed
+     */
     public function getDate_validation()
     {
         return $this->date_validation;
@@ -107,11 +107,10 @@ class Comments
     /**
      * @param mixed $date_validation
      */
-    public function setDate_validation( $date_validation ): void
+    public function setDate_validation($date_validation): void
     {
         $this->date_validation = $date_validation;
     }
-
 
 
     public function __construct(array $datas)
@@ -122,9 +121,8 @@ class Comments
     public function hydrate(array $datas)
     {
 
-        foreach ($datas as $key => $value)
-        {
-            $method = 'set'.ucfirst($key);
+        foreach ($datas as $key => $value) {
+            $method = 'set' . ucfirst($key);
 
             if (method_exists($this, $method)) {
                 $this->$method($value);
@@ -133,7 +131,7 @@ class Comments
         }
     }
 
-    
+
 }        
 
 

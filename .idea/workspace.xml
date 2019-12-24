@@ -6,8 +6,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/recycle/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/FrontendController.old" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/checkFormFields.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/checkFormFields.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/securizeFormFields.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/securizeFormFields.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/ArticleDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/ArticleDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Articles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/CommentDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/CommentDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/PdoConstruct.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PdoConstruct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/UserDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Emails.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Emails.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout_gabarit.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_gabarit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/articles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/logAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/logAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,18 +109,19 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/vue" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\recycle" />
+      <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\model" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\vue" />
       <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\vue\backend" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\model" />
     </key>
   </component>
   <component name="RunManager">
@@ -167,7 +195,7 @@
       <workItem from="1576824298529" duration="22660000" />
       <workItem from="1576933553430" duration="3135000" />
       <workItem from="1577013983056" duration="6950000" />
-      <workItem from="1577091631466" duration="4830000" />
+      <workItem from="1577091631466" duration="18083000" />
     </task>
     <servers />
   </component>
@@ -204,10 +232,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1575478068712" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1576333368784">
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1577109083582">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1576333368784" />
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1577109083582" />
     <state x="453" y="178" key="NewPhpClassDialog" timestamp="1576746628811">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -216,10 +244,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1576331874046" />
+    <state x="487" y="74" key="RollbackChangesDialog" timestamp="1577106099533">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="487" y="74" key="RollbackChangesDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106099533" />
     <state x="291" y="12" key="SettingsEditor" timestamp="1575496558583">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575496558583" />
+    <state x="569" y="280" key="VCS.EditChangelistDialog" timestamp="1577106083540">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="569" y="280" key="VCS.EditChangelistDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106083540" />
     <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1577091643465">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -228,10 +264,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="481" y="27" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1576585132138" />
-    <state x="379" y="0" width="607" height="728" key="find.popup" timestamp="1576685962674">
+    <state x="379" y="0" width="607" height="728" key="find.popup" timestamp="1577109111592">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="0" width="607" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1576685962674" />
+    <state x="379" y="0" width="607" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1577109111592" />
     <state x="424" y="0" width="517" height="688" key="refactoring.ChangeSignatureDialog" timestamp="1577021418600">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

@@ -1,10 +1,11 @@
 <?php
+
 namespace Model;
 
 /******
- * 
+ *
  * **************************************************************************
-Cette classe gère les données liées à l'affichage des articles
+ * Cette classe gère les données liées à l'affichage des articles
  *************************************************************************************/
 class Articles
 {
@@ -17,26 +18,20 @@ class Articles
     protected $date_creation;
     protected $date_mise_a_jour;
 
-
     public function __construct(array $datas)
     {
         $this->hydrate($datas);
     }
 
-
     public function hydrate(array $datas)
     {
-        foreach ($datas as $key => $value)
-        {
-
-            $method = 'set'.ucfirst($key);
-
+        foreach ($datas as $key => $value) {
+            $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }
     }
-
 
     /**
      * @return mixed
@@ -49,7 +44,7 @@ class Articles
     /**
      * @param mixed $articles_id
      */
-    public function setArticles_id( $id ): void
+    public function setArticles_id($id): void
     {
         $this->articles_id = $id;
     }
@@ -65,7 +60,7 @@ class Articles
     /**
      * @param mixed $titre
      */
-    public function setTitre( $titre ): void
+    public function setTitre($titre): void
     {
         $this->titre = $titre;
     }
@@ -81,7 +76,7 @@ class Articles
     /**
      * @param mixed $chapo
      */
-    public function setChapo( $chapo ): void
+    public function setChapo($chapo): void
     {
         $this->chapo = $chapo;
     }
@@ -97,7 +92,7 @@ class Articles
     /**
      * @param mixed $auteur
      */
-    public function setAuteur( $auteur ): void
+    public function setAuteur($auteur): void
     {
         $this->auteur = $auteur;
     }
@@ -113,7 +108,7 @@ class Articles
     /**
      * @param mixed $contenu
      */
-    public function setContenu( $contenu ): void
+    public function setContenu($contenu): void
     {
         $this->contenu = $contenu;
     }
@@ -129,7 +124,7 @@ class Articles
     /**
      * @param mixed $rubrique
      */
-    public function setRubrique( $rubrique ): void
+    public function setRubrique($rubrique): void
     {
         $this->rubrique = $rubrique;
     }
@@ -145,7 +140,7 @@ class Articles
     /**
      * @param mixed $date_creation
      */
-    public function setDate_creation( $date_creation ): void
+    public function setDate_creation($date_creation): void
     {
         $this->date_creation = $date_creation;
     }
@@ -161,7 +156,7 @@ class Articles
     /**
      * @param mixed $date_mise_a_jour
      */
-    public function setDate_mise_a_jour( $date_mise_a_jour ): void
+    public function setDate_mise_a_jour($date_mise_a_jour): void
     {
         $this->date_mise_a_jour = $date_mise_a_jour;
     }

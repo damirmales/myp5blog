@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 use Model\ArticleDao;
@@ -21,10 +22,8 @@ class BackendController
 
             header('Location: index.php'); // if user is not admin
             exit();
-
         }
         include 'vue/backend/admin_page.php';
-
     }
     //*****************************************************************
     //******************** Manage articles ************************
@@ -90,8 +89,8 @@ class BackendController
     }
 
     /**********************
-     * 
-     * display article  
+     *
+     * display article
      ****************************/
     public function showArticle($idArticle)
     {
@@ -99,16 +98,13 @@ class BackendController
         $article = $getArticle->getSingleArticle($idArticle);
 
         include 'vue/backend/show_article.php';
-
     }
 
     public function updateArticle2()
     {
-
         $updateArticleErrorMessage = [];
         $post = securizeFormFields($_POST);
         if (isset($post['btn_update_article'])) {
-
 
             if (empty($post['titre'])) {
 
@@ -141,19 +137,13 @@ class BackendController
             }
 
             if (empty($updateArticleErrorMessage)) {
-
                 $article = new Articles($post);
-
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleUpdate = $articleDao->updateArticleToDb($article);
-
                 if ($articleUpdate) {
-
                     $this->showArticle($post['articles_id']);
-
                 }
             }
-
             //saveFormData('newArticle');
             include 'vue/backend/edit_article.php';
         }
@@ -165,16 +155,11 @@ class BackendController
         $post = securizeFormFields($_POST);
 
         if (isset($post['btn_update_article'])) {
-
             if (empty($post['titre'])) {
-
                 $updateArticleErrorMessage['titre'] = setFlash("Attention !", "Manque le titre", 'warning');
-
-            }
-            elseif (strlen($post['titre']) < 3) {
+            } elseif (strlen($post['titre']) < 3) {
                 $updateArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
-            }
-            elseif (strlen($post['titre']) > 45) {
+            } elseif (strlen($post['titre']) > 45) {
                 $updateArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
             }
 
@@ -193,50 +178,33 @@ class BackendController
             } elseif (strlen($post['auteur']) > 45) {
                 $updateArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
             }
-
             if (empty($post['contenu'])) {
                 $updateArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
             }
-
+            $article = new Articles($post);
             if (empty($updateArticleErrorMessage)) {
-                $article = new Articles($post);
-
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleUpdate = $articleDao->updateArticleToDb($article);
-
                 if ($articleUpdate) {
                     $_SESSION['updateArticle'] = setFlash("Super !", "Article mis à jour", 'success');
-
                     $this->showArticle($post['articles_id']);
-
                 }
-            }
-        else
-            {
-                $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
-                $article = $getArticle->getSingleArticle($post['articles_id']);
-
+            } else {
                 include 'vue/backend/edit_article.php';
             }
-
-
         }
-
     }
 
     public function editListArticles()
     {
-
         $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
         $articlesEdited = $articles->getListArticles();
-
         include 'vue/backend/list_articles.php';
-
     }
 
     /**********************
-     * 
-     * display current article's datas to be modified 
+     *
+     * display current article's datas to be modified
      ****************************/
     public function editArticle($idArticle)
     {
@@ -251,11 +219,9 @@ class BackendController
         $articleDeleted = $articles->deleteArticle($idArticle);
         if ($articleDeleted) {
             header('Location:index.php?route=editListArticles');
-
             exit();
         }
     }
-
     //*****************************************************************
     //******************** Manage comments  ************************
     //*****************************************************************
@@ -273,9 +239,7 @@ class BackendController
         $commentDeleted = $comment->deleteComment($idComment);
 
         if ($commentDeleted) {
-
             $this->editListComments();
-
         }
     }
 
@@ -283,9 +247,6 @@ class BackendController
     {
         $comments = new CommentDao(); //////////// voir gestion instance en Singleton
         $commentEdited = $comments->getListComments();
-
-
-
         include 'vue/backend/list_comments.php';
     }
 

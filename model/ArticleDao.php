@@ -5,9 +5,8 @@ namespace Model;
 use Model\PdoConstruct;
 use Model\Articles;
 
-
 /******
- * 
+ *
  * **************************************************************************
  * Cette classe gère la collecte des données pour afficher la liste des articles
  * et chaque article en particulier
@@ -21,8 +20,8 @@ class ArticleDao extends PdoConstruct
     }
 
     /************
-     * 
-     * Add articles to database 
+     *
+     * Add articles to database
      ***************/
     public function setArticleToDb($article)
     {
@@ -49,26 +48,21 @@ class ArticleDao extends PdoConstruct
 
     public function updateArticleToDb($article)
     {
-
-
-            $requete = $this->connection->prepare(
-                '
+        $requete = $this->connection->prepare(
+            '
             UPDATE articles
             SET titre = :titre, chapo = :chapo, auteur = :auteur, contenu = :contenu, date_mise_a_jour = NOW()
             WHERE  articles_id = :id
             '
-            );
-            $requete->bindValue(':id', $article->getArticles_id(), \PDO::PARAM_INT);
-            $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
-            $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
-            $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
-            $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
+        );
+        $requete->bindValue(':id', $article->getArticles_id(), \PDO::PARAM_INT);
+        $requete->bindValue(':titre', $article->getTitre(), \PDO::PARAM_STR);
+        $requete->bindValue(':chapo', $article->getChapo(), \PDO::PARAM_STR);
+        $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
+        $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
 
-
-            $affectedLines = $requete->execute();
-
-            return $affectedLines;
-
+        $affectedLines = $requete->execute();
+        return $affectedLines;
     }
 
     //----- Retourne la liste des articles pour affichage ------------
@@ -82,16 +76,12 @@ class ArticleDao extends PdoConstruct
         );
 
         $listArticles->execute();
-
         $articles = [];
         foreach ($listArticles as $article) {
             $articles[] = new Articles($article);
         }
         $listArticles->closeCursor();
         return $articles;
-
-
-
     }
 
     //----- Retourne un article particulier pour affichage ------------
@@ -123,7 +113,6 @@ class ArticleDao extends PdoConstruct
             WHERE rubrique = "' . $rubrique . '" 
             ORDER BY date_creation DESC'
         );
-
         $listArticles->execute();
         $articles = $listArticles->fetchAll();
         $listArticles->closeCursor();
@@ -143,22 +132,17 @@ class ArticleDao extends PdoConstruct
             );
 
             $commentaire->execute([':id' => $idArticle]);
-        }
-        catch (PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $commentaire . "<br>" . $e->getMessage();
         }
-
         $article = $this->connection->prepare(
             '
             DELETE 
             FROM articles
             WHERE articles_id = :id'
         );
-
         $article->execute([':id' => $idArticle]);
         $article->closeCursor();
         return $article;
-
     }
 }

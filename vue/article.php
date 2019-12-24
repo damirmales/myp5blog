@@ -9,12 +9,9 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1><?= $article->getTitre() ?></h1>
-            <h2 class="subheading"><?= $article->getChapo(); ?></h2>
-            <span class="meta">Posté par 
-              <a href="#"><?= $article->getAuteur(); ?></a>
-              <br>
-            Le <?= $article->getDate_creation(); ?></span>
+
+            <h2 class="subheading"> <span class="subheading">Article : <?= $article->getTitre(); ?></span></h2>
+
           </div>
         </div>
       </div>
@@ -24,13 +21,21 @@
   <!-- Article Content -->
   <article>
     <div class="container">
-        <p>Contenu : </p>
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-        
-            <p><?= $article->getContenu(); ?><!-- $article-> -->
+            <div class="post-heading">
+                <span class="meta"> <strong>Titre :</strong></span>
+                <h1><?= $article->getTitre() ?></h1>
+                <span class="meta"><strong>Châpo :</strong></span>
+                <h2 class="subheading"><?= $article->getChapo(); ?></h2>
+                <span class="meta"> <strong>Posté par : </strong>
+              <a href="#"><?= $article->getAuteur(); ?></a>
+              <br>
+            <strong> Posté le : </strong><?= $article->getDate_creation(); ?></span>
+            </div>
 
-          </p>         
+            <p><strong>Contenu : </strong></p>
+            <p><?= $article->getContenu(); ?></p>
         </div>
       </div>
     </div>

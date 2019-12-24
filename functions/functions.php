@@ -11,9 +11,7 @@ use Model\PdoConstruct;
 function getFormData($session, $key)
 {
     if (!empty($_SESSION[$session][$key])) {
-
         $value = $_SESSION[$session][$key];
-
         unset($_SESSION[$session][$key]);
         return htmlspecialchars($value);
     }
@@ -27,7 +25,6 @@ function saveFormData($index)
     $post =  securizeFormFields($_POST);
     foreach ($post as $key => $value) {
         $_SESSION[$index] [$key] = $value;
-
     }
 }
 
@@ -36,10 +33,8 @@ function saveFormData($index)
  */
 function generateToken()
 {
-
     //Create a "unique" token.
     return $token = bin2hex(openssl_random_pseudo_bytes(16));
-
 }
 
 /**
@@ -56,11 +51,9 @@ function createUrlWithToken($token, $email)
 
     //Build the HTML for the link.
     $urlLink = '<a href="' . $url . '">' . $url . '</a>';
-
     //Send the email containing the $link above.
     return $urlLink;
 }
-
 
 /**
  * @param $titre
@@ -86,17 +79,14 @@ function flashMessage2($mess)
     unset($mess);
 }
 
-function flashMessage($mess)
-{
+function flashMessage($mess){
     foreach ($mess as $msg)
     {
         echo '<div class="container alerte alert-' . $msg['type'] . '">' . $msg['titre'] . '
 <button type="button" class="close" data-dismiss="alert">&times;</button>' . $msg['message'] .
         '</div>';
         unset($mess);
-
     }
-
 }
 
 
