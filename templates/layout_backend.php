@@ -37,13 +37,13 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
-                      <a class="nav-link" href="index.php">Accueil du blog</a>
+                      <a class="nav-link" href="index.php">✍ Accueil du blog</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="index.php?route=admin">Tableau de bord</a>
+                      <a class="nav-link" href="index.php?route=admin">⚙ Tableau de bord</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="index.php?route=deconnexion">Se déconnecter</a>
+                      <a class="nav-link" href="index.php?route=deconnexion">ⓓ Se déconnecter</a>
                   </li>
 
               </ul>
@@ -59,7 +59,7 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
               <h1>Page d'administration du blog</h1>
-              <span class="subheading"><?php echo $titre; ?></span>
+              <span class="subheading"><?= $titre; ?></span>
 
             </div>
           </div>
@@ -68,7 +68,7 @@
     </header>
 
 
-    <?php echo $content; ?>
+    <?= $content; ?>
       
 
   <!-- Footer -->
@@ -78,7 +78,7 @@
 
           <div class="col-lg-8 col-md-10 mx-auto">
 
-              <p class="text-center" ><a  href="index.php?route=deconnexion">Se déconnecter</a></p>
+              <p class="text-center" ><a  href="index.php?route=deconnexion">ⓓ Se déconnecter</a></p>
               <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
           </div>
       </div>

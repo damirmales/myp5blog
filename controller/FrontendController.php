@@ -12,7 +12,7 @@ use Services\Emails;
 use Services\ImportPage;
 
 //require_once 'services/Emails.php';
-require_once 'services/ValidateForms.php';
+//require_once 'services/ValidateForms.php';
 require_once 'functions/functions.php';
 require_once 'functions/securizeFormFields.php';
 require_once 'functions/checkFormFields.php';

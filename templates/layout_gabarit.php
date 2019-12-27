@@ -1,15 +1,14 @@
 <?php
 if (!isset($_SESSION["user"]['role']))
     {
-        $_SESSION["user"]['role']=null;
+        $session_role = $_SESSION["user"]['role']=null;
     }
 else
 {
-    $_SESSION["user"]['role'];
+    $session_role = $_SESSION["user"]['role'];
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -75,20 +74,20 @@ else
                 </li>
                 <?php
                 // if (isset($_SESSION['user'])) {
-                if (($_SESSION["user"]['role'] == 'admin')) {
+                if (($session_role == 'admin')) {
                     ?>
                         <li class="nav-item">
                             <a class="" href="index.php?route=admin"> ⚒ Admin</a>
-                            <a class="" href="index.php?route=deconnexion">/ Déconnexion /</a>
+                            <a class="" href="index.php?route=deconnexion">ⓓ Déconnexion </a>
                         </li>
                     <?php
 
                 }
-                elseif (($_SESSION["user"]['role'] == 'member')) {
+                elseif (($session_role == 'member')) {
                     ?>
                         <li class="nav-item">
-                            <a class="" >/ ☑ Membre /</a>
-                            <a class="" href="index.php?route=deconnexion">/ Se déconnecter /</a>
+                            <a class="" > ☑ Membre </a>
+                            <a class="" href="index.php?route=deconnexion">ⓓ Se déconnecter </a>
                         </li>
                     <?php
                 }
@@ -96,8 +95,8 @@ else
                 {
                     ?>
                         <li class="nav-item">
-                            <a class="" href="index.php?route=register">/ s'enregistrer /</a>
-                            <a class="" href="index.php?route=connexion">/ se connecter /</a>
+                            <a class="" href="index.php?route=register">ⓔ S'enregistrer </a>
+                            <a class="" href="index.php?route=connexion">ⓒ Se connecter </a>
                         </li>
                     <?php
                 }
@@ -109,7 +108,7 @@ else
     </div>
 </nav>
 
-<?php echo $content; ?>
+<?= $content; ?>
 
 <!-- Footer -->
 <footer>
@@ -139,13 +138,11 @@ else
                 </div>
 
                 <?php
-                if (isset($_SESSION["user"]['role'])) {
+                if (isset($session_role)) {
 
-                    if ($_SESSION["user"]['role'] != 'admin')  {
-
-
+                    if ($session_role != 'admin')  {
                         ?>
-                        <p class="admin text-center"><a href="index.php?route=connexionAdmin"> Administration</a>
+                        <p class="admin text-center"><a href="index.php?route=connexionAdmin">⚒ Administration</a>
                         <?php
                     }
                 }

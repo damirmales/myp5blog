@@ -73,6 +73,7 @@ function setFlash($titre, $message, $type)
 
 function flashMessage2($mess)
 {
+
     echo '<div class="container alerte alert-' . $mess['type'] . '">' . $mess['titre'] . '
 <button type="button" class="close" data-dismiss="alert">&times;</button>' . $mess['message'] .
         '</div>';

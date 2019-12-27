@@ -1,8 +1,8 @@
 node_modules
 .idea/
-/vendor/
-
-/recycle/
+/vendor
+/public
+/recycle
 myp5blog.clpprj
 myp5blog.sublime-project
 myp5blog.sublime-workspace

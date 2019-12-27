@@ -6,7 +6,7 @@ $titre = "Tableau de bord";
 <div class="container">
 <div class="row">
 <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Articles </p>
+        <p><strong> Articles </strong></p>
         <p><ul>
           <li><a href="index.php?route=createArticle" >Créer un article</a></li>
         <li><a href="index.php?route=editListArticles" >Afficher les articles</a></li>
@@ -18,7 +18,7 @@ $titre = "Tableau de bord";
 
 <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
-      <p>Commentaires</p>
+      <p><strong>Commentaires</strong></p>
         <ul>
          <li><a href="index.php?route=listComments" >Liste des commentaires</a></li>
 
