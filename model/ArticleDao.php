@@ -13,12 +13,6 @@ use Model\Articles;
  *************************************************************************************/
 class ArticleDao extends PdoConstruct
 {
-    private function buildArticle($field) // create an object Articles to allow acces to its properties    {
-    {
-        $article = new Articles($field);
-        return $article;
-    }
-
     /************
      *
      * Add articles to database
@@ -65,7 +59,6 @@ class ArticleDao extends PdoConstruct
         return $affectedLines;
     }
 
-    //----- Retourne la liste des articles pour affichage ------------
     public function getListArticles()
     {
         $listArticles = $this->connection->prepare(
@@ -74,7 +67,6 @@ class ArticleDao extends PdoConstruct
             FROM articles
             ORDER BY articles_id DESC'
         );
-
         $listArticles->execute();
         $articles = [];
         foreach ($listArticles as $article) {
@@ -84,7 +76,8 @@ class ArticleDao extends PdoConstruct
         return $articles;
     }
 
-    //----- Retourne un article particulier pour affichage ------------
+    //----- Retourne la liste des articles pour affichage ------------
+
     public function getSingleArticle($idArticle)
     {
         $requete = $this->connection->prepare(
@@ -101,8 +94,8 @@ class ArticleDao extends PdoConstruct
         return $oneArticle;
     }
 
-    /*-------- Retourne la liste des articles selon la rubrique -------
-     ------------------ pour affichage -----------------------------------*/
+    //----- Retourne un article particulier pour affichage ------------
+
     public function getArticlesByCategory($rubrique)
     {
         //$connection = $this->getConnectDB();
@@ -119,7 +112,8 @@ class ArticleDao extends PdoConstruct
         return $articles;
     }
 
-    //---------- efface l'article en fonction du numéro d'id fournit ----------
+    /*-------- Retourne la liste des articles selon la rubrique -------
+     ------------------ pour affichage -----------------------------------*/
 
     public function deleteArticle($idArticle)
     {
@@ -143,6 +137,13 @@ class ArticleDao extends PdoConstruct
         );
         $article->execute([':id' => $idArticle]);
         $article->closeCursor();
+        return $article;
+    }
+    //---------- efface l'article en fonction du numéro d'id fournit ----------
+
+    private function buildArticle($field) // create an object Articles to allow acces to its properties    {
+    {
+        $article = new Articles($field);
         return $article;
     }
 }

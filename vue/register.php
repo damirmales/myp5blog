@@ -77,13 +77,11 @@ if (!empty($_SESSION["registerForm"]["OK"])) {
                         <input type="password" class="form-control" id="inputPassword2"
                                placeholder="répeter Mot de passe" name="password2">
                     </div>
-
                     <button type="submit" class="btn btn-primary">Soumettre</button>
                 </form>
             </div>
         </div>
     </div>
     <hr>
-
 <?php $content = ob_get_clean(); ?>
 <?php require 'templates/layout_gabarit.php'; ?>

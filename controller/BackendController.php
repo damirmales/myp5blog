@@ -1,11 +1,9 @@
 <?php
 
 namespace Controller;
-
 use Model\ArticleDao;
 use Model\Articles;
 use Model\CommentDao;
-use Model\Comments;
 
 require_once 'functions/functions.php';
 require_once 'functions/securizeFormFields.php';
@@ -17,7 +15,6 @@ class BackendController
     public function admin()
     {
         //!!!!!!!!!!!!!!! verifier l existence de la session !!!!!!!!!!!!!!
-
         if ($_SESSION["user"]['role'] != 'admin') {
 
             header('Location: index.php'); // if user is not admin
@@ -40,7 +37,6 @@ class BackendController
         $post = securizeFormFields($_POST);
 
         if (isset($post['btn_creer_article'])) {
-
             if (empty($post['titre'])) {
                 $addArticleErrorMessage['titre'] = setFlash("Attention !", "Manque le titre", 'warning');
             } elseif (strlen($post['titre']) < 3) {
@@ -69,11 +65,8 @@ class BackendController
                 $addArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
             }
 
-
             if (empty($addArticleErrorMessage)) {
-
                 $article = new Articles($post);
-
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleAdded = $articleDao->setArticleToDb($article);
 
@@ -96,7 +89,6 @@ class BackendController
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
-
         include 'vue/backend/show_article.php';
     }
 
@@ -107,7 +99,6 @@ class BackendController
         if (isset($post['btn_update_article'])) {
 
             if (empty($post['titre'])) {
-
                 $updateArticleErrorMessage['titre'] = setFlash("Attention !", "Manque le titre", 'warning');
 
             } elseif (strlen($post['titre']) < 3) {

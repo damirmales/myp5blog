@@ -15,6 +15,38 @@ class Collection implements IteratorAggregate, \ArrayAccess
 
     }
 
+    public function arrayAssoc($key, $value)
+    {
+        foreach ($key as $value)
+        {
+            return $value;
+        }
+    }
+
+    /***********************
+     * Méthodes de la classe ArrayAccess *****************
+        /**
+     *
+     * @inheritDoc
+     */
+    public function offsetExists($offset)
+    {
+        return $this->hasKey($offset);
+    }
+
+    public function hasKey($key)
+    {
+        return array_key_exists($key, $this->items);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetGet($offset)
+    {
+        return $this->getKey($offset);
+    }
+
     public function getKey($key)
     {
 
@@ -27,48 +59,17 @@ class Collection implements IteratorAggregate, \ArrayAccess
         }
     }
 
-    public  function setKey($key, $value)
-    {
-        $this->items[$key] = $value;
-    }
-
-    public function hasKey($key)
-    {
-        return array_key_exists($key, $this->items);
-    }
-
-    public function arrayAssoc($key, $value)
-    {
-        foreach ($key as $value)
-        {
-            return $value;
-        }
-    }
-    /***********************
-     * Méthodes de la classe ArrayAccess *****************
-        /**
-     *
-     * @inheritDoc
-     */
-    public function offsetExists($offset)
-    {
-        return $this->hasKey($offset);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetGet($offset)
-    {
-        return $this->getKey($offset);
-    }
-
     /**
      * @inheritDoc
      */
     public function offsetSet($offset, $value)
     {
         return $this->setKey($offset);
+    }
+
+    public  function setKey($key, $value)
+    {
+        $this->items[$key] = $value;
     }
 
     /**
@@ -80,7 +81,6 @@ class Collection implements IteratorAggregate, \ArrayAccess
             unset($this->items[$offset]);
         }
     }
-
     /***********************
      * 
      * Méthode de la classe IteratorAggregate *****************

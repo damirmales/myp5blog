@@ -1,4 +1,3 @@
-
 <?php ob_start();
 $titre = "Tableau de bord";
 ?>
@@ -27,7 +26,5 @@ $titre = "Tableau de bord";
 </div>
 </div>
   <hr>
-
 <?php $content = ob_get_clean();?>
-
 <?php require'templates/layout_backend.php'; ?>

@@ -15,19 +15,19 @@ class Session
         $this->session[$name][$key] = $value;
     }
 
-    public function get($name,$key)
-    {
-        if(isset($this->session[$name][$key])) {
-            return $this->session[$name][$key];
-        }
-    }
-
     public function show($name)
     {
         if(isset($this->session[$name])) {
             $key = $this->get($name);
             $this->remove($name);
             return $key;
+        }
+    }
+
+    public function get($name,$key)
+    {
+        if(isset($this->session[$name][$key])) {
+            return $this->session[$name][$key];
         }
     }
 
@@ -40,5 +40,4 @@ class Session
     {
         session_destroy();
     }
-
 }

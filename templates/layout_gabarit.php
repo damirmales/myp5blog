@@ -12,14 +12,11 @@ else
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="auteur" content="">
-
     <title>Damir Blog </title>
-
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -34,11 +31,8 @@ else
     <link href="public/css/clean-blog.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="public/css/clean-blog.min.css" rel="stylesheet">
-    <!-- add style.css pour le tableau des comments -->
 </head>
-
 <body>
-
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -81,7 +75,6 @@ else
                             <a class="" href="index.php?route=deconnexion">ⓓ Déconnexion </a>
                         </li>
                     <?php
-
                 }
                 elseif (($session_role == 'member')) {
                     ?>
@@ -101,7 +94,6 @@ else
                     <?php
                 }
                 // }
-
                 ?>
             </ul>
         </div>
@@ -120,10 +112,9 @@ else
                     <div class="container">
                         <div class="d-flex justify-content-center">
                             <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-github"
-                               href="https://github.com/blackrockdigital">
+                               href="https://github.com/">
                                 <i class="fab fa-github"></i>
                             </a>
-
 
                             <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-twitter"
                                href="https://twitter.com/sbootstrap">

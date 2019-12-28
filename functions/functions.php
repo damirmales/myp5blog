@@ -1,7 +1,5 @@
 <?php
 
-use Model\PdoConstruct;
-
 //*** Get an input value entered by user ***
 /**
  * @param $session
@@ -13,7 +11,7 @@ function getFormData($session, $key)
     if (!empty($_SESSION[$session][$key])) {
         $value = $_SESSION[$session][$key];
         unset($_SESSION[$session][$key]);
-        return htmlspecialchars($value);
+        return $value;
     }
     return null;
 }
@@ -22,7 +20,7 @@ function getFormData($session, $key)
 //================ mettre dans services ou functions =================
 function saveFormData($index)
 {
-    $post =  securizeFormFields($_POST);
+    $post = securizeFormFields($_POST);
     foreach ($post as $key => $value) {
         $_SESSION[$index] [$key] = $value;
     }
@@ -80,12 +78,12 @@ function flashMessage2($mess)
     unset($mess);
 }
 
-function flashMessage($mess){
-    foreach ($mess as $msg)
-    {
+function flashMessage($mess)
+{
+    foreach ($mess as $msg) {
         echo '<div class="container alerte alert-' . $msg['type'] . '">' . $msg['titre'] . '
 <button type="button" class="close" data-dismiss="alert">&times;</button>' . $msg['message'] .
-        '</div>';
+            '</div>';
         unset($mess);
     }
 }

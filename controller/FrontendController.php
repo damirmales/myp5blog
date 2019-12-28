@@ -3,7 +3,6 @@
 namespace Controller;
 
 use Model\CommentDao;
-use Model\Articles;
 use Model\ArticleDao;
 use Model\Comments;
 use Model\Users;
@@ -11,15 +10,12 @@ use Model\UserDao;
 use Services\Emails;
 use Services\ImportPage;
 
-//require_once 'services/Emails.php';
-//require_once 'services/ValidateForms.php';
 require_once 'functions/functions.php';
 require_once 'functions/securizeFormFields.php';
 require_once 'functions/checkFormFields.php';
 
 class FrontendController
 {
-
     /*******************
      * home management
      **********************/
@@ -343,7 +339,6 @@ class FrontendController
                 } elseif (strlen($post['nom']) > 45) {
                     $registerFormMessage['nom'] = setFlash("Attention !", 'Votre nom doit faire moins de 45 caractères', 'warning');
                 }
-
                 if (empty($post['prenom'])) {
 
                     $registerFormMessage['prenom'] = setFlash("Attention !", "Manque le prénom", "warning"); // Store error message to be abvailable into register.php
@@ -359,7 +354,6 @@ class FrontendController
 
                 } elseif (!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
                     $registerFormMessage['email'] = setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", "warning");
-
                 }
 
                 if (empty($post['login'])) {
@@ -382,7 +376,6 @@ class FrontendController
                 //--------------------------------------------------------------
                 //---- if no errors in form fields add user's data in DB and ---
                 //---- launch email checking with a token ----------------------
-
                 if (empty($registerFormMessage)) {
                     $userDao = new UserDao();
                     $userLogin = $userDao->checkUserLogin($post['login']);
@@ -406,11 +399,9 @@ class FrontendController
                         $userDao->addUserToDb($user);
                         $userEmail = $user->getEmail(); //"damir@romandie.com";
                         $createUrlToken = createUrlWithToken($token, $userEmail);
-
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
                         $_SESSION["registerForm"]["OK"] = setFlash("Génial !", "Email envoyé", "success");
-
                         header('Location: index.php');
                         exit();
                     }
@@ -419,7 +410,6 @@ class FrontendController
         }
         include 'vue/register.php';
     }
-
     //*********** check the token from the link validate in the user's email **************
     public function verifyToken()
     {

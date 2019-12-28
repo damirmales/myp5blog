@@ -2,20 +2,31 @@
 <project version="4">
   <component name="AnalysisUIOptions">
     <option name="SCOPE_TYPE" value="8" />
-    <option name="CUSTOM_SCOPE_NAME" value="Open Files" />
+    <option name="CUSTOM_SCOPE_NAME" value="Current File" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/ArticleDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/ArticleDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myp5blog.clpprj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myp5blog.sublime-project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myp5blog.sublime-workspace" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myp5blog_clcs.csprj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Collection.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Collection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Session.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/layout_backend.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_backend.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/layout_gabarit.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_gabarit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.php" beforeDir="false" afterPath="$PROJECT_DIR$/test.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/article.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/backend/admin_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/admin_page.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/show_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/show_article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/list_comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +52,13 @@
     </option>
     <expand />
     <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -91,9 +109,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -179,7 +198,8 @@
       <workItem from="1577091631466" duration="18083000" />
       <workItem from="1577175430532" duration="2736000" />
       <workItem from="1577349599284" duration="6050000" />
-      <workItem from="1577433438899" duration="2498000" />
+      <workItem from="1577433438899" duration="7005000" />
+      <workItem from="1577522625666" duration="11267000" />
     </task>
     <servers />
   </component>
@@ -212,10 +232,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1575364789435" />
-    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1575478068712">
+    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1577557085932">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1575478068712" />
+    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1577557085932" />
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1577109083582">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -232,18 +252,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="487" y="74" key="RollbackChangesDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106099533" />
-    <state x="291" y="12" key="SettingsEditor" timestamp="1575496558583">
+    <state x="291" y="12" key="SettingsEditor" timestamp="1577477583320">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575496558583" />
+    <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1577477583320" />
     <state x="569" y="280" key="VCS.EditChangelistDialog" timestamp="1577106083540">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="569" y="280" key="VCS.EditChangelistDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106083540" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1577433443123">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1577523160780">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1577433443123" />
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1577523160780" />
     <state x="481" y="27" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1576585132138">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

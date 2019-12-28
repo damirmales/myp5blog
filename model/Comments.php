@@ -16,6 +16,23 @@ class Comments
     protected $validation;
     protected $date_validation;
 
+    public function __construct(array $datas)
+    {
+        $this->hydrate($datas);
+    }
+
+    public function hydrate(array $datas)
+    {
+        foreach ($datas as $key => $value) {
+            $method = 'set' . ucfirst($key);
+
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+
+            }
+        }
+    }
+
     /**
      * @return mixed
      */
@@ -110,25 +127,6 @@ class Comments
     public function setDate_validation($date_validation): void
     {
         $this->date_validation = $date_validation;
-    }
-
-
-    public function __construct(array $datas)
-    {
-        $this->hydrate($datas);
-    }
-
-    public function hydrate(array $datas)
-    {
-
-        foreach ($datas as $key => $value) {
-            $method = 'set' . ucfirst($key);
-
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-
-            }
-        }
     }
 
 
