@@ -68,9 +68,8 @@ EOF
                 continue;
             }
 
-            if (
-                !$tokens[$index + 1]->isGivenKind(T_ENCAPSED_AND_WHITESPACE) ||
-                !$tokens[$index + 2]->isGivenKind(T_END_HEREDOC)
+            if (!$tokens[$index + 1]->isGivenKind(T_ENCAPSED_AND_WHITESPACE) 
+                || !$tokens[$index + 2]->isGivenKind(T_END_HEREDOC)
             ) {
                 continue;
             }
@@ -83,10 +82,12 @@ EOF
 
             $tokens[$index] = $this->convertToNowdoc($token);
             $content = str_replace(['\\\\', '\\$'], ['\\', '$'], $content);
-            $tokens[$index + 1] = new Token([
+            $tokens[$index + 1] = new Token(
+                [
                 $tokens[$index + 1]->getId(),
                 $content,
-            ]);
+                ]
+            );
         }
     }
 
@@ -99,9 +100,11 @@ EOF
      */
     private function convertToNowdoc(Token $token)
     {
-        return new Token([
+        return new Token(
+            [
             $token->getId(),
             Preg::replace('/^([Bb]?<<<)([ \t]*)"?([^\s"]+)"?/', '$1$2\'$3\'', $token->getContent()),
-        ]);
+            ]
+        );
     }
 }

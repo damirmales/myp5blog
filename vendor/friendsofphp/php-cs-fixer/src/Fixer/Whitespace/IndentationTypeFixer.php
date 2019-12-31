@@ -101,9 +101,11 @@ final class IndentationTypeFixer extends AbstractFixer implements WhitespacesAwa
         $indent = $this->indent;
 
         // change indent to expected one
-        $content = Preg::replaceCallback('/^(?:    )+/m', static function ($matches) use ($indent) {
-            return str_replace('    ', $indent, $matches[0]);
-        }, $content);
+        $content = Preg::replaceCallback(
+            '/^(?:    )+/m', static function ($matches) use ($indent) {
+                return str_replace('    ', $indent, $matches[0]);
+            }, $content
+        );
 
         return new Token([$tokens[$index]->getId(), $content]);
     }

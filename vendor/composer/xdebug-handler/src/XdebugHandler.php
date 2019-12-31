@@ -24,7 +24,9 @@ class XdebugHandler
     const RESTART_SETTINGS = 'XDEBUG_HANDLER_SETTINGS';
     const DEBUG = 'XDEBUG_HANDLER_DEBUG';
 
-    /** @var string|null */
+    /**
+     * @var string|null 
+     */
     protected $tmpIni;
 
     private static $inRestart;
@@ -39,7 +41,9 @@ class XdebugHandler
     private $loaded;
     private $persistent;
     private $script;
-    /** @var Status|null */
+    /**
+     * @var Status|null 
+     */
     private $statusWriter;
 
     /**
@@ -49,8 +53,8 @@ class XdebugHandler
      * uppercased and prepended to the default base values. For example 'myapp'
      * would result in MYAPP_ALLOW_XDEBUG and MYAPP_ORIGINAL_INIS.
      *
-     * @param string $envPrefix Value used in environment variables
-     * @param string $colorOption Command-line long option to force color output
+     * @param  string $envPrefix   Value used in environment variables
+     * @param  string $colorOption Command-line long option to force color output
      * @throws \RuntimeException If a parameter is invalid
      */
     public function __construct($envPrefix, $colorOption = '')
@@ -203,7 +207,8 @@ class XdebugHandler
         $envArgs = explode('|', (string) getenv(self::RESTART_SETTINGS));
 
         if (count($envArgs) !== 6
-            || (!self::$inRestart && php_ini_loaded_file() !== $envArgs[0])) {
+            || (!self::$inRestart && php_ini_loaded_file() !== $envArgs[0])
+        ) {
             return;
         }
 
@@ -311,9 +316,9 @@ class XdebugHandler
     /**
      * Returns true if the tmp ini file was written
      *
-     * @param array $iniFiles All ini files used in the current process
-     * @param string $tmpDir The system temporary directory
-     * @param string $error Set by method if ini file cannot be read
+     * @param array  $iniFiles All ini files used in the current process
+     * @param string $tmpDir   The system temporary directory
+     * @param string $error    Set by method if ini file cannot be read
      *
      * @return bool
      */
@@ -386,8 +391,8 @@ class XdebugHandler
      *
      * No need to update $_SERVER since this is set in the restarted process.
      *
-     * @param bool $scannedInis Whether there were scanned ini files
-     * @param array $iniFiles All ini files used in the current process
+     * @param bool  $scannedInis Whether there were scanned ini files
+     * @param array $iniFiles    All ini files used in the current process
      *
      * @return bool
      */
@@ -423,7 +428,7 @@ class XdebugHandler
     /**
      * Logs status messages
      *
-     * @param string $op Status handler constant
+     * @param string      $op   Status handler constant
      * @param null|string $data Optional data
      */
     private function notify($op, $data = null)
@@ -435,7 +440,7 @@ class XdebugHandler
      * Returns default, changed and command-line ini settings
      *
      * @param array $loadedConfig All current ini settings
-     * @param array $iniConfig Settings from user ini files
+     * @param array $iniConfig    Settings from user ini files
      *
      * @return string
      */
@@ -447,7 +452,8 @@ class XdebugHandler
             // Value will either be null, string or array (HHVM only)
             if (!is_string($value)
                 || strpos($name, 'xdebug') === 0
-                || $name === 'apc.mmap_file_mask') {
+                || $name === 'apc.mmap_file_mask'
+            ) {
                 continue;
             }
 

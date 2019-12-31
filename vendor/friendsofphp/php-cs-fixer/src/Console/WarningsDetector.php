@@ -66,9 +66,11 @@ final class WarningsDetector
             return [];
         }
 
-        return array_unique(array_merge(
-            $this->warnings,
-            ['If you need help while solving warnings, ask at https://gitter.im/PHP-CS-Fixer, we will help you!']
-        ));
+        return array_unique(
+            array_merge(
+                $this->warnings,
+                ['If you need help while solving warnings, ask at https://gitter.im/PHP-CS-Fixer, we will help you!']
+            )
+        );
     }
 }

@@ -44,7 +44,8 @@ final class PhpUnitMockShortWillReturnFixer extends AbstractFixer
         return new FixerDefinition(
             'Usage of PHPUnit\'s mock e.g. `->will($this->returnValue(..))` must be replaced by its shorter equivalent such as `->willReturn(...)`.',
             [
-                new CodeSample('<?php
+                new CodeSample(
+                    '<?php
 final class MyTest extends \PHPUnit_Framework_TestCase
 {
     public function testSomeTest()
@@ -57,7 +58,8 @@ final class MyTest extends \PHPUnit_Framework_TestCase
         $someMock->method("some")->will($this->returnValueMap(["a","b","c"]));
     }
 }
-'),
+'
+                ),
             ],
             null,
             'Risky when PHPUnit classes are overridden or not accessible, or when project has PHPUnit incompatibilities.'
@@ -115,8 +117,7 @@ final class MyTest extends \PHPUnit_Framework_TestCase
 
             $classReferenceIndex = $tokens->getNextMeaningfulToken($functionToReplaceOpeningBraceIndex);
             $objectOperatorIndex = $tokens->getNextMeaningfulToken($classReferenceIndex);
-            if (
-                !($tokens[$classReferenceIndex]->equals([T_VARIABLE, '$this'], false) && $tokens[$objectOperatorIndex]->equals([T_OBJECT_OPERATOR, '->']))
+            if (!($tokens[$classReferenceIndex]->equals([T_VARIABLE, '$this'], false) && $tokens[$objectOperatorIndex]->equals([T_OBJECT_OPERATOR, '->']))
                 && !($tokens[$classReferenceIndex]->equals([T_STRING, 'self'], false) && $tokens[$objectOperatorIndex]->equals([T_DOUBLE_COLON, '::']))
                 && !($tokens[$classReferenceIndex]->equals([T_STATIC, 'static'], false) && $tokens[$objectOperatorIndex]->equals([T_DOUBLE_COLON, '::']))
             ) {

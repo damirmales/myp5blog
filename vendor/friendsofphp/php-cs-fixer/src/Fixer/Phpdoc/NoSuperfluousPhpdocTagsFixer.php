@@ -38,7 +38,8 @@ final class NoSuperfluousPhpdocTagsFixer extends AbstractFixer implements Config
         return new FixerDefinition(
             'Removes `@param` and `@return` tags that don\'t provide any useful information.',
             [
-                new CodeSample('<?php
+                new CodeSample(
+                    '<?php
 class Foo {
     /**
      * @param Bar $bar
@@ -46,8 +47,10 @@ class Foo {
      */
     public function doFoo(Bar $bar, $baz) {}
 }
-'),
-                new CodeSample('<?php
+'
+                ),
+                new CodeSample(
+                    '<?php
 class Foo {
     /**
      * @param Bar $bar
@@ -55,8 +58,10 @@ class Foo {
      */
     public function doFoo(Bar $bar, $baz) {}
 }
-', ['allow_mixed' => true]),
-                new VersionSpecificCodeSample('<?php
+', ['allow_mixed' => true]
+                ),
+                new VersionSpecificCodeSample(
+                    '<?php
 class Foo {
     /**
      * @param Bar $bar
@@ -66,7 +71,8 @@ class Foo {
      */
     public function doFoo(Bar $bar, $baz): Baz {}
 }
-', new VersionSpecification(70000)),
+', new VersionSpecification(70000)
+                ),
             ]
         );
     }
@@ -128,8 +134,7 @@ class Foo {
 
                 $argumentName = $matches[1];
 
-                if (
-                    !isset($argumentsInfo[$argumentName])
+                if (!isset($argumentsInfo[$argumentName])
                     || $this->annotationIsSuperfluous($annotation, $argumentsInfo[$argumentName], $shortNames)
                 ) {
                     $annotation->remove();
@@ -153,12 +158,14 @@ class Foo {
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('allow_mixed', 'Whether type `mixed` without description is allowed (`true`) or considered superfluous (`false`)'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     private function findDocumentedFunction(Tokens $tokens, $index)
@@ -206,8 +213,7 @@ class Foo {
 
             if (!$info['allows_null']) {
                 $nextIndex = $tokens->getNextMeaningfulToken($index);
-                if (
-                    $tokens[$nextIndex]->equals('=')
+                if ($tokens[$nextIndex]->equals('=')
                     && $tokens[$tokens->getNextMeaningfulToken($nextIndex)]->equals([T_STRING, 'null'])
                 ) {
                     $info['allows_null'] = true;

@@ -148,8 +148,7 @@ SAMPLE
             }
 
             $meaningfulTokenBeforeParenthesis = $tokens[$tokens->getPrevMeaningfulToken($index)];
-            if (
-                $meaningfulTokenBeforeParenthesis->isKeyword()
+            if ($meaningfulTokenBeforeParenthesis->isKeyword()
                 && !$meaningfulTokenBeforeParenthesis->isGivenKind([T_LIST, T_FUNCTION])
             ) {
                 continue;
@@ -157,8 +156,7 @@ SAMPLE
 
             $isMultiline = $this->fixFunction($tokens, $index);
 
-            if (
-                $isMultiline
+            if ($isMultiline
                 && 'ensure_fully_multiline' === $this->configuration['on_multiline']
                 && !$meaningfulTokenBeforeParenthesis->isGivenKind(T_LIST)
             ) {
@@ -172,7 +170,8 @@ SAMPLE
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('keep_multiple_spaces_after_comma', 'Whether keep multiple spaces after comma.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
@@ -195,15 +194,18 @@ SAMPLE
             (new FixerOptionBuilder('after_heredoc', 'Whether the whitespace between heredoc end and comma should be removed.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
-                ->setNormalizer(static function (Options $options, $value) {
-                    if (\PHP_VERSION_ID < 70300 && $value) {
-                        throw new InvalidOptionsForEnvException('"after_heredoc" option can only be enabled with PHP 7.3+.');
-                    }
+                ->setNormalizer(
+                    static function (Options $options, $value) {
+                        if (\PHP_VERSION_ID < 70300 && $value) {
+                            throw new InvalidOptionsForEnvException('"after_heredoc" option can only be enabled with PHP 7.3+.');
+                        }
 
-                    return $value;
-                })
+                        return $value;
+                    }
+                )
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -350,8 +352,7 @@ SAMPLE
             $lastLineIndex = strrpos($existingIndentation, "\n");
             $existingIndentation = false === $lastLineIndex
                 ? $existingIndentation
-                : substr($existingIndentation, $lastLineIndex + 1)
-            ;
+                : substr($existingIndentation, $lastLineIndex + 1);
         }
 
         $indentation = $existingIndentation.$this->whitespacesConfig->getIndent();
@@ -441,9 +442,8 @@ SAMPLE
         if ($tokens[$index - 1]->isWhitespace()) {
             $prevIndex = $tokens->getPrevNonWhitespace($index - 1);
 
-            if (
-                !$tokens[$prevIndex]->equals(',') && !$tokens[$prevIndex]->isComment() &&
-                ($this->configuration['after_heredoc'] || !$tokens[$prevIndex]->isGivenKind(T_END_HEREDOC))
+            if (!$tokens[$prevIndex]->equals(',') && !$tokens[$prevIndex]->isComment() 
+                && ($this->configuration['after_heredoc'] || !$tokens[$prevIndex]->isGivenKind(T_END_HEREDOC))
             ) {
                 $tokens->clearAt($index - 1);
             }
@@ -462,8 +462,7 @@ SAMPLE
                 $newContent = Preg::replace('/\R/', '', $newContent);
             }
 
-            if (
-                (!$this->configuration['keep_multiple_spaces_after_comma'] || Preg::match('/\R/', $newContent))
+            if ((!$this->configuration['keep_multiple_spaces_after_comma'] || Preg::match('/\R/', $newContent))
                 && !$this->isCommentLastLineToken($tokens, $index + 2)
             ) {
                 $newContent = ltrim($newContent, " \t");

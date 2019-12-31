@@ -95,12 +95,14 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('case', 'Apply camel or snake case to test methods'))
                 ->setAllowedValues([self::CAMEL_CASE, self::SNAKE_CASE])
                 ->setDefault(self::CAMEL_CASE)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -251,14 +253,16 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
                 continue;
             }
 
-            $newLineContent = Preg::replaceCallback('/(@depends\s+)(.+)(\b)/', function (array $matches) {
-                return sprintf(
-                    '%s%s%s',
-                    $matches[1],
-                    $this->updateMethodCasing($matches[2]),
-                    $matches[3]
-                );
-            }, $lineContent);
+            $newLineContent = Preg::replaceCallback(
+                '/(@depends\s+)(.+)(\b)/', function (array $matches) {
+                    return sprintf(
+                        '%s%s%s',
+                        $matches[1],
+                        $this->updateMethodCasing($matches[2]),
+                        $matches[3]
+                    );
+                }, $lineContent
+            );
 
             if ($newLineContent !== $lineContent) {
                 $lines[$inc] = new Line($newLineContent);

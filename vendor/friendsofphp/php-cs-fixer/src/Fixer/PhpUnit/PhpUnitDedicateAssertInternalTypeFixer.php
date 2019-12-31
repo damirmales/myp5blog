@@ -117,13 +117,15 @@ final class MyTest extends \PHPUnit\Framework\TestCase
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('target', 'Target version of PHPUnit.'))
                 ->setAllowedTypes(['string'])
                 ->setAllowedValues([PhpUnitTargetVersion::VERSION_7_5, PhpUnitTargetVersion::VERSION_NEWEST])
                 ->setDefault(PhpUnitTargetVersion::VERSION_NEWEST)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -191,10 +193,12 @@ final class MyTest extends \PHPUnit\Framework\TestCase
 
             $nextMeaningfulTokenIndex = $tokens->getNextMeaningfulToken($commaTokenIndex);
 
-            $tokens->overrideRange($index, $nextMeaningfulTokenIndex - 1, [
+            $tokens->overrideRange(
+                $index, $nextMeaningfulTokenIndex - 1, [
                 new Token([T_STRING, $newAssertion]),
                 new Token('('),
-            ]);
+                ]
+            );
         }
     }
 }

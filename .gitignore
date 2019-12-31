@@ -1,4 +1,6 @@
 node_modules
 .idea/
-/vendor/
-
+/vendor
+/public
+/recycle
+gulpfile.js

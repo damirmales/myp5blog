@@ -1,7 +1,5 @@
 <?php ob_start(); ?>
 
-
-
    <!-- Blog Author -->
   <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
     <div class="overlay"></div>
@@ -10,7 +8,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
             <h1>Blog de Damir M</h1>
-            <span class="subheading">Liste des articles</span>
+              <span class="subheading">Liste des articles</span>
           </div>
         </div>
       </div>
@@ -26,17 +24,7 @@ if (!empty($_SESSION["userMember"]))
 {
     flashMessage2($_SESSION["userMember"]);
 }
-
-/*if (!empty($_SESSION["user"]['bienvenu'])) {
-    echo '<br/><div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong>Bravo! </strong>'
-        . $_SESSION["user"]['nom'] . ' vous êtes membre du blog et vous pouvez commenter</div>';
-
-    unset($_SESSION["user"]['bienvenu']);
-} */
-
-
+unset($_SESSION["userMember"]);
 ?>
 
 <?php foreach ($articles as $article) : ?>
@@ -44,21 +32,16 @@ if (!empty($_SESSION["userMember"]))
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">
-
-
             <h2 class="post-title">
            <a href="index.php?route=article&id=<?= $article->getArticles_id() ?>">   <?php echo htmlspecialchars($article->getTitre()); ?>       </a>
             </h2>
-
             <h3 class="post-subtitle">
              <?php echo  htmlspecialchars($article->getChapo()); ?>
             </h3>
-   
   
       <p class="post-meta">Modifié le : 
             <?php echo  htmlspecialchars($article->getDate_mise_a_jour()); ?>
       </p>
-   
 
         </div>
      
@@ -68,10 +51,6 @@ if (!empty($_SESSION["userMember"]))
   </div>
   </div>
   </div>
-
 <?php endforeach ?>
-
   <?php $content = ob_get_clean();?>
-
-
 <?php require'templates/layout_gabarit.php'; ?>

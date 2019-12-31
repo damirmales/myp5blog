@@ -77,8 +77,7 @@ class Foo {
 
                     if ($tokens[$index]->equals([T_STRING, 'null'], false)) {
                         for ($i = $varTokenIndex + 1; $i <= $index; ++$i) {
-                            if (
-                                !($tokens[$i]->isWhitespace() && false !== strpos($tokens[$i]->getContent(), "\n"))
+                            if (!($tokens[$i]->isWhitespace() && false !== strpos($tokens[$i]->getContent(), "\n"))
                                 && !$tokens[$i]->isComment()
                             ) {
                                 $tokens->clearAt($i);

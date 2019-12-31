@@ -55,9 +55,8 @@ final class LowercaseConstantsFixer extends AbstractFixer
                 continue;
             }
 
-            if (
-                $this->isNeighbourAccepted($tokens, $tokens->getPrevMeaningfulToken($index)) &&
-                $this->isNeighbourAccepted($tokens, $tokens->getNextMeaningfulToken($index))
+            if ($this->isNeighbourAccepted($tokens, $tokens->getPrevMeaningfulToken($index)) 
+                && $this->isNeighbourAccepted($tokens, $tokens->getNextMeaningfulToken($index))
             ) {
                 $tokens[$index] = new Token([$token->getId(), strtolower($token->getContent())]);
             }

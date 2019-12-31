@@ -28,9 +28,13 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class OrderedClassElementsFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    /** @internal */
+    /**
+ * @internal 
+*/
     const SORT_ALPHA = 'alpha';
-    /** @internal */
+    /**
+ * @internal 
+*/
     const SORT_NONE = 'none';
 
     /**
@@ -251,11 +255,13 @@ class Example
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless('order', [
+        return new FixerConfigurationResolverRootless(
+            'order', [
             (new FixerOptionBuilder('order', 'List of strings defining order of elements.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(array_keys(array_merge(self::$typeHierarchy, self::$specialTypes)))])
-                ->setDefault([
+                ->setDefault(
+                    [
                     'use_trait',
                     'constant_public',
                     'constant_protected',
@@ -270,13 +276,15 @@ class Example
                     'method_public',
                     'method_protected',
                     'method_private',
-                ])
+                    ]
+                )
                 ->getOption(),
             (new FixerOptionBuilder('sortAlgorithm', 'How multiple occurrences of same type statements should be sorted'))
                 ->setAllowedValues($this->supportedSortAlgorithms)
                 ->setDefault(self::SORT_NONE)
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 
     /**
@@ -379,13 +387,14 @@ class Example
             return 'destruct';
         }
 
-        if (
-            $nameToken->equalsAny([
+        if ($nameToken->equalsAny(
+            [
                 [T_STRING, 'setUpBeforeClass'],
                 [T_STRING, 'tearDownAfterClass'],
                 [T_STRING, 'setUp'],
                 [T_STRING, 'tearDown'],
-            ], false)
+                ], false
+        )
         ) {
             return ['phpunit', strtolower($nameToken->getContent())];
         }
@@ -411,7 +420,8 @@ class Example
             $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index);
         }
 
-        for (++$index; $tokens[$index]->isWhitespace(" \t") || $tokens[$index]->isComment(); ++$index);
+        for (++$index; $tokens[$index]->isWhitespace(" \t") || $tokens[$index]->isComment(); ++$index) {
+        }
 
         --$index;
 
@@ -459,13 +469,15 @@ class Example
         }
         unset($element);
 
-        usort($elements, function (array $a, array $b) {
-            if ($a['position'] === $b['position']) {
-                return $this->sortGroupElements($a, $b);
-            }
+        usort(
+            $elements, function (array $a, array $b) {
+                if ($a['position'] === $b['position']) {
+                    return $this->sortGroupElements($a, $b);
+                }
 
-            return $a['position'] > $b['position'] ? 1 : -1;
-        });
+                return $a['position'] > $b['position'] ? 1 : -1;
+            }
+        );
 
         return $elements;
     }

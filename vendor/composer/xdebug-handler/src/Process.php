@@ -15,7 +15,7 @@ namespace Composer\XdebugHandler;
  * Provides utility functions to prepare a child process command-line and set
  * environment variables in that process.
  *
- * @author John Stevenson <john-stevenson@blueyonder.co.uk>
+ * @author   John Stevenson <john-stevenson@blueyonder.co.uk>
  * @internal
  */
 class Process
@@ -25,7 +25,7 @@ class Process
      *
      * A color option is needed because child process output is piped.
      *
-     * @param array $args The script parameters
+     * @param array  $args        The script parameters
      * @param string $colorOption The long option to force color output
      *
      * @return array
@@ -34,7 +34,8 @@ class Process
     {
         if (!$colorOption
             || in_array($colorOption, $args)
-            || !preg_match('/^--([a-z]+$)|(^--[a-z]+=)/', $colorOption, $matches)) {
+            || !preg_match('/^--([a-z]+$)|(^--[a-z]+=)/', $colorOption, $matches)
+        ) {
             return $args;
         }
 
@@ -66,9 +67,9 @@ class Process
      * From https://github.com/johnstevenson/winbox-args
      * MIT Licensed (c) John Stevenson <john-stevenson@blueyonder.co.uk>
      *
-     * @param string $arg  The argument to be escaped
-     * @param bool   $meta Additionally escape cmd.exe meta characters
-     * @param bool $module The argument is the module to invoke
+     * @param string $arg    The argument to be escaped
+     * @param bool   $meta   Additionally escape cmd.exe meta characters
+     * @param bool   $module The argument is the module to invoke
      *
      * @return string The escaped argument
      */
@@ -137,7 +138,7 @@ class Process
     /**
      * Makes putenv environment changes available in $_SERVER and $_ENV
      *
-     * @param string $name
+     * @param string       $name
      * @param string|false $value A false value unsets the variable
      *
      * @return bool Whether the environment variable was set

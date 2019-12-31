@@ -45,8 +45,8 @@ class LocalPart extends Parser
 
             $this->checkConsecutiveDots();
 
-            if ($this->lexer->token['type'] === EmailLexer::S_DOT &&
-                $this->lexer->isNextToken(EmailLexer::S_AT)
+            if ($this->lexer->token['type'] === EmailLexer::S_DOT 
+                && $this->lexer->isNextToken(EmailLexer::S_AT)
             ) {
                 throw new DotAtEnd();
             }

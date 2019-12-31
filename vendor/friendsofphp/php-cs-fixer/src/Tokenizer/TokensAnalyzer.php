@@ -142,8 +142,7 @@ final class TokensAnalyzer
 
         $endIndex = $tokens[$index]->equals('(')
             ? $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index)
-            : $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index)
-        ;
+            : $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index);
 
         for (++$index; $index < $endIndex; ++$index) {
             $token = $tokens[$index];
@@ -155,10 +154,9 @@ final class TokensAnalyzer
                 continue;
             }
 
-            if (
-                $token->isWhitespace() &&
-                !$tokens[$index - 1]->isGivenKind(T_END_HEREDOC) &&
-                false !== strpos($token->getContent(), "\n")
+            if ($token->isWhitespace() 
+                && !$tokens[$index - 1]->isGivenKind(T_END_HEREDOC) 
+                && false !== strpos($token->getContent(), "\n")
             ) {
                 return true;
             }
@@ -311,9 +309,8 @@ final class TokensAnalyzer
 
         $nextIndex = $this->tokens->getNextMeaningfulToken($index);
 
-        if (
-            $this->tokens[$nextIndex]->equalsAny(['(', '{']) ||
-            $this->tokens[$nextIndex]->isGivenKind([T_AS, T_DOUBLE_COLON, T_ELLIPSIS, T_NS_SEPARATOR, CT::T_RETURN_REF, CT::T_TYPE_ALTERNATION, T_VARIABLE])
+        if ($this->tokens[$nextIndex]->equalsAny(['(', '{']) 
+            || $this->tokens[$nextIndex]->isGivenKind([T_AS, T_DOUBLE_COLON, T_ELLIPSIS, T_NS_SEPARATOR, CT::T_RETURN_REF, CT::T_TYPE_ALTERNATION, T_VARIABLE])
         ) {
             return false;
         }

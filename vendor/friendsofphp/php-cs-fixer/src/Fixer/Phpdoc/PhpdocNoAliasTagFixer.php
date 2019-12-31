@@ -122,55 +122,67 @@ final class Example
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless('replacements', [
+        return new FixerConfigurationResolverRootless(
+            'replacements', [
             (new FixerOptionBuilder('replacements', 'Mapping between replaced annotations with new ones.'))
                 ->setAllowedTypes(['array'])
-                ->setNormalizer(static function (Options $options, $value) {
-                    $normalizedValue = [];
+                ->setNormalizer(
+                    static function (Options $options, $value) {
+                        $normalizedValue = [];
 
-                    foreach ($value as $from => $to) {
-                        if (!\is_string($from)) {
-                            throw new InvalidOptionsException('Tag to replace must be a string.');
+                        foreach ($value as $from => $to) {
+                            if (!\is_string($from)) {
+                                throw new InvalidOptionsException('Tag to replace must be a string.');
+                            }
+
+                            if (!\is_string($to)) {
+                                throw new InvalidOptionsException(
+                                    sprintf(
+                                        'Tag to replace to from "%s" must be a string.',
+                                        $from
+                                    )
+                                );
+                            }
+
+                            if (1 !== Preg::match('#^\S+$#', $to) || false !== strpos($to, '*/')) {
+                                throw new InvalidOptionsException(
+                                    sprintf(
+                                        'Tag "%s" cannot be replaced by invalid tag "%s".',
+                                        $from,
+                                        $to
+                                    )
+                                );
+                            }
+
+                            $normalizedValue[trim($from)] = trim($to);
                         }
 
-                        if (!\is_string($to)) {
-                            throw new InvalidOptionsException(sprintf(
-                                'Tag to replace to from "%s" must be a string.',
-                                $from
-                            ));
+                        foreach ($normalizedValue as $from => $to) {
+                            if (isset($normalizedValue[$to])) {
+                                throw new InvalidOptionsException(
+                                    sprintf(
+                                        'Cannot change tag "%1$s" to tag "%2$s", as the tag "%2$s" is configured to be replaced to "%3$s".',
+                                        $from,
+                                        $to,
+                                        $normalizedValue[$to]
+                                    )
+                                );
+                            }
                         }
 
-                        if (1 !== Preg::match('#^\S+$#', $to) || false !== strpos($to, '*/')) {
-                            throw new InvalidOptionsException(sprintf(
-                                'Tag "%s" cannot be replaced by invalid tag "%s".',
-                                $from,
-                                $to
-                            ));
-                        }
-
-                        $normalizedValue[trim($from)] = trim($to);
+                        return $normalizedValue;
                     }
-
-                    foreach ($normalizedValue as $from => $to) {
-                        if (isset($normalizedValue[$to])) {
-                            throw new InvalidOptionsException(sprintf(
-                                'Cannot change tag "%1$s" to tag "%2$s", as the tag "%2$s" is configured to be replaced to "%3$s".',
-                                $from,
-                                $to,
-                                $normalizedValue[$to]
-                            ));
-                        }
-                    }
-
-                    return $normalizedValue;
-                })
-                ->setDefault([
+                )
+                ->setDefault(
+                    [
                     'property-read' => 'property',
                     'property-write' => 'property',
                     'type' => 'var',
                     'link' => 'see',
-                ])
+                    ]
+                )
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 }

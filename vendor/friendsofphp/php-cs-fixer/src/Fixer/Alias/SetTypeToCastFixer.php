@@ -115,8 +115,7 @@ settype($bar, "null");
                 $secondArgumentStart = $tokens->getNextMeaningfulToken($secondArgumentStart);
             }
 
-            if (
-                !$tokens[$secondArgumentStart]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)
+            if (!$tokens[$secondArgumentStart]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)
                 || $tokens->getNextMeaningfulToken($secondArgumentStart) < $secondArgumentEnd
             ) {
                 continue; // second argument is of the wrong type or is a (complex) statement of some sort (function is overridden)

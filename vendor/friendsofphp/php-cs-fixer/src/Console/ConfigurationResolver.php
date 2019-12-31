@@ -268,19 +268,27 @@ final class ConfigurationResolver
     {
         if (null === $this->differ) {
             $mapper = [
-                'null' => static function () { return new NullDiffer(); },
-                'sbd' => static function () { return new SebastianBergmannDiffer(); },
-                'udiff' => static function () { return new UnifiedDiffer(); },
+                'null' => static function () {
+                    return new NullDiffer(); 
+                },
+                'sbd' => static function () {
+                    return new SebastianBergmannDiffer(); 
+                },
+                'udiff' => static function () {
+                    return new UnifiedDiffer(); 
+                },
             ];
 
             if ($this->options['diff-format']) {
                 $option = $this->options['diff-format'];
                 if (!isset($mapper[$option])) {
-                    throw new InvalidConfigurationException(sprintf(
-                        '"diff-format" must be any of "%s", got "%s".',
-                        implode('", "', array_keys($mapper)),
-                        $option
-                    ));
+                    throw new InvalidConfigurationException(
+                        sprintf(
+                            '"diff-format" must be any of "%s", got "%s".',
+                            implode('", "', array_keys($mapper)),
+                            $option
+                        )
+                    );
                 }
             } else {
                 $default = 'sbd'; // @TODO: 3.0 change to udiff as default
@@ -326,8 +334,7 @@ final class ConfigurationResolver
             $this->fixers = $this->createFixerFactory()
                 ->useRuleSet($this->getRuleSet())
                 ->setWhitespacesConfig(new WhitespacesFixerConfig($this->config->getIndent(), $this->config->getLineEnding()))
-                ->getFixers()
-            ;
+                ->getFixers();
 
             if (false === $this->getRiskyAllowed()) {
                 $riskyFixers = array_map(
@@ -384,10 +391,12 @@ final class ConfigurationResolver
                             : $cwd.\DIRECTORY_SEPARATOR.$path;
 
                         if (!file_exists($absolutePath)) {
-                            throw new InvalidConfigurationException(sprintf(
-                                'The path "%s" is not readable.',
-                                $path
-                            ));
+                            throw new InvalidConfigurationException(
+                                sprintf(
+                                    'The path "%s" is not readable.',
+                                    $path
+                                )
+                            );
                         }
 
                         return $absolutePath;
@@ -421,11 +430,13 @@ final class ConfigurationResolver
 
                     $progressType = $this->getConfig()->getHideProgress() ? 'none' : $default;
                 } elseif (!\in_array($progressType, $progressTypes, true)) {
-                    throw new InvalidConfigurationException(sprintf(
-                        'The progress type "%s" is not defined, supported are "%s".',
-                        $progressType,
-                        implode('", "', $progressTypes)
-                    ));
+                    throw new InvalidConfigurationException(
+                        sprintf(
+                            'The progress type "%s" is not defined, supported are "%s".',
+                            $progressType,
+                            implode('", "', $progressTypes)
+                        )
+                    );
                 } elseif (\in_array($progressType, ['estimating', 'estimating-max', 'run-in'], true)) {
                     $message = 'Passing `estimating`, `estimating-max` or `run-in` is deprecated and will not be supported in 3.0, use `none` or `dots` instead.';
 
@@ -727,15 +738,21 @@ final class ConfigurationResolver
         }
         $ruleSet = new RuleSet($ruleSet);
 
-        /** @var string[] $configuredFixers */
+        /**
+ * @var string[] $configuredFixers 
+*/
         $configuredFixers = array_keys($ruleSet->getRules());
 
         $fixers = $this->createFixerFactory()->getFixers();
 
-        /** @var string[] $availableFixers */
-        $availableFixers = array_map(static function (FixerInterface $fixer) {
-            return $fixer->getName();
-        }, $fixers);
+        /**
+ * @var string[] $availableFixers 
+*/
+        $availableFixers = array_map(
+            static function (FixerInterface $fixer) {
+                return $fixer->getName();
+            }, $fixers
+        );
 
         $unknownFixers = array_diff(
             $configuredFixers,
@@ -794,22 +811,27 @@ final class ConfigurationResolver
             $this->options['path-mode'],
             $modes,
             true
-        )) {
-            throw new InvalidConfigurationException(sprintf(
-                'The path-mode "%s" is not defined, supported are "%s".',
-                $this->options['path-mode'],
-                implode('", "', $modes)
-            ));
+        )
+        ) {
+            throw new InvalidConfigurationException(
+                sprintf(
+                    'The path-mode "%s" is not defined, supported are "%s".',
+                    $this->options['path-mode'],
+                    implode('", "', $modes)
+                )
+            );
         }
 
         $isIntersectionPathMode = self::PATH_MODE_INTERSECTION === $this->options['path-mode'];
 
-        $paths = array_filter(array_map(
-            static function ($path) {
-                return realpath($path);
-            },
-            $this->getPath()
-        ));
+        $paths = array_filter(
+            array_map(
+                static function ($path) {
+                    return realpath($path);
+                },
+                $this->getPath()
+            )
+        );
 
         if (!\count($paths)) {
             if ($isIntersectionPathMode) {

@@ -30,7 +30,6 @@ class Finder extends BaseFinder
             ->name('*.phpt')
             ->ignoreDotFiles(true)
             ->ignoreVCS(true)
-            ->exclude('vendor')
-        ;
+            ->exclude('vendor');
     }
 }

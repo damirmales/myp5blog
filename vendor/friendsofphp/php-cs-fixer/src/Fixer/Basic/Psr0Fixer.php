@@ -159,11 +159,13 @@ class InvalidName {}
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('dir', 'The directory where the project code is placed.'))
                 ->setAllowedTypes(['string'])
                 ->setDefault('')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 }

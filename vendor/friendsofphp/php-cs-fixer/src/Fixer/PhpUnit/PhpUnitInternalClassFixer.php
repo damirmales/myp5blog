@@ -66,13 +66,15 @@ final class PhpUnitInternalClassFixer extends AbstractFixer implements Whitespac
     {
         $types = ['normal', 'final', 'abstract'];
 
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('types', 'What types of classes to mark as internal'))
                 ->setAllowedValues([(new AllowedValueSubset($types))])
                 ->setAllowedTypes(['array'])
                 ->setDefault(['normal', 'final'])
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     protected function applyFix(\SplFileInfo $file, Tokens $tokens)

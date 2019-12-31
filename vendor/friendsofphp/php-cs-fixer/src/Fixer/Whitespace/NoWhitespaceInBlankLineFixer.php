@@ -76,8 +76,7 @@ final class NoWhitespaceInBlankLineFixer extends AbstractFixer implements Whites
         $lines = Preg::split("/(\r\n|\n)/", $content);
         $lineCount = \count($lines);
 
-        if (
-            // fix T_WHITESPACES with at least 3 lines (eg `\n   \n`)
+        if (// fix T_WHITESPACES with at least 3 lines (eg `\n   \n`)
             $lineCount > 2
             // and T_WHITESPACES with at least 2 lines at the end of file or after open tag with linebreak
             || ($lineCount > 0 && (!isset($tokens[$index + 1]) || $tokens[$index - 1]->isGivenKind(T_OPEN_TAG)))

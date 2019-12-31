@@ -171,13 +171,15 @@ final class EregToPregFixer extends AbstractFixer
         }
 
         // return the least used delimiter, using the position in the list as a tie breaker
-        uasort($delimiters, static function ($a, $b) {
-            if ($a[0] === $b[0]) {
-                return Utils::cmpInt($a, $b);
-            }
+        uasort(
+            $delimiters, static function ($a, $b) {
+                if ($a[0] === $b[0]) {
+                    return Utils::cmpInt($a, $b);
+                }
 
-            return $a[0] < $b[0] ? -1 : 1;
-        });
+                return $a[0] < $b[0] ? -1 : 1;
+            }
+        );
 
         return key($delimiters);
     }

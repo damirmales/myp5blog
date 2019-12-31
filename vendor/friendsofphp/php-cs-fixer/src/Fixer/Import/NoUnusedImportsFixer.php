@@ -93,8 +93,7 @@ final class NoUnusedImportsFixer extends AbstractFixer
                 function (NamespaceUseAnalysis $useDeclaration) use ($namespace) {
                     return
                         $useDeclaration->getStartIndex() >= $namespace->getScopeStartIndex()
-                        && $useDeclaration->getEndIndex() <= $namespace->getScopeEndIndex()
-                    ;
+                        && $useDeclaration->getEndIndex() <= $namespace->getScopeEndIndex();
                 }
             );
 
@@ -125,8 +124,7 @@ final class NoUnusedImportsFixer extends AbstractFixer
 
             $token = $tokens[$index];
 
-            if (
-                $token->isGivenKind(T_STRING)
+            if ($token->isGivenKind(T_STRING)
                 && 0 === strcasecmp($shortName, $token->getContent())
                 && !$tokens[$tokens->getPrevMeaningfulToken($index)]->isGivenKind([T_NS_SEPARATOR, T_CONST, T_OBJECT_OPERATOR])
             ) {
@@ -136,7 +134,8 @@ final class NoUnusedImportsFixer extends AbstractFixer
             if ($token->isComment() && Preg::match(
                 '/(?<![[:alnum:]])(?<!\\\\)'.$shortName.'(?![[:alnum:]])/i',
                 $token->getContent()
-            )) {
+            )
+            ) {
                 return true;
             }
         }

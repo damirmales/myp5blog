@@ -1,23 +1,13 @@
 <?php
 namespace Model;
-use Model\Database;
 
 class PdoConstruct extends Database
 {
-	
+    protected $connection;
 
-		protected $connection;
-
-		public function __construct()
-		{
-
-			$this->connection = $this->getConnectDB();
-			
-		}
-
-
-
-
+    public function __construct()
+    {
+        $this->connection = $this->getConnectDB();
+    }
 }
-
 ?>

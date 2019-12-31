@@ -79,7 +79,8 @@ final class ErrorSuppressionFixer extends AbstractFixer implements Configuration
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder(self::OPTION_MUTE_DEPRECATION_ERROR, 'Whether to add `@` in deprecation notices.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(true)
@@ -92,7 +93,8 @@ final class ErrorSuppressionFixer extends AbstractFixer implements Configuration
                 ->setAllowedTypes(['array'])
                 ->setDefault([])
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -101,9 +103,11 @@ final class ErrorSuppressionFixer extends AbstractFixer implements Configuration
     protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
         $functionsAnalyzer = new FunctionsAnalyzer();
-        $excludedFunctions = array_map(function ($function) {
-            return strtolower($function);
-        }, $this->configuration[self::OPTION_NOISE_REMAINING_USAGES_EXCLUDE]);
+        $excludedFunctions = array_map(
+            function ($function) {
+                return strtolower($function);
+            }, $this->configuration[self::OPTION_NOISE_REMAINING_USAGES_EXCLUDE]
+        );
 
         for ($index = $tokens->count() - 1; $index >= 0; --$index) {
             $token = $tokens[$index];

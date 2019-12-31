@@ -48,17 +48,21 @@ final class PhpUnitTestAnnotationFixer extends AbstractFixer implements Configur
         return new FixerDefinition(
             'Adds or removes @test annotations from tests, following configuration.',
             [
-                new CodeSample('<?php
+                new CodeSample(
+                    '<?php
 class Test extends \\PhpUnit\\FrameWork\\TestCase
 {
     /**
      * @test
      */
-    public function itDoesSomething() {} }'.$this->whitespacesConfig->getLineEnding()),
-                new CodeSample('<?php
+    public function itDoesSomething() {} }'.$this->whitespacesConfig->getLineEnding()
+                ),
+                new CodeSample(
+                    '<?php
 class Test extends \\PhpUnit\\FrameWork\\TestCase
 {
-public function testItDoesSomething() {}}'.$this->whitespacesConfig->getLineEnding(), ['style' => 'annotation']),
+public function testItDoesSomething() {}}'.$this->whitespacesConfig->getLineEnding(), ['style' => 'annotation']
+                ),
             ],
             null,
             'This fixer may change the name of your tests, and could cause incompatibility with'.
@@ -100,7 +104,8 @@ public function testItDoesSomething() {}}'.$this->whitespacesConfig->getLineEndi
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('style', 'Whether to use the @test annotation or not.'))
                 ->setAllowedValues(['prefix', 'annotation'])
                 ->setDefault('prefix')
@@ -110,7 +115,8 @@ public function testItDoesSomething() {}}'.$this->whitespacesConfig->getLineEndi
                 ->setDefault('camel')
                 ->setDeprecationMessage('Use `php_unit_method_casing` fixer instead.')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -184,7 +190,7 @@ public function testItDoesSomething() {}}'.$this->whitespacesConfig->getLineEndi
 
     /**
      * @param Tokens $tokens
-     * @param int$index
+     * @param int    $index
      *
      * @return bool
      */
@@ -390,10 +396,10 @@ public function testItDoesSomething() {}}'.$this->whitespacesConfig->getLineEndi
                 // One we split it up, we run the function again, so we deal with other things in a proper way
             }
 
-            if (!$needsAnnotation &&
-                false !== strpos($lines[$i]->getContent(), ' @test') &&
-                false === strpos($lines[$i]->getContent(), '@testWith') &&
-                false === strpos($lines[$i]->getContent(), '@testdox')
+            if (!$needsAnnotation 
+                && false !== strpos($lines[$i]->getContent(), ' @test') 
+                && false === strpos($lines[$i]->getContent(), '@testWith') 
+                && false === strpos($lines[$i]->getContent(), '@testdox')
             ) {
                 // We remove @test from the doc block
                 $lines[$i] = new Line(str_replace(' @test', '', $lines[$i]->getContent()));
@@ -432,7 +438,7 @@ public function testItDoesSomething() {}}'.$this->whitespacesConfig->getLineEndi
     }
 
     /**
-     * @param Line []$line
+     * @param Line [] $line
      *
      * @return string
      */

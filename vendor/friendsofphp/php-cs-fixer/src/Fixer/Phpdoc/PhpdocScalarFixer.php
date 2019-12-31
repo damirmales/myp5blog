@@ -46,7 +46,8 @@ final class PhpdocScalarFixer extends AbstractPhpdocTypesFixer implements Config
     {
         return new FixerDefinition(
             'Scalar types should always be written in the same form. `int` not `integer`, `bool` not `boolean`, `float` not `real` or `double`.',
-            [new CodeSample('<?php
+            [new CodeSample(
+                '<?php
 /**
  * @param integer $a
  * @param boolean $b
@@ -58,7 +59,8 @@ function sample($a, $b, $c)
 {
     return sample2($a, $b, $c);
 }
-')]
+'
+            )]
         );
     }
 
@@ -81,12 +83,14 @@ function sample($a, $b, $c)
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('types', 'A map of types to fix.'))
                 ->setAllowedValues([new AllowedValueSubset(array_keys(self::$types))])
                 ->setDefault(['boolean', 'double', 'integer', 'real', 'str']) // TODO 3.0 add "callback"
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**

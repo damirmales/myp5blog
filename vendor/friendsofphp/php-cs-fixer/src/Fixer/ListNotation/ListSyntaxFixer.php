@@ -104,12 +104,14 @@ final class ListSyntaxFixer extends AbstractFixer implements ConfigurationDefini
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('syntax', 'Whether to use the `long` or `short` `list` syntax.'))
                 ->setAllowedValues(['long', 'short'])
                 ->setDefault('long')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**

@@ -277,17 +277,23 @@ Exit code is built using following bit flags:
 EOF
         ;
 
-        return strtr($template, [
+        return strtr(
+            $template, [
             '%%%CONFIG_INTERFACE_URL%%%' => sprintf(
                 'https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/v%s/src/ConfigInterface.php',
                 self::getLatestReleaseVersionFromChangeLog()
             ),
-            '%%%CI_INTEGRATION%%%' => implode("\n", array_map(
-                static function ($line) { return '    $ '.$line; },
-                \array_slice(file(__DIR__.'/../../../dev-tools/ci-integration.sh', FILE_IGNORE_NEW_LINES), 3)
-            )),
+            '%%%CI_INTEGRATION%%%' => implode(
+                "\n", array_map(
+                    static function ($line) {
+                        return '    $ '.$line; 
+                    },
+                    \array_slice(file(__DIR__.'/../../../dev-tools/ci-integration.sh', FILE_IGNORE_NEW_LINES), 3)
+                )
+            ),
             '%%%FIXERS_DETAILS%%%' => self::getFixersHelp(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -343,24 +349,28 @@ EOF
         $allowed = $option->getAllowedValues();
 
         if (null !== $allowed) {
-            $allowed = array_filter($allowed, static function ($value) {
-                return !($value instanceof \Closure);
-            });
-
-            usort($allowed, static function ($valueA, $valueB) {
-                if ($valueA instanceof AllowedValueSubset) {
-                    return -1;
+            $allowed = array_filter(
+                $allowed, static function ($value) {
+                    return !($value instanceof \Closure);
                 }
+            );
 
-                if ($valueB instanceof AllowedValueSubset) {
-                    return 1;
+            usort(
+                $allowed, static function ($valueA, $valueB) {
+                    if ($valueA instanceof AllowedValueSubset) {
+                        return -1;
+                    }
+
+                    if ($valueB instanceof AllowedValueSubset) {
+                        return 1;
+                    }
+
+                    return strcasecmp(
+                        self::toString($valueA),
+                        self::toString($valueB)
+                    );
                 }
-
-                return strcasecmp(
-                    self::toString($valueA),
-                    self::toString($valueB)
-                );
-            });
+            );
 
             if (0 === \count($allowed)) {
                 $allowed = null;
@@ -394,11 +404,13 @@ EOF
         if (false === $changelog) {
             $error = error_get_last();
 
-            throw new \RuntimeException(sprintf(
-                'Failed to read content of the changelog file "%s".%s',
-                $changelogFile,
-                $error ? ' '.$error['message'] : ''
-            ));
+            throw new \RuntimeException(
+                sprintf(
+                    'Failed to read content of the changelog file "%s".%s',
+                    $changelogFile,
+                    $error ? ' '.$error['message'] : ''
+                )
+            );
         }
 
         for ($i = (int) Application::VERSION; $i > 0; --$i) {
@@ -486,10 +498,12 @@ EOF
                 $description .= sprintf(' DEPRECATED: %s.', $message);
             }
 
-            $description = implode("\n   | ", self::wordwrap(
-                Preg::replace('/(`.+?`)/', '<info>$1</info>', $description),
-                72
-            ));
+            $description = implode(
+                "\n   | ", self::wordwrap(
+                    Preg::replace('/(`.+?`)/', '<info>$1</info>', $description),
+                    72
+                )
+            );
 
             if (!empty($sets)) {
                 $help .= sprintf(" * <comment>%s</comment> [%s]\n   | %s\n", $fixer->getName(), implode(', ', $sets), $description);
@@ -615,8 +629,10 @@ EOF
             $lineLength += $wordLength;
         }
 
-        return array_map(static function ($line) {
-            return implode(' ', $line);
-        }, $result);
+        return array_map(
+            static function ($line) {
+                return implode(' ', $line);
+            }, $result
+        );
     }
 }

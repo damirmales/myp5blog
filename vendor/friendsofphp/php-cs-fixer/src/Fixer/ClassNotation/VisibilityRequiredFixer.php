@@ -83,20 +83,24 @@ class Sample
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless('elements', [
+        return new FixerConfigurationResolverRootless(
+            'elements', [
             (new FixerOptionBuilder('elements', 'The structural elements to fix (PHP >= 7.1 required for `const`).'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(['property', 'method', 'const'])])
-                ->setNormalizer(static function (Options $options, $value) {
-                    if (\PHP_VERSION_ID < 70100 && \in_array('const', $value, true)) {
-                        throw new InvalidOptionsForEnvException('"const" option can only be enabled with PHP 7.1+.');
-                    }
+                ->setNormalizer(
+                    static function (Options $options, $value) {
+                        if (\PHP_VERSION_ID < 70100 && \in_array('const', $value, true)) {
+                            throw new InvalidOptionsForEnvException('"const" option can only be enabled with PHP 7.1+.');
+                        }
 
-                    return $value;
-                })
+                        return $value;
+                    }
+                )
                 ->setDefault(['property', 'method'])
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 
     /**

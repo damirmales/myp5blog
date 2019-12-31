@@ -310,31 +310,35 @@ switch($a) {
     {
         $that = $this;
 
-        return new FixerConfigurationResolverRootless('tokens', [
+        return new FixerConfigurationResolverRootless(
+            'tokens', [
             (new FixerOptionBuilder('tokens', 'List of tokens to fix.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(self::$availableTokens)])
-                ->setNormalizer(static function (Options $options, $tokens) use ($that) {
-                    foreach ($tokens as &$token) {
-                        if ('useTrait' === $token) {
-                            $message = "Token \"useTrait\" in option \"tokens\" for rule \"{$that->getName()}\" is deprecated and will be removed in 3.0, use \"use_trait\" instead.";
+                ->setNormalizer(
+                    static function (Options $options, $tokens) use ($that) {
+                        foreach ($tokens as &$token) {
+                            if ('useTrait' === $token) {
+                                $message = "Token \"useTrait\" in option \"tokens\" for rule \"{$that->getName()}\" is deprecated and will be removed in 3.0, use \"use_trait\" instead.";
 
-                            if (getenv('PHP_CS_FIXER_FUTURE_MODE')) {
-                                throw new InvalidConfigurationException("{$message} This check was performed as `PHP_CS_FIXER_FUTURE_MODE` env var is set.");
+                                if (getenv('PHP_CS_FIXER_FUTURE_MODE')) {
+                                    throw new InvalidConfigurationException("{$message} This check was performed as `PHP_CS_FIXER_FUTURE_MODE` env var is set.");
+                                }
+
+                                @trigger_error($message, E_USER_DEPRECATED);
+                                $token = 'use_trait';
+
+                                break;
                             }
-
-                            @trigger_error($message, E_USER_DEPRECATED);
-                            $token = 'use_trait';
-
-                            break;
                         }
-                    }
 
-                    return $tokens;
-                })
+                        return $tokens;
+                    }
+                )
                 ->setDefault(['extra'])
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 
     private function fixByToken(Token $token, $index)
@@ -432,8 +436,7 @@ switch($a) {
         // find the line break
         $tokenCount = \count($this->tokens);
         for ($end = $index; $end < $tokenCount; ++$end) {
-            if (
-                $this->tokens[$end]->equals('}')
+            if ($this->tokens[$end]->equals('}')
                 || false !== strpos($this->tokens[$end]->getContent(), "\n")
             ) {
                 break;

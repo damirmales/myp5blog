@@ -33,7 +33,8 @@ final class PhpdocVarWithoutNameFixer extends AbstractFixer
     {
         return new FixerDefinition(
             '`@var` and `@type` annotations should not contain the variable name.',
-            [new CodeSample('<?php
+            [new CodeSample(
+                '<?php
 final class Foo
 {
     /**
@@ -46,7 +47,8 @@ final class Foo
      */
     public $baz;
 }
-')]
+'
+            )]
         );
     }
 

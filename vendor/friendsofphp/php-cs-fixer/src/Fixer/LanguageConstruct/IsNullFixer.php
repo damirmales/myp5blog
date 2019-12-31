@@ -191,12 +191,14 @@ final class IsNullFixer extends AbstractFixer implements ConfigurationDefinition
     protected function createConfigurationDefinition()
     {
         // @todo 3.0 drop `ConfigurationDefinitionFixerInterface`
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('use_yoda_style', 'Whether Yoda style conditions should be used.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(true)
                 ->setDeprecationMessage('Use `yoda_style` fixer instead.')
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 }

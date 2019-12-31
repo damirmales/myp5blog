@@ -107,11 +107,13 @@ function foo() {}
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless('annotations', [
+        return new FixerConfigurationResolverRootless(
+            'annotations', [
             (new FixerOptionBuilder('annotations', 'List of annotations to remove, e.g. `["author"]`.'))
                 ->setAllowedTypes(['array'])
                 ->setDefault([])
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 }

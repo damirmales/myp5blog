@@ -28,11 +28,11 @@ use ReflectionProperty;
 /**
  * A reader for docblock annotations.
  *
- * @author  Benjamin Eberlei <kontakt@beberlei.de>
- * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author  Jonathan Wage <jonwage@gmail.com>
- * @author  Roman Borschel <roman@code-factory.org>
- * @author  Johannes M. Schmitt <schmittjoh@gmail.com>
+ * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author Jonathan Wage <jonwage@gmail.com>
+ * @author Roman Borschel <roman@code-factory.org>
+ * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
 class AnnotationReader implements Reader
 {

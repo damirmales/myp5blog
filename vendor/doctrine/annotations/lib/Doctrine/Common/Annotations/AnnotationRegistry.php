@@ -63,7 +63,7 @@ final class AnnotationRegistry
      */
     public static function registerFile(string $file) : void
     {
-        require_once $file;
+        include_once $file;
     }
 
     /**
@@ -123,7 +123,7 @@ final class AnnotationRegistry
      */
     public static function registerUniqueLoader(callable $callable) : void
     {
-        if ( ! in_array($callable, self::$loaders, true) ) {
+        if (! in_array($callable, self::$loaders, true) ) {
             self::registerLoader($callable);
         }
     }
@@ -147,13 +147,13 @@ final class AnnotationRegistry
 
                 if ($dirs === null) {
                     if ($path = stream_resolve_include_path($file)) {
-                        require $path;
+                        include $path;
                         return true;
                     }
                 } else {
                     foreach((array) $dirs AS $dir) {
                         if (is_file($dir . \DIRECTORY_SEPARATOR . $file)) {
-                            require $dir . \DIRECTORY_SEPARATOR . $file;
+                            include $dir . \DIRECTORY_SEPARATOR . $file;
                             return true;
                         }
                     }

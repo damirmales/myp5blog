@@ -14,7 +14,6 @@
       </div>
     </div>
   </header>
-    
 
 
 <?php foreach ($rubriques as $article) :?>
@@ -48,8 +47,5 @@
   </div>
 
 <?php endforeach ?>
-
   <?php $content = ob_get_clean();?>
-
-
 <?php require'templates/layout_gabarit.php'; ?>

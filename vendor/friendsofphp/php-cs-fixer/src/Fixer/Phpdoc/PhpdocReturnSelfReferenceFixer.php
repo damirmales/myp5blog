@@ -137,40 +137,48 @@ class Sample
             '@static' => 'static',
         ];
 
-        return new FixerConfigurationResolverRootless('replacements', [
+        return new FixerConfigurationResolverRootless(
+            'replacements', [
             (new FixerOptionBuilder('replacements', 'Mapping between replaced return types with new ones.'))
                 ->setAllowedTypes(['array'])
-                ->setNormalizer(static function (Options $options, $value) use ($default) {
-                    $normalizedValue = [];
-                    foreach ($value as $from => $to) {
-                        if (\is_string($from)) {
-                            $from = strtolower($from);
+                ->setNormalizer(
+                    static function (Options $options, $value) use ($default) {
+                        $normalizedValue = [];
+                        foreach ($value as $from => $to) {
+                            if (\is_string($from)) {
+                                $from = strtolower($from);
+                            }
+
+                            if (!isset($default[$from])) {
+                                throw new InvalidOptionsException(
+                                    sprintf(
+                                        'Unknown key "%s", expected any of "%s".',
+                                        \is_object($from) ? \get_class($from) : \gettype($from).(\is_resource($from) ? '' : '#'.$from),
+                                        implode('", "', array_keys($default))
+                                    )
+                                );
+                            }
+
+                            if (!\in_array($to, self::$toTypes, true)) {
+                                throw new InvalidOptionsException(
+                                    sprintf(
+                                        'Unknown value "%s", expected any of "%s".',
+                                        \is_object($to) ? \get_class($to) : \gettype($to).(\is_resource($to) ? '' : '#'.$to),
+                                        implode('", "', self::$toTypes)
+                                    )
+                                );
+                            }
+
+                            $normalizedValue[$from] = $to;
                         }
 
-                        if (!isset($default[$from])) {
-                            throw new InvalidOptionsException(sprintf(
-                                'Unknown key "%s", expected any of "%s".',
-                                \is_object($from) ? \get_class($from) : \gettype($from).(\is_resource($from) ? '' : '#'.$from),
-                                implode('", "', array_keys($default))
-                            ));
-                        }
-
-                        if (!\in_array($to, self::$toTypes, true)) {
-                            throw new InvalidOptionsException(sprintf(
-                                'Unknown value "%s", expected any of "%s".',
-                                \is_object($to) ? \get_class($to) : \gettype($to).(\is_resource($to) ? '' : '#'.$to),
-                                implode('", "', self::$toTypes)
-                            ));
-                        }
-
-                        $normalizedValue[$from] = $to;
+                        return $normalizedValue;
                     }
-
-                    return $normalizedValue;
-                })
+                )
                 ->setDefault($default)
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 
     /**

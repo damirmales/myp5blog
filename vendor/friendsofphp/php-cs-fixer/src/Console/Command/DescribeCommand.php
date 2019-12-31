@@ -92,8 +92,7 @@ final class DescribeCommand extends Command
                     new InputArgument('name', InputArgument::REQUIRED, 'Name of rule / set.'),
                 ]
             )
-            ->setDescription('Describe rule / ruleset.')
-        ;
+            ->setDescription('Describe rule / ruleset.');
     }
 
     /**
@@ -120,12 +119,14 @@ final class DescribeCommand extends Command
 
             $this->describeList($output, $e->getType());
 
-            throw new \InvalidArgumentException(sprintf(
-                '%s "%s" not found.%s',
-                ucfirst($e->getType()),
-                $name,
-                null === $alternative ? '' : ' Did you mean "'.$alternative.'"?'
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s "%s" not found.%s',
+                    ucfirst($e->getType()),
+                    $name,
+                    null === $alternative ? '' : ' Did you mean "'.$alternative.'"?'
+                )
+            );
         }
     }
 
@@ -141,7 +142,9 @@ final class DescribeCommand extends Command
             throw new DescribeNameNotFoundException($name, 'rule');
         }
 
-        /** @var FixerInterface $fixer */
+        /**
+ * @var FixerInterface $fixer 
+*/
         $fixer = $fixers[$name];
         if ($fixer instanceof DefinedFixerInterface) {
             $definition = $fixer->getDefinition();
@@ -251,29 +254,37 @@ final class DescribeCommand extends Command
             $output->writeln('');
         }
 
-        /** @var CodeSampleInterface[] $codeSamples */
-        $codeSamples = array_filter($definition->getCodeSamples(), static function (CodeSampleInterface $codeSample) {
-            if ($codeSample instanceof VersionSpecificCodeSampleInterface) {
-                return $codeSample->isSuitableFor(\PHP_VERSION_ID);
-            }
+        /**
+ * @var CodeSampleInterface[] $codeSamples 
+*/
+        $codeSamples = array_filter(
+            $definition->getCodeSamples(), static function (CodeSampleInterface $codeSample) {
+                if ($codeSample instanceof VersionSpecificCodeSampleInterface) {
+                    return $codeSample->isSuitableFor(\PHP_VERSION_ID);
+                }
 
-            return true;
-        });
+                return true;
+            }
+        );
 
         if (!\count($codeSamples)) {
-            $output->writeln([
+            $output->writeln(
+                [
                 'Fixing examples can not be demonstrated on the current PHP version.',
                 '',
-            ]);
+                ]
+            );
         } else {
             $output->writeln('Fixing examples:');
 
             $differ = new FullDiffer();
-            $diffFormatter = new DiffConsoleFormatter($output->isDecorated(), sprintf(
-                '<comment>   ---------- begin diff ----------</comment>%s%%s%s<comment>   ----------- end diff -----------</comment>',
-                PHP_EOL,
-                PHP_EOL
-            ));
+            $diffFormatter = new DiffConsoleFormatter(
+                $output->isDecorated(), sprintf(
+                    '<comment>   ---------- begin diff ----------</comment>%s%%s%s<comment>   ----------- end diff -----------</comment>',
+                    PHP_EOL,
+                    PHP_EOL
+                )
+            );
 
             foreach ($codeSamples as $index => $codeSample) {
                 $old = $codeSample->getCode();
@@ -330,7 +341,9 @@ final class DescribeCommand extends Command
         $help = '';
 
         foreach ($rules as $rule => $config) {
-            /** @var FixerDefinitionInterface $definition */
+            /**
+ * @var FixerDefinitionInterface $definition 
+*/
             $definition = $fixers[$rule]->getDefinition();
             $help .= sprintf(
                 " * <info>%s</info>%s\n   | %s\n%s\n",
@@ -397,7 +410,9 @@ final class DescribeCommand extends Command
             return;
         }
 
-        /** @var string[] $items */
+        /**
+ * @var string[] $items 
+*/
         foreach ($describe as $list => $items) {
             $output->writeln(sprintf('<comment>Defined %s:</comment>', $list));
             foreach ($items as $name => $item) {

@@ -78,8 +78,7 @@ final class FileFilterIterator extends \FilterIterator
         $content = FileReader::createSingleton()->read($path);
 
         // mark as skipped:
-        if (
-            // empty file
+        if (// empty file
             '' === $content
             // file that does not need fixing due to cache
             || !$this->cacheManager->needFixing($file->getPathname(), $content)
@@ -106,8 +105,7 @@ final class FileFilterIterator extends \FilterIterator
         }
 
         // BC compatibility < Sf 4.3
-        if (
-            !$this->eventDispatcher instanceof \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
+        if (!$this->eventDispatcher instanceof \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
         ) {
             $this->eventDispatcher->dispatch($name, $event);
 

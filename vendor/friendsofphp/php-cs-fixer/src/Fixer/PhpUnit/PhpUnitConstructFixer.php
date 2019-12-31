@@ -118,18 +118,22 @@ $this->assertNotSame(null, $d);
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless('assertions', [
+        return new FixerConfigurationResolverRootless(
+            'assertions', [
             (new FixerOptionBuilder('assertions', 'List of assertion methods to fix.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(array_keys(self::$assertionFixers))])
-                ->setDefault([
+                ->setDefault(
+                    [
                     'assertEquals',
                     'assertSame',
                     'assertNotEquals',
                     'assertNotSame',
-                ])
+                    ]
+                )
                 ->getOption(),
-        ], $this->getName());
+            ], $this->getName()
+        );
     }
 
     /**
@@ -193,8 +197,7 @@ $this->assertNotSame(null, $d);
         $sequenceIndexes = array_keys($sequence);
         $operatorIndex = $tokens->getPrevMeaningfulToken($sequenceIndexes[0]);
         $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
-        if (
-            !($tokens[$operatorIndex]->equals([T_OBJECT_OPERATOR, '->']) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this']))
+        if (!($tokens[$operatorIndex]->equals([T_OBJECT_OPERATOR, '->']) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this']))
             && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STRING, 'self']))
             && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STATIC, 'static']))
         ) {

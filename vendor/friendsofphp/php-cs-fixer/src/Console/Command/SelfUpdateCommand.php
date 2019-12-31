@@ -84,8 +84,7 @@ latest version released on:
 <info>$ php php-cs-fixer.phar %command.name%</info>
 
 EOT
-            )
-        ;
+            );
     }
 
     /**
@@ -107,10 +106,12 @@ EOT
             $latestVersion = $this->versionChecker->getLatestVersion();
             $latestVersionOfCurrentMajor = $this->versionChecker->getLatestVersionOfMajor($currentMajor);
         } catch (\Exception $exception) {
-            $output->writeln(sprintf(
-                '<error>Unable to determine newest version: %s</error>',
-                $exception->getMessage()
-            ));
+            $output->writeln(
+                sprintf(
+                    '<error>Unable to determine newest version: %s</error>',
+                    $exception->getMessage()
+                )
+            );
 
             return 1;
         }
@@ -123,8 +124,7 @@ EOT
 
         $remoteTag = $latestVersion;
 
-        if (
-            0 !== $this->versionChecker->compareVersions($latestVersionOfCurrentMajor, $latestVersion)
+        if (0 !== $this->versionChecker->compareVersions($latestVersionOfCurrentMajor, $latestVersion)
             && true !== $input->getOption('force')
         ) {
             $output->writeln(sprintf('<info>A new major version of php-cs-fixer is available</info> (<comment>%s</comment>)', $latestVersion));

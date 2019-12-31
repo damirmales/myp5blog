@@ -1,29 +1,35 @@
 <?php
+
 namespace Services;
-//require __DIR__ . '/vendor/autoload.php';
-//require 'vendor/autoload.php';
+
 
 class Emails
 {
-	private $nom;
+    private $nom;
     private $prenom;
     private $email;
     private $message;
 
-     /**************************************
-     * @return mixed
-     */
-    public function getNom()
+    public function sendEmail()
     {
-        return $this->nom;
-    }
+        $prenom = $this->getPrenom();
+        $nom = $this->getNom();
+        $email = $this->getEmail();
 
-    /**
-     * @param mixed $nom
-     */
-    public function setNom( $nom ): void
-    {
-        $this->nom = $nom;
+        $message = 'email : ' . $email . ' - ';
+        $message .= 'nom : ' . $prenom . ' ' . $nom . " - ";
+        $message .= 'message : ' . $this->getMessage();
+
+        $emailTo = "damir@romandie.com";
+        $subject = "Contact";
+        $emailFrom = $this->getEmail();
+
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+
+        //---- envoi email
+        $success = mail($emailTo, $subject, $message, $headers);
+        return $success;
     }
 
     /**************************************
@@ -37,9 +43,25 @@ class Emails
     /**
      * @param mixed $prenom
      */
-    public function setPrenom( $prenom ): void
+    public function setPrenom($prenom): void
     {
         $this->prenom = $prenom;
+    }
+
+    /**************************************
+     * @return mixed
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @param mixed $nom
+     */
+    public function setNom($nom): void
+    {
+        $this->nom = $nom;
     }
 
     /**************************************
@@ -53,7 +75,7 @@ class Emails
     /**
      * @param mixed $email
      */
-    public function setEmail( $email ): void
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -69,88 +91,52 @@ class Emails
     /**
      * @param mixed $message
      */
-    public function setMessage( $message ): void
+    public function setMessage($message): void
     {
         $this->message = $message;
     }
 
+    //---- send email with token to register a new user ----------
+    public function tokenEmail($userEmail, $UrlToken)
+    {
+        $prenom = $this->getPrenom('prenom');
+        $nom = $this->getNom('nom');
+        $email = $this->getEmail('email');
+        $message = 'email : ' . $userEmail;
+        $message .= 'token : ' . $UrlToken;
+        $emailTo = $userEmail;
+        $subject = "confirmez votre email";
+        $emailFrom = $this->getEmail('email');
 
-	public function sendEmail()
-	{
-		$prenom = $this->getPrenom('prenom');
-		$nom = $this->getNom('nom'); 
-		$email = $this->getEmail('email');
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+        // envoi email 
+        $success = mail($emailTo, $subject, $message, $headers);
+        return $success;
+    }
 
-		$message   = 'email : '.$email.' - ';
-		$message   .= 'nom : '.$prenom.' '.$nom." - " ;
-        $message .= 'message : '.$this->getMessage('message');
+    /**
+     * @return string
+     */
+    public static function generateToken()
+    {
+        //Create a "unique" token.
+        return $token = bin2hex(openssl_random_pseudo_bytes(16));
+    }
 
-		$emailTo = "damir@romandie.com";
-		$subject = "Contact";
-		$emailFrom = $this->getEmail('email'); 
+    /**
+     * @param $token
+     * @param $email
+     * @return string
+     */
+    public static function createUrlWithToken($token, $email)
+    {
+        // Construct the URL.
+        $url = "https://damirweb.com/oc/p5/myp5blog/index.php?route=verifEmail&token=$token&email=$email";
 
-		$headers   = 'MIME-Version: 1.0' . "\r\n";
-		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-
-		//---- envoi email
-		$success = mail($emailTo, $subject, $message, $headers);
-
-       // echo '<pre>'; var_dump($success);
-        //$_SESSION["contactForm"] = "email  envoyé";
-		return $success;	
-
-	}
-	
-//---- send email with token to register a new user ----------
-		public function tokenEmail($userEmail,$UrlToken)
-	{
-
-		$prenom = $this->getPrenom('prenom');
-		$nom = $this->getNom('nom'); 
-		$email = $this->getEmail('email');
-		$message   = 'email : '.$userEmail;
-		$message   .= 'token : '. $UrlToken ;
-
-
-		$emailTo = $userEmail;
-		$subject = "confirmez votre email";
-		$emailFrom = $this->getEmail('email'); 
-
-		$headers   = 'MIME-Version: 1.0' . "\r\n";
-		$headers  .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-
-
-		// envoi email 
-		$success = mail($emailTo, $subject, $message, $headers);
-		return $success;	
-
-	}
-
-
-	/*public function swiftMailer()
-	{
-
-// Create the Transport
-		$transport = (new \Swift_SmtpTransport('smtp.gmail.com', 25))
-		//$transport = (new \Swift_SmtpTransport('mail07.lwspanel.com', 465))
-		->setUsername('your username')
-		->setPassword('your password')
-		;
-
-// Create the Mailer using your created Transport
-		$mailer = new \Swift_Mailer($transport);
-
-// Create a message
-		$message = (new \Swift_Message('Wonderful Subject'))
-		->setFrom(['john@doe.com' => 'John Doe'])
-		->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
-		->setBody('Here is the message itself')
-		;
-
-// Send the message
-		$result = $mailer->send($message);
-
-	} */
-
-
+        //Build the HTML for the link.
+        $urlLink = '<a href="' . $url . '">' . $url . '</a>';
+        //Send the email containing the $link above.
+        return $urlLink;
+    }
 }

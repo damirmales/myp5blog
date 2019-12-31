@@ -54,13 +54,19 @@ class Constraint implements ConstraintInterface
         self::OP_NE => '!=',
     );
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $operator;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $version;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $prettyString;
 
     /**
@@ -119,11 +125,13 @@ class Constraint implements ConstraintInterface
     public function __construct($operator, $version)
     {
         if (!isset(self::$transOpStr[$operator])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid operator "%s" given, expected one of: %s',
-                $operator,
-                implode(', ', self::getSupportedOperators())
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Invalid operator "%s" given, expected one of: %s',
+                    $operator,
+                    implode(', ', self::getSupportedOperators())
+                )
+            );
         }
 
         $this->operator = self::$transOpStr[$operator];
@@ -134,7 +142,7 @@ class Constraint implements ConstraintInterface
      * @param string $a
      * @param string $b
      * @param string $operator
-     * @param bool $compareBranches
+     * @param bool   $compareBranches
      *
      * @throws \InvalidArgumentException if invalid operator is given.
      *
@@ -143,11 +151,13 @@ class Constraint implements ConstraintInterface
     public function versionCompare($a, $b, $operator, $compareBranches = false)
     {
         if (!isset(self::$transOpStr[$operator])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid operator "%s" given, expected one of: %s',
-                $operator,
-                implode(', ', self::getSupportedOperators())
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Invalid operator "%s" given, expected one of: %s',
+                    $operator,
+                    implode(', ', self::getSupportedOperators())
+                )
+            );
         }
 
         $aIsBranch = 'dev-' === substr($a, 0, 4);
@@ -167,7 +177,7 @@ class Constraint implements ConstraintInterface
 
     /**
      * @param Constraint $provider
-     * @param bool $compareBranches
+     * @param bool       $compareBranches
      *
      * @return bool
      */
@@ -199,7 +209,8 @@ class Constraint implements ConstraintInterface
             // 1.0 >= 1.0 but 1.0 is outside of the provided interval
             if ($provider->version === $this->version
                 && self::$transOpInt[$provider->operator] === $providerNoEqualOp
-                && self::$transOpInt[$this->operator] !== $noEqualOp) {
+                && self::$transOpInt[$this->operator] !== $noEqualOp
+            ) {
                 return false;
             }
 

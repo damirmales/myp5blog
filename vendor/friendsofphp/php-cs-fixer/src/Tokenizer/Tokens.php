@@ -486,9 +486,11 @@ class Tokens extends \SplFixedArray
         }
 
         if (!self::isLegacyMode()) {
-            $possibleKinds = array_filter($possibleKinds, function ($kind) {
-                return $this->isTokenKindFound($kind);
-            });
+            $possibleKinds = array_filter(
+                $possibleKinds, function ($kind) {
+                    return $this->isTokenKindFound($kind);
+                }
+            );
         }
 
         if (\count($possibleKinds)) {
@@ -643,9 +645,11 @@ class Tokens extends \SplFixedArray
     public function getTokenOfKindSibling($index, $direction, array $tokens = [], $caseSensitive = true)
     {
         if (!self::isLegacyMode()) {
-            $tokens = array_filter($tokens, function ($token) {
-                return $this->isTokenKindFound($this->extractTokenKind($token));
-            });
+            $tokens = array_filter(
+                $tokens, function ($token) {
+                    return $this->isTokenKindFound($this->extractTokenKind($token));
+                }
+            );
         }
 
         if (!\count($tokens)) {

@@ -94,8 +94,7 @@ final class NoShortBoolCastFixer extends AbstractFixer
     private function fixShortCastToBoolCast(Tokens $tokens, $start, $end)
     {
         for (; $start <= $end; ++$start) {
-            if (
-                !$tokens[$start]->isComment()
+            if (!$tokens[$start]->isComment()
                 && !($tokens[$start]->isWhitespace() && $tokens[$start - 1]->isComment())
             ) {
                 $tokens->clearAt($start);

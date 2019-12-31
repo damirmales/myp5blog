@@ -29,7 +29,7 @@ unset($_SESSION['updateArticle']);
             <p><?= $article->getContenu(); ?><!-- $article-> -->
             <p><a href="index.php?route=deleteArticle&id=<?= $article->getArticles_id(); ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a></p>
             <p><a href="index.php?route=editArticle&id=<?= $article->getArticles_id(); ?>" > Modifier</a></p>
-            <p><a href="index.php?route=editListArticles "> Retour à la liste</a></p>
+            <p><a href="index.php?route=editListArticles "> Liste des articles</a></p>
         </div>
       </div>
     </div>

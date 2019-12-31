@@ -116,11 +116,13 @@ EOT
                 if (1 === \count($distinctVariableSet['tokens'])) {
                     $singleVariableIndex = key($distinctVariableSet['tokens']);
                     $singleVariableToken = current($distinctVariableSet['tokens']);
-                    $tokens->overrideRange($singleVariableIndex, $singleVariableIndex, [
+                    $tokens->overrideRange(
+                        $singleVariableIndex, $singleVariableIndex, [
                         new Token([T_DOLLAR_OPEN_CURLY_BRACES, '${']),
                         new Token([T_STRING_VARNAME, substr($singleVariableToken->getContent(), 1)]),
                         new Token([CT::T_DOLLAR_CLOSE_CURLY_BRACES, '}']),
-                    ]);
+                        ]
+                    );
                 } else {
                     foreach ($distinctVariableSet['tokens'] as $variablePartIndex => $variablePartToken) {
                         if ($variablePartToken->isGivenKind(T_NUM_STRING)) {
@@ -153,7 +155,6 @@ EOT
         return $token->isGivenKind(T_ENCAPSED_AND_WHITESPACE)
             || $token->isGivenKind(T_START_HEREDOC)
             || '"' === $token->getContent()
-            || 'b"' === strtolower($token->getContent())
-        ;
+            || 'b"' === strtolower($token->getContent());
     }
 }

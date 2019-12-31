@@ -171,25 +171,26 @@ final class CurlyBraceTransformer extends AbstractTransformer
 
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
 
-        if (!$tokens[$prevIndex]->equalsAny([
+        if (!$tokens[$prevIndex]->equalsAny(
+            [
             [T_STRING],
             [T_VARIABLE],
             [CT::T_ARRAY_INDEX_CURLY_BRACE_CLOSE],
             ']',
             ')',
-        ])) {
+            ]
+        )
+        ) {
             return;
         }
 
-        if (
-            $tokens[$prevIndex]->isGivenKind(T_STRING)
+        if ($tokens[$prevIndex]->isGivenKind(T_STRING)
             && !$tokens[$tokens->getPrevMeaningfulToken($prevIndex)]->isGivenKind(T_OBJECT_OPERATOR)
         ) {
             return;
         }
 
-        if (
-            $tokens[$prevIndex]->equals(')')
+        if ($tokens[$prevIndex]->equals(')')
             && !$tokens[$tokens->getPrevMeaningfulToken(
                 $tokens->findBlockStart(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $prevIndex)
             )]->isGivenKind(T_ARRAY)

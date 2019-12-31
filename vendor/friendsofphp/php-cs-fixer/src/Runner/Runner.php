@@ -180,9 +180,8 @@ final class Runner
             foreach ($this->fixers as $fixer) {
                 // for custom fixers we don't know is it safe to run `->fix()` without checking `->supports()` and `->isCandidate()`,
                 // thus we need to check it and conditionally skip fixing
-                if (
-                    !$fixer instanceof AbstractFixer &&
-                    (!$fixer->supports($file) || !$fixer->isCandidate($tokens))
+                if (!$fixer instanceof AbstractFixer 
+                    && (!$fixer->supports($file) || !$fixer->isCandidate($tokens))
                 ) {
                     continue;
                 }
@@ -295,8 +294,7 @@ final class Runner
         }
 
         // BC compatibility < Sf 4.3
-        if (
-            !$this->eventDispatcher instanceof \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
+        if (!$this->eventDispatcher instanceof \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
         ) {
             $this->eventDispatcher->dispatch($name, $event);
 

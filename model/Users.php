@@ -1,12 +1,10 @@
 <?php
+
 namespace Model;
-use Model\PdoConstruct;
 
 class Users extends PdoConstruct
- {
-
-	
-	private $id;
+{
+    private $id;
     private $nom;
     private $prenom;
     private $email;
@@ -16,27 +14,21 @@ class Users extends PdoConstruct
     private $login;
     private $password;
 
-
     public function __construct(array $datas)
     {
         $this->hydrate($datas);
     }
 
-
     public function hydrate(array $datas)
     {
-        foreach ($datas as $key => $value)
-        {
+        foreach ($datas as $key => $value) {
+            $method = 'set' . ucfirst($key);
 
-            $method = 'set'.ucfirst($key);
-
-            if (method_exists($this, $method))
-            {
+            if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }
     }
-
 
     /***************************************
      * @return mixed
@@ -49,7 +41,7 @@ class Users extends PdoConstruct
     /**
      * @param mixed $id
      */
-    public function setId( $id ): void
+    public function setId($id): void
     {
         $this->id = $id;
     }
@@ -65,7 +57,7 @@ class Users extends PdoConstruct
     /**
      * @param mixed $nom
      */
-    public function setNom( $nom ): void
+    public function setNom($nom): void
     {
         $this->nom = $nom;
     }
@@ -81,7 +73,7 @@ class Users extends PdoConstruct
     /**
      * @param mixed $prenom
      */
-    public function setPrenom( $prenom ): void
+    public function setPrenom($prenom): void
     {
         $this->prenom = $prenom;
     }
@@ -97,7 +89,7 @@ class Users extends PdoConstruct
     /**
      * @param mixed $email
      */
-    public function setEmail( $email ): void
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -113,7 +105,7 @@ class Users extends PdoConstruct
     /**
      * @param mixed $role
      */
-    public function setRole( $role ): void
+    public function setRole($role): void
     {
         $this->role = $role;
     }
@@ -129,7 +121,7 @@ class Users extends PdoConstruct
     /**
      * @param mixed $statut
      */
-    public function setStatut( $statut ): void
+    public function setStatut($statut): void
     {
         $this->statut = $statut;
     }
@@ -145,7 +137,7 @@ class Users extends PdoConstruct
     /**
      * @param mixed $token
      */
-    public function setToken( $token ): void
+    public function setToken($token): void
     {
         $this->token = $token;
     }
@@ -161,7 +153,7 @@ class Users extends PdoConstruct
     /**
      * @param mixed $login
      */
-    public function setLogin( $login ): void
+    public function setLogin($login): void
     {
         $this->login = $login;
     }
@@ -177,10 +169,9 @@ class Users extends PdoConstruct
     /**
      * @param mixed $password
      */
-    public function setPassword( $password ): void
+    public function setPassword($password): void
     {
         $this->password = $password;
     }
 
-
- }
+}

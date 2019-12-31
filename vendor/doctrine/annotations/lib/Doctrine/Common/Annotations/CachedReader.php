@@ -213,7 +213,7 @@ final class CachedReader implements Reader
     /**
      * Checks if the cache is fresh.
      *
-     * @param string           $cacheKey
+     * @param string          $cacheKey
      * @param ReflectionClass $class
      *
      * @return boolean
@@ -230,7 +230,7 @@ final class CachedReader implements Reader
     /**
      * Returns the time the class was last modified, testing traits and parents
      *
-     * @param ReflectionClass $class
+     * @param  ReflectionClass $class
      * @return int
      */
     private function getLastModification(ReflectionClass $class)
@@ -238,25 +238,29 @@ final class CachedReader implements Reader
         $filename = $class->getFileName();
         $parent   = $class->getParentClass();
 
-        return max(array_merge(
-            [$filename ? filemtime($filename) : 0],
-            array_map([$this, 'getTraitLastModificationTime'], $class->getTraits()),
-            array_map([$this, 'getLastModification'], $class->getInterfaces()),
-            $parent ? [$this->getLastModification($parent)] : []
-        ));
+        return max(
+            array_merge(
+                [$filename ? filemtime($filename) : 0],
+                array_map([$this, 'getTraitLastModificationTime'], $class->getTraits()),
+                array_map([$this, 'getLastModification'], $class->getInterfaces()),
+                $parent ? [$this->getLastModification($parent)] : []
+            )
+        );
     }
 
     /**
-     * @param ReflectionClass $reflectionTrait
+     * @param  ReflectionClass $reflectionTrait
      * @return int
      */
     private function getTraitLastModificationTime(ReflectionClass $reflectionTrait)
     {
         $fileName = $reflectionTrait->getFileName();
 
-        return max(array_merge(
-            [$fileName ? filemtime($fileName) : 0],
-            array_map([$this, 'getTraitLastModificationTime'], $reflectionTrait->getTraits())
-        ));
+        return max(
+            array_merge(
+                [$fileName ? filemtime($fileName) : 0],
+                array_map([$this, 'getTraitLastModificationTime'], $reflectionTrait->getTraits())
+            )
+        );
     }
 }

@@ -82,19 +82,23 @@ SAMPLE
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('after_heredoc', 'Whether the whitespace between heredoc end and comma should be removed.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
-                ->setNormalizer(static function (Options $options, $value) {
-                    if (\PHP_VERSION_ID < 70300 && $value) {
-                        throw new InvalidOptionsForEnvException('"after_heredoc" option can only be enabled with PHP 7.3+.');
-                    }
+                ->setNormalizer(
+                    static function (Options $options, $value) {
+                        if (\PHP_VERSION_ID < 70300 && $value) {
+                            throw new InvalidOptionsForEnvException('"after_heredoc" option can only be enabled with PHP 7.3+.');
+                        }
 
-                    return $value;
-                })
+                        return $value;
+                    }
+                )
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -118,9 +122,8 @@ SAMPLE
             $currentToken = $tokens[$i];
             $prevIndex = $tokens->getPrevNonWhitespace($i - 1);
 
-            if (
-                $currentToken->equals(',') && !$tokens[$prevIndex]->isComment() &&
-                ($this->configuration['after_heredoc'] || !$tokens[$prevIndex]->equals([T_END_HEREDOC]))
+            if ($currentToken->equals(',') && !$tokens[$prevIndex]->isComment() 
+                && ($this->configuration['after_heredoc'] || !$tokens[$prevIndex]->equals([T_END_HEREDOC]))
             ) {
                 $tokens->removeLeadingWhitespace($i);
             }

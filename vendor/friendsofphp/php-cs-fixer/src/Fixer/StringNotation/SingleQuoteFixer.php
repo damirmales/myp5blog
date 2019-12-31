@@ -78,11 +78,10 @@ EOF;
                 $content = substr($content, 1);
             }
 
-            if (
-                '"' === $content[0] &&
-                (true === $this->configuration['strings_containing_single_quote_chars'] || false === strpos($content, "'")) &&
+            if ('"' === $content[0] 
+                && (true === $this->configuration['strings_containing_single_quote_chars'] || false === strpos($content, "'")) 
                 // regex: odd number of backslashes, not followed by double quote or dollar
-                !Preg::match('/(?<!\\\\)(?:\\\\{2})*\\\\(?!["$\\\\])/', $content)
+                && !Preg::match('/(?<!\\\\)(?:\\\\{2})*\\\\(?!["$\\\\])/', $content)
             ) {
                 $content = substr($content, 1, -1);
                 $content = str_replace(['\\"', '\\$', '\''], ['"', '$', '\\\''], $content);
@@ -96,11 +95,13 @@ EOF;
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('strings_containing_single_quote_chars', 'Whether to fix double-quoted strings that contains single-quotes.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 }

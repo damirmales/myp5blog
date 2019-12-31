@@ -61,7 +61,8 @@ final class BraceClassInstantiationTransformer extends AbstractTransformer
             return;
         }
 
-        if ($tokens[$tokens->getPrevMeaningfulToken($index)]->equalsAny([
+        if ($tokens[$tokens->getPrevMeaningfulToken($index)]->equalsAny(
+            [
             ']',
             [CT::T_ARRAY_INDEX_CURLY_BRACE_CLOSE],
             [CT::T_ARRAY_SQUARE_BRACE_CLOSE],
@@ -76,7 +77,9 @@ final class BraceClassInstantiationTransformer extends AbstractTransformer
             [T_SWITCH],
             [T_VARIABLE],
             [T_WHILE],
-        ])) {
+            ]
+        )
+        ) {
             return;
         }
 

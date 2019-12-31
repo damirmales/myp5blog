@@ -56,11 +56,13 @@ final class Application extends BaseApplication
         $this->add(new DescribeCommand());
         $this->add(new FixCommand($this->toolInfo));
         $this->add(new ReadmeCommand());
-        $this->add(new SelfUpdateCommand(
-            new NewVersionChecker(new GithubClient()),
-            $this->toolInfo,
-            new PharChecker()
-        ));
+        $this->add(
+            new SelfUpdateCommand(
+                new NewVersionChecker(new GithubClient()),
+                $this->toolInfo,
+                new PharChecker()
+            )
+        );
     }
 
     /**

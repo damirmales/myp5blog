@@ -143,7 +143,8 @@ final class MyTest extends \PHPUnit_Framework_TestCase
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('target', 'Target version of PHPUnit.'))
                 ->setAllowedTypes(['string'])
                 ->setAllowedValues([PhpUnitTargetVersion::VERSION_3_2, PhpUnitTargetVersion::VERSION_4_3, PhpUnitTargetVersion::VERSION_NEWEST])
@@ -153,7 +154,8 @@ final class MyTest extends \PHPUnit_Framework_TestCase
                 ->setAllowedTypes(['bool'])
                 ->setDefault(true)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -207,12 +209,14 @@ final class MyTest extends \PHPUnit_Framework_TestCase
             $doc = new DocBlock($tokens[$docBlockIndex]->getContent());
             $annotations = [];
 
-            foreach ($doc->getAnnotationsOfType([
+            foreach ($doc->getAnnotationsOfType(
+                [
                 'expectedException',
                 'expectedExceptionCode',
                 'expectedExceptionMessage',
                 'expectedExceptionMessageRegExp',
-            ]) as $annotation) {
+                ]
+            ) as $annotation) {
                 $tag = $annotation->getTag()->getName();
                 $content = $this->extractContentFromAnnotation($annotation);
                 $annotations[$tag] = $content;
@@ -236,19 +240,23 @@ final class MyTest extends \PHPUnit_Framework_TestCase
                 .implode(', ', $paramList)
                 .');';
             $newMethods = Tokens::fromCode($newMethodsCode);
-            $newMethods[0] = new Token([
+            $newMethods[0] = new Token(
+                [
                 T_WHITESPACE,
                 $this->whitespacesConfig->getLineEnding().$originalIndent.$this->whitespacesConfig->getIndent(),
-            ]);
+                ]
+            );
 
             // apply changes
             $tokens[$docBlockIndex] = new Token([T_DOC_COMMENT, $doc->getContent()]);
             $tokens->insertAt($braceIndex + 1, $newMethods);
 
-            $tokens[$braceIndex + $newMethods->getSize() + 1] = new Token([
+            $tokens[$braceIndex + $newMethods->getSize() + 1] = new Token(
+                [
                 T_WHITESPACE,
                 $this->whitespacesConfig->getLineEnding().$tokens[$braceIndex + $newMethods->getSize() + 1]->getContent(),
-            ]);
+                ]
+            );
 
             $i = $docBlockIndex;
         }

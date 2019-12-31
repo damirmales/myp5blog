@@ -312,19 +312,23 @@ if (true) {
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('statements', 'List of statements which must be preceded by an empty line.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(array_keys(self::$tokenMap))])
-                ->setDefault([
+                ->setDefault(
+                    [
                     'break',
                     'continue',
                     'declare',
                     'return',
                     'throw',
                     'try',
-                ])
+                    ]
+                )
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 }

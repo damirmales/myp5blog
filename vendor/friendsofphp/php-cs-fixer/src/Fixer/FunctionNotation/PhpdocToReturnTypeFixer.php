@@ -145,12 +145,14 @@ function my_foo()
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver([
+        return new FixerConfigurationResolver(
+            [
             (new FixerOptionBuilder('scalar_types', 'Fix also scalar types; may have unexpected behaviour due to PHP bad type coercion system.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(true)
                 ->getOption(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -305,7 +307,8 @@ function my_foo()
     {
         do {
             $index = $tokens->getPrevNonWhitespace($index);
-        } while ($tokens[$index]->isGivenKind([
+        } while ($tokens[$index]->isGivenKind(
+            [
             T_COMMENT,
             T_ABSTRACT,
             T_FINAL,
@@ -313,7 +316,8 @@ function my_foo()
             T_PROTECTED,
             T_PUBLIC,
             T_STATIC,
-        ]));
+            ]
+        ));
 
         if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
             return [];
