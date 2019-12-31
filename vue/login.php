@@ -8,7 +8,7 @@ require_once('functions/functions.php');
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <div class="page-heading">
-                        <h1>login page</h1>
+                        <h1>Page de connection</h1>
                         <span class="subheading">accès aux membres</span>
                         <a class="nav-link" href="index.php">Accueil</a>
                     </div>

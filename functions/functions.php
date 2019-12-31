@@ -1,12 +1,11 @@
 <?php
 
-//*** Get an input value entered by user ***
 /**
  * @param $session
  * @param $key
  * @return string|null
  */
-function getFormData($session, $key)
+function getFormData($session, $key)//*** Get an input value entered by user ***
 {
     if (!empty($_SESSION[$session][$key])) {
         $value = $_SESSION[$session][$key];
@@ -15,21 +14,20 @@ function getFormData($session, $key)
     }
     return null;
 }
-
 //*** save all input value entered by user ***
 //================ mettre dans services ou functions =================
 function saveFormData($index)
 {
     $post = securizeFormFields($_POST);
     foreach ($post as $key => $value) {
-        $_SESSION[$index] [$key] = $value;
+        $_SESSION[$index][$key] = $value;
     }
 }
-
 /**
  * @return string
  */
-function generateToken()
+
+/*function generateToken()
 {
     //Create a "unique" token.
     return $token = bin2hex(openssl_random_pseudo_bytes(16));
@@ -40,11 +38,10 @@ function generateToken()
  * @param $email
  * @return string
  */
-function createUrlWithToken($token, $email)
-{
-    $userId = 1; // test only
 
-    //Construct the URL.
+/*function createUrlWithToken($token, $email)
+{
+    // Construct the URL.
     $url = "https://damirweb.com/oc/p5/myp5blog/index.php?route=verifEmail&token=$token&email=$email";
 
     //Build the HTML for the link.
@@ -71,7 +68,6 @@ function setFlash($titre, $message, $type)
 
 function flashMessage2($mess)
 {
-
     echo '<div class="container alerte alert-' . $mess['type'] . '">' . $mess['titre'] . '
 <button type="button" class="close" data-dismiss="alert">&times;</button>' . $mess['message'] .
         '</div>';

@@ -6,26 +6,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/ArticleDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/ArticleDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/securizeFormFields.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/securizeFormFields.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Comments.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myp5blog.clpprj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myp5blog.sublime-project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myp5blog.sublime-workspace" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myp5blog_clcs.csprj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Collection.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Collection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Session.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layout_backend.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_backend.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Emails.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Emails.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/layout_gabarit.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_gabarit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/admin_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/admin_page.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/list_comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/articles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/comments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/fromages.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/fromages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/livres.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/livres.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -199,7 +196,9 @@
       <workItem from="1577175430532" duration="2736000" />
       <workItem from="1577349599284" duration="6050000" />
       <workItem from="1577433438899" duration="7005000" />
-      <workItem from="1577522625666" duration="11267000" />
+      <workItem from="1577522625666" duration="13137000" />
+      <workItem from="1577642119973" duration="2334000" />
+      <workItem from="1577697438824" duration="25023000" />
     </task>
     <servers />
   </component>
@@ -232,14 +231,14 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1575364789435" />
-    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1577557085932">
+    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1577701204737">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1577557085932" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1577109083582">
+    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1577701204737" />
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1577646616045">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1577109083582" />
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1577646616045" />
     <state x="453" y="178" key="NewPhpClassDialog" timestamp="1576746628811">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -260,18 +259,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="569" y="280" key="VCS.EditChangelistDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106083540" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1577523160780">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1577775300675">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1577523160780" />
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1577775300675" />
     <state x="481" y="27" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1576585132138">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="481" y="27" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1576585132138" />
-    <state x="379" y="0" width="607" height="728" key="find.popup" timestamp="1577109111592">
+    <state x="379" y="0" width="607" height="728" key="find.popup" timestamp="1577706103146">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="0" width="607" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1577109111592" />
+    <state x="379" y="0" width="607" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1577706103146" />
     <state x="424" y="0" width="517" height="688" key="refactoring.ChangeSignatureDialog" timestamp="1577021418600">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -284,15 +283,5 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1576425575748" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/index.php</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

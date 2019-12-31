@@ -1,12 +1,10 @@
 <?php
 
 namespace Model;
-/*********************************************/
-/************
- * Manage comments
- ***************/
-/*********************************************/
 
+/**
+ * Manage comments
+ */
 class Comments
 {
     protected $commentaire_id;
@@ -25,7 +23,6 @@ class Comments
     {
         foreach ($datas as $key => $value) {
             $method = 'set' . ucfirst($key);
-
             if (method_exists($this, $method)) {
                 $this->$method($value);
 
@@ -128,8 +125,6 @@ class Comments
     {
         $this->date_validation = $date_validation;
     }
-
-
 }        
 
 

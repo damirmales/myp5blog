@@ -1,7 +1,5 @@
 <?php ob_start(); ?>
 
-
-
    <!-- Blog Author -->
   <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
     <div class="overlay"></div>
@@ -55,5 +53,4 @@ unset($_SESSION["userMember"]);
   </div>
 <?php endforeach ?>
   <?php $content = ob_get_clean();?>
-
 <?php require'templates/layout_gabarit.php'; ?>

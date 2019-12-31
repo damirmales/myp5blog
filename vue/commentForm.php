@@ -1,3 +1,4 @@
+
 <?php ob_start();?>
 <?php
 if (!empty($commentErrorMessage)) {
@@ -20,4 +21,5 @@ if (!empty($_SESSION['waitingValidation'])) {
 </form>
 
 <?php $formComment = ob_get_clean(); ?>
+
 <?php require 'vue/comments.php'; ?>

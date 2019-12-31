@@ -1,4 +1,5 @@
 <?php
+/*
 if (!isset($_SESSION["user"]['role']))
     {
         $session_role = $_SESSION["user"]['role']=null;
@@ -7,7 +8,7 @@ else
 {
     $session_role = $_SESSION["user"]['role'];
 }
-
+*/
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -67,34 +68,22 @@ else
                     <a class="nav-link" href="index.php?route=contact">Contact</a>
                 </li>
                 <?php
-                // if (isset($_SESSION['user'])) {
-                if (($session_role == 'admin')) {
+                if (isset($_SESSION['user']['role'])) {
                     ?>
-                        <li class="nav-item">
-                            <a class="" href="index.php?route=admin"> ⚒ Admin</a>
-                            <a class="" href="index.php?route=deconnexion">ⓓ Déconnexion </a>
-                        </li>
-                    <?php
-                }
-                elseif (($session_role == 'member')) {
-                    ?>
-                        <li class="nav-item">
-                            <a class="" > ☑ Membre </a>
-                            <a class="" href="index.php?route=deconnexion">ⓓ Se déconnecter </a>
-                        </li>
-                    <?php
-                }
-                else
-                {
-                    ?>
-                        <li class="nav-item">
-                            <a class="" href="index.php?route=register">ⓔ S'enregistrer </a>
-                            <a class="" href="index.php?route=connexion">ⓒ Se connecter </a>
-                        </li>
-                    <?php
-                }
-                // }
-                ?>
+                    <li class="nav-item">
+                        <?php if ($_SESSION['user']['role'] === 'admin') { ?>
+                            <a class="" href="index.php?route=admin">⚒ Admin</a>
+                        <?php } else { ?>
+                            <span class=""> ☑ Membre </span>
+                        <?php } ?>
+                        <a class="" href="index.php?route=deconnexion">ⓓ Déconnexion </a>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="" href="index.php?route=register">ⓔ S'enregistrer </a>
+                        <a class="" href="index.php?route=connexion">ⓒ Se connecter </a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
@@ -131,13 +120,13 @@ else
                 <?php
                 if (isset($session_role)) {
 
-                    if ($session_role != 'admin')  {
-                        ?>
-                        <p class="admin text-center"><a href="index.php?route=connexionAdmin">⚒ Administration</a>
-                        <?php
-                    }
-                }
+                if ($session_role != 'admin')  {
                 ?>
+                <p class="admin text-center"><a href="index.php?route=connexionAdmin">⚒ Administration</a>
+                    <?php
+                    }
+                    }
+                    ?>
 
                 <p class="copyright text-muted">Copyright &copy; Damir Blog 2019</p>
             </div>

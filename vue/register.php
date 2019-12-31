@@ -22,18 +22,15 @@ if (!empty($registerFormMessage)) {
     flashMessage($registerFormMessage);
 }
 if (!empty($_SESSION["registerForm"]["login"])) {
-
     flashMessage2($_SESSION["registerForm"]["login"]);
     unset($_SESSION["registerForm"]["login"]);
 }
 if (!empty($_SESSION["registerForm"]["email"])) {
-
     flashMessage2($_SESSION["registerForm"]["email"]);
     unset($_SESSION["registerForm"]["email"]);
 }
 
 if (!empty($_SESSION["registerForm"]["OK"])) {
-
     flashMessage2($_SESSION["registerForm"]["OK"]);
     unset($_SESSION["registerForm"]["OK"]);
 }

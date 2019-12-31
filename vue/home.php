@@ -24,12 +24,20 @@ require_once('functions/functions.php');
                     <br/>Vous pouvez me contactez par ce formulaire</p>
                 <?php
                 if (!empty($contactErrorMessage)) {
-
                     flashMessage($contactErrorMessage);
                 }
+                if (!empty($contactSendMessage)) {
+                    flashMessage2($contactSendMessage);
+                }
+
 
                 if (!empty($registerMessage)) {
                     flashMessage($registerMessage);
+                }
+
+                if (!empty($_SESSION["registerForm"]["OK"])) {
+                    flashMessage2($_SESSION["registerForm"]["OK"]);
+                    unset($_SESSION["registerForm"]["OK"]);
                 }
                 ?>
                 <!-- Contact Form -  -->

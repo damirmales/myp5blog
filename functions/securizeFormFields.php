@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @param $data
+ * @return null
+ */
 function securizeFormFields($data)
 {
     $arrayField = null;

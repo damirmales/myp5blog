@@ -1,6 +1,7 @@
 <?php
 
 namespace Controller;
+
 use Model\ArticleDao;
 use Model\Articles;
 use Model\CommentDao;
@@ -81,63 +82,14 @@ class BackendController
         include 'vue/backend/create_article.php';
     }
 
-    /**********************
-     *
+    /**
      * display article
-     ****************************/
+     **/
     public function showArticle($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
         include 'vue/backend/show_article.php';
-    }
-
-    public function updateArticle2()
-    {
-        $updateArticleErrorMessage = [];
-        $post = securizeFormFields($_POST);
-        if (isset($post['btn_update_article'])) {
-
-            if (empty($post['titre'])) {
-                $updateArticleErrorMessage['titre'] = setFlash("Attention !", "Manque le titre", 'warning');
-
-            } elseif (strlen($post['titre']) < 3) {
-                $updateArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['titre']) > 45) {
-                $updateArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
-            }
-
-            if (empty($post['chapo'])) {
-                $updateArticleErrorMessage['chapo'] = setFlash("Attention !", "Manque le chapo", 'warning');
-            } elseif (strlen($post['chapo']) < 3) {
-                $updateArticleErrorMessage['chapo'] = setFlash("Attention !", 'Votre chapo doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['chapo']) > 45) {
-                $updateArticleErrorMessage['chapo'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
-            }
-
-            if (empty($post['auteur'])) {
-                $updateArticleErrorMessage['auteur'] = setFlash("Attention !", "Manque l'auteur", 'warning');
-            } elseif (strlen($post['auteur']) < 3) {
-                $updateArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['auteur']) > 45) {
-                $updateArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
-            }
-
-            if (empty($post['contenu'])) {
-                $updateArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
-            }
-
-            if (empty($updateArticleErrorMessage)) {
-                $article = new Articles($post);
-                $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
-                $articleUpdate = $articleDao->updateArticleToDb($article);
-                if ($articleUpdate) {
-                    $this->showArticle($post['articles_id']);
-                }
-            }
-            //saveFormData('newArticle');
-            include 'vue/backend/edit_article.php';
-        }
     }
 
     public function updateArticle()
@@ -192,11 +144,9 @@ class BackendController
         $articlesEdited = $articles->getListArticles();
         include 'vue/backend/list_articles.php';
     }
-
-    /**********************
-     *
+    /**
      * display current article's datas to be modified
-     ****************************/
+     **/
     public function editArticle($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
@@ -213,10 +163,9 @@ class BackendController
             exit();
         }
     }
-    //*****************************************************************
-    //******************** Manage comments  ************************
-    //*****************************************************************
-
+    /**
+    /* Manage comments
+    */
     public function showComment($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
