@@ -78,7 +78,7 @@ class BackendController
                 //require 'vue/articles.php.php';
             }
         }
-        saveFormData('newArticle');
+        saveFormData('newArticle',$post);
         include 'vue/backend/create_article.php';
     }
 

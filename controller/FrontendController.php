@@ -16,9 +16,9 @@ require_once 'functions/checkFormFields.php';
 
 class FrontendController
 {
-    /*******************
+    /**
      * home management
-     **********************/
+     **/
     public function home()
     {
         include 'vue/home.php';
@@ -32,17 +32,17 @@ class FrontendController
         include 'vue/cv.php';
     }
 
-    /*******************
+    /**
      * contact from top menu
-     **********************/
+     **/
     public function contact()
     {
         include 'vue/home.php';
     }
 
-    /*******************
+    /**
      * Front articles.php management
-     **********************/
+     **/
     public function pullListeArticles() // get all articles
     {
         $reqArticles = new ArticleDao(); //////////// voir gestion instance en Singleton
@@ -72,10 +72,12 @@ class FrontendController
      * @param $articleId
      * @param $post
      */
-    public function addComment($articleId, $post)
+    public function addComment($articleId, $postData)
     {
-        $nom = $_SESSION['user']['nom'];
-        $email = $_SESSION['user']['email'];
+        $post = securizeFormFields($postData);
+
+        $nom = $_SESSION['user']['nom']; //use logged user's name
+        $email = $_SESSION['user']['email'];//use logged user's email
         $comment = $post['comment'];
         $article = null;// init $article to use it as an array to display article datas
         $comments = null;// init comments to show all comments
@@ -83,6 +85,7 @@ class FrontendController
 
         if (isset($post['commentFormBtn'])) {
             if (empty($post['comment'])) {
+
                 $commentErrorMessage['contenu'] = setFlash("Attention !", "Commentaire non renseigné", 'warning');
             }
             if (empty($commentErrorMessage)) {
@@ -102,16 +105,17 @@ class FrontendController
                     $_SESSION['waitingValidation'] = setFlash("Super !", "le commentaire est en attente de validation", 'success');
                 }
             } else {
-                saveFormData('comment');
+                saveFormData('comment',$post);
             }
         }
-        //------- check if instance of Articles and Comments classes already exist -------
+        //check if instance of Articles and Comments classes already exist
+        // help to not create multiple instance
         if (($article instanceof ArticleDao) != true) {
             $reqArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
-            $reqArticle->getSingleArticle($articleId);
+            $article = $reqArticle->getSingleArticle($articleId);
 
         } else {
-            $reqArticle->getSingleArticle($articleId);
+            $article =  $reqArticle->getSingleArticle($articleId);
         }
 
         if (($comments instanceof Comments) != true) {
@@ -152,7 +156,7 @@ class FrontendController
         $contactErrorMessage = [];// Store error message to be available into home.php
 
         $field = securizeFormFields($post);
-        saveFormData('input');
+        saveFormData('input',$field);
         if ($field['formContact'] == 'sent') {
 
             if (empty($field['nom'])) {
@@ -193,6 +197,7 @@ class FrontendController
 
                 $email = $sendEmail->sendEmail();
                 $contactSendMessage = setFlash("Magnifique !", 'Email envoyé', 'success');
+                cleanFormData('input',$post);
             }
         }
         include_once 'vue/home.php';
@@ -350,7 +355,7 @@ class FrontendController
                 if (($post['password2']) !== ($post['password'])) {
                     $registerFormMessage['password12'] = setFlash("Attention !", "Les champs des mots de passe doivent être identiques", "warning"); // Store error message to be abvailable into register.php
                 }
-                saveFormData('register');
+                saveFormData('register',$post);
                 //---- if no errors in form fields add user's data in DB and ---
                 //---- launch email checking with a token ----------------------
                 if (empty($registerFormMessage)) {

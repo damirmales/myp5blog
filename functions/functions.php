@@ -14,48 +14,27 @@ function getFormData($session, $key)//*** Get an input value entered by user ***
     }
     return null;
 }
+
 //*** save all input value entered by user ***
 //================ mettre dans services ou functions =================
-function saveFormData($index)
+function saveFormData($index, $post)
 {
-    $post = securizeFormFields($_POST);
     foreach ($post as $key => $value) {
         $_SESSION[$index][$key] = $value;
     }
-}
-/**
- * @return string
- */
 
-/*function generateToken()
+}
+
+//*** Clean all input value entered by user ***
+//================ mettre dans services ou functions =================
+function cleanFormData($index, $post)
 {
-    //Create a "unique" token.
-    return $token = bin2hex(openssl_random_pseudo_bytes(16));
+    foreach ($post as $key => $value) {
+        $_SESSION[$index][$key] = "";
+    }
+
 }
 
-/**
- * @param $token
- * @param $email
- * @return string
- */
-
-/*function createUrlWithToken($token, $email)
-{
-    // Construct the URL.
-    $url = "https://damirweb.com/oc/p5/myp5blog/index.php?route=verifEmail&token=$token&email=$email";
-
-    //Build the HTML for the link.
-    $urlLink = '<a href="' . $url . '">' . $url . '</a>';
-    //Send the email containing the $link above.
-    return $urlLink;
-}
-
-/**
- * @param $titre
- * @param $message
- * @param $type
- * @return array
- */
 function setFlash($titre, $message, $type)
 {
     $mess = [

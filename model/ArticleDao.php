@@ -89,7 +89,7 @@ class ArticleDao extends PdoConstruct
         );
         $requete->execute([':id' => $idArticle]);
         $article = $requete->fetch(\PDO::FETCH_ASSOC); //si pas FETCH_ASSOC alors on recupere des numéros de colonne
-        $requete->closeCursor();
+        //$requete->closeCursor();
         $oneArticle = new Articles($article);
         return $oneArticle;
     }

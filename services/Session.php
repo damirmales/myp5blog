@@ -3,7 +3,7 @@ namespace Services;
 
 class Session
 {
-    public $session;
+    protected $session;
 
     public function __construct($session)
     {
@@ -15,12 +15,12 @@ class Session
         $this->session[$name][$key] = $value;
     }
 
-    public function show($name)
-    {
-        if(isset($this->session[$name])) {
-            $key = $this->get($name);
-            $this->remove($name);
-            return $key;
+    public function show($name,$key)
+    {print_r($this->session[$name]) ;
+        if(isset($this->session[$name][$key])) {
+            $value = $this->get($name,$key);
+            $this->remove($name,$key);
+            return $value;
         }
     }
 

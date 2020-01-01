@@ -1,15 +1,3 @@
-<?php
-/*
-if (!isset($_SESSION["user"]['role']))
-    {
-        $session_role = $_SESSION["user"]['role']=null;
-    }
-else
-{
-    $session_role = $_SESSION["user"]['role'];
-}
-*/
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,6 +20,8 @@ else
     <link href="public/css/clean-blog.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="public/css/clean-blog.min.css" rel="stylesheet">
+    <!-- add personalized style.css -->
+    <link href="public/css/styles.css" rel="stylesheet">
 </head>
 <body>
 <!-- Navigation -->
@@ -74,7 +64,7 @@ else
                         <?php if ($_SESSION['user']['role'] === 'admin') { ?>
                             <a class="" href="index.php?route=admin">⚒ Admin</a>
                         <?php } else { ?>
-                            <span class=""> ☑ Membre </span>
+                            <span class="menu_member"> ☑ Membre </span>
                         <?php } ?>
                         <a class="" href="index.php?route=deconnexion">ⓓ Déconnexion </a>
                     </li>
