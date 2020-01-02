@@ -1,4 +1,6 @@
-<?php ob_start();
+<?php use Services\Messages;
+
+ob_start();
 require_once('functions/functions.php');
 ?>
     <!-- Page Header -->
@@ -19,7 +21,7 @@ require_once('functions/functions.php');
 
 <?php
 if (!empty($connexionErrorMessage)) {
-    flashMessage($connexionErrorMessage);
+    Messages::flashMessage($connexionErrorMessage);
 }
 ?>
     <!-- Main Content -->

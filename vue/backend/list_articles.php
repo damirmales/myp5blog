@@ -29,7 +29,6 @@ $titre = "Liste des articles";
   </div>
 
 <?php endforeach ?>
-
 <?php $content = ob_get_clean();
 require'templates/layout_backend.php'; 
 

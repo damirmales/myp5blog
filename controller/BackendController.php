@@ -5,8 +5,10 @@ namespace Controller;
 use Model\ArticleDao;
 use Model\Articles;
 use Model\CommentDao;
+use Services\FormData;
+use Services\Messages;
 
-require_once 'functions/functions.php';
+
 require_once 'functions/securizeFormFields.php';
 
 class BackendController
@@ -39,31 +41,31 @@ class BackendController
 
         if (isset($post['btn_creer_article'])) {
             if (empty($post['titre'])) {
-                $addArticleErrorMessage['titre'] = setFlash("Attention !", "Manque le titre", 'warning');
+                $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", "Manque le titre", 'warning');
             } elseif (strlen($post['titre']) < 3) {
-                $addArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
+                $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
             } elseif (strlen($post['titre']) > 45) {
-                $addArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
+                $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
             }
 
             if (empty($post['chapo'])) {
-                $addArticleErrorMessage['chapo'] = setFlash("Attention !", "Manque le chapo", 'warning');
+                $addArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", "Manque le chapo", 'warning');
             } elseif (strlen($post['chapo']) < 3) {
-                $addArticleErrorMessage['chapo'] = setFlash("Attention !", 'Votre chapo doit faire plus de 3 caractères', 'warning');
+                $addArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", 'Votre chapo doit faire plus de 3 caractères', 'warning');
             } elseif (strlen($post['chapo']) > 45) {
-                $addArticleErrorMessage['chapo'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
+                $addArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
             }
 
             if (empty($post['auteur'])) {
-                $addArticleErrorMessage['auteur'] = setFlash("Attention !", "Manque l'auteur", 'warning');
+                $addArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", "Manque l'auteur", 'warning');
             } elseif (strlen($post['auteur']) < 3) {
-                $addArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire plus de 3 caractères', 'warning');
+                $addArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", 'Votre auteur doit faire plus de 3 caractères', 'warning');
             } elseif (strlen($post['auteur']) > 45) {
-                $addArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
+                $addArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
             }
 
             if (empty($post['contenu'])) {
-                $addArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
+                $addArticleErrorMessage['contenu'] = Messages::setFlash("Attention !", "Manque le contenu", 'warning');
             }
 
             if (empty($addArticleErrorMessage)) {
@@ -71,14 +73,14 @@ class BackendController
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleAdded = $articleDao->setArticleToDb($article);
 
-                $messOk = setFlash("Super !", "Article ajouté", 'success');
+                $messOk = Messages::setFlash("Super !", "Article ajouté", 'success');
 
                 $this->showArticle($articleAdded);
                 unset($_SESSION['newArticle']); // delete data provided by user
                 //require 'vue/articles.php.php';
             }
         }
-        saveFormData('newArticle',$post);
+        FormData::saveFormData('newArticle',$post);
         include 'vue/backend/create_article.php';
     }
 
@@ -99,37 +101,37 @@ class BackendController
 
         if (isset($post['btn_update_article'])) {
             if (empty($post['titre'])) {
-                $updateArticleErrorMessage['titre'] = setFlash("Attention !", "Manque le titre", 'warning');
+                $updateArticleErrorMessage['titre'] = Messages::setFlash("Attention !", "Manque le titre", 'warning');
             } elseif (strlen($post['titre']) < 3) {
-                $updateArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
+                $updateArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
             } elseif (strlen($post['titre']) > 45) {
-                $updateArticleErrorMessage['titre'] = setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
+                $updateArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
             }
 
             if (empty($post['chapo'])) {
-                $updateArticleErrorMessage['chapo'] = setFlash("Attention !", "Manque le chapo", 'warning');
+                $updateArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", "Manque le chapo", 'warning');
             } elseif (strlen($post['chapo']) < 3) {
-                $updateArticleErrorMessage['chapo'] = setFlash("Attention !", 'Votre chapo doit faire plus de 3 caractères', 'warning');
+                $updateArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", 'Votre chapo doit faire plus de 3 caractères', 'warning');
             } elseif (strlen($post['chapo']) > 45) {
-                $updateArticleErrorMessage['chapo'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
+                $updateArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
             }
 
             if (empty($post['auteur'])) {
-                $updateArticleErrorMessage['auteur'] = setFlash("Attention !", "Manque l'auteur", 'warning');
+                $updateArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", "Manque l'auteur", 'warning');
             } elseif (strlen($post['auteur']) < 3) {
-                $updateArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire plus de 3 caractères', 'warning');
+                $updateArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", 'Votre auteur doit faire plus de 3 caractères', 'warning');
             } elseif (strlen($post['auteur']) > 45) {
-                $updateArticleErrorMessage['auteur'] = setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
+                $updateArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
             }
             if (empty($post['contenu'])) {
-                $updateArticleErrorMessage['contenu'] = setFlash("Attention !", "Manque le contenu", 'warning');
+                $updateArticleErrorMessage['contenu'] = Messages::setFlash("Attention !", "Manque le contenu", 'warning');
             }
             $article = new Articles($post);
             if (empty($updateArticleErrorMessage)) {
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleUpdate = $articleDao->updateArticleToDb($article);
                 if ($articleUpdate) {
-                    $_SESSION['updateArticle'] = setFlash("Super !", "Article mis à jour", 'success');
+                    $_SESSION['updateArticle'] = Messages::setFlash("Super !", "Article mis à jour", 'success');
                     $this->showArticle($post['articles_id']);
                 }
             } else {

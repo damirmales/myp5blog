@@ -4,3 +4,4 @@ node_modules
 /public
 /recycle
 gulpfile.js
+test.php

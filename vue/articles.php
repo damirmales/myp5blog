@@ -19,12 +19,13 @@
 /******************************** gestion des messages selon les renseignements des formulaires ***********
  * //************* mettre dans une classe Messages / success **********************
  * /*****************************************************************************/
-
+/*
 if (!empty($_SESSION["userMember"]))
 {
     flashMessage2($_SESSION["userMember"]);
 }
 unset($_SESSION["userMember"]);
+*/
 ?>
 
 <?php foreach ($articles as $article) : ?>
