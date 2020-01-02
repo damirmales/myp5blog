@@ -13,7 +13,7 @@ use Services\ImportPage;
 use Services\Messages;
 
 //require_once 'functions/functions.php';
-require_once 'functions/securizeFormFields.php';
+//require_once 'functions/securizeFormFields.php';
 require_once 'functions/checkFormFields.php';
 
 class FrontendController
@@ -76,7 +76,7 @@ class FrontendController
      */
     public function addComment($articleId, $postData)
     {
-        $post = securizeFormFields($postData);
+        $post = FormData::securizeFormFields($postData);
 
         $nom = $_SESSION['user']['nom']; //use logged user's name
         $email = $_SESSION['user']['email'];//use logged user's email
@@ -155,7 +155,7 @@ class FrontendController
     {
         $contactErrorMessage = [];// Store error message to be available into home.php
 
-        $field = securizeFormFields($post);
+        $field = FormData::securizeFormFields($post);
         FormData::saveFormData('input', $field);
         if ($field['formContact'] == 'sent') {
 
@@ -194,8 +194,7 @@ class FrontendController
                 $sendEmail->setPrenom($post['prenom']);
                 $sendEmail->setEmail($post['email']);
                 $sendEmail->setMessage($post['message']);
-
-                $email = $sendEmail->sendEmail();
+                $sendEmail->sendEmail();
                 $contactSendMessage = Messages::setFlash("Magnifique !", 'Email envoyé', 'success');
                 FormData::cleanFormData('input', $post);
             }
@@ -235,14 +234,11 @@ class FrontendController
     public function checkUser()//---- from login.php ---------
     {
         $connexionErrorMessage = [];// Store error message to be available into login.php
-        $field = securizeFormFields($_POST);
-
+        $field = FormData::securizeFormFields($_POST);
         if (($field['formLogin']) == 'sent') {
-
             if (empty($field['login'])) {
                 $connexionErrorMessage['login'] = Messages::setFlash("Attention !", "Pas de login renseigné", 'warning');
             }
-
             if (empty($field['password'])) {
                 $connexionErrorMessage['password'] = Messages::setFlash("Attention !", "Pas de password renseigné", 'warning');
             } elseif (strlen($field['password']) < 2) {
@@ -261,16 +257,11 @@ class FrontendController
                         $_SESSION["user"]['login'] = $checkUser['login'];
                         $_SESSION["user"]['email'] = $checkUser['email'];
                         $_SESSION["user"]['bienvenu'] = 1;
-
                         //------ check if user is admin --------
                         if ($_SESSION["user"]['role'] == 'admin') {
-
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
                             exit();
-
                         } else {
-                          //  $_SESSION["userMember"] = Messages::setFlash("Bonjour !", "Vous êtes membre du blog", 'success');
-
                             header('Location: index.php');
                             exit();
                         }
@@ -281,7 +272,6 @@ class FrontendController
                         exit();
                     }
                 } else {
-
                     $connexionErrorMessage['loginOrPass'] = Messages::setFlash("Attention !", "Identifiants non correct", 'warning');
                 }
             }
@@ -293,14 +283,12 @@ class FrontendController
      **/
     public function addUser()
     {
-        $post = securizeFormFields($_POST);
+        $post = FormData::securizeFormFields($_POST);
         /**
          * Contact form check
          **/
         $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs dans les champs du formulaire
-
         if (!empty($post)) {
-
             if ($post['formRegister'] == 'sent') {
                 if (empty($post['nom'])) {
                     $registerFormMessage['nom'] = Messages::setFlash("Attention !", "Manque le nom", "warning"); // Store error message to be abvailable into register.php

@@ -46,7 +46,6 @@ use Services\Messages;
                 <form action="index.php?route=contactForm" method="post" name="sentMessage" id="contactForm" novalidate>
                     <input type="hidden" name="formContact" value="sent">
                     <div class="control-group">
-
                         <div class="control-group">
                             <div class="form-group floating-label-form-group controls">
                                 <label>Nom</label>

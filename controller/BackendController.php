@@ -8,8 +8,7 @@ use Model\CommentDao;
 use Services\FormData;
 use Services\Messages;
 
-
-require_once 'functions/securizeFormFields.php';
+//require_once 'functions/securizeFormFields.php';
 
 class BackendController
 {
@@ -37,7 +36,7 @@ class BackendController
     public function addArticle() //
     {
         $addArticleErrorMessage = [];// Store error message to be available into create_article
-        $post = securizeFormFields($_POST);
+        $post = FormData::securizeFormFields($_POST);
 
         if (isset($post['btn_creer_article'])) {
             if (empty($post['titre'])) {
@@ -97,7 +96,7 @@ class BackendController
     public function updateArticle()
     {
         $updateArticleErrorMessage = [];
-        $post = securizeFormFields($_POST);
+        $post = FormData::securizeFormFields($_POST);
 
         if (isset($post['btn_update_article'])) {
             if (empty($post['titre'])) {

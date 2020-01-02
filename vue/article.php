@@ -1,5 +1,5 @@
 <?php ob_start();
-require_once('functions/functions.php');
+
 ?>
 <!-- Page Header -->
 <header class="masthead" style="background-image: url('public/img/post-bg.jpg')">

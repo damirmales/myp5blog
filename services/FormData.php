@@ -1,11 +1,25 @@
 <?php
 
-
 namespace Services;
-
 
 class FormData
 {
+    /**
+     * @param $data
+     * @return null
+     */
+    public static function securizeFormFields($data)
+    {
+        $arrayField = null;
+        foreach ($data as $key => $field) {
+            $field = trim($field);
+            $field = stripslashes($field);
+            $field = htmlspecialchars($field);
+            $arrayField[$key] = $field;
+        }
+        return $arrayField;
+    }
+
     /**
      * @param $session
      * @param $key
@@ -45,4 +59,6 @@ class FormData
             $_SESSION[$index][$key] = "";
         }
     }
+
+
 }
