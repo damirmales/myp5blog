@@ -23,18 +23,16 @@ use Services\Messages;
 if (!empty($registerFormMessage)) {
     Messages::flashMessage($registerFormMessage);
 }
-if (!empty($_SESSION["registerForm"]["login"])) {
-    Messages::flashMessage2($_SESSION["registerForm"]["login"]);
-    unset($_SESSION["registerForm"]["login"]);
-}
-if (!empty($_SESSION["registerForm"]["email"])) {
-    Messages::flashMessage2($_SESSION["registerForm"]["email"]);
-    unset($_SESSION["registerForm"]["email"]);
-}
+if (!empty($loginEmailFormMessage["registerForm"]["login"])) {
+    Messages::flashMessage2($loginEmailFormMessage["registerForm"]["login"]);
+  }
+if (!empty($loginEmailFormMessage["registerForm"]["email"])) {
+    Messages::flashMessage2($loginEmailFormMessage["registerForm"]["email"]);
+  }
 
 if (!empty($_SESSION["registerForm"]["OK"])) {
-   Messages::flashMessage2($_SESSION["registerForm"]["OK"]);
-    unset($_SESSION["registerForm"]["OK"]);
+   Messages::flashMessage2( $_SESSION["registerForm"]["OK"]);
+   unset($_SESSION["registerForm"]["OK"]);
 }
 ?>    <!-- Main Content -->
     <div class="container">

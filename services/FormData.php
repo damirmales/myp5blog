@@ -4,6 +4,8 @@ namespace Services;
 
 class FormData
 {
+    private static $formSession = [];
+
     /**
      * @param $data
      * @return null
@@ -27,8 +29,8 @@ class FormData
      */
     public static function getFormData($session, $key)//*** Get an input value entered by user ***
     {
-        if (!empty($_SESSION[$session][$key])) {
-            $value = $_SESSION[$session][$key];
+        if (!empty(self::$formSession[$session][$key])) {
+            $value = self::$formSession[$session][$key];
             return $value;
         }
         return null;
@@ -41,7 +43,8 @@ class FormData
     public static function saveFormData($index, $post)
     {
         foreach ($post as $key => $value) {
-            $_SESSION[$index][$key] = $value;
+            self::$formSession[$index][$key] = $value;
+
         }
     }
 
@@ -52,7 +55,7 @@ class FormData
     public static function cleanFormData($index, $post)
     {
         foreach ($post as $key => $value) {
-            $_SESSION[$index][$key] = "";
+            self::$formSession[$index][$key] = "";
         }
     }
 

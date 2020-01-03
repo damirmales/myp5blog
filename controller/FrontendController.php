@@ -269,7 +269,9 @@ class FrontendController
     public function addUser()
     {
         $post = FormData::securizeFormFields($_POST);
-        $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs dans les champs du formulaire
+        $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs présentent dans les champs du formulaire
+        $loginEmailFormMessage = []; //si login et email déjà utilisés
+
         if (!empty($post)) {
             if ($post['formRegister'] == 'sent') {
                 if (empty($post['nom'])) {
@@ -300,8 +302,9 @@ class FrontendController
 
                 if (empty($post['password'])) {
                     $registerFormMessage['password'] = Messages::setFlash("Attention !", "Manque le Mot de passe ", "warning"); // Store error message to be abvailable into register.php
+                } elseif (strlen($post['password']) < 2) {
+                    $registerFormMessage['password'] = Messages::setFlash("Attention !", "Le mot de passe doit avoir plus de 2 caractères!", 'warning');
                 }
-
                 if (empty($post['password2'])) {
                     $registerFormMessage ['password2'] = Messages::setFlash("Attention !", "Il faut répéter mot de passe ", "warning"); // Store error message to be abvailable into register.php
                 }
@@ -309,8 +312,9 @@ class FrontendController
                 if (($post['password2']) !== ($post['password'])) {
                     $registerFormMessage['password12'] = Messages::setFlash("Attention !", "Les champs des mots de passe doivent être identiques", "warning"); // Store error message to be abvailable into register.php
                 }
+
                 FormData::saveFormData('register', $post);
-                //---- if no errors in form fields add user's data in DB and ---
+                //---- if no errors in form fields add user's data are not yet in DB  ---
                 //---- launch email checking with a token ----------------------
                 if (empty($registerFormMessage)) {
                     $userDao = new UserDao();
@@ -319,10 +323,12 @@ class FrontendController
 
                     if ($userLogin || $userEmail) {
                         if ($userLogin) {
-                            $_SESSION["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
+                            //$_SESSION["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
+                            $loginEmailFormMessage["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
                         }
+
                         if ($userEmail) {
-                            $_SESSION["registerForm"]["email"] = Messages::setFlash("Attention !", "Email déjà pris", "warning");
+                            $loginEmailFormMessage["registerForm"]["email"] = Messages::setFlash("Attention !", "Email déjà pris", "warning");
                         }
                     } else {
                         $token = Emails::generateToken();
@@ -336,7 +342,6 @@ class FrontendController
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
                         $_SESSION["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
 
-                        //include 'vue/register.php';
                         header('Location: index.php?route=register');
                         exit();
                     }
