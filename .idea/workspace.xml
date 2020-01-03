@@ -9,11 +9,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/securizeFormFields.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/FormData.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/FormData.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ValidateForms.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/checkFormFields.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/checkFormFields.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +187,7 @@
       <workItem from="1577697438824" duration="25023000" />
       <workItem from="1577775298337" duration="10849000" />
       <workItem from="1577889023305" duration="14286000" />
-      <workItem from="1577950341508" duration="17715000" />
+      <workItem from="1577950341508" duration="23370000" />
     </task>
     <servers />
   </component>
@@ -224,10 +220,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1575364789435" />
-    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1577985295421">
+    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1578058661193">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1577985295421" />
+    <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1578058661193" />
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1577646616045">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

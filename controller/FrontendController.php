@@ -12,10 +12,6 @@ use Services\FormData;
 use Services\ImportPage;
 use Services\Messages;
 
-//require_once 'functions/functions.php';
-//require_once 'functions/securizeFormFields.php';
-require_once 'functions/checkFormFields.php';
-
 class FrontendController
 {
     /**
@@ -25,7 +21,6 @@ class FrontendController
     {
         include 'vue/home.php';
     }
-
     /**
      * cv
      */
@@ -33,7 +28,6 @@ class FrontendController
     {
         include 'vue/cv.php';
     }
-
     /**
      * contact from top menu
      **/
@@ -41,7 +35,6 @@ class FrontendController
     {
         include 'vue/home.php';
     }
-
     /**
      * Front articles.php management
      **/
@@ -51,7 +44,6 @@ class FrontendController
         $articles = $reqArticles->getListArticles();
         include 'vue/articles.php';
     }
-
     public function getArticle($id) // get one article
     {
         $reqArticle = new ArticleDao(); // voir gestion instance en Singleton
@@ -59,7 +51,6 @@ class FrontendController
         $comments = $this->getComments($id); // insérer les commentaires avec l'article
         include 'vue/commentForm.php';
     }
-
     /*******************
      * Front comments management
      **********************/
@@ -69,7 +60,6 @@ class FrontendController
         $comments = $comments->getCommentsFromDb($id);
         return $comments;
     }
-
     /**
      * @param $articleId
      * @param $post
@@ -77,7 +67,6 @@ class FrontendController
     public function addComment($articleId, $postData)
     {
         $post = FormData::securizeFormFields($postData);
-
         $nom = $_SESSION['user']['nom']; //use logged user's name
         $email = $_SESSION['user']['email'];//use logged user's email
         $comment = $post['comment'];
@@ -87,7 +76,6 @@ class FrontendController
 
         if (isset($post['commentFormBtn'])) {
             if (empty($post['comment'])) {
-
                 $commentErrorMessage['contenu'] = Messages::setFlash("Attention !", "Commentaire non renseigné", 'warning');
             }
             if (empty($commentErrorMessage)) {
@@ -100,9 +88,7 @@ class FrontendController
                 $affectedLines = $commentObj->addCommentsToDb($articleId, $newComment); // id de l'article
 
                 if ($affectedLines === false) {
-
                     exit('Impossible d\'ajouter le commentaire !');
-
                 } else {
                     $_SESSION['waitingValidation'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
                 }
@@ -113,11 +99,9 @@ class FrontendController
         if (($article instanceof ArticleDao) != true) {
             $reqArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
             $article = $reqArticle->getSingleArticle($articleId);
-
         } else {
             $article = $reqArticle->getSingleArticle($articleId);
         }
-
         if (($comments instanceof Comments) != true) {
             $comments = new CommentDao();
             $comments = $comments->getCommentsFromDb($articleId);
@@ -126,7 +110,6 @@ class FrontendController
         }
         include 'vue/commentForm.php';
     }
-
     /**
      * Front articles.php categories management
      */
@@ -154,11 +137,9 @@ class FrontendController
     public function addContact($post)
     {
         $contactErrorMessage = [];// Store error message to be available into home.php
-
         $field = FormData::securizeFormFields($post);
         FormData::saveFormData('input', $field);
         if ($field['formContact'] == 'sent') {
-
             if (empty($field['nom'])) {
                 $contactErrorMessage['nom'] = Messages::setFlash("Attention !", "Nom non renseigné", "warning"); // Store error message to be abvailable into register.php
             } elseif (strlen($field['nom']) < 3) {
@@ -166,7 +147,6 @@ class FrontendController
             } elseif (strlen($field['nom']) > 45) {
                 $contactErrorMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire moins de 45 caractères', 'warning');
             }
-
             if (empty($field['prenom'])) {
                 $contactErrorMessage['prenom'] = Messages::setFlash("Attention !", "prenom non renseigné", "warning"); // Store error message to be abvailable into register.php
             } elseif (strlen($field['prenom']) < 3) {
@@ -174,17 +154,14 @@ class FrontendController
             } elseif (strlen($field['prenom']) > 45) {
                 $contactErrorMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire moins de 45 caractères', 'warning');
             }
-
             if (empty($field['email'])) {
                 $contactErrorMessage['email'] = Messages::setFlash("Attention !", "Email non renseigné", 'warning');
             } elseif (!filter_var($field['email'], FILTER_VALIDATE_EMAIL)) {
                 $contactErrorMessage['email'] = Messages::setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", 'warning');
             }
-
             if (empty($field['message'])) {
                 $contactErrorMessage['message'] = Messages::setFlash("Attention !", "Le message manque", 'warning');
             }
-
             if (empty($contactErrorMessage)) {
                 /**
                  * Call class Emails to send contact form data
@@ -228,6 +205,7 @@ class FrontendController
         header('Location: index.php');
         exit();
     }
+
     /**
      * Before login check user presence in database
      */
@@ -265,8 +243,7 @@ class FrontendController
                             header('Location: index.php');
                             exit();
                         }
-                    } else // statut = 0
-                    {
+                    } else {// statut = 0
                         $_SESSION["loginForm"] = "Votre compte n'est pas encore validé";
                         header('Location: index.php');
                         exit();

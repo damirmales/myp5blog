@@ -8,12 +8,9 @@ use Model\CommentDao;
 use Services\FormData;
 use Services\Messages;
 
-//require_once 'functions/securizeFormFields.php';
-
 class BackendController
 {
     //********** admin login page access *************
-
     public function admin()
     {
         //!!!!!!!!!!!!!!! verifier l existence de la session !!!!!!!!!!!!!!
@@ -24,10 +21,10 @@ class BackendController
         }
         include 'vue/backend/admin_page.php';
     }
-    //*****************************************************************
-    //******************** Manage articles ************************
-    //*****************************************************************
 
+    /**
+     * Manage articles
+     */
     public function createArticle()
     {
         include 'vue/backend/create_article.php';//call addArticle() when form will be completed
@@ -155,6 +152,9 @@ class BackendController
         include_once 'vue/backend/edit_article.php';
     }
 
+    /**
+     * @param $idArticle
+     */
     public function deleteArticle($idArticle)
     {
         $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
@@ -164,9 +164,7 @@ class BackendController
             exit();
         }
     }
-    /**
-    /* Manage comments
-    */
+
     public function showComment($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
