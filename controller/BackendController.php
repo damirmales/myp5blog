@@ -76,7 +76,7 @@ class BackendController
                 //require 'vue/articles.php.php';
             }
         }
-        FormData::saveFormData('newArticle',$post);
+        FormData::saveFormData('newArticle', $post);
         include 'vue/backend/create_article.php';
     }
 
@@ -142,6 +142,7 @@ class BackendController
         $articlesEdited = $articles->getListArticles();
         include 'vue/backend/list_articles.php';
     }
+
     /**
      * display current article's datas to be modified
      **/

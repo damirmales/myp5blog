@@ -21,6 +21,7 @@ class FrontendController
     {
         include 'vue/home.php';
     }
+
     /**
      * cv
      */
@@ -28,6 +29,7 @@ class FrontendController
     {
         include 'vue/cv.php';
     }
+
     /**
      * contact from top menu
      **/
@@ -35,6 +37,7 @@ class FrontendController
     {
         include 'vue/home.php';
     }
+
     /**
      * Front articles.php management
      **/
@@ -44,6 +47,7 @@ class FrontendController
         $articles = $reqArticles->getListArticles();
         include 'vue/articles.php';
     }
+
     public function getArticle($id) // get one article
     {
         $reqArticle = new ArticleDao(); // voir gestion instance en Singleton
@@ -51,6 +55,7 @@ class FrontendController
         $comments = $this->getComments($id); // insérer les commentaires avec l'article
         include 'vue/commentForm.php';
     }
+
     /*******************
      * Front comments management
      **********************/
@@ -60,6 +65,7 @@ class FrontendController
         $comments = $comments->getCommentsFromDb($id);
         return $comments;
     }
+
     /**
      * @param $articleId
      * @param $post
@@ -110,6 +116,7 @@ class FrontendController
         }
         include 'vue/commentForm.php';
     }
+
     /**
      * Front articles.php categories management
      */
@@ -255,15 +262,13 @@ class FrontendController
         }
         include_once 'vue/login.php';
     }
+
     /**
      * Add user from register.php to database
      **/
     public function addUser()
     {
         $post = FormData::securizeFormFields($_POST);
-        /**
-         * Contact form check
-         **/
         $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs dans les champs du formulaire
         if (!empty($post)) {
             if ($post['formRegister'] == 'sent') {
@@ -340,6 +345,7 @@ class FrontendController
         }
         include 'vue/register.php';
     }
+
     //check the token from the link validate in the user's email
     public function verifyToken()
     {

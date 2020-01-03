@@ -1,12 +1,9 @@
 <?php
 
-
 namespace Services;
-
 
 class Messages
 {
-
     /**
      * @param $titre
      * @param $message
@@ -23,7 +20,10 @@ class Messages
         return $mess;
     }
 
-    public static function flashMessage2($mess)
+    /**
+     * @param $mess
+     */
+    public static function flashMessage2($mess)//display one item
     {
         echo '<div class="container alerte alert-' . $mess['type'] . '">' . $mess['titre'] . '
 <button type="button" class="close" data-dismiss="alert">&times;</button>' . $mess['message'] .
@@ -31,6 +31,9 @@ class Messages
         unset($mess);
     }
 
+    /**
+     * @param $mess
+     */
     public static function flashMessage($mess)
     {
         foreach ($mess as $msg) {

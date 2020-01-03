@@ -2,11 +2,9 @@
 
 namespace Model;
 
-/******
- *
- * **************************************************************************
+/**
  * Cette classe gère les données liées à l'affichage des articles
- *************************************************************************************/
+ */
 class Articles
 {
     protected $articles_id;

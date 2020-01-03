@@ -6,10 +6,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/checkFormFields.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/checkFormFields.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/ArticleDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/ArticleDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Articles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/CommentDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/CommentDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/UserDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserDao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Emails.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Emails.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/FormData.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/FormData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/ImportPage.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/ImportPage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Messages.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +195,7 @@
       <workItem from="1577697438824" duration="25023000" />
       <workItem from="1577775298337" duration="10849000" />
       <workItem from="1577889023305" duration="14286000" />
-      <workItem from="1577950341508" duration="23370000" />
+      <workItem from="1577950341508" duration="25738000" />
     </task>
     <servers />
   </component>
@@ -240,10 +248,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="487" y="74" key="RollbackChangesDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106099533" />
-    <state x="291" y="12" key="SettingsEditor" timestamp="1577477583320">
+    <state x="291" y="12" key="SettingsEditor" timestamp="1578061091393">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1577477583320" />
+    <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1578061091393" />
     <state x="569" y="280" key="VCS.EditChangelistDialog" timestamp="1577106083540">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

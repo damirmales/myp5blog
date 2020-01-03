@@ -34,8 +34,6 @@ class FormData
         return null;
     }
 
-//*** save all input value entered by user ***
-//================ mettre dans services ou functions =================
     /**
      * @param $index
      * @param $post
@@ -47,8 +45,6 @@ class FormData
         }
     }
 
-//*** Clean all input value entered by user ***
-//================ mettre dans services ou functions =================
     /**
      * @param $index
      * @param $post

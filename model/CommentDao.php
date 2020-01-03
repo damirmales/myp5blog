@@ -4,11 +4,9 @@ namespace Model;
 
 class CommentDao extends PdoConstruct
 {
-    /************
-     *
+    /*
      * Fetch comments from database
-     ***************/
-
+     */
     public function getCommentsFromDb($articleId)
     {
         $requete = $this->connection->prepare(
@@ -22,10 +20,9 @@ class CommentDao extends PdoConstruct
         $comments = $requete->fetchAll();
         return $comments;
     }
-
-    /************
+    /**
      *
-     * Add comments to database **************
+     * Add comments to database
      *
      * @param  $articleId
      * @param  $comment
@@ -48,12 +45,9 @@ class CommentDao extends PdoConstruct
         $affectedLines = $requete->execute();
         return $affectedLines;
     }
-
-    /************
-     *
+    /**
      * Fetch list of comments from database
-     ***************/
-
+     */
     public function getListComments()
     {
         $requete = $this->connection->prepare('
@@ -70,10 +64,11 @@ class CommentDao extends PdoConstruct
         }
         return $comments;
     }
-
-    //---------- efface le commentaire en fonction du numéro d'id fournit ----------
-
-    public function deleteComment($idComment)
+    /**
+     * @param $idComment
+     * @return bool|\PDOStatement
+     */
+    public function deleteComment($idComment) // efface le commentaire en fonction du numéro d'id fournit ----------
     {
         $commentaire = $this->connection->prepare(
             '
@@ -84,7 +79,9 @@ class CommentDao extends PdoConstruct
         $commentaire->execute([':id' => $idComment]);
         return $commentaire;
     }
-
+    /**
+     * @param $idComment
+     */
     public function validateComment($idComment)
     {
         $commentaire = $this->connection->prepare(

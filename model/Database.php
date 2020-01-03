@@ -1,8 +1,8 @@
 <?php
 namespace Model;
-/****
+/**
  * Cette classe permet de gérer la connexion à la base de données 
- *****************/
+ */
 
 class Database
 {
@@ -18,7 +18,6 @@ class Database
             $connectPDO->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             return $connectPDO;
         }
-
         catch (Exception $e)
         {
             die('Erreur : ' . $e->getMessage());

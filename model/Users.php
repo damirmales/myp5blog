@@ -18,7 +18,6 @@ class Users extends PdoConstruct
     {
         $this->hydrate($datas);
     }
-
     public function hydrate(array $datas)
     {
         foreach ($datas as $key => $value) {
@@ -29,15 +28,13 @@ class Users extends PdoConstruct
             }
         }
     }
-
-    /***************************************
+    /**
      * @return mixed
      */
     public function getId()
     {
         return $this->id;
     }
-
     /**
      * @param mixed $id
      */
@@ -45,15 +42,13 @@ class Users extends PdoConstruct
     {
         $this->id = $id;
     }
-
-    /**************************************
+    /**
      * @return mixed
      */
     public function getNom()
     {
         return $this->nom;
     }
-
     /**
      * @param mixed $nom
      */
@@ -61,15 +56,13 @@ class Users extends PdoConstruct
     {
         $this->nom = $nom;
     }
-
-    /**************************************
+    /**
      * @return mixed
      */
     public function getPrenom()
     {
         return $this->prenom;
     }
-
     /**
      * @param mixed $prenom
      */
@@ -77,15 +70,13 @@ class Users extends PdoConstruct
     {
         $this->prenom = $prenom;
     }
-
-    /**************************************
+    /**
      * @return mixed
      */
     public function getEmail()
     {
         return $this->email;
     }
-
     /**
      * @param mixed $email
      */
@@ -93,15 +84,13 @@ class Users extends PdoConstruct
     {
         $this->email = $email;
     }
-
-    /**************************************
+    /**
      * @return mixed
      */
     public function getRole()
     {
         return $this->role;
     }
-
     /**
      * @param mixed $role
      */
@@ -109,7 +98,6 @@ class Users extends PdoConstruct
     {
         $this->role = $role;
     }
-
     /**************************************
      * @return mixed
      */
@@ -117,7 +105,6 @@ class Users extends PdoConstruct
     {
         return $this->statut;
     }
-
     /**
      * @param mixed $statut
      */
@@ -125,7 +112,6 @@ class Users extends PdoConstruct
     {
         $this->statut = $statut;
     }
-
     /**************************************
      * @return mixed
      */
@@ -133,7 +119,6 @@ class Users extends PdoConstruct
     {
         return $this->token;
     }
-
     /**
      * @param mixed $token
      */
@@ -141,7 +126,6 @@ class Users extends PdoConstruct
     {
         $this->token = $token;
     }
-
     /**************************************
      * @return mixed
      */
@@ -149,7 +133,6 @@ class Users extends PdoConstruct
     {
         return $this->login;
     }
-
     /**
      * @param mixed $login
      */
@@ -157,7 +140,6 @@ class Users extends PdoConstruct
     {
         $this->login = $login;
     }
-
     /**************************************
      * @return mixed
      */
@@ -165,7 +147,6 @@ class Users extends PdoConstruct
     {
         return $this->password;
     }
-
     /**
      * @param mixed $password
      */
