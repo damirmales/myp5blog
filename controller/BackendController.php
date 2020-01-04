@@ -14,9 +14,9 @@ class BackendController
     public function admin()
     {
         //!!!!!!!!!!!!!!! verifier l existence de la session !!!!!!!!!!!!!!
-        if ($_SESSION["user"]['role'] != 'admin') {
+        if ($_SESSION["user"]['role'] != 'admin') {// from frontendController checkUser() method via Router
 
-            header('Location: index.php'); // if user is not admin
+            header('Location: index.php'); // if user is NOT admin
             exit();
         }
         include 'vue/backend/admin_page.php';
@@ -63,31 +63,22 @@ class BackendController
             if (empty($post['contenu'])) {
                 $addArticleErrorMessage['contenu'] = Messages::setFlash("Attention !", "Manque le contenu", 'warning');
             }
+            FormData::saveFormData('newArticle', $post);
 
             if (empty($addArticleErrorMessage)) {
                 $article = new Articles($post);
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleAdded = $articleDao->setArticleToDb($article);
 
-                $messOk = Messages::setFlash("Super !", "Article ajouté", 'success');
+                //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
 
-                $this->showArticle($articleAdded);
-                unset($_SESSION['newArticle']); // delete data provided by user
-                //require 'vue/articles.php.php';
+                header('Location: index.php?route=showArticle&id=' . $articleAdded);
+                exit();
+                //$this->showArticle($articleAdded);
+                // unset($_SESSION['newArticle']);
             }
         }
-        FormData::saveFormData('newArticle', $post);
         include 'vue/backend/create_article.php';
-    }
-
-    /**
-     * display article
-     **/
-    public function showArticle($idArticle)
-    {
-        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $article = $getArticle->getSingleArticle($idArticle);
-        include 'vue/backend/show_article.php';
     }
 
     public function updateArticle()
@@ -134,6 +125,16 @@ class BackendController
                 include 'vue/backend/edit_article.php';
             }
         }
+    }
+
+    /**
+     * display article
+     **/
+    public function showArticle($idArticle)
+    {
+        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $article = $getArticle->getSingleArticle($idArticle);
+        include 'vue/backend/show_article.php';
     }
 
     public function editListArticles()

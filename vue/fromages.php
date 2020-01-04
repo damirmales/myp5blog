@@ -35,7 +35,6 @@
                         <?php echo htmlspecialchars($article['date_mise_a_jour']); ?>
                     </p>
 
-
                 </div>
                 <hr>
                 <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">Voir l'article</a>

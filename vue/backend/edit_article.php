@@ -1,12 +1,13 @@
 <?php ob_start();
 $titre = "Modifier un article";
-?>
+
+use Services\Messages; ?>
 <div class="container">
     <div class="col-lg-8 col-md-10 mx-auto">
         <p>Vous pouvez modifier cet article</p>
         <?php
         if (isset($updateArticleErrorMessage) && !empty($updateArticleErrorMessage)) {
-            flashMessage($updateArticleErrorMessage);
+            Messages::flashMessage($updateArticleErrorMessage);
         }
         ?>
         <form action="index.php?route=updateArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>
