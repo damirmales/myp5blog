@@ -11,6 +11,7 @@ use Services\Emails;
 use Services\FormData;
 use Services\ImportPage;
 use Services\Messages;
+use Services\Session;
 
 class FrontendController
 {
@@ -237,13 +238,15 @@ class FrontendController
                 if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password'])) {
 
                     if ($checkUser['statut'] == 1) {
-                        $_SESSION["user"]['role'] = $checkUser['role'];
-                        $_SESSION["user"]['nom'] = $checkUser['nom'];
-                        $_SESSION["user"]['login'] = $checkUser['login'];
-                        $_SESSION["user"]['email'] = $checkUser['email'];
-                        $_SESSION["user"]['bienvenu'] = 1;
+                        $session = &$_SESSION;
+                        $session["user"]['role'] = $checkUser['role'];
+                        $session["user"]['nom'] = $checkUser['nom'];
+                        $session["user"]['login'] = $checkUser['login'];
+                        $session["user"]['email'] = $checkUser['email'];
+                        $session["user"]['bienvenu'] = 1;
                         //------ check if user is admin --------
-                        if ($_SESSION["user"]['role'] == 'admin') {
+                        if ($session["user"]['role'] === 'admin') {
+                            //echo '<pre> sessionUserrole'; var_dump(Session::get('user', 'role'));
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
                             exit();
                         } else {
@@ -251,9 +254,7 @@ class FrontendController
                             exit();
                         }
                     } else {// statut = 0
-                        $_SESSION["loginForm"] = "Votre compte n'est pas encore validé";
-                        header('Location: index.php');
-                        exit();
+                        $connexionErrorMessage['statut'] = Messages::setFlash("Attention !", "Votre compte n'est pas encore validé", 'warning');
                     }
                 } else {
                     $connexionErrorMessage['loginOrPass'] = Messages::setFlash("Attention !", "Identifiants non correct", 'warning');

@@ -24,15 +24,15 @@
                     <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">
 
                         <h2 class="post-title">
-                            <?php echo htmlspecialchars($article['titre']); ?>
+                            <?= htmlspecialchars($article['titre']); ?>
                         </h2>
                         <h3 class="post-subtitle">
-                            <?php echo htmlspecialchars($article['chapo']); ?>
+                            <?= htmlspecialchars($article['chapo']); ?>
                         </h3>
                     </a>
 
                     <p class="post-meta">Modifié le :
-                        <?php echo htmlspecialchars($article['date_mise_a_jour']); ?>
+                        <?= htmlspecialchars($article['date_mise_a_jour']); ?>
                     </p>
 
                 </div>

@@ -7,14 +7,18 @@ use Model\Articles;
 use Model\CommentDao;
 use Services\FormData;
 use Services\Messages;
+use Services\Session;
 
 class BackendController
 {
-    //********** admin login page access *************
+    /**
+    /* admin login page access
+    */
     public function admin()
     {
-        //!!!!!!!!!!!!!!! verifier l existence de la session !!!!!!!!!!!!!!
-        if ($_SESSION["user"]['role'] != 'admin') {// from frontendController checkUser() method via Router
+
+        $session = &$_SESSION;
+           if ($session["user"]['role'] != 'admin') {// from frontendController checkUser() method via Router
 
             header('Location: index.php'); // if user is NOT admin
             exit();
@@ -69,9 +73,7 @@ class BackendController
                 $article = new Articles($post);
                 $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
                 $articleAdded = $articleDao->setArticleToDb($article);
-
                 //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
-
                 header('Location: index.php?route=showArticle&id=' . $articleAdded);
                 exit();
                 //$this->showArticle($articleAdded);
@@ -115,7 +117,7 @@ class BackendController
             }
             $article = new Articles($post);
             if (empty($updateArticleErrorMessage)) {
-                $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
+                $articleDao = new ArticleDao();
                 $articleUpdate = $articleDao->updateArticleToDb($article);
                 if ($articleUpdate) {
                     $_SESSION['updateArticle'] = Messages::setFlash("Super !", "Article mis à jour", 'success');
@@ -139,7 +141,7 @@ class BackendController
 
     public function editListArticles()
     {
-        $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $articles = new ArticleDao();
         $articlesEdited = $articles->getListArticles();
         include 'vue/backend/list_articles.php';
     }
@@ -149,7 +151,7 @@ class BackendController
      **/
     public function editArticle($idArticle)
     {
-        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $getArticle = new ArticleDao();
         $article = $getArticle->getSingleArticle($idArticle);
         include_once 'vue/backend/edit_article.php';
     }
@@ -159,7 +161,7 @@ class BackendController
      */
     public function deleteArticle($idArticle)
     {
-        $articles = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $articles = new ArticleDao();
         $articleDeleted = $articles->deleteArticle($idArticle);
         if ($articleDeleted) {
             header('Location:index.php?route=editListArticles');
@@ -176,7 +178,7 @@ class BackendController
 
     public function deleteComment($idComment)
     {
-        $comment = new CommentDao(); //////////// voir gestion instance en Singleton
+        $comment = new CommentDao();
         $commentDeleted = $comment->deleteComment($idComment);
 
         if ($commentDeleted) {
@@ -186,7 +188,7 @@ class BackendController
 
     public function editListComments()
     {
-        $comments = new CommentDao(); //////////// voir gestion instance en Singleton
+        $comments = new CommentDao();
         $commentEdited = $comments->getListComments();
         include 'vue/backend/list_comments.php';
     }
