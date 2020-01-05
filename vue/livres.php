@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">
-            <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">
+            <a href="index.php?route=article&id=<?= htmlspecialchars($article['articles_id']) ?>">
 
             <h2 class="post-title">
               <?= htmlspecialchars($article['titre']); ?>
@@ -36,7 +36,7 @@
 
         </div>
         <hr>
-    <a href="index.php?route=article&id=<?= $article['articles_id'] ?>">Voir l'article</a>
+    <a href="index.php?route=article&id=<?= htmlspecialchars($article['articles_id']) ?>">Voir l'article</a>
  
   </div>
   </div>

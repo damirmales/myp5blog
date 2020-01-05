@@ -341,7 +341,8 @@ class FrontendController
                         $createUrlToken = Emails::createUrlWithToken($token, $userEmail);
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
-                        $_SESSION["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
+                        $session =&$_SESSION;
+                        $session["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
 
                         header('Location: index.php?route=register');
                         exit();

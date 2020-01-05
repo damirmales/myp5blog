@@ -11,7 +11,7 @@ use Services\Messages; ?>
         }
         ?>
         <form action="index.php?route=updateArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>
-            <input type="hidden" name="articles_id" value="<?= $article->getArticles_id(); ?>">
+            <input type="hidden" name="articles_id" value="<?= htmlspecialchars($article->getArticles_id()) ?>">
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                     <label>titre</label>

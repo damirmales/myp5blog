@@ -16,10 +16,8 @@ class BackendController
     */
     public function admin()
     {
-
         $session = &$_SESSION;
            if ($session["user"]['role'] != 'admin') {// from frontendController checkUser() method via Router
-
             header('Location: index.php'); // if user is NOT admin
             exit();
         }
@@ -76,9 +74,7 @@ class BackendController
                 //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
                 header('Location: index.php?route=showArticle&id=' . $articleAdded);
                 exit();
-                //$this->showArticle($articleAdded);
-                // unset($_SESSION['newArticle']);
-            }
+              }
         }
         include 'vue/backend/create_article.php';
     }
@@ -180,7 +176,6 @@ class BackendController
     {
         $comment = new CommentDao();
         $commentDeleted = $comment->deleteComment($idComment);
-
         if ($commentDeleted) {
             $this->editListComments();
         }

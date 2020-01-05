@@ -1,15 +1,17 @@
 
-<?php ob_start();?>
+<?php ob_start();
+$session = &$_SESSION;
+use Services\Messages; ?>
 <?php
 if (!empty($commentErrorMessage)) {
-    flashMessage($commentErrorMessage);
+    Messages::flashMessage($commentErrorMessage);
 }
-if (!empty($_SESSION['waitingValidation'])) {
-    flashMessage2($_SESSION['waitingValidation']);
-    unset($_SESSION['waitingValidation']);
+if (!empty($session['waitingValidation'])) {
+    Messages::flashMessage2($session['waitingValidation']);
+    unset($session['waitingValidation']);
 }
 ?>
-<form action="index.php?route=addComment&id=<?= $article->getArticles_id() ?>" method="post" name="commentForm">
+<form action="index.php?route=addComment&id=<?= addslashes($article->getArticles_id()) ?>" method="post" name="commentForm">
     <div class="input-group">
         <div class="input-group-prepend">
             <span class="input-group-text">Votre commentaire</span>

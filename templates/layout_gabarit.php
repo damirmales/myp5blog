@@ -58,10 +58,11 @@
                     <a class="nav-link" href="index.php?route=contact">Contact</a>
                 </li>
                 <?php
-                if (isset($_SESSION['user']['role'])) {
+                $session = &$_SESSION;
+                if (isset($session['user']['role'])) {
                     ?>
                     <li class="nav-item">
-                        <?php if ($_SESSION['user']['role'] === 'admin') { ?>
+                        <?php if ($session['user']['role'] === 'admin') { ?>
                             <a class="" href="index.php?route=admin">⚒ Admin</a>
                         <?php } else { ?>
                             <span class="menu_member"> ☑ Membre </span>

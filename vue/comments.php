@@ -1,9 +1,9 @@
-<?php ob_start(); ?>
+<?php ob_start(); $session=&$_SESSION; ?>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <?php if (isset($_SESSION['user']['role'])) :
+            <?php if (isset($session['user']['role'])) :
                 echo $formComment; // affiche le formulaire pour commenter
             else :
                 ?>
@@ -18,7 +18,7 @@
                 <!-- Comment Content -->
                 <article>
                     <p><strong>Rédigé par <?= htmlspecialchars($comment['pseudo']) ?></strong></p>
-                    <p>le <?= $comment['date_ajout'] ?></p>
+                    <p>le <?= htmlspecialchars($comment['date_ajout']) ?></p>
                     <p><strong>Commentaire</strong></p>
                     <p><?= nl2br(htmlspecialchars($comment['contenu'])) ?></p>
                 </article>

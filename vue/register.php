@@ -2,7 +2,7 @@
 
 use Services\FormData;
 use Services\Messages;
-
+$session = &$_SESSION;
 ?>
     <!-- Page Header -->
     <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
@@ -30,9 +30,9 @@ if (!empty($loginEmailFormMessage["registerForm"]["email"])) {
     Messages::flashMessage2($loginEmailFormMessage["registerForm"]["email"]);
   }
 
-if (!empty($_SESSION["registerForm"]["OK"])) {
-   Messages::flashMessage2( $_SESSION["registerForm"]["OK"]);
-   unset($_SESSION["registerForm"]["OK"]);
+if (!empty($session["registerForm"]["OK"])) {
+   Messages::flashMessage2( $session["registerForm"]["OK"]);
+   unset($session["registerForm"]["OK"]);
 }
 ?>    <!-- Main Content -->
     <div class="container">
@@ -47,22 +47,22 @@ if (!empty($_SESSION["registerForm"]["OK"])) {
                         <label for="nom">Nom </label>
                         <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
                         <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"
-                               value="<?= FormData::getFormData('register', 'nom') ?>">
+                               value="<?= addslashes(FormData::getFormData('register', 'nom')) ?>">
                     </div>
                     <div class="form-group">
                         <label for="prenom">Prénom</label>
                         <input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"
-                               value="<?= FormData::getFormData('register', 'prenom') ?>">
+                               value="<?= addslashes(FormData::getFormData('register', 'prenom')) ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">E-mail</label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email"
-                               value="<?= FormData::getFormData('register', 'email') ?>">
+                               value="<?= addslashes(FormData::getFormData('register', 'email')) ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputLogin">Login</label>
                         <input type="input" class="form-control" id="login" aria-describedby="login" name="login"
-                               placeholder="Login" value="<?= FormData::getFormData('register', 'login') ?>">
+                               placeholder="Login" value="<?= addslashes(FormData::getFormData('register', 'login')) ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputPassword">Mot de Passe</label>

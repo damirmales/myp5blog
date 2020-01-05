@@ -15,7 +15,7 @@ use Services\Messages; ?>
             <div class="form-group floating-label-form-group controls">
                 <label>titre</label>
                 <input type="text" class="form-control" placeholder="Titre" name="titre" id="titre"
-                       value="<?= FormData::getFormData('newArticle', 'titre') ?>" required
+                       value="<?= htmlspecialchars(FormData::getFormData('newArticle', 'titre')) ?>" required
                        data-validation-required-message="Entrez le titre.">
                 <p class="help-block text-danger"></p>
             </div>
@@ -25,7 +25,7 @@ use Services\Messages; ?>
             <div class="form-group floating-label-form-group controls">
                 <label>Châpo</label>
                 <input type="text" class="form-control" placeholder="Châpo" name="chapo" id="chapo"
-                       value="<?= FormData::getFormData('newArticle', 'chapo') ?>" required
+                       value="<?= htmlspecialchars(FormData::getFormData('newArticle', 'chapo')) ?>" required
                        data-validation-required-message="Entrez le châpo.">
                 <p class="help-block text-danger"></p>
             </div>
@@ -35,7 +35,7 @@ use Services\Messages; ?>
             <div class="form-group floating-label-form-group controls">
                 <label>Auteur</label>
                 <input type="text" class="form-control" placeholder="Auteur" name="auteur" id="auteur"
-                       value="<?= FormData::getFormData('newArticle', 'auteur') ?>" required
+                       value="<?= htmlspecialchars(FormData::getFormData('newArticle', 'auteur')) ?>" required
                        data-validation-required-message="Entrez votre nom.">
                 <p class="help-block text-danger"></p>
             </div>
@@ -54,12 +54,11 @@ use Services\Messages; ?>
             <div class="form-group floating-label-form-group controls">
                 <label>Contenu</label>
                 <textarea rows="5" class="form-control" placeholder="Contenu" name="contenu" id="contenu"
-                          value="<?= FormData::getFormData('newArticle', 'contenu') ?>" required
+                          value="<?= htmlspecialchars(FormData::getFormData('newArticle', 'contenu')) ?>" required
                           data-validation-required-message="Entrez le texte."></textarea>
                 <p class="help-block text-danger"></p>
             </div>
         </div>
-
         <br>
         <div id="success"></div>
         <div class="form-group">
