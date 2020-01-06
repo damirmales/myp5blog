@@ -6,18 +6,19 @@ use Model\ArticleDao;
 use Model\Articles;
 use Model\CommentDao;
 use Services\FormData;
+use Services\FormPost;
 use Services\Messages;
 use Services\Session;
 
 class BackendController
 {
     /**
-    /* admin login page access
-    */
+     * /* admin login page access
+     */
     public function admin()
     {
-        $session = &$_SESSION;
-           if ($session["user"]['role'] != 'admin') {// from frontendController checkUser() method via Router
+        $mySession = new Session();
+        if ($mySession->get('user', 'role') != 'admin') {// from frontendController checkUser() method via Router
             header('Location: index.php'); // if user is NOT admin
             exit();
         }
@@ -32,20 +33,28 @@ class BackendController
         include 'vue/backend/create_article.php';//call addArticle() when form will be completed
     }
 
+    /**
+     *
+     */
     public function addArticle() //
     {
         $addArticleErrorMessage = [];// Store error message to be available into create_article
-        $post = FormData::securizeFormFields($_POST);
+        $inputPost = new FormPost();
 
-        if (isset($post['btn_creer_article'])) {
-            if (empty($post['titre'])) {
+        //$post = FormData::securizeFormFields($arrayPost);
+
+        if ($inputPost->post('btn_creer_article') != 1) {
+            var_dump($inputPost->post('titre'));
+            die();
+            if (empty($inputPost->post('titre'))) {
                 $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", "Manque le titre", 'warning');
             } elseif (strlen($post['titre']) < 3) {
                 $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
             } elseif (strlen($post['titre']) > 45) {
                 $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
             }
-
+            var_dump($inputPost->post('btn_creer_article'));
+            die();
             if (empty($post['chapo'])) {
                 $addArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", "Manque le chapo", 'warning');
             } elseif (strlen($post['chapo']) < 3) {
@@ -74,7 +83,7 @@ class BackendController
                 //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
                 header('Location: index.php?route=showArticle&id=' . $articleAdded);
                 exit();
-              }
+            }
         }
         include 'vue/backend/create_article.php';
     }

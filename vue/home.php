@@ -2,6 +2,7 @@
 
 use Services\FormData;
 use Services\Messages;
+
 $session = &$_SESSION;
 ?>
     <!-- Blog Author -->
@@ -51,7 +52,7 @@ $session = &$_SESSION;
                                 <label>Nom</label>
                                 <input type="text" class="form-control" placeholder="Nom" name="nom" id="nom" required
                                        data-validation-required-message="Entrez votre nom."
-                                       value="<?= addslashes(FormData::getFormData('input', 'nom')) ?>">
+                                       value="<?= htmlspecialchars(FormData::getFormData('input', 'nom')) ?>">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -60,7 +61,7 @@ $session = &$_SESSION;
                             <label>Prénom </label>
                             <input type="text" class="form-control" placeholder="Prénom " name="prenom" id="prenom"
                                    required data-validation-required-message="Entrez votre prénom"
-                                   value="<?= addslashes(FormData::getFormData('input', 'prenom')) ?>">
+                                   value="<?= htmlspecialchars(FormData::getFormData('input', 'prenom')) ?>">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -70,7 +71,7 @@ $session = &$_SESSION;
                             <label>Email</label>
                             <input type="email" class="form-control" placeholder="Email" name="email" id="email"
                                    data-validation-required-message="Entrez votre email."
-                                   value="<?= addslashes(FormData::getFormData('input', 'email')) ?>" required>
+                                   value="<?= htmlspecialchars(FormData::getFormData('input', 'email')) ?>" required>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -80,7 +81,7 @@ $session = &$_SESSION;
                             <label>Message</label>
                             <textarea rows="5" class="form-control" placeholder="Message" name="message" id="message"
                                       required data-validation-required-message="Entrez votre message."
-                                      value="<?= addslashes(FormData::getFormData('input', 'message')) ?>"></textarea>
+                                      value="<?= htmlspecialchars(FormData::getFormData('input', 'message')) ?>"></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>

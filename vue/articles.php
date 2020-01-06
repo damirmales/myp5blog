@@ -33,8 +33,9 @@
 
                 </div>
 
-                <a href="index.php?route=article&id=<?= addslashes($article->getArticles_id()) ?>">Voir l'article</a><br>
-      
+                <a href="index.php?route=article&id=<?= htmlspecialchars($article->getArticles_id()) ?>">Voir
+                    l'article</a><br>
+
                 <hr>
             </div>
         </div>

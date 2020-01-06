@@ -238,14 +238,22 @@ class FrontendController
                 if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password'])) {
 
                     if ($checkUser['statut'] == 1) {
-                        $session = &$_SESSION;
-                        $session["user"]['role'] = $checkUser['role'];
-                        $session["user"]['nom'] = $checkUser['nom'];
-                        $session["user"]['login'] = $checkUser['login'];
-                        $session["user"]['email'] = $checkUser['email'];
-                        $session["user"]['bienvenu'] = 1;
+                        $mySession = new Session();
+                        $mySession->set('user', 'nom', $checkUser['nom']);
+                        $mySession->set('user', 'role', $checkUser['role']);
+                        $mySession->set('user', 'login', $checkUser['login']);
+                        $mySession->set('user', 'email', $checkUser['email']);
+                        $mySession->set('user', 'bienvenu', 1);
+
+
+                        //$session["user"]['role'] = $checkUser['role'];
+                        //$session["user"]['nom'] = $checkUser['nom'];
+                        //$session["user"]['login'] = $checkUser['login'];
+                        // $session["user"]['email'] = $checkUser['email'];
+                        //$session["user"]['bienvenu'] = 1;
+
                         //------ check if user is admin --------
-                        if ($session["user"]['role'] === 'admin') {
+                        if ($mySession->get('user', 'role') === 'admin') {
                             //echo '<pre> sessionUserrole'; var_dump(Session::get('user', 'role'));
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
                             exit();
@@ -341,7 +349,7 @@ class FrontendController
                         $createUrlToken = Emails::createUrlWithToken($token, $userEmail);
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
-                        $session =&$_SESSION;
+                        $session =& $_SESSION;
                         $session["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
 
                         header('Location: index.php?route=register');

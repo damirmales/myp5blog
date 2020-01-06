@@ -20,11 +20,13 @@ $row = 0; // to display number for each row of the comment table
                     <th scope="row"><?= ++$row ?></th>
                     <td><?php echo htmlspecialchars($comment->getPseudo()); ?></td>
                     <td><?= htmlspecialchars($comment->getContenu()); ?></td>
-                    <td><a href="index.php?route=deleteComment&id=<?= addslashes($comment->getCommentaire_id()) ?>"
+                    <td>
+                        <a href="index.php?route=deleteComment&id=<?= htmlspecialchars($comment->getCommentaire_id()) ?>"
                            onclick="return window.confirm(`Êtes vous sur de vouloir supprimer ce commentaire ?!`)"> ✄
                             Supprimer</a>
                         <br/>
-                        <a href="index.php?route=validateComment&id=<?= htmlspecialchars($comment->getCommentaire_id()) ?>"> ✌ Autoriser
+                        <a href="index.php?route=validateComment&id=<?= htmlspecialchars($comment->getCommentaire_id()) ?>">
+                            ✌ Autoriser
                             la publication</a>
                     </td>
                 </tr>

@@ -1,4 +1,5 @@
 <?php
+
 use Services\Messages;
 
 ob_start();
@@ -32,7 +33,6 @@ if (!empty($connexionErrorMessage)) {
                         <label for="inputLogin">Login</label>
                         <input type="input" class="form-control" id="login" name="login" aria-describedby="login"
                                placeholder="Votre login">
-
                     </div>
                     <div class="form-group">
                         <label for="inputPassword">Mot de passe</label>

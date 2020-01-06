@@ -17,6 +17,7 @@ class FormData
             $field = trim($field);
             $field = stripslashes($field);
             $field = htmlspecialchars($field);
+
             $arrayField[$key] = $field;
         }
         return $arrayField;

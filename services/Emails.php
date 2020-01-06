@@ -10,6 +10,9 @@ class Emails
     private $email;
     private $message;
 
+    /**
+     * @return bool
+     */
     public function sendEmail()
     {
         $prenom = $this->getPrenom();
@@ -22,11 +25,11 @@ class Emails
 
         $emailTo = "damir@romandie.com";
         $subject = "Contact";
-        $emailFrom = $this->getEmail();
+        $this->getEmail();
 
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-        //---- envoi email
+        //---- Envoi email
         $success = mail($emailTo, $subject, $message, $headers);
         return $success;
     }
