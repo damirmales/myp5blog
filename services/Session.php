@@ -3,40 +3,41 @@ namespace Services;
 
 class Session
 {
-    public $session;
+    protected static $session;
 
     public function __construct($session)
     {
-        $this->session = $session;
+        self::$session = $session;
     }
 
-    public function set($name,$key, $value)
+    public static function set($name,$key, $value)
     {
-        $this->session[$name][$key] = $value;
+        self::$session[$name][$key] = $value;
     }
 
-    public function show($name)
+    public static function show($name,$key)
     {
-        if(isset($this->session[$name])) {
-            $key = $this->get($name);
-            $this->remove($name);
-            return $key;
+        if(isset(self::$session[$name][$key])) {
+            $value = $this->get($name,$key);
+            self::remove($name,$key);
+            return $value;
         }
     }
 
-    public function get($name,$key)
+    public static function get($name,$key)
     {
-        if(isset($this->session[$name][$key])) {
-            return $this->session[$name][$key];
+        if(isset(self::$session[$name][$key])) {
+            return self::$session[$name][$key];
         }
+        return null;
     }
 
-    public function remove($name,$key)
+    public static function remove($name,$key)
     {
-        unset($this->session[$name][$key]);
+        unset(self::$session[$name][$key]);
     }
 
-    public function stop()
+    public static function stop()
     {
         session_destroy();
     }

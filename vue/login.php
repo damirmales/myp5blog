@@ -1,5 +1,7 @@
-<?php ob_start();
-require_once('functions/functions.php');
+<?php
+use Services\Messages;
+
+ob_start();
 ?>
     <!-- Page Header -->
     <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
@@ -16,13 +18,11 @@ require_once('functions/functions.php');
             </div>
         </div>
     </header>
-
 <?php
 if (!empty($connexionErrorMessage)) {
-    flashMessage($connexionErrorMessage);
+    Messages::flashMessage($connexionErrorMessage);
 }
-?>
-    <!-- Main Content -->
+?> <!-- Main Content -->
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">

@@ -1,5 +1,5 @@
 <?php ob_start();
-require_once('functions/functions.php');
+
 ?>
 <!-- Page Header -->
 <header class="masthead" style="background-image: url('public/img/post-bg.jpg')">
@@ -9,7 +9,7 @@ require_once('functions/functions.php');
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="post-heading">
 
-                    <h2 class="subheading"><span class="subheading">Article : <?= $article->getTitre(); ?></span></h2>
+                    <h2 class="subheading"><span class="subheading">Article : <?= addslashes($article->getTitre()) ?></span></h2>
 
                 </div>
             </div>
@@ -24,17 +24,17 @@ require_once('functions/functions.php');
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="post-heading">
                     <span class="meta"> <strong>Titre :</strong></span>
-                    <h1><?= $article->getTitre() ?></h1>
+                    <h1><?= addslashes($article->getTitre()) ?></h1>
                     <span class="meta"><strong>Châpo :</strong></span>
-                    <h2 class="subheading"><?= $article->getChapo(); ?></h2>
+                    <h2 class="subheading"><?= addslashes($article->getChapo()) ?></h2>
                     <span class="meta"> <strong>Posté par : </strong>
               <a href="#"><?= $article->getAuteur(); ?></a>
               <br>
-            <strong> Posté le : </strong><?= $article->getDate_creation(); ?></span>
+            <strong> Posté le : </strong><?= addslashes($article->getDate_creation()) ?></span>
                 </div>
 
                 <p><strong>Contenu : </strong></p>
-                <p><?= $article->getContenu(); ?></p>
+                <p><?= addslashes($article->getContenu()) ?></p>
             </div>
         </div>
     </div>
@@ -48,7 +48,6 @@ require_once('functions/functions.php');
         </div>
     </div>
 </div>
-
 
 <!-- display comments  a mettre dans la methode du FrontendController-->
 <?= $allComments; // Comments container ?>

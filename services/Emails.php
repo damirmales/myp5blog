@@ -26,13 +26,12 @@ class Emails
 
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-
         //---- envoi email
         $success = mail($emailTo, $subject, $message, $headers);
         return $success;
     }
 
-    /**************************************
+    /**
      * @return mixed
      */
     public function getPrenom()
@@ -48,7 +47,7 @@ class Emails
         $this->prenom = $prenom;
     }
 
-    /**************************************
+    /**
      * @return mixed
      */
     public function getNom()
@@ -64,7 +63,7 @@ class Emails
         $this->nom = $nom;
     }
 
-    /**************************************
+    /**
      * @return mixed
      */
     public function getEmail()
@@ -80,7 +79,7 @@ class Emails
         $this->email = $email;
     }
 
-    /**************************************
+    /**
      * @return mixed
      */
     public function getMessage()
@@ -96,8 +95,12 @@ class Emails
         $this->message = $message;
     }
 
-    //---- send email with token to register a new user ----------
-    public function tokenEmail($userEmail, $UrlToken)
+    /**
+     * @param $userEmail
+     * @param $UrlToken
+     * @return bool
+     */
+    public function tokenEmail($userEmail, $UrlToken)   //---- send email with token to register a new user ----------
     {
         $prenom = $this->getPrenom('prenom');
         $nom = $this->getNom('nom');

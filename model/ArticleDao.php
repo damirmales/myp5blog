@@ -2,21 +2,15 @@
 
 namespace Model;
 
-use Model\PdoConstruct;
-use Model\Articles;
-
-/******
- *
- * **************************************************************************
+/**
  * Cette classe gère la collecte des données pour afficher la liste des articles
  * et chaque article en particulier
- *************************************************************************************/
+ */
 class ArticleDao extends PdoConstruct
 {
-    /************
-     *
+    /**
      * Add articles to database
-     ***************/
+     */
     public function setArticleToDb($article)
     {
         $requete = $this->connection->prepare(
@@ -31,8 +25,7 @@ class ArticleDao extends PdoConstruct
         $requete->bindValue(':auteur', $article->getAuteur(), \PDO::PARAM_STR);
         $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
         $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
-        //$requete->bindValue(':date_creation', $this->getDateCreation(), \PDO::PARAM_INT);
-        //$requete->bindValue(':date_mise_a_jour', $this->getDateMiseAJour(), \PDO::PARAM_INT);
+
         $affectedLines = $requete->execute();
 
         $lastId = $this->connection->lastInsertId();
@@ -40,6 +33,10 @@ class ArticleDao extends PdoConstruct
         return $lastId; //$affectedLines;
     }
 
+    /**
+     * @param $article
+     * @return bool
+     */
     public function updateArticleToDb($article)
     {
         $requete = $this->connection->prepare(
@@ -75,9 +72,10 @@ class ArticleDao extends PdoConstruct
         $listArticles->closeCursor();
         return $articles;
     }
-
-    //----- Retourne la liste des articles pour affichage ------------
-
+    /**
+     * @param $idArticle
+     * @return Articles
+     */
     public function getSingleArticle($idArticle)
     {
         $requete = $this->connection->prepare(
@@ -89,13 +87,14 @@ class ArticleDao extends PdoConstruct
         );
         $requete->execute([':id' => $idArticle]);
         $article = $requete->fetch(\PDO::FETCH_ASSOC); //si pas FETCH_ASSOC alors on recupere des numéros de colonne
-        $requete->closeCursor();
+        //$requete->closeCursor();
         $oneArticle = new Articles($article);
         return $oneArticle;
     }
-
-    //----- Retourne un article particulier pour affichage ------------
-
+    /**
+     * @param $rubrique
+     * @return array
+     */
     public function getArticlesByCategory($rubrique)
     {
         //$connection = $this->getConnectDB();
@@ -111,10 +110,10 @@ class ArticleDao extends PdoConstruct
         $listArticles->closeCursor();
         return $articles;
     }
-
-    /*-------- Retourne la liste des articles selon la rubrique -------
-     ------------------ pour affichage -----------------------------------*/
-
+    /**
+     * @param $idArticle
+     * @return bool|\PDOStatement
+     */
     public function deleteArticle($idArticle)
     {
         try {
@@ -137,13 +136,6 @@ class ArticleDao extends PdoConstruct
         );
         $article->execute([':id' => $idArticle]);
         $article->closeCursor();
-        return $article;
-    }
-    //---------- efface l'article en fonction du numéro d'id fournit ----------
-
-    private function buildArticle($field) // create an object Articles to allow acces to its properties    {
-    {
-        $article = new Articles($field);
         return $article;
     }
 }

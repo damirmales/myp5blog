@@ -16,16 +16,16 @@ class UserDao extends PdoConstruct
         );
         // On lie la variable $email définie au-dessus au paramètre :email de la requête préparée
         $userEmail->bindValue(':email', $email, \PDO::PARAM_STR);
-
         $userEmail->execute();
         $user = $userEmail->fetch();
 
         return $user;
     }
-
-    //----- Check if user's login is in the DB ------------
-
-    public function checkUserLogin($loginUser)
+    /**
+     * @param $loginUser
+     * @return mixed
+     */
+    public function checkUserLogin($loginUser) //----- Check if user's login is in the DB
     {
         $userData = $this->connection->prepare(
             '
@@ -34,16 +34,13 @@ class UserDao extends PdoConstruct
 					WHERE login = :loginUser
 					'
         );
-
         $userData->execute([':loginUser' => $loginUser]);
         $user = $userData->fetch();
         return $user;
     }
-
-    /************
-     *
+    /**
      * Add user to database
-     ***************/
+     */
     public function addUserToDb($user)
     {
         $requete = $this->connection->prepare(
@@ -66,17 +63,19 @@ class UserDao extends PdoConstruct
         $count = $requete->rowCount();
         return $affectedLines;
     }
-
     /**
-     *
-     * encrypt password
-     ********/
+     * @param $pswd
+     * @return false|string|null
+     */
     private function hashPassword($pswd)
     {
         $pwd_hashed = password_hash($pswd, PASSWORD_DEFAULT);
         return $pwd_hashed;
     }
-
+    /**
+     * @param $idUser
+     * @return bool
+     */
     public function validateUser($idUser)
     {
         $commentaire = $this->connection->prepare(
@@ -88,9 +87,11 @@ class UserDao extends PdoConstruct
         $validUser = $commentaire->execute([':id' => $idUser]);
         return $validUser;
     }
-
-    //*********** check the token from the link validate in the user's email **************
-    public function fetchToken($userToken)
+    /**
+     * @param $userToken
+     * @return mixed
+     */
+    public function fetchToken($userToken)// check the token from the link validate in the user's email
     {
         $sql = "SELECT id,nom  FROM users WHERE  token = :token";
         $stmt = $this->connection->prepare($sql);

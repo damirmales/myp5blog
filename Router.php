@@ -1,4 +1,5 @@
 <?php
+
 use Controller\FrontendController;
 use Controller\BackendController;
 
@@ -10,9 +11,7 @@ class Router
     {
         try {
             if (isset($_GET['route'])) {
-                $getAction = $_GET['route'];
-                $get = filter_var($getAction, FILTER_SANITIZE_SPECIAL_CHARS);
-
+                $get = filter_var($_GET['route'], FILTER_SANITIZE_SPECIAL_CHARS);
                 if ($get === 'contactForm') {
                     $frontController = new FrontendController;
                     $frontController->addContact($_POST);
@@ -21,7 +20,6 @@ class Router
                     $frontController->cv();
                 } elseif ($get === 'contact') {
                     $frontController = new FrontendController;
-                    //$frontController->home();
                     $frontController->contact();
                 } elseif ($get === 'liste') {
                     $frontController = new FrontendController;
@@ -72,11 +70,9 @@ class Router
                 {
                     $frontController = new FrontendController;
                     $frontController->verifyToken();
-                }
-                /*********************************
+                } /**
                  * PARTIE BACKEND
-                 ********************************/
-                /*********************************************************************************/
+                 */
                 elseif ($get === 'createArticle') {
                     $backController = new BackendController;
                     $backController->createArticle();
@@ -86,7 +82,7 @@ class Router
                 } elseif ($get === 'editArticle') {
                     $backController = new BackendController;
                     $backController->editArticle($_GET['id']);
-                } elseif ($get === 'updateArticle') {//var_dump($_GET['id']);
+                } elseif ($get === 'updateArticle') {
                     $backController = new BackendController;
                     $backController->updateArticle();
                 } elseif ($get === 'editListArticles') {
@@ -98,10 +94,9 @@ class Router
                 } elseif ($get === 'showArticle') {
                     $backController = new BackendController;
                     $backController->showArticle($_GET['id']);
-                } /***************
-                 *
+                } /**
                  * manage comments
-                 ***********/
+                 */
                 elseif ($get === 'listComments') {
                     $backController = new BackendController;
                     $backController->editListComments();
@@ -113,20 +108,15 @@ class Router
                 } elseif ($get === 'validateComment') {
                     $backController = new BackendController;
                     $backController->validateComment($_GET['id']);
-
                 } else {
                     echo 'page inconnue ' . $get;
                 }
-
             } else {
                 $frontController = new FrontendController;
                 $frontController->home();
             }
         } catch (Exception $e) {
             echo 'Erreur niveau Router :' . $e->getMessage();
-
-            // header('Location: index.php');
-            //  exit();
         }
     }
 }
