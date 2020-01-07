@@ -6,28 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/services/FormPost.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/ArticleDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/ArticleDao.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Comments.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/Emails.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Emails.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/FormData.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/FormData.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Session.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/articles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/list_articles.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_articles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/list_comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/list_comments.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/show_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/show_article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/FormPost.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/FormGlobals.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +188,7 @@
       <workItem from="1577775298337" duration="10849000" />
       <workItem from="1577889023305" duration="14286000" />
       <workItem from="1577950341508" duration="64735000" />
-      <workItem from="1578249202402" duration="35879000" />
+      <workItem from="1578249202402" duration="53780000" />
     </task>
     <servers />
   </component>

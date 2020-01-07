@@ -4,7 +4,7 @@
 namespace Services;
 
 
-class FormPost
+class FormGlobals
 {
     private $_post;
     private $_get;
@@ -16,7 +16,6 @@ class FormPost
     {
         $this->_post = $_POST;
         $this->_get = $_GET;
-
     }
 
     /**

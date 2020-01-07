@@ -6,9 +6,11 @@ use Model\ArticleDao;
 use Model\Articles;
 use Model\CommentDao;
 use Services\FormData;
-use Services\FormPost;
+use Services\FormGlobals;
 use Services\Messages;
 use Services\Session;
+
+require_once 'services/checkArticleInputs.php';
 
 class BackendController
 {
@@ -38,42 +40,20 @@ class BackendController
      */
     public function addArticle() //
     {
+
         $addArticleErrorMessage = [];// Store error message to be available into create_article
-        $inputPost = new FormPost();
 
-        //$post = FormData::securizeFormFields($arrayPost);
+        $addArticleError = checkArticleInputs($_POST);
 
-        if ($inputPost->post('btn_creer_article') != 1) {
-            var_dump($inputPost->post('titre'));
-            die();
-            if (empty($inputPost->post('titre'))) {
-                $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", "Manque le titre", 'warning');
-            } elseif (strlen($post['titre']) < 3) {
-                $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['titre']) > 45) {
-                $addArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
+        if (($addArticleError) != null) {
+            foreach ($addArticleError as $item => $value) {
+                $addArticleErrorMessage[$item] = Messages::setFlash("Attention !", $value, 'warning');
             }
-            var_dump($inputPost->post('btn_creer_article'));
-            die();
-            if (empty($post['chapo'])) {
-                $addArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", "Manque le chapo", 'warning');
-            } elseif (strlen($post['chapo']) < 3) {
-                $addArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", 'Votre chapo doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['chapo']) > 45) {
-                $addArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
-            }
+        }
 
-            if (empty($post['auteur'])) {
-                $addArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", "Manque l'auteur", 'warning');
-            } elseif (strlen($post['auteur']) < 3) {
-                $addArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", 'Votre auteur doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['auteur']) > 45) {
-                $addArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
-            }
+        $post = FormData::securizeFormFields($_POST);
 
-            if (empty($post['contenu'])) {
-                $addArticleErrorMessage['contenu'] = Messages::setFlash("Attention !", "Manque le contenu", 'warning');
-            }
+        if (is_null($addArticleError)) {
             FormData::saveFormData('newArticle', $post);
 
             if (empty($addArticleErrorMessage)) {
@@ -88,38 +68,20 @@ class BackendController
         include 'vue/backend/create_article.php';
     }
 
-    public function updateArticle()
+    public
+    function updateArticle()
     {
         $updateArticleErrorMessage = [];
+
+        $addArticleError = checkArticleInputs($_POST);
+        if (($addArticleError) != null) {
+            foreach ($addArticleError as $item => $value) {
+                $addArticleErrorMessage[$item] = Messages::setFlash("Attention !", $value, 'warning');
+            }
+        }
         $post = FormData::securizeFormFields($_POST);
 
-        if (isset($post['btn_update_article'])) {
-            if (empty($post['titre'])) {
-                $updateArticleErrorMessage['titre'] = Messages::setFlash("Attention !", "Manque le titre", 'warning');
-            } elseif (strlen($post['titre']) < 3) {
-                $updateArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['titre']) > 45) {
-                $updateArticleErrorMessage['titre'] = Messages::setFlash("Attention !", 'Votre titre doit faire moins de 45 caractères', 'warning');
-            }
-
-            if (empty($post['chapo'])) {
-                $updateArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", "Manque le chapo", 'warning');
-            } elseif (strlen($post['chapo']) < 3) {
-                $updateArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", 'Votre chapo doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['chapo']) > 45) {
-                $updateArticleErrorMessage['chapo'] = Messages::setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
-            }
-
-            if (empty($post['auteur'])) {
-                $updateArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", "Manque l'auteur", 'warning');
-            } elseif (strlen($post['auteur']) < 3) {
-                $updateArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", 'Votre auteur doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($post['auteur']) > 45) {
-                $updateArticleErrorMessage['auteur'] = Messages::setFlash("Attention !", 'Votre auteur doit faire moins de 45 caractères', 'warning');
-            }
-            if (empty($post['contenu'])) {
-                $updateArticleErrorMessage['contenu'] = Messages::setFlash("Attention !", "Manque le contenu", 'warning');
-            }
+        if (empty($addArticleErrorMessage)) {
             $article = new Articles($post);
             if (empty($updateArticleErrorMessage)) {
                 $articleDao = new ArticleDao();
@@ -137,14 +99,16 @@ class BackendController
     /**
      * display article
      **/
-    public function showArticle($idArticle)
+    public
+    function showArticle($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
         include 'vue/backend/show_article.php';
     }
 
-    public function editListArticles()
+    public
+    function editListArticles()
     {
         $articles = new ArticleDao();
         $articlesEdited = $articles->getListArticles();
@@ -154,7 +118,8 @@ class BackendController
     /**
      * display current article's datas to be modified
      **/
-    public function editArticle($idArticle)
+    public
+    function editArticle($idArticle)
     {
         $getArticle = new ArticleDao();
         $article = $getArticle->getSingleArticle($idArticle);
@@ -164,7 +129,8 @@ class BackendController
     /**
      * @param $idArticle
      */
-    public function deleteArticle($idArticle)
+    public
+    function deleteArticle($idArticle)
     {
         $articles = new ArticleDao();
         $articleDeleted = $articles->deleteArticle($idArticle);
@@ -174,14 +140,16 @@ class BackendController
         }
     }
 
-    public function showComment($idArticle)
+    public
+    function showComment($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
         include 'vue/backend/show_article.php';
     }
 
-    public function deleteComment($idComment)
+    public
+    function deleteComment($idComment)
     {
         $comment = new CommentDao();
         $commentDeleted = $comment->deleteComment($idComment);
@@ -190,14 +158,16 @@ class BackendController
         }
     }
 
-    public function editListComments()
+    public
+    function editListComments()
     {
         $comments = new CommentDao();
         $commentEdited = $comments->getListComments();
         include 'vue/backend/list_comments.php';
     }
 
-    public function validateComment($idComment)
+    public
+    function validateComment($idComment)
     {
         $getComment = new CommentDao(); //////////// voir gestion instance en Singleton
         $comment = $getComment->validateComment($idComment);
