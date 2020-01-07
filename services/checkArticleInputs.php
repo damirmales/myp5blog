@@ -1,13 +1,31 @@
 <?php
 
+
+function verifyEmptiness($value, $name)
+{
+
+    if (strlen($value) == 0) {
+        $text = "Le " . $name . " est obligatoire";
+        var_dump($text);
+        die();
+        return $text;
+
+    } else return null;
+
+
+}
+
 function checkArticleInputs($field)
 {
     $errs = array();
 
     $titre = stripSlashes($field["titre"]);
+    //$errs["titre"] = verifyEmptiness($titre, "titre");
+
     if (strlen($titre) == 0) {
         $errs["titre"] = "Le titre est obligatoire";
     }
+
     if (strlen($titre) > 45) {
         $errs["titre"] = "Le titre ne doit pas exceder 45 c.";
     }
@@ -42,17 +60,6 @@ function checkArticleInputs($field)
     if (count($errs) != 0) {
         return $errs;
     } else return null;
-
-    /*if (count($errs) == 0) {
-
-        return count($errs);
-
-    } else {
-        return $errs;
-    }*/
-
 }
-
-
 
 

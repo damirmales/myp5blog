@@ -27,6 +27,12 @@ class FormGlobals
         return $this->checkGlobal($this->_post, $key);
     }
 
+    public function get($key = null)
+    {
+        return $this->checkGlobal($this->_get, $key);
+    }
+
+
     /**
      * @param $global
      * @param null $key

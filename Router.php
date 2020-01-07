@@ -2,6 +2,7 @@
 
 use Controller\FrontendController;
 use Controller\BackendController;
+use Services\FormGlobals;
 
 class Router
 {
@@ -9,12 +10,13 @@ class Router
 
     public function run()
     {
+        $input = new FormGlobals();
         try {
             if (isset($_GET['route'])) {
                 $get = filter_var($_GET['route'], FILTER_SANITIZE_SPECIAL_CHARS);
                 if ($get === 'contactForm') {
                     $frontController = new FrontendController;
-                    $frontController->addContact($_POST);
+                    $frontController->addContact($input->post());
                 } elseif ($get === 'cv') {
                     $frontController = new FrontendController;
                     $frontController->cv();
@@ -26,13 +28,13 @@ class Router
                     $frontController->pullListeArticles();
                 } elseif ($get === 'article') {
                     $frontController = new FrontendController;
-                    $frontController->getArticle($_GET['id']);
+                    $frontController->getArticle($input->get('id'));
                 } elseif ($get === 'admin') {
                     $backController = new BackendController; // from frontendController checkUser() method
                     $backController->admin();
                 } elseif ($get === 'addComment') {
                     $frontController = new FrontendController;
-                    $frontController->addComment($_GET['id'], $_POST);
+                    $frontController->addComment($input->get('id'), $input->post());
                 } elseif ($get == 'livres') {
                     $frontController = new FrontendController;
                     $frontController->getCategoryArticles($get);
@@ -81,7 +83,7 @@ class Router
                     $backController->addArticle();
                 } elseif ($get === 'editArticle') {
                     $backController = new BackendController;
-                    $backController->editArticle($_GET['id']);
+                    $backController->editArticle($input->get('id'));
                 } elseif ($get === 'updateArticle') {
                     $backController = new BackendController;
                     $backController->updateArticle();
@@ -90,10 +92,10 @@ class Router
                     $backController->editListArticles();
                 } elseif ($get === 'deleteArticle') {
                     $backController = new BackendController;
-                    $backController->deleteArticle($_GET['id']);
+                    $backController->deleteArticle($input->get('id'));
                 } elseif ($get === 'showArticle') {
                     $backController = new BackendController;
-                    $backController->showArticle($_GET['id']);
+                    $backController->showArticle($input->get('id'));
                 } /**
                  * manage comments
                  */
@@ -103,11 +105,11 @@ class Router
 
                 } elseif ($get === 'deleteComment') {
                     $backController = new BackendController;
-                    $backController->deleteComment($_GET['id']);
+                    $backController->deleteComment($input->get('id'));
 
                 } elseif ($get === 'validateComment') {
                     $backController = new BackendController;
-                    $backController->validateComment($_GET['id']);
+                    $backController->validateComment($input->get('id'));
                 } else {
                     echo 'page inconnue ' . $get;
                 }

@@ -52,9 +52,9 @@ class BackendController
         }
 
         $post = FormData::securizeFormFields($_POST);
-
+        FormData::saveFormData('newArticle', $post);
         if (is_null($addArticleError)) {
-            FormData::saveFormData('newArticle', $post);
+
 
             if (empty($addArticleErrorMessage)) {
                 $article = new Articles($post);
