@@ -6,14 +6,14 @@ use Services\FormGlobals;
 
 class Router
 {
-    public $get;
+    protected $get;
 
     public function run()
     {
         $input = new FormGlobals();
         try {
-            if (isset($_GET['route'])) {
-                $get = filter_var($_GET['route'], FILTER_SANITIZE_SPECIAL_CHARS);
+            if ($input->get('route')) {
+                $get = filter_var(stripslashes($input->get('route')), FILTER_SANITIZE_SPECIAL_CHARS);
                 if ($get === 'contactForm') {
                     $frontController = new FrontendController;
                     $frontController->addContact($input->post());
@@ -30,7 +30,8 @@ class Router
                     $frontController = new FrontendController;
                     $frontController->getArticle($input->get('id'));
                 } elseif ($get === 'admin') {
-                    $backController = new BackendController; // from frontendController checkUser() method
+                    // from frontendController checkUser() method
+                    $backController = new BackendController;
                     $backController->admin();
                 } elseif ($get === 'addComment') {
                     $frontController = new FrontendController;
@@ -41,35 +42,35 @@ class Router
                 } elseif ($get == 'fromages') {
                     $frontController = new FrontendController;
                     $frontController->getCategoryArticles($get);
-                } elseif ($get === 'connexion') // go to login.php form page
-                {
+                    // go to login.php form page
+                } elseif ($get === 'connexion') {
                     $frontController = new FrontendController;
                     $frontController->logUser();
-                } elseif ($get === 'connexionAdmin') // go to logAdmin.php form page
-                {
+                    // go to logAdmin.php form page
+                } elseif ($get === 'connexionAdmin') {
                     $frontController = new FrontendController;
                     $frontController->logAdmin();
                 } elseif ($get === 'deconnexion') {
                     $frontController = new FrontendController;
                     $frontController->logOff();
-                } elseif ($get === 'pageUser') // from login.php check admin data to login
-                {
+                    // from login.php check admin data to login
+                } elseif ($get === 'pageUser') {
                     $frontController = new FrontendController;
                     $frontController->checkUser();
-                } elseif ($get === 'pageAdmin') // from login.php check admin data to login
-                {
+                    // from login.php check admin data to login
+                } elseif ($get === 'pageAdmin') {
                     $frontController = new FrontendController;
                     $frontController->checkUser();
-                } elseif ($get === 'register')// to the register form page
-                {
+                    // to the register form page
+                } elseif ($get === 'register') {
                     $frontController = new FrontendController;
                     $frontController->register();
-                } elseif ($get === 'addUser')// register user's data into the database
-                {
+                    // register user's data into the database
+                } elseif ($get === 'addUser') {
                     $frontController = new FrontendController;
                     $frontController->addUser();
-                } elseif ($get === 'verifEmail')// check user email via token
-                {
+                    // check user email via token
+                } elseif ($get === 'verifEmail') {
                     $frontController = new FrontendController;
                     $frontController->verifyToken();
                 } /**

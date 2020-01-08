@@ -7,8 +7,10 @@ use Model\ArticleDao;
 use Model\Comments;
 use Model\Users;
 use Model\UserDao;
+use Services\CheckUserInputs;
 use Services\Emails;
 use Services\FormData;
+use Services\FormGlobals;
 use Services\ImportPage;
 use Services\Messages;
 use Services\Session;
@@ -74,8 +76,10 @@ class FrontendController
     public function addComment($articleId, $postData)
     {
         $post = FormData::securizeFormFields($postData);
-        $nom = $_SESSION['user']['nom']; //use logged user's name
-        $email = $_SESSION['user']['email'];//use logged user's email
+        $mySession = new Session();
+        $nom = $mySession->get('user', 'nom');
+        // $nom = $_SESSION['user']['nom']; //use logged user's name
+        //$email = $_SESSION['user']['email'];//use logged user's email
         $comment = $post['comment'];
         $article = null;// init $article to use it as an array to display article datas
         $comments = null;// init comments to show all comments
@@ -97,7 +101,8 @@ class FrontendController
                 if ($affectedLines === false) {
                     exit('Impossible d\'ajouter le commentaire !');
                 } else {
-                    $_SESSION['waitingValidation'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
+
+                    $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
                 }
             } else FormData::saveFormData('comment', $post);
         }
@@ -147,6 +152,7 @@ class FrontendController
         $contactErrorMessage = [];// Store error message to be available into home.php
         $field = FormData::securizeFormFields($post);
         FormData::saveFormData('input', $field);
+
         if ($field['formContact'] == 'sent') {
             if (empty($field['nom'])) {
                 $contactErrorMessage['nom'] = Messages::setFlash("Attention !", "Nom non renseigné", "warning"); // Store error message to be abvailable into register.php
@@ -220,7 +226,8 @@ class FrontendController
     public function checkUser()//---- from login.php ---------
     {
         $connexionErrorMessage = [];// Store error message to be available into login.php
-        $field = FormData::securizeFormFields($_POST);
+        $input = new FormGlobals();
+        $field = FormData::securizeFormFields($input->post());
         if (($field['formLogin']) == 'sent') {
             if (empty($field['login'])) {
                 $connexionErrorMessage['login'] = Messages::setFlash("Attention !", "Pas de login renseigné", 'warning');
@@ -244,13 +251,6 @@ class FrontendController
                         $mySession->set('user', 'login', $checkUser['login']);
                         $mySession->set('user', 'email', $checkUser['email']);
                         $mySession->set('user', 'bienvenu', 1);
-
-
-                        //$session["user"]['role'] = $checkUser['role'];
-                        //$session["user"]['nom'] = $checkUser['nom'];
-                        //$session["user"]['login'] = $checkUser['login'];
-                        // $session["user"]['email'] = $checkUser['email'];
-                        //$session["user"]['bienvenu'] = 1;
 
                         //------ check if user is admin --------
                         if ($mySession->get('user', 'role') === 'admin') {
@@ -277,50 +277,15 @@ class FrontendController
      **/
     public function addUser()
     {
-        $post = FormData::securizeFormFields($_POST);
+        $input = new FormGlobals();
+        $post = FormData::securizeFormFields($input->post());
         $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs présentent dans les champs du formulaire
-        $loginEmailFormMessage = []; //si login et email déjà utilisés
+        $loginEmailFormMessage = []; //stocke erreur si login et email déjà utilisés
 
         if (!empty($post)) {
             if ($post['formRegister'] == 'sent') {
-                if (empty($post['nom'])) {
-                    $registerFormMessage['nom'] = Messages::setFlash("Attention !", "Manque le nom", "warning"); // Store error message to be abvailable into register.php
-                } elseif (strlen($post['nom']) < 3) {
-                    $registerFormMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire plus de 3 caractères', 'warning');
-                } elseif (strlen($post['nom']) > 45) {
-                    $registerFormMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire moins de 45 caractères', 'warning');
-                }
-
-                if (empty($post['prenom'])) {
-                    $registerFormMessage['prenom'] = Messages::setFlash("Attention !", "Manque le prénom", "warning"); // Store error message to be abvailable into register.php
-                } elseif (strlen($post['prenom']) < 3) {
-                    $registerFormMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire plus de 3 caractères', 'warning');
-                } elseif (strlen($post['prenom']) > 45) {
-                    $registerFormMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire moins de 45 caractères', 'warning');
-                }
-
-                if (empty($post['email'])) {
-                    $registerFormMessage['email'] = Messages::setFlash("Attention !", "Manque l'email", "warning"); // Store error message to be abvailable into register.php
-                } elseif (!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-                    $registerFormMessage['email'] = Messages::setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", "warning");
-                }
-
-                if (empty($post['login'])) {
-                    $registerFormMessage['login'] = Messages::setFlash("Attention !", "Manque le login", "warning"); // Store error message to be abvailable into register.php
-                }
-
-                if (empty($post['password'])) {
-                    $registerFormMessage['password'] = Messages::setFlash("Attention !", "Manque le Mot de passe ", "warning"); // Store error message to be abvailable into register.php
-                } elseif (strlen($post['password']) < 2) {
-                    $registerFormMessage['password'] = Messages::setFlash("Attention !", "Le mot de passe doit avoir plus de 2 caractères!", 'warning');
-                }
-                if (empty($post['password2'])) {
-                    $registerFormMessage ['password2'] = Messages::setFlash("Attention !", "Il faut répéter mot de passe ", "warning"); // Store error message to be abvailable into register.php
-                }
-
-                if (($post['password2']) !== ($post['password'])) {
-                    $registerFormMessage['password12'] = Messages::setFlash("Attention !", "Les champs des mots de passe doivent être identiques", "warning"); // Store error message to be abvailable into register.php
-                }
+                $checkInput = new  CheckUserInputs();
+                $registerFormMessage = $checkInput->checkUserInputs($input->post());
 
                 FormData::saveFormData('register', $post);
                 //---- if no errors in form fields add user's data are not yet in DB  ---
@@ -332,7 +297,7 @@ class FrontendController
 
                     if ($userLogin || $userEmail) {
                         if ($userLogin) {
-                            //$_SESSION["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
+
                             $loginEmailFormMessage["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
                         }
 
@@ -349,11 +314,11 @@ class FrontendController
                         $createUrlToken = Emails::createUrlWithToken($token, $userEmail);
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
-                        $session =& $_SESSION;
-                        $session["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
+                   
+                        $loginEmailFormMessage["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
 
-                        header('Location: index.php?route=register');
-                        exit();
+                        FormData::cleanFormData('register', $post);
+
                     }
                 }
             }
@@ -364,10 +329,11 @@ class FrontendController
     //check the token from the link validate in the user's email
     public function verifyToken()
     {
+        $input = new FormGlobals();
         $registerMessage = [];
-        if (isset($_GET['token']) && !empty($_GET['token'])) // if got user's token from email
+        if (!empty($input->get('token'))) // if got user's token from email
         {
-            $userToken = trim($_GET['token']);//token from email
+            $userToken = trim($input->get('token'));//token from email
             $newUser = new UserDao();
             $result = $newUser->fetchToken($userToken);
             $noviUser = $newUser->validateUser($result['id']);

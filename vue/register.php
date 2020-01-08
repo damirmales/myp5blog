@@ -30,11 +30,11 @@ if (!empty($loginEmailFormMessage["registerForm"]["login"])) {
 if (!empty($loginEmailFormMessage["registerForm"]["email"])) {
     Messages::flashMessage2($loginEmailFormMessage["registerForm"]["email"]);
 }
-
-if (!empty($session["registerForm"]["OK"])) {
-    Messages::flashMessage2($session["registerForm"]["OK"]);
-    unset($session["registerForm"]["OK"]);
+if (!empty($loginEmailFormMessage["registerForm"]["OK"])) {
+    Messages::flashMessage2($loginEmailFormMessage["registerForm"]["OK"]);
 }
+
+
 ?>    <!-- Main Content -->
     <div class="container">
         <div class="row">

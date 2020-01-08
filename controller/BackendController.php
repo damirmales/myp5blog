@@ -5,15 +5,16 @@ namespace Controller;
 use Model\ArticleDao;
 use Model\Articles;
 use Model\CommentDao;
+use Services\CheckArticleInputs;
 use Services\FormData;
 use Services\FormGlobals;
 use Services\Messages;
 use Services\Session;
 
-require_once 'services/checkArticleInputs.php';
 
 class BackendController
 {
+
     /**
      * /* admin login page access
      */
@@ -38,62 +39,48 @@ class BackendController
     /**
      *
      */
-    public function addArticle() //
+    public function addArticle()
     {
+        $input = new FormGlobals();
+        $checkInput = new  CheckArticleInputs();
+        $addArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
 
-        $addArticleErrorMessage = [];// Store error message to be available into create_article
-
-        $addArticleError = checkArticleInputs($_POST);
-
-        if (($addArticleError) != null) {
-            foreach ($addArticleError as $item => $value) {
-                $addArticleErrorMessage[$item] = Messages::setFlash("Attention !", $value, 'warning');
-            }
-        }
-
-        $post = FormData::securizeFormFields($_POST);
+        $post = FormData::securizeFormFields($input->post());
         FormData::saveFormData('newArticle', $post);
-        if (is_null($addArticleError)) {
-
-
-            if (empty($addArticleErrorMessage)) {
-                $article = new Articles($post);
-                $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
-                $articleAdded = $articleDao->setArticleToDb($article);
-                //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
-                header('Location: index.php?route=showArticle&id=' . $articleAdded);
-                exit();
-            }
-        }
-        include 'vue/backend/create_article.php';
-    }
-
-    public
-    function updateArticle()
-    {
-        $updateArticleErrorMessage = [];
-
-        $addArticleError = checkArticleInputs($_POST);
-        if (($addArticleError) != null) {
-            foreach ($addArticleError as $item => $value) {
-                $addArticleErrorMessage[$item] = Messages::setFlash("Attention !", $value, 'warning');
-            }
-        }
-        $post = FormData::securizeFormFields($_POST);
 
         if (empty($addArticleErrorMessage)) {
             $article = new Articles($post);
-            if (empty($updateArticleErrorMessage)) {
-                $articleDao = new ArticleDao();
-                $articleUpdate = $articleDao->updateArticleToDb($article);
-                if ($articleUpdate) {
-                    $_SESSION['updateArticle'] = Messages::setFlash("Super !", "Article mis à jour", 'success');
-                    $this->showArticle($post['articles_id']);
-                }
-            } else {
-                include 'vue/backend/edit_article.php';
-            }
+            $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
+            $articleAdded = $articleDao->setArticleToDb($article);
+            //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
+            header('Location: index.php?route=showArticle&id=' . $articleAdded);
+            exit();
         }
+
+        include 'vue/backend/create_article.php';
+    }
+
+    public function updateArticle()
+    {
+
+        $input = new FormGlobals();
+        $updateArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
+
+        $post = FormData::securizeFormFields($input->post());
+
+
+        $article = new Articles($post);
+        if (empty($updateArticleErrorMessage)) {
+            $articleDao = new ArticleDao();
+            $articleUpdate = $articleDao->updateArticleToDb($article);
+            if ($articleUpdate) {
+                $_SESSION['updateArticle'] = Messages::setFlash("Super !", "Article mis à jour", 'success');
+                $this->showArticle($post['articles_id']);
+            }
+        } else {
+            include 'vue/backend/edit_article.php';
+        }
+
     }
 
     /**
