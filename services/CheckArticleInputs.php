@@ -8,56 +8,76 @@ class CheckArticleInputs
     public function checkArticleInputs($field)
     {
         $errs = array();
-        $ErrorMessage = [];
 
-        $titre = stripSlashes($field["titre"]);
+        $titre = htmlspecialchars($field["titre"]);
+        $errs["titre"] = $this->checkTitre($titre);
 
+        $chapo = htmlspecialchars($field["chapo"]);
+        $errs["chapo"] = $this->checkChapo($chapo);
 
-        if (strlen($titre) == 0) {
-            $errs["titre"] = "Le titre est obligatoire";
-        }
+        $auteur = htmlspecialchars($field["auteur"]);
+        $errs["auteur"] = $this->checkAuteur($auteur);
 
-        if (strlen($titre) > 45) {
-            $errs["titre"] = "Le titre ne doit pas exceder 45 c.";
-        }
-        if (!preg_match("/^[A-Za-z '-]+$/", $titre)) {
-            $errs["titre"] = "Le titre doit contenir seulement des caractères";
-        }
+        $contenu = htmlspecialchars($field["contenu"]);
+        $errs["contenu"] = $this->checkContenu($contenu);
 
-        $chapo = stripSlashes($field["chapo"]);
-        if (strlen($chapo) == 0) {
-            $errs["chapo"] = "Le chapo est obligatoire";
-        }
-        if (strlen($chapo) > 45) {
-            $errs["chapo"] = "Le chapo ne doit pas exceder 45 c.";
-        }
-
-        if (isset($field["auteur"])) {
-            $auteur = stripSlashes($field["auteur"]);
-            if (strlen($auteur) == 0) {
-                $errs["auteur"] = "Le auteur est obligatoire";
-            }
-
-            if (strlen($auteur) > 45) {
-                $errs["auteur"] = "Le auteur ne doit pas exceder 45 c.";
-            }
-        }
-
-        $contenu = stripSlashes($field["contenu"]);
-        if (strlen($contenu) == 0) {
-            $errs["contenu"] = "Le contenu est obligatoire";
-        }
-
-        if (($errs) != null) {
+        if (!empty($errs)) {
             foreach ($errs as $item => $value) {
-                $ErrorMessage[$item] = Messages::setFlash("Attention !", $value, 'warning');
+                if (!empty($value)) {
+                    $errs[$item] = Messages::setFlash('Attention !', $value, 'warning');
+                }
             }
         }
 
         if (count($errs) != 0) {
-            return $ErrorMessage;
+            return $errs;
         } else return null;
     }
+
+    public function checkTitre($titre)
+    {
+        $err = null;
+        if (strlen($titre) === 0) {
+            $err = "Le titre est obligatoire";
+        } elseif (strlen($titre) > 45) {
+            $err = "Le titre ne doit pas exceder 45 c.";
+        } elseif (!preg_match("/^[A-Za-z '-]+$/", $titre)) {
+            $err = "Le titre doit contenir seulement des caractères";
+        }
+        return $err;
+    }
+
+    public function checkChapo($chapo)
+    {
+        $err = null;
+        if (strlen($chapo) == 0) {
+            $err = "Le chapo est obligatoire";
+        } elseif (strlen($chapo) > 45) {
+            $err = "Le chapo ne doit pas exceder 45 c.";
+        }
+        return $err;
+    }
+
+    public function checkAuteur($auteur)
+    {
+        $err = null;
+        if (strlen($auteur) == 0) {
+            $err = "Le auteur est obligatoire";
+        } elseif (strlen($auteur) > 45) {
+            $err = "Le auteur ne doit pas exceder 45 c.";
+        }
+        return $err;
+    }
+
+    public function checkContenu($contenu)
+    {
+        $err = null;
+        if (strlen($contenu) == 0) {
+            $err = "Le contenu est obligatoire";
+        }
+        return $err;
+    }
+
 }
 
 

@@ -12,7 +12,7 @@ class CheckUserInputs
         $errs = array();
         $ErrorMessage = [];
 
-        $nom = stripSlashes($field["nom"]);
+        $nom = htmlspecialchars($field["nom"]);
 
 
         if (empty($nom)) {
@@ -23,7 +23,7 @@ class CheckUserInputs
             $errs["nom"] = "Le nom doit contenir seulement des caractères";
         }
 
-        $prenom = stripSlashes($field["prenom"]);
+        $prenom = htmlspecialchars($field["prenom"]);
         if (strlen($prenom) == 0) {
             $errs["prenom"] = "Le prenom est obligatoire";
         } elseif (strlen($prenom) > 45) {
@@ -31,7 +31,7 @@ class CheckUserInputs
         }
 
         if (isset($field["email"])) {
-            $email = stripSlashes($field["email"]);
+            $email = htmlspecialchars($field["email"]);
             if (strlen($email) == 0) {
                 $errs["email"] = "L'email est obligatoire";
             }
@@ -43,18 +43,18 @@ class CheckUserInputs
             }
         }
 
-        $login = stripSlashes($field["login"]);
+        $login = htmlspecialchars($field["login"]);
         if (strlen($login) == 0) {
             $errs["login"] = "Le login est obligatoire";
         }
 
-        $password = stripSlashes($field["password"]);
+        $password = htmlspecialchars($field["password"]);
         if (empty($password)) {
             $errs['password'] = "Manque le Mot de passe ";
         } elseif (strlen($password) < 2) {
             $errs['password'] = "Le mot de passe doit avoir plus de 2 caractères!";
         }
-        $password2 = stripSlashes($field["password"]);
+        $password2 = htmlspecialchars($field["password"]);
         if (empty($password2)) {
             $errs['password2'] = "Il faut répéter le mot de passe ";
         }

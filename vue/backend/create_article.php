@@ -7,7 +7,7 @@ use Services\Messages; ?>
     <p>Un nouvel article</p>
     <?php
     if (!empty($addArticleErrorMessage)) {
-        Messages::flashMessage($addArticleErrorMessage);
+        Messages::flashMessageWarning($addArticleErrorMessage);
     }
     ?>
     <form action="index.php?route=addArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>

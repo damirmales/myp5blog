@@ -45,10 +45,15 @@ class BackendController
         $checkInput = new  CheckArticleInputs();
         $addArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
 
+
+        echo '<pre> 2checkArticleInputs ';
+        var_dump($addArticleErrorMessage);
+
         $post = FormData::securizeFormFields($input->post());
         FormData::saveFormData('newArticle', $post);
 
         if (empty($addArticleErrorMessage)) {
+
             $article = new Articles($post);
             $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
             $articleAdded = $articleDao->setArticleToDb($article);
@@ -64,6 +69,7 @@ class BackendController
     {
 
         $input = new FormGlobals();
+        $checkInput = new  CheckArticleInputs();
         $updateArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
 
         $post = FormData::securizeFormFields($input->post());

@@ -6,14 +6,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/services/CheckUserInputs.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/checkArticleInputs.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/CheckArticleInputs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/commentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/commentForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/CheckArticleInputs.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/CheckArticleInputs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/CheckUserInputs.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/CheckUserInputs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/Messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Messages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/backend/create_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/create_article.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +191,10 @@
       <workItem from="1577889023305" duration="14286000" />
       <workItem from="1577950341508" duration="64735000" />
       <workItem from="1578249202402" duration="66312000" />
-      <workItem from="1578483424496" duration="16797000" />
+      <workItem from="1578483424496" duration="17927000" />
+      <workItem from="1578560188169" duration="15000" />
+      <workItem from="1578561025912" duration="15531000" />
+      <workItem from="1578597892458" duration="2514000" />
     </task>
     <servers />
   </component>
@@ -218,10 +219,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="449" y="166" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1575056621397" />
-    <state x="363" y="91" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575461423697">
+    <state x="363" y="91" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1578597200171">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="363" y="91" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1575461423697" />
+    <state x="363" y="91" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1578597200171" />
     <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578504981774">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -254,10 +255,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="569" y="280" key="VCS.EditChangelistDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106083540" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1578483643294">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1578599847696">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1578483643294" />
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1578599847696" />
     <state x="481" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1578486782489">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
