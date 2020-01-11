@@ -318,8 +318,7 @@ class FrontendController
     }
 
 //check the token from the link validate in the user's email
-    public
-    function verifyToken()
+    public function verifyToken()
     {
         $input = new FormGlobals();
         $registerMessage = [];
@@ -334,5 +333,14 @@ class FrontendController
             }
             include_once 'vue/home.php';
         }
+    }
+
+    /**
+     * contact from top menu
+     **/
+    public function errorsException($exception)
+    {
+        $errorException = $exception;
+        include 'vue/errorsException.php';
     }
 }

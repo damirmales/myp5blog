@@ -20,7 +20,6 @@ class Messages
         return $mess;
     }
 
-
     /**
      * @param $mess
      */

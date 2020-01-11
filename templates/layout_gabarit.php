@@ -119,7 +119,7 @@
                     }
                     ?>
 
-                <p class="copyright text-muted">Copyright &copy; Damir Blog 2019</p>
+                <p class="copyright text-muted">Copyright &copy; Damir Blog 2020</p>
             </div>
         </div>
     </div>

@@ -1,11 +1,12 @@
 <?php
+
 namespace Model;
+
 use PDO;
 
 /**
- * Cette classe permet de gérer la connexion à la base de données 
+ * Cette classe permet de gérer la connexion à la base de données
  */
-
 class Database
 {
     const DB_HOST = 'mysql:host=localhost;dbname=p5blog;charset=utf8';
@@ -14,15 +15,15 @@ class Database
 
     public function getConnectDB()
     {
-        try
-        {
+        try {
             $connectPDO = new PDO(self::DB_HOST, self::DB_USER, self::DB_PASS);
             $connectPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $connectPDO;
-        }
-        catch (\Exception $e)
-        {
-            die('Erreur : ' . $e->getMessage());
+        } catch (\Exception  $e) {
+            $errorException = ('Erreur dans Database : ' . $e->getMessage());
+            header('Location: index.php?route=errorMessage&exception=' . $errorException);
+            exit();
+
         }
     }
 }

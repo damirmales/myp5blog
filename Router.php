@@ -111,6 +111,9 @@ class Router
                 } elseif ($get === 'validateComment') {
                     $backController = new BackendController;
                     $backController->validateComment($input->get('id'));
+                } elseif ($get === 'errorMessage') {
+                    $frontController = new FrontendController;
+                    $frontController->errorsException($input->get('exception'));
                 } else {
                     echo 'page inconnue ' . $get;
                 }

@@ -6,14 +6,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/services/CheckContactInputs.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/layout_errors.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/errorsException.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/CheckArticleInputs.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/CheckArticleInputs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/CheckUserInputs.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/CheckUserInputs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/Database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/Messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Messages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/create_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/create_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout_backend.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_backend.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout_gabarit.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_gabarit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout_message.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +198,7 @@
       <workItem from="1578483424496" duration="17927000" />
       <workItem from="1578560188169" duration="15000" />
       <workItem from="1578561025912" duration="15531000" />
-      <workItem from="1578597892458" duration="16288000" />
+      <workItem from="1578597892458" duration="25632000" />
     </task>
     <servers />
   </component>
@@ -225,10 +227,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="363" y="91" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1578597200171" />
-    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578675532025">
+    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578740454242">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1578675532025" />
+    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1578740454242" />
     <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1578483630640">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -241,10 +243,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="453" y="178" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1578674342774" />
-    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1576331874046">
+    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1578748090900">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1576331874046" />
+    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1578748090900" />
     <state x="487" y="74" key="RollbackChangesDialog" timestamp="1577106099533">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -265,10 +267,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="481" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1578486782489" />
-    <state x="379" y="0" width="737" height="728" key="find.popup" timestamp="1578338224665">
+    <state x="379" y="0" width="737" height="728" key="find.popup" timestamp="1578746102146">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="0" width="737" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1578338224665" />
+    <state x="379" y="0" width="737" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1578746102146" />
     <state x="424" y="0" width="517" height="688" key="refactoring.ChangeSignatureDialog" timestamp="1578235260911">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
