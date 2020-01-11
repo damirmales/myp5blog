@@ -4,13 +4,13 @@
 namespace Services;
 
 
-class CheckUserInputs
+class CheckContactInputs
 {
 
-    public function checkUserInputs($field)
+    public function checkContactInputs($field)
     {
         $errs = array();
-        $ErrorMessage = [];
+        $errMessage = [];
 
         $nom = htmlspecialchars($field["nom"]);
         $errs["nom"] = $this->checkNom($nom);
@@ -21,28 +21,19 @@ class CheckUserInputs
         $email = htmlspecialchars($field["email"]);
         $errs["email"] = $this->checkEmail($email);
 
-        $login = htmlspecialchars($field["login"]);
-        $errs["login"] = $this->checkLogin($login);
-
-        $password = htmlspecialchars($field["password"]);
-        $errs["password"] = $this->checkPassword($password);
-
-        $password2 = htmlspecialchars($field["password2"]);
-        $errs["password2"] = $this->checkPassword2($password2);
-
-
-        $errs["password12"] = $this->checkPassword12($password, $password2);
+        $message = htmlspecialchars($field["message"]);
+        $errs["message"] = $this->checkContenu($message);
 
         if (!empty($errs)) {
             foreach ($errs as $item => $value) {
                 if ($value != null) {
-                    $ErrorMessage[$item] = Messages::setFlash('Attention !', $value, 'warning');
+                    $errMessage[$item] = Messages::setFlash('Attention !', $value, 'warning');
                 }
             }
         }
 
-        if (count($errs) != 0) {
-            return $ErrorMessage;
+        if (count($errMessage) != 0) {
+            return $errMessage;
         } else return null;
     }
 
@@ -83,46 +74,14 @@ class CheckUserInputs
         return $err;
     }
 
-    public function checkLogin($login)
+    public
+    function checkContenu($message)
     {
         $err = null;
-        $login = htmlspecialchars($login);
-        if (strlen($login) == 0) {
-            $err = "Le login est obligatoire";
+        if (strlen($message) == 0) {
+            $err = "Le message est obligatoire";
         }
         return $err;
     }
-
-    public function checkPassword($password)
-    {
-        $err = null;
-        $password = htmlspecialchars($password);
-        if (empty($password)) {
-            $err = "Manque le Mot de passe ";
-        } elseif (strlen($password) < 2) {
-            $err = "Le mot de passe doit avoir plus de 2 caractères!";
-        }
-        return $err;
-    }
-
-    public function checkPassword2($password2)
-    {
-        $err = null;
-        $password2 = htmlspecialchars($password2);
-        if (empty($password2)) {
-            $err = "Il faut répéter le mot de passe ";
-        }
-        return $err;
-    }
-
-    public function checkPassword12($password, $password2)
-    {
-        $err = null;
-        if (($password) !== ($password2)) {
-            $err = "Les champs des mots de passe doivent être identiques";
-        }
-        return $err;
-    }
-
 
 }

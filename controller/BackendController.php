@@ -42,13 +42,10 @@ class BackendController
     public function addArticle()
     {
         $input = new FormGlobals();
-        $checkInput = new  CheckArticleInputs();
+        $checkInput = new CheckArticleInputs();
         $addArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
 
-
-        echo '<pre> 2checkArticleInputs ';
-        var_dump($addArticleErrorMessage);
-
+  
         $post = FormData::securizeFormFields($input->post());
         FormData::saveFormData('newArticle', $post);
 
@@ -67,13 +64,11 @@ class BackendController
 
     public function updateArticle()
     {
-
         $input = new FormGlobals();
         $checkInput = new  CheckArticleInputs();
         $updateArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
 
         $post = FormData::securizeFormFields($input->post());
-
 
         $article = new Articles($post);
         if (empty($updateArticleErrorMessage)) {

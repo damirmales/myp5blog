@@ -8,7 +8,7 @@ class CheckArticleInputs
     public function checkArticleInputs($field)
     {
         $errs = array();
-
+        $errMessage = [];
         $titre = htmlspecialchars($field["titre"]);
         $errs["titre"] = $this->checkTitre($titre);
 
@@ -21,16 +21,18 @@ class CheckArticleInputs
         $contenu = htmlspecialchars($field["contenu"]);
         $errs["contenu"] = $this->checkContenu($contenu);
 
-        if (!empty($errs)) {
-            foreach ($errs as $item => $value) {
-                if (!empty($value)) {
-                    $errs[$item] = Messages::setFlash('Attention !', $value, 'warning');
-                }
+
+        foreach ($errs as $item => $value) {
+
+            if ($value != null) {
+
+                $errMessage[$item] = Messages::setFlash('Attention !', $value, 'warning');
             }
         }
 
-        if (count($errs) != 0) {
-            return $errs;
+
+        if (count($errMessage) != 0) {
+            return $errMessage;
         } else return null;
     }
 
@@ -44,7 +46,10 @@ class CheckArticleInputs
         } elseif (!preg_match("/^[A-Za-z '-]+$/", $titre)) {
             $err = "Le titre doit contenir seulement des caractères";
         }
+
         return $err;
+
+
     }
 
     public function checkChapo($chapo)

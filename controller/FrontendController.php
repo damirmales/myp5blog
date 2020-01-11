@@ -7,6 +7,8 @@ use Model\ArticleDao;
 use Model\Comments;
 use Model\Users;
 use Model\UserDao;
+use Services\CheckArticleInputs;
+use Services\CheckContactInputs;
 use Services\CheckUserInputs;
 use Services\Emails;
 use Services\FormData;
@@ -149,34 +151,17 @@ class FrontendController
      **/
     public function addContact($post)
     {
-        $contactErrorMessage = [];// Store error message to be available into home.php
         $field = FormData::securizeFormFields($post);
+        $checkInput = new  CheckContactInputs();
+        $contactErrorMessage = $checkInput->checkContactInputs($field);
+
         FormData::saveFormData('input', $field);
 
         if ($field['formContact'] == 'sent') {
-            if (empty($field['nom'])) {
-                $contactErrorMessage['nom'] = Messages::setFlash("Attention !", "Nom non renseigné", "warning"); // Store error message to be abvailable into register.php
-            } elseif (strlen($field['nom']) < 3) {
-                $contactErrorMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($field['nom']) > 45) {
-                $contactErrorMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire moins de 45 caractères', 'warning');
-            }
-            if (empty($field['prenom'])) {
-                $contactErrorMessage['prenom'] = Messages::setFlash("Attention !", "prenom non renseigné", "warning"); // Store error message to be abvailable into register.php
-            } elseif (strlen($field['prenom']) < 3) {
-                $contactErrorMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($field['prenom']) > 45) {
-                $contactErrorMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire moins de 45 caractères', 'warning');
-            }
-            if (empty($field['email'])) {
-                $contactErrorMessage['email'] = Messages::setFlash("Attention !", "Email non renseigné", 'warning');
-            } elseif (!filter_var($field['email'], FILTER_VALIDATE_EMAIL)) {
-                $contactErrorMessage['email'] = Messages::setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", 'warning');
-            }
-            if (empty($field['message'])) {
-                $contactErrorMessage['message'] = Messages::setFlash("Attention !", "Le message manque", 'warning');
-            }
+
+
             if (empty($contactErrorMessage)) {
+
                 /**
                  * Call class Emails to send contact form data
                  */
@@ -193,26 +178,30 @@ class FrontendController
         include_once 'vue/home.php';
     }
 
-    //********** acces admin login page *************
-    public function logUser()
+//********** acces admin login page *************
+    public
+    function logUser()
     {
         include 'vue/login.php';
     }
 
-    //********** acces logAdmin.php  page *************
-    public function logAdmin()
+//********** acces logAdmin.php  page *************
+    public
+    function logAdmin()
     {
         include 'vue/logAdmin.php';
     }
 
-    //********** acces register login page *************
+//********** acces register login page *************
 
-    public function register()
+    public
+    function register()
     {
         ImportPage::getPage(include 'vue/register.php');
     }
 
-    public function logOff()
+    public
+    function logOff()
     {
         unset($_SESSION);
         session_destroy();
@@ -223,7 +212,8 @@ class FrontendController
     /**
      * Before login check user presence in database
      */
-    public function checkUser()//---- from login.php ---------
+    public
+    function checkUser()//---- from login.php ---------
     {
         $connexionErrorMessage = [];// Store error message to be available into login.php
         $input = new FormGlobals();
@@ -275,7 +265,8 @@ class FrontendController
     /**
      * Add user from register.php to database
      **/
-    public function addUser()
+    public
+    function addUser()
     {
         $input = new FormGlobals();
         $post = FormData::securizeFormFields($input->post());
@@ -314,7 +305,7 @@ class FrontendController
                         $createUrlToken = Emails::createUrlWithToken($token, $userEmail);
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
-                   
+
                         $loginEmailFormMessage["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
 
                         FormData::cleanFormData('register', $post);
@@ -326,8 +317,9 @@ class FrontendController
         include 'vue/register.php';
     }
 
-    //check the token from the link validate in the user's email
-    public function verifyToken()
+//check the token from the link validate in the user's email
+    public
+    function verifyToken()
     {
         $input = new FormGlobals();
         $registerMessage = [];
