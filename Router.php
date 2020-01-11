@@ -73,6 +73,9 @@ class Router
                 } elseif ($get === 'verifEmail') {
                     $frontController = new FrontendController;
                     $frontController->verifyToken();
+                } elseif ($get === 'errorMessage') {
+                    $frontController = new FrontendController;
+                    $frontController->errorsException($input->get('exception'));
                 } /**
                  * PARTIE BACKEND
                  */
@@ -111,9 +114,6 @@ class Router
                 } elseif ($get === 'validateComment') {
                     $backController = new BackendController;
                     $backController->validateComment($input->get('id'));
-                } elseif ($get === 'errorMessage') {
-                    $frontController = new FrontendController;
-                    $frontController->errorsException($input->get('exception'));
                 } else {
                     echo 'page inconnue ' . $get;
                 }

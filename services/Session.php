@@ -66,6 +66,7 @@ class Session
      */
     public function stop()
     {
+        unset($this->session);
         session_destroy();
     }
 }

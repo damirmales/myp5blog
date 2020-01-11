@@ -7,7 +7,6 @@ use Model\ArticleDao;
 use Model\Comments;
 use Model\Users;
 use Model\UserDao;
-use Services\CheckArticleInputs;
 use Services\CheckContactInputs;
 use Services\CheckUserInputs;
 use Services\Emails;
@@ -101,7 +100,8 @@ class FrontendController
                 $affectedLines = $commentObj->addCommentsToDb($articleId, $newComment); // id de l'article
 
                 if ($affectedLines === false) {
-                    exit('Impossible d\'ajouter le commentaire !');
+
+                    $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "Impossible d'ajouter le commentaire !", 'success');
                 } else {
 
                     $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
@@ -203,10 +203,12 @@ class FrontendController
     public
     function logOff()
     {
-        unset($_SESSION);
-        session_destroy();
+
+        $session = new Session();
+        $session->stop(); //unset($_SESSION);  session_destroy();
+
         header('Location: index.php');
-        exit();
+
     }
 
     /**

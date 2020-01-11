@@ -22,7 +22,7 @@ class Database
         } catch (\Exception  $e) {
             $errorException = ('Erreur dans Database : ' . $e->getMessage());
             header('Location: index.php?route=errorMessage&exception=' . $errorException);
-            exit();
+
 
         }
     }
