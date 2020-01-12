@@ -6,6 +6,8 @@ use Services\Messages; ?>
 <div class="col-lg-8 col-md-10 mx-auto">
     <p>Un nouvel article</p>
     <?php
+
+
     if (!empty($addArticleErrorMessage)) {
         Messages::flashMessage($addArticleErrorMessage);
     }

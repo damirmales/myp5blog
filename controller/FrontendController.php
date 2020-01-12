@@ -7,8 +7,11 @@ use Model\ArticleDao;
 use Model\Comments;
 use Model\Users;
 use Model\UserDao;
+use Services\CheckContactInputs;
+use Services\CheckUserInputs;
 use Services\Emails;
 use Services\FormData;
+use Services\FormGlobals;
 use Services\ImportPage;
 use Services\Messages;
 use Services\Session;
@@ -74,8 +77,10 @@ class FrontendController
     public function addComment($articleId, $postData)
     {
         $post = FormData::securizeFormFields($postData);
-        $nom = $_SESSION['user']['nom']; //use logged user's name
-        $email = $_SESSION['user']['email'];//use logged user's email
+        $mySession = new Session();
+        $nom = $mySession->get('user', 'nom');
+        // $nom = $_SESSION['user']['nom']; //use logged user's name
+        //$email = $_SESSION['user']['email'];//use logged user's email
         $comment = $post['comment'];
         $article = null;// init $article to use it as an array to display article datas
         $comments = null;// init comments to show all comments
@@ -95,9 +100,11 @@ class FrontendController
                 $affectedLines = $commentObj->addCommentsToDb($articleId, $newComment); // id de l'article
 
                 if ($affectedLines === false) {
-                    exit('Impossible d\'ajouter le commentaire !');
+
+                    $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "Impossible d'ajouter le commentaire !", 'success');
                 } else {
-                    $_SESSION['waitingValidation'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
+
+                    $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
                 }
             } else FormData::saveFormData('comment', $post);
         }
@@ -135,7 +142,7 @@ class FrontendController
 
         } else {
             header('Location: index.php');
-            exit();
+
         }
     }
 
@@ -144,33 +151,17 @@ class FrontendController
      **/
     public function addContact($post)
     {
-        $contactErrorMessage = [];// Store error message to be available into home.php
         $field = FormData::securizeFormFields($post);
+        $checkInput = new  CheckContactInputs();
+        $contactErrorMessage = $checkInput->checkContactInputs($field);
+
         FormData::saveFormData('input', $field);
+
         if ($field['formContact'] == 'sent') {
-            if (empty($field['nom'])) {
-                $contactErrorMessage['nom'] = Messages::setFlash("Attention !", "Nom non renseigné", "warning"); // Store error message to be abvailable into register.php
-            } elseif (strlen($field['nom']) < 3) {
-                $contactErrorMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($field['nom']) > 45) {
-                $contactErrorMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire moins de 45 caractères', 'warning');
-            }
-            if (empty($field['prenom'])) {
-                $contactErrorMessage['prenom'] = Messages::setFlash("Attention !", "prenom non renseigné", "warning"); // Store error message to be abvailable into register.php
-            } elseif (strlen($field['prenom']) < 3) {
-                $contactErrorMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire plus de 3 caractères', 'warning');
-            } elseif (strlen($field['prenom']) > 45) {
-                $contactErrorMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire moins de 45 caractères', 'warning');
-            }
-            if (empty($field['email'])) {
-                $contactErrorMessage['email'] = Messages::setFlash("Attention !", "Email non renseigné", 'warning');
-            } elseif (!filter_var($field['email'], FILTER_VALIDATE_EMAIL)) {
-                $contactErrorMessage['email'] = Messages::setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", 'warning');
-            }
-            if (empty($field['message'])) {
-                $contactErrorMessage['message'] = Messages::setFlash("Attention !", "Le message manque", 'warning');
-            }
+
+
             if (empty($contactErrorMessage)) {
+
                 /**
                  * Call class Emails to send contact form data
                  */
@@ -187,40 +178,48 @@ class FrontendController
         include_once 'vue/home.php';
     }
 
-    //********** acces admin login page *************
-    public function logUser()
+//********** acces admin login page *************
+    public
+    function logUser()
     {
         include 'vue/login.php';
     }
 
-    //********** acces logAdmin.php  page *************
-    public function logAdmin()
+//********** acces logAdmin.php  page *************
+    public
+    function logAdmin()
     {
         include 'vue/logAdmin.php';
     }
 
-    //********** acces register login page *************
+//********** acces register login page *************
 
-    public function register()
+    public
+    function register()
     {
         ImportPage::getPage(include 'vue/register.php');
     }
 
-    public function logOff()
+    public
+    function logOff()
     {
-        unset($_SESSION);
-        session_destroy();
+
+        $session = new Session();
+        $session->stop(); //unset($_SESSION);  session_destroy();
+
         header('Location: index.php');
-        exit();
+
     }
 
     /**
      * Before login check user presence in database
      */
-    public function checkUser()//---- from login.php ---------
+    public
+    function checkUser()//---- from login.php ---------
     {
         $connexionErrorMessage = [];// Store error message to be available into login.php
-        $field = FormData::securizeFormFields($_POST);
+        $input = new FormGlobals();
+        $field = FormData::securizeFormFields($input->post());
         if (($field['formLogin']) == 'sent') {
             if (empty($field['login'])) {
                 $connexionErrorMessage['login'] = Messages::setFlash("Attention !", "Pas de login renseigné", 'warning');
@@ -238,20 +237,21 @@ class FrontendController
                 if (($checkUser['login'] === $field['login']) && password_verify($field['password'], $checkUser['password'])) {
 
                     if ($checkUser['statut'] == 1) {
-                        $session = &$_SESSION;
-                        $session["user"]['role'] = $checkUser['role'];
-                        $session["user"]['nom'] = $checkUser['nom'];
-                        $session["user"]['login'] = $checkUser['login'];
-                        $session["user"]['email'] = $checkUser['email'];
-                        $session["user"]['bienvenu'] = 1;
+                        $mySession = new Session();
+                        $mySession->set('user', 'nom', $checkUser['nom']);
+                        $mySession->set('user', 'role', $checkUser['role']);
+                        $mySession->set('user', 'login', $checkUser['login']);
+                        $mySession->set('user', 'email', $checkUser['email']);
+                        $mySession->set('user', 'bienvenu', 1);
+
                         //------ check if user is admin --------
-                        if ($session["user"]['role'] === 'admin') {
+                        if ($mySession->get('user', 'role') === 'admin') {
                             //echo '<pre> sessionUserrole'; var_dump(Session::get('user', 'role'));
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
-                            exit();
+
                         } else {
                             header('Location: index.php');
-                            exit();
+                         
                         }
                     } else {// statut = 0
                         $connexionErrorMessage['statut'] = Messages::setFlash("Attention !", "Votre compte n'est pas encore validé", 'warning');
@@ -267,52 +267,18 @@ class FrontendController
     /**
      * Add user from register.php to database
      **/
-    public function addUser()
+    public
+    function addUser()
     {
-        $post = FormData::securizeFormFields($_POST);
+        $input = new FormGlobals();
+        $post = FormData::securizeFormFields($input->post());
         $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs présentent dans les champs du formulaire
-        $loginEmailFormMessage = []; //si login et email déjà utilisés
+        $loginEmailFormMessage = []; //stocke erreur si login et email déjà utilisés
 
         if (!empty($post)) {
             if ($post['formRegister'] == 'sent') {
-                if (empty($post['nom'])) {
-                    $registerFormMessage['nom'] = Messages::setFlash("Attention !", "Manque le nom", "warning"); // Store error message to be abvailable into register.php
-                } elseif (strlen($post['nom']) < 3) {
-                    $registerFormMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire plus de 3 caractères', 'warning');
-                } elseif (strlen($post['nom']) > 45) {
-                    $registerFormMessage['nom'] = Messages::setFlash("Attention !", 'Votre nom doit faire moins de 45 caractères', 'warning');
-                }
-
-                if (empty($post['prenom'])) {
-                    $registerFormMessage['prenom'] = Messages::setFlash("Attention !", "Manque le prénom", "warning"); // Store error message to be abvailable into register.php
-                } elseif (strlen($post['prenom']) < 3) {
-                    $registerFormMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire plus de 3 caractères', 'warning');
-                } elseif (strlen($post['prenom']) > 45) {
-                    $registerFormMessage['prenom'] = Messages::setFlash("Attention !", 'Votre prénom doit faire moins de 45 caractères', 'warning');
-                }
-
-                if (empty($post['email'])) {
-                    $registerFormMessage['email'] = Messages::setFlash("Attention !", "Manque l'email", "warning"); // Store error message to be abvailable into register.php
-                } elseif (!empty($post['email']) && !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-                    $registerFormMessage['email'] = Messages::setFlash("Attention !", "L'email doit être selon format :bibi@fricotin.fr", "warning");
-                }
-
-                if (empty($post['login'])) {
-                    $registerFormMessage['login'] = Messages::setFlash("Attention !", "Manque le login", "warning"); // Store error message to be abvailable into register.php
-                }
-
-                if (empty($post['password'])) {
-                    $registerFormMessage['password'] = Messages::setFlash("Attention !", "Manque le Mot de passe ", "warning"); // Store error message to be abvailable into register.php
-                } elseif (strlen($post['password']) < 2) {
-                    $registerFormMessage['password'] = Messages::setFlash("Attention !", "Le mot de passe doit avoir plus de 2 caractères!", 'warning');
-                }
-                if (empty($post['password2'])) {
-                    $registerFormMessage ['password2'] = Messages::setFlash("Attention !", "Il faut répéter mot de passe ", "warning"); // Store error message to be abvailable into register.php
-                }
-
-                if (($post['password2']) !== ($post['password'])) {
-                    $registerFormMessage['password12'] = Messages::setFlash("Attention !", "Les champs des mots de passe doivent être identiques", "warning"); // Store error message to be abvailable into register.php
-                }
+                $checkInput = new  CheckUserInputs();
+                $registerFormMessage = $checkInput->checkUserInputs($input->post());
 
                 FormData::saveFormData('register', $post);
                 //---- if no errors in form fields add user's data are not yet in DB  ---
@@ -324,7 +290,7 @@ class FrontendController
 
                     if ($userLogin || $userEmail) {
                         if ($userLogin) {
-                            //$_SESSION["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
+
                             $loginEmailFormMessage["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
                         }
 
@@ -341,11 +307,11 @@ class FrontendController
                         $createUrlToken = Emails::createUrlWithToken($token, $userEmail);
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
-                        $session =&$_SESSION;
-                        $session["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
 
-                        header('Location: index.php?route=register');
-                        exit();
+                        $loginEmailFormMessage["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
+
+                        FormData::cleanFormData('register', $post);
+
                     }
                 }
             }
@@ -353,13 +319,14 @@ class FrontendController
         include 'vue/register.php';
     }
 
-    //check the token from the link validate in the user's email
+//check the token from the link validate in the user's email
     public function verifyToken()
     {
+        $input = new FormGlobals();
         $registerMessage = [];
-        if (isset($_GET['token']) && !empty($_GET['token'])) // if got user's token from email
+        if (!empty($input->get('token'))) // if got user's token from email
         {
-            $userToken = trim($_GET['token']);//token from email
+            $userToken = trim($input->get('token'));//token from email
             $newUser = new UserDao();
             $result = $newUser->fetchToken($userToken);
             $noviUser = $newUser->validateUser($result['id']);
@@ -368,5 +335,14 @@ class FrontendController
             }
             include_once 'vue/home.php';
         }
+    }
+
+    /**
+     * contact from top menu
+     **/
+    public function errorsException($exception)
+    {
+        $errorException = $exception;
+        include 'vue/errorsException.php';
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Model;
 
+use PDOException;
+
 /**
  * Cette classe gère la collecte des données pour afficher la liste des articles
  * et chaque article en particulier
@@ -26,7 +28,7 @@ class ArticleDao extends PdoConstruct
         $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
         $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
 
-        $affectedLines = $requete->execute();
+         $requete->execute();
 
         $lastId = $this->connection->lastInsertId();
         $requete->closeCursor();
@@ -102,10 +104,10 @@ class ArticleDao extends PdoConstruct
             '
             SELECT articles_id, titre, chapo, auteur,contenu, rubrique, date_creation, date_mise_a_jour 
             FROM articles
-            WHERE rubrique = "' . $rubrique . '" 
+            WHERE rubrique = :rubrique 
             ORDER BY date_creation DESC'
         );
-        $listArticles->execute();
+        $listArticles->execute([':rubrique' => $rubrique]);
         $articles = $listArticles->fetchAll();
         $listArticles->closeCursor();
         return $articles;
@@ -125,8 +127,8 @@ class ArticleDao extends PdoConstruct
             );
 
             $commentaire->execute([':id' => $idArticle]);
-        } catch (PDOException $e) {
-            echo $commentaire . "<br>" . $e->getMessage();
+        } catch (\PDOException $e) {
+            throw new \MyDatabaseException( $commentaire . "<br>" . $e->getMessage());
         }
         $article = $this->connection->prepare(
             '
