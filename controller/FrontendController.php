@@ -248,10 +248,10 @@ class FrontendController
                         if ($mySession->get('user', 'role') === 'admin') {
                             //echo '<pre> sessionUserrole'; var_dump(Session::get('user', 'role'));
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
-                            exit();
+
                         } else {
                             header('Location: index.php');
-                            exit();
+                         
                         }
                     } else {// statut = 0
                         $connexionErrorMessage['statut'] = Messages::setFlash("Attention !", "Votre compte n'est pas encore validé", 'warning');

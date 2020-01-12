@@ -1,6 +1,7 @@
 <?php ob_start();
 $titre = "Un article";
-$session = &$_SESSION;
+
+$updateArticleMessage = new \Services\Session();
 
 use Services\Messages; ?>
     <!-- Article Content -->
@@ -8,10 +9,11 @@ use Services\Messages; ?>
         <div class="container">
             <?php
 
-            if (isset($session['updateArticle'])) {
-                Messages::flashMessage2($session['updateArticle']);
-                unset($session['updateArticle']);
+            if (($updateArticleMessage->get('update', 'article')) != null) {
+                Messages::flashMessage2($updateArticleMessage->get('update', 'article'));
+                $updateArticleMessage->get('update', 'article');
             }
+
             ?>
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">

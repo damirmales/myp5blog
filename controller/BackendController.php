@@ -75,7 +75,10 @@ class BackendController
             $articleDao = new ArticleDao();
             $articleUpdate = $articleDao->updateArticleToDb($article);
             if ($articleUpdate) {
-                $_SESSION['updateArticle'] = Messages::setFlash("Super !", "Article mis à jour", 'success');
+                //$_SESSION['updateArticle'] = Messages::setFlash("Super !", "Article mis à jour", 'success');
+                $session = new Session();
+                $session->set('update', 'article', Messages::setFlash("Super !", "Article mis à jour", 'success'));
+
                 $this->showArticle($post['articles_id']);
             }
         } else {
@@ -124,7 +127,7 @@ class BackendController
         $articleDeleted = $articles->deleteArticle($idArticle);
         if ($articleDeleted) {
             header('Location:index.php?route=editListArticles');
-            
+
         }
     }
 
