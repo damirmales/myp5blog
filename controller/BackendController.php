@@ -23,7 +23,7 @@ class BackendController
         $mySession = new Session();
         if ($mySession->get('user', 'role') != 'admin') {// from frontendController checkUser() method via Router
             header('Location: index.php'); // if user is NOT admin
-            exit();
+
         }
         include 'vue/backend/admin_page.php';
     }
@@ -45,7 +45,7 @@ class BackendController
         $checkInput = new CheckArticleInputs();
         $addArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
 
-  
+
         $post = FormData::securizeFormFields($input->post());
         FormData::saveFormData('newArticle', $post);
 
@@ -56,7 +56,7 @@ class BackendController
             $articleAdded = $articleDao->setArticleToDb($article);
             //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
             header('Location: index.php?route=showArticle&id=' . $articleAdded);
-            exit();
+
         }
 
         include 'vue/backend/create_article.php';
@@ -124,7 +124,7 @@ class BackendController
         $articleDeleted = $articles->deleteArticle($idArticle);
         if ($articleDeleted) {
             header('Location:index.php?route=editListArticles');
-            exit();
+            
         }
     }
 

@@ -142,7 +142,7 @@ class FrontendController
 
         } else {
             header('Location: index.php');
-            exit();
+
         }
     }
 
