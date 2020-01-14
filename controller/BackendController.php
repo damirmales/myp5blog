@@ -102,7 +102,7 @@ class BackendController
     function editListArticles()
     {
         $articles = new ArticleDao();
-        $articlesEdited = $articles->getListArticles();
+        $articlesEdited = $articles->getArticlesByCategory('all');
         include 'vue/backend/list_articles.php';
     }
 

@@ -47,14 +47,14 @@ class FrontendController
      **/
     public function pullListeArticles() // get all articles
     {
-        $reqArticles = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $articles = $reqArticles->getListArticles();
+        $reqArticles = new ArticleDao();
+        $articles = $reqArticles->getArticlesByCategory('all');
         include 'vue/articles.php';
     }
 
     public function getArticle($id) // get one article
     {
-        $reqArticle = new ArticleDao(); // voir gestion instance en Singleton
+        $reqArticle = new ArticleDao();
         $article = $reqArticle->getSingleArticle($id);
         $comments = $this->getComments($id); // insérer les commentaires avec l'article
         include 'vue/commentForm.php';
@@ -79,8 +79,7 @@ class FrontendController
         $post = FormData::securizeFormFields($postData);
         $mySession = new Session();
         $nom = $mySession->get('user', 'nom');
-        // $nom = $_SESSION['user']['nom']; //use logged user's name
-        //$email = $_SESSION['user']['email'];//use logged user's email
+
         $comment = $post['comment'];
         $article = null;// init $article to use it as an array to display article datas
         $comments = null;// init comments to show all comments
@@ -111,7 +110,7 @@ class FrontendController
         //check if instance of Articles and Comments classes already exist
         // help to not create multiple instance
         if (($article instanceof ArticleDao) != true) {
-            $reqArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+            $reqArticle = new ArticleDao();
             $article = $reqArticle->getSingleArticle($articleId);
         } else {
             $article = $reqArticle->getSingleArticle($articleId);
@@ -126,12 +125,12 @@ class FrontendController
     }
 
     /**
-     * Front articles.php categories management
+     *  list of articles management
      */
     public function getCategoryArticles($rubriq)
     {
         $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $rubriques = $articleDao->getArticlesByCategory($rubriq);
+        $articles = $articleDao->getArticlesByCategory($rubriq);
 
         // Associer la vue correspondante à la rubrique sélectionnée
         if ($rubriq == "livres") {
@@ -251,7 +250,7 @@ class FrontendController
 
                         } else {
                             header('Location: index.php');
-                         
+
                         }
                     } else {// statut = 0
                         $connexionErrorMessage['statut'] = Messages::setFlash("Attention !", "Votre compte n'est pas encore validé", 'warning');

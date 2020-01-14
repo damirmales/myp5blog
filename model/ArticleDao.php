@@ -2,8 +2,6 @@
 
 namespace Model;
 
-use PDOException;
-
 /**
  * Cette classe gère la collecte des données pour afficher la liste des articles
  * et chaque article en particulier
@@ -28,7 +26,7 @@ class ArticleDao extends PdoConstruct
         $requete->bindValue(':contenu', $article->getContenu(), \PDO::PARAM_STR);
         $requete->bindValue(':rubrique', $article->getRubrique(), \PDO::PARAM_STR);
 
-         $requete->execute();
+        $requete->execute();
 
         $lastId = $this->connection->lastInsertId();
         $requete->closeCursor();
@@ -58,22 +56,6 @@ class ArticleDao extends PdoConstruct
         return $affectedLines;
     }
 
-    public function getListArticles()
-    {
-        $listArticles = $this->connection->prepare(
-            '
-            SELECT *
-            FROM articles
-            ORDER BY articles_id DESC'
-        );
-        $listArticles->execute();
-        $articles = [];
-        foreach ($listArticles as $article) {
-            $articles[] = new Articles($article);
-        }
-        $listArticles->closeCursor();
-        return $articles;
-    }
     /**
      * @param $idArticle
      * @return Articles
@@ -89,29 +71,47 @@ class ArticleDao extends PdoConstruct
         );
         $requete->execute([':id' => $idArticle]);
         $article = $requete->fetch(\PDO::FETCH_ASSOC); //si pas FETCH_ASSOC alors on recupere des numéros de colonne
-        //$requete->closeCursor();
+
         $oneArticle = new Articles($article);
         return $oneArticle;
     }
+
     /**
      * @param $rubrique
      * @return array
      */
     public function getArticlesByCategory($rubrique)
     {
-        //$connection = $this->getConnectDB();
-        $listArticles = $this->connection->prepare(
-            '
+        $articles = [];
+
+        if ($rubrique != 'all') {
+            $listArticles = $this->connection->prepare(
+                '
             SELECT articles_id, titre, chapo, auteur,contenu, rubrique, date_creation, date_mise_a_jour 
             FROM articles
             WHERE rubrique = :rubrique 
             ORDER BY date_creation DESC'
-        );
-        $listArticles->execute([':rubrique' => $rubrique]);
-        $articles = $listArticles->fetchAll();
-        $listArticles->closeCursor();
+            );
+            $listArticles->execute([':rubrique' => $rubrique]);
+            $listArticles = $listArticles->fetchAll();
+        } else {
+            $listArticles = $this->connection->prepare(
+                '
+            SELECT *
+            FROM articles
+            ORDER BY articles_id DESC'
+            );
+            $listArticles->execute();
+        }
+
+
+        foreach ($listArticles as $article) {
+            $articles[] = new Articles($article);
+        }
+
         return $articles;
     }
+
     /**
      * @param $idArticle
      * @return bool|\PDOStatement
@@ -128,7 +128,8 @@ class ArticleDao extends PdoConstruct
 
             $commentaire->execute([':id' => $idArticle]);
         } catch (\PDOException $e) {
-            throw new \MyDatabaseException( $commentaire . "<br>" . $e->getMessage());
+            $errorException = ('Erreur dans deleteArticle : ' . $e->getMessage());
+            header('Location: index.php?route=errorMessage&exception=' . $errorException);
         }
         $article = $this->connection->prepare(
             '

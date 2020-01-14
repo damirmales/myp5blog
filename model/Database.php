@@ -5,7 +5,7 @@ namespace Model;
 use PDO;
 
 /**
- * Cette classe permet de gérer la connexion à la base de données
+ * This class allow connection to the database
  */
 class Database
 {
@@ -22,7 +22,6 @@ class Database
         } catch (\Exception  $e) {
             $errorException = ('Erreur dans Database : ' . $e->getMessage());
             header('Location: index.php?route=errorMessage&exception=' . $errorException);
-
 
         }
     }

@@ -15,31 +15,31 @@
         </div>
     </header>
 
-<?php foreach ($rubriques as $article) : ?>
+<?php foreach ($articles as $article) : ?>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="post-preview">
+                    <a href="index.php?route=article&id=<?= $article->getArticles_id() ?>">
 
-                    <a href="index.php?route=article&id=<?= htmlspecialchars($article['articles_id']) ?>">
                         <h2 class="post-title">
-                            <?= htmlspecialchars($article['titre']); ?>
+                            <?= htmlspecialchars($article->getTitre()); ?>
                         </h2>
                         <h3 class="post-subtitle">
-                            <?= htmlspecialchars($article['chapo']); ?>
+                            <?= htmlspecialchars($article->getChapo()); ?>
                         </h3>
                     </a>
                     <p class="post-meta">Modifié le :
-                        <?= htmlspecialchars($article['date_mise_a_jour']); ?>
+                        <?= htmlspecialchars($article->getDate_mise_a_jour()); ?>
                     </p>
                 </div>
                 <hr>
-                <a href="index.php?route=article&id=<?= htmlspecialchars($article['articles_id']) ?>">Voir l'article</a>
+                <a href="index.php?route=article&id=<?= htmlspecialchars($article->getArticles_id()) ?>">Voir
+                    l'article</a>
 
             </div>
         </div>
     </div>
-
 <?php endforeach ?>
 <?php $content = ob_get_clean(); ?>
 <?php require 'templates/layout_gabarit.php'; ?>

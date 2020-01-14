@@ -81,12 +81,10 @@ $session = &$_SESSION;
                             <label>Message</label>
                             <textarea rows="5" class="form-control" placeholder="Message" name="message" id="message"
                                       required data-validation-required-message="Entrez votre message."
-                                      value="<?= htmlspecialchars(FormData::getFormData('input', 'message')) ?>"></textarea>
+                            ><?= htmlspecialchars(FormData::getFormData('input', 'message')) ?></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
-
-                    <br>
                     <div id="success"></div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" id="sendMessageButton" name="valider">Envoyez
