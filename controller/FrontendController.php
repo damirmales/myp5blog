@@ -18,6 +18,7 @@ use Services\Session;
 
 class FrontendController
 {
+
     /**
      * home management
      **/
@@ -99,10 +100,8 @@ class FrontendController
                 $affectedLines = $commentObj->addCommentsToDb($articleId, $newComment); // id de l'article
 
                 if ($affectedLines === false) {
-
                     $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "Impossible d'ajouter le commentaire !", 'success');
                 } else {
-
                     $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
                 }
             } else FormData::saveFormData('comment', $post);
@@ -141,7 +140,6 @@ class FrontendController
 
         } else {
             header('Location: index.php');
-
         }
     }
 
@@ -157,8 +155,6 @@ class FrontendController
         FormData::saveFormData('input', $field);
 
         if ($field['formContact'] == 'sent') {
-
-
             if (empty($contactErrorMessage)) {
 
                 /**
@@ -177,32 +173,38 @@ class FrontendController
         include_once 'vue/home.php';
     }
 
-//********** acces admin login page *************
-    public
-    function logUser()
+
+    /**
+     * acces to admin login page
+     */
+    public function logUser()
     {
         include 'vue/login.php';
     }
 
-//********** acces logAdmin.php  page *************
-    public
-    function logAdmin()
+
+    /**
+     *  acces to logAdmin.php  page
+     */
+    public function logAdmin()
     {
         include 'vue/logAdmin.php';
     }
 
-//********** acces register login page *************
 
-    public
-    function register()
+    /**
+     * access to register login page
+     */
+    public function register()
     {
         ImportPage::getPage(include 'vue/register.php');
     }
 
-    public
-    function logOff()
+    /**
+     *
+     */
+    public function logOff()
     {
-
         $session = new Session();
         $session->stop(); //unset($_SESSION);  session_destroy();
 
@@ -213,8 +215,7 @@ class FrontendController
     /**
      * Before login check user presence in database
      */
-    public
-    function checkUser()//---- from login.php ---------
+    public function checkUser()//---- from login.php
     {
         $connexionErrorMessage = [];// Store error message to be available into login.php
         $input = new FormGlobals();
@@ -266,8 +267,7 @@ class FrontendController
     /**
      * Add user from register.php to database
      **/
-    public
-    function addUser()
+    public function addUser()
     {
         $input = new FormGlobals();
         $post = FormData::securizeFormFields($input->post());
@@ -318,7 +318,10 @@ class FrontendController
         include 'vue/register.php';
     }
 
-//check the token from the link validate in the user's email
+
+    /**
+     * check the token from the link validate in the user's email
+     */
     public function verifyToken()
     {
         $input = new FormGlobals();

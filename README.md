@@ -16,7 +16,6 @@ https://github.com/damirmales/myp5blog/issues
 Url of the project
 https://damirweb.com/oc/p5/myp5blog/
 
-
 Dependency :
 I use Composer to manage my classes' with an autoloading
 https://getcomposer.org/doc/01-basic-usage.md
@@ -26,7 +25,7 @@ You need Apache, MySQL and PHP : you can download a server ( WAMP, MAMP, LAMP, X
 Personnaly I use XAMPP server
 
 Installation
-Download project or clone it in the accurate server file (www for windows, htdocs for MAC...).
+Download project or clone it in the accurate server file (htdocs if you use XAMPP).
 
 1. Make a gitclone from Github repo
 2. Use Composer update to install dependencies 

@@ -62,6 +62,9 @@ class BackendController
         include 'vue/backend/create_article.php';
     }
 
+    /**
+     *
+     */
     public function updateArticle()
     {
         $input = new FormGlobals();
@@ -90,16 +93,17 @@ class BackendController
     /**
      * display article
      **/
-    public
-    function showArticle($idArticle)
+    public function showArticle($idArticle)
     {
         $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
         $article = $getArticle->getSingleArticle($idArticle);
         include 'vue/backend/show_article.php';
     }
 
-    public
-    function editListArticles()
+    /**
+     *
+     */
+    public function editListArticles()
     {
         $articles = new ArticleDao();
         $articlesEdited = $articles->getArticlesByCategory('all');
@@ -109,8 +113,7 @@ class BackendController
     /**
      * display current article's datas to be modified
      **/
-    public
-    function editArticle($idArticle)
+    public function editArticle($idArticle)
     {
         $getArticle = new ArticleDao();
         $article = $getArticle->getSingleArticle($idArticle);
@@ -120,8 +123,7 @@ class BackendController
     /**
      * @param $idArticle
      */
-    public
-    function deleteArticle($idArticle)
+    public function deleteArticle($idArticle)
     {
         $articles = new ArticleDao();
         $articleDeleted = $articles->deleteArticle($idArticle);
@@ -131,16 +133,7 @@ class BackendController
         }
     }
 
-    public
-    function showComment($idArticle)
-    {
-        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $article = $getArticle->getSingleArticle($idArticle);
-        include 'vue/backend/show_article.php';
-    }
-
-    public
-    function deleteComment($idComment)
+    public function deleteComment($idComment)
     {
         $comment = new CommentDao();
         $commentDeleted = $comment->deleteComment($idComment);
@@ -149,16 +142,14 @@ class BackendController
         }
     }
 
-    public
-    function editListComments()
+    public function editListComments()
     {
         $comments = new CommentDao();
         $commentEdited = $comments->getListComments();
         include 'vue/backend/list_comments.php';
     }
 
-    public
-    function validateComment($idComment)
+    public function validateComment($idComment)
     {
         $getComment = new CommentDao(); //////////// voir gestion instance en Singleton
         $comment = $getComment->validateComment($idComment);

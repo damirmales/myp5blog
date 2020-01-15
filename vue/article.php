@@ -29,10 +29,10 @@
                         <h1><?= htmlspecialchars($article->getTitre()) ?></h1>
                         <span class="meta"><strong>Châpo :</strong></span>
                         <h2 class="subheading"><?= htmlspecialchars($article->getChapo()) ?></h2>
-                        <span class="meta"> <strong>Posté par : </strong>
+                        <span class="meta"> <strong>Rédigé par : </strong>
               <a href="#"><?= $article->getAuteur(); ?></a>
               <br>
-            <strong> Posté le : </strong><?= htmlspecialchars($article->getDate_creation()) ?></span>
+            <strong> Dernière mise à jour : </strong><?= htmlspecialchars($article->getDate_creation()) ?></span>
                     </div>
 
                     <p><strong>Contenu : </strong></p>
@@ -52,7 +52,7 @@
     </div>
 
     <!-- display comments  a mettre dans la methode du FrontendController-->
-<?= $allComments; // Comments container  ?>
+<?= $allComments; // Comments container    ?>
 
 <?php $content = ob_get_clean(); ?>
 <?php require 'templates/layout_gabarit.php'; ?>

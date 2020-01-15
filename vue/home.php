@@ -12,6 +12,8 @@ $session = &$_SESSION;
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <div class="site-heading">
+                        <img id="trombi" src="public/img/trombidam.jpg" width="50" height="50" alt="damir males photo">
+
                         <h1>Blog de Damir M</h1>
                         <span class="subheading">Développeur PHP</span>
                     </div>
