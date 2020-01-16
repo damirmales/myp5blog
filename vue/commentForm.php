@@ -1,13 +1,10 @@
 <?php ob_start();
 
-//$session = &$_SESSION;
-
 use Services\Messages; ?>
 <?php
 if (!empty($commentErrorMessage)) {
     Messages::flashMessage($commentErrorMessage);
 }
-
 ?>
 <form action="index.php?route=addComment&id=<?= htmlspecialchars($article->getArticles_id()) ?>" method="post"
       name="commentForm">
@@ -22,5 +19,4 @@ if (!empty($commentErrorMessage)) {
 </form>
 
 <?php $formComment = ob_get_clean(); ?>
-
 <?php require 'vue/comments.php'; ?>
