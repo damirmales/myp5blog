@@ -52,13 +52,14 @@ class BackendController
         if (empty($addArticleErrorMessage)) {
 
             $article = new Articles($post);
-            $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
+            $articleDao = new ArticleDao();
             $articleAdded = $articleDao->setArticleToDb($article);
             //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
+            $session = new Session();
+            $session->set('new', 'article', Messages::setFlash("Super !", "Article ajouté", 'success'));
+            
             header('Location: index.php?route=showArticle&id=' . $articleAdded);
-
         }
-
         include 'vue/backend/create_article.php';
     }
 
@@ -95,7 +96,7 @@ class BackendController
      **/
     public function showArticle($idArticle)
     {
-        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $getArticle = new ArticleDao();
         $article = $getArticle->getSingleArticle($idArticle);
         include 'vue/backend/show_article.php';
     }

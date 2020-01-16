@@ -12,6 +12,7 @@ class Session
     public function __construct()
     {
         $this->session = &$_SESSION;
+
     }
 
     /**
@@ -31,7 +32,7 @@ class Session
      */
     public function get($name, $key)
     {
-        if (($this->session[$name][$key]) != null) {
+        if (isset($this->session[$name][$key])) {
             return $this->session[$name][$key];
         }
         return null;

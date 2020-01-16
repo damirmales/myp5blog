@@ -57,13 +57,13 @@ class FrontendController
     {
         $reqArticle = new ArticleDao();
         $article = $reqArticle->getSingleArticle($id);
-        $comments = $this->getComments($id); // insérer les commentaires avec l'article
+        $comments = $this->getComments($id); // insert comments on article
         include 'vue/commentForm.php';
     }
 
-    /*******************
+    /**
      * Front comments management
-     **********************/
+     */
     public function getComments($id)
     {
         $comments = new CommentDao();
@@ -271,8 +271,8 @@ class FrontendController
     {
         $input = new FormGlobals();
         $post = FormData::securizeFormFields($input->post());
-        $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs présentent dans les champs du formulaire
-        $loginEmailFormMessage = []; //stocke erreur si login et email déjà utilisés
+        $registerFormMessage = []; // array to store errors from invalid values from form inputs
+        $loginEmailFormMessage = []; //Store errors if login and/or email already used
 
         if (!empty($post)) {
             if ($post['formRegister'] == 'sent') {
@@ -298,11 +298,11 @@ class FrontendController
                         }
                     } else {
                         $token = Emails::generateToken();
-                        //instancier la classe qui envoie les données des utilisateurs vers la bdd
+                        //create instance which send user datas to the database
                         $user = new Users($post);
                         $user->setToken($token);
                         $userDao->addUserToDb($user);
-                        $userEmail = $user->getEmail(); //"damir@romandie.com";
+                        $userEmail = $user->getEmail();
                         $createUrlToken = Emails::createUrlWithToken($token, $userEmail);
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class

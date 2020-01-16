@@ -1,19 +1,24 @@
 <?php ob_start();
 $titre = "Un article";
 
-$updateArticleMessage = new \Services\Session();
+use Services\Messages;
+use Services\Session;
 
-use Services\Messages; ?>
+$updateArticleMessage = new Session();
+
+?>
     <!-- Article Content -->
     <article>
         <div class="container">
             <?php
-
             if (($updateArticleMessage->get('update', 'article')) != null) {
                 Messages::flashMessage2($updateArticleMessage->get('update', 'article'));
-                $updateArticleMessage->get('update', 'article');
+                $updateArticleMessage->remove('update', 'article');
             }
-
+            if (($updateArticleMessage->get('new', 'article')) != null) {
+                Messages::flashMessage2($updateArticleMessage->get('new', 'article'));
+                $updateArticleMessage->remove('new', 'article');
+            }
             ?>
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
