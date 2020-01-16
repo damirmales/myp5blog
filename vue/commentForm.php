@@ -1,5 +1,6 @@
 <?php ob_start();
-$session = &$_SESSION;
+
+//$session = &$_SESSION;
 
 use Services\Messages; ?>
 <?php

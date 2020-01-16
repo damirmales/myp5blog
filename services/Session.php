@@ -31,7 +31,7 @@ class Session
      */
     public function get($name, $key)
     {
-        if (isset($this->session[$name][$key])) {
+        if (($this->session[$name][$key]) != null) {
             return $this->session[$name][$key];
         }
         return null;
