@@ -6,17 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/Emails.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/Emails.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layout_gabarit.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout_gabarit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/comments.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/comments.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/home.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +195,8 @@
       <workItem from="1578901270564" duration="17525000" />
       <workItem from="1578951721165" duration="1508000" />
       <workItem from="1578986988452" duration="9689000" />
-      <workItem from="1579078150919" duration="22196000" />
+      <workItem from="1579078150919" duration="23423000" />
+      <workItem from="1579148930967" duration="1276000" />
     </task>
     <servers />
   </component>
@@ -269,10 +261,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="569" y="280" key="VCS.EditChangelistDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106083540" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1579078190939">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1579148945416">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1579078190939" />
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1579148945416" />
     <state x="481" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1578486782489">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

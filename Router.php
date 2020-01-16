@@ -93,13 +93,12 @@ class Router
                     $backController->deleteComment($input->get('id'));
                 } elseif ($get === 'validateComment') {
                     $backController->validateComment($input->get('id'));
-                } else {
-                    //echo 'page inconnue ' . $get;
-                    header('Location:/404.php');
-                }
+                } else header('Location:/404.php');
             } else $frontController->home();
         } catch (Exception $e) {
-            echo 'Erreur niveau Router :' . $e->getMessage();
+            $errorException = ('Erreur niveau Router  : ' . $e->getMessage());
+            header('Location: index.php?route=errorMessage&exception=' . $errorException);
+
         }
     }
 }
