@@ -82,7 +82,7 @@
     </div>
 </nav>
 
-<?= $content; ?>
+<?php echo $content; ?>
 
 
 <!-- Footer -->
@@ -119,13 +119,13 @@
                 <?php
                 if (isset($session_role)) {
 
-                if ($session_role != 'admin')  {
-                ?>
+                    if ($session_role != 'admin') {
+                        ?>
                 <p class="admin text-center"><a href="index.php?route=connexionAdmin">⚒ Administration</a>
-                    <?php
+                        <?php
                     }
-                    }
-                    ?>
+                }
+                ?>
 
                 <p class="copyright text-muted">Copyright &copy; Damir Blog 2020</p>
             </div>

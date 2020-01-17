@@ -43,7 +43,8 @@ class CheckUserInputs
 
         if (count($errs) != 0) {
             return $ErrorMessage;
-        } else return null;
+        } else { return null;
+        }
     }
 
     public function checkNom($nom)

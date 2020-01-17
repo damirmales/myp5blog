@@ -11,7 +11,7 @@ $errorException = null;
             if (!empty($errorException)) {
                 ?>
                 <div class="container alerte alert-warning">Erreur
-                    <button type="button" class="close" data-dismiss="alert">&times;</button><?= $errorException ?>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button><?php echo $errorException ?>
                 </div>
                 <?php
             }

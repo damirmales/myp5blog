@@ -54,7 +54,7 @@ $session = &$_SESSION;
                                 <label>Nom</label>
                                 <input type="text" class="form-control" placeholder="Nom" name="nom" id="nom" required
                                        data-validation-required-message="Entrez votre nom."
-                                       value="<?= htmlspecialchars(FormData::getFormData('input', 'nom')) ?>">
+                                       value="<?php echo htmlspecialchars(FormData::getFormData('input', 'nom')) ?>">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ $session = &$_SESSION;
                             <label>Prénom </label>
                             <input type="text" class="form-control" placeholder="Prénom " name="prenom" id="prenom"
                                    required data-validation-required-message="Entrez votre prénom"
-                                   value="<?= htmlspecialchars(FormData::getFormData('input', 'prenom')) ?>">
+                                   value="<?php echo htmlspecialchars(FormData::getFormData('input', 'prenom')) ?>">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ $session = &$_SESSION;
                             <label>Email</label>
                             <input type="email" class="form-control" placeholder="Email" name="email" id="email"
                                    data-validation-required-message="Entrez votre email."
-                                   value="<?= htmlspecialchars(FormData::getFormData('input', 'email')) ?>" required>
+                                   value="<?php echo htmlspecialchars(FormData::getFormData('input', 'email')) ?>" required>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -83,7 +83,7 @@ $session = &$_SESSION;
                             <label>Message</label>
                             <textarea rows="5" class="form-control" placeholder="Message" name="message" id="message"
                                       required data-validation-required-message="Entrez votre message."
-                            ><?= htmlspecialchars(FormData::getFormData('input', 'message')) ?></textarea>
+                            ><?php echo htmlspecialchars(FormData::getFormData('input', 'message')) ?></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>

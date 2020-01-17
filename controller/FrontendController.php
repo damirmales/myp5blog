@@ -30,7 +30,7 @@ class FrontendController
     /**
      * cv
      */
-    public function cv()
+    public function cvitae()
     {
         include 'vue/cv.php';
     }
@@ -104,7 +104,8 @@ class FrontendController
                 } else {
                     $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
                 }
-            } else FormData::saveFormData('comment', $post);
+            } else { FormData::saveFormData('comment', $post);
+            }
         }
         //check if instance of Articles and Comments classes already exist
         // help to not create multiple instance
@@ -246,7 +247,7 @@ class FrontendController
 
                         //------ check if user is admin --------
                         if ($mySession->get('user', 'role') === 'admin') {
-                            //echo '<pre> sessionUserrole'; var_dump(Session::get('user', 'role'));
+
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
 
                         } else {

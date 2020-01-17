@@ -6,7 +6,7 @@ if (!empty($commentErrorMessage)) {
     Messages::flashMessage($commentErrorMessage);
 }
 ?>
-<form action="index.php?route=addComment&id=<?= htmlspecialchars($article->getArticles_id()) ?>" method="post"
+<form action="index.php?route=addComment&id=<?php echo htmlspecialchars($article->getArticles_id()) ?>" method="post"
       name="commentForm">
     <div class="input-group">
         <div class="input-group-prepend">

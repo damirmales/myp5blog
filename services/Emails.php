@@ -99,8 +99,8 @@ class Emails
     }
 
     /**
-     * @param $userEmail
-     * @param $UrlToken
+     * @param  $userEmail
+     * @param  $UrlToken
      * @return bool
      */
     public function tokenEmail($userEmail, $UrlToken)   //---- send email with token to register a new user ----------
@@ -128,8 +128,8 @@ class Emails
     }
 
     /**
-     * @param $token
-     * @param $email
+     * @param  $token
+     * @param  $email
      * @return string
      */
     public static function createUrlWithToken($token, $email)

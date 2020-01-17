@@ -10,7 +10,7 @@
                     <div class="post-heading">
 
                         <h2 class="subheading"><span
-                                    class="subheading">Article : <?= htmlspecialchars($article->getTitre()) ?></span>
+                                    class="subheading">Article : <?php echo htmlspecialchars($article->getTitre()) ?></span>
                         </h2>
 
                     </div>
@@ -26,17 +26,17 @@
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <div class="post-heading">
                         <span class="meta"> <strong>Titre :</strong></span>
-                        <h1><?= htmlspecialchars($article->getTitre()) ?></h1>
+                        <h1><?php echo htmlspecialchars($article->getTitre()) ?></h1>
                         <span class="meta"><strong>Châpo :</strong></span>
-                        <h2 class="subheading"><?= htmlspecialchars($article->getChapo()) ?></h2>
+                        <h2 class="subheading"><?php echo htmlspecialchars($article->getChapo()) ?></h2>
                         <span class="meta"> <strong>Rédigé par : </strong>
-              <a href="#"><?= $article->getAuteur(); ?></a>
+              <a href="#"><?php echo $article->getAuteur(); ?></a>
               <br>
-            <strong> Dernière mise à jour : </strong><?= htmlspecialchars($article->getDate_creation()) ?></span>
+            <strong> Dernière mise à jour : </strong><?php echo htmlspecialchars($article->getDate_creation()) ?></span>
                     </div>
 
                     <p><strong>Contenu : </strong></p>
-                    <p><?= htmlspecialchars($article->getContenu()) ?></p>
+                    <p><?php echo htmlspecialchars($article->getContenu()) ?></p>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
     </div>
 
     <!-- display comments  a mettre dans la methode du FrontendController-->
-<?= $allComments; // Comments container    ?>
+<?php echo $allComments; // Comments container    ?>
 
 <?php $content = ob_get_clean(); ?>
 <?php require 'templates/layout_gabarit.php'; ?>

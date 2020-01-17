@@ -23,7 +23,7 @@ class Router
                 if ($get === 'contactForm') {
                     $frontController->addContact($input->post());
                 } elseif ($get === 'cv') {
-                    $frontController->cv();
+                    $frontController->cvitae();
                 } elseif ($get === 'home') {
                     $frontController->home();
                 } elseif ($get === 'contact') {
@@ -93,8 +93,10 @@ class Router
                     $backController->deleteComment($input->get('id'));
                 } elseif ($get === 'validateComment') {
                     $backController->validateComment($input->get('id'));
-                } else header('Location:/404.php');
-            } else $frontController->home();
+                } else { header('Location:/404.php');
+                }
+            } else { $frontController->home();
+            }
         } catch (Exception $e) {
             $errorException = ('Erreur niveau Router  : ' . $e->getMessage());
             header('Location: index.php?route=errorMessage&exception=' . $errorException);

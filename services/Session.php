@@ -26,8 +26,8 @@ class Session
     }
 
     /**
-     * @param $name
-     * @param $key
+     * @param  $name
+     * @param  $key
      * @return |null
      */
     public function get($name, $key)
@@ -39,8 +39,8 @@ class Session
     }
 
     /**
-     * @param $name
-     * @param $key
+     * @param  $name
+     * @param  $key
      * @return |null
      */
     public function show($name, $key)

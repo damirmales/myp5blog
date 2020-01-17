@@ -34,7 +34,7 @@ class ArticleDao extends PdoConstruct
     }
 
     /**
-     * @param $article
+     * @param  $article
      * @return bool
      */
     public function updateArticleToDb($article)
@@ -57,7 +57,7 @@ class ArticleDao extends PdoConstruct
     }
 
     /**
-     * @param $idArticle
+     * @param  $idArticle
      * @return Articles
      */
     public function getSingleArticle($idArticle)
@@ -77,7 +77,7 @@ class ArticleDao extends PdoConstruct
     }
 
     /**
-     * @param $rubrique
+     * @param  $rubrique
      * @return array
      */
     public function getArticlesByCategory($rubrique)
@@ -113,7 +113,7 @@ class ArticleDao extends PdoConstruct
     }
 
     /**
-     * @param $idArticle
+     * @param  $idArticle
      * @return bool|\PDOStatement
      */
     public function deleteArticle($idArticle)

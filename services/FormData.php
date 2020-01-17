@@ -7,7 +7,7 @@ class FormData
     private static $formSession = [];
 
     /**
-     * @param $data
+     * @param  $data
      * @return null
      */
     public static function securizeFormFields($data)
@@ -24,8 +24,8 @@ class FormData
     }
 
     /**
-     * @param $session
-     * @param $key
+     * @param  $session
+     * @param  $key
      * @return string|null
      */
     public static function getFormData($session, $key)//*** Get an input value entered by user ***

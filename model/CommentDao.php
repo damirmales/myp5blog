@@ -21,7 +21,6 @@ class CommentDao extends PdoConstruct
         return $comments;
     }
     /**
-     *
      * Add comments to database
      *
      * @param  $articleId
@@ -50,7 +49,8 @@ class CommentDao extends PdoConstruct
      */
     public function getListComments()
     {
-        $requete = $this->connection->prepare('
+        $requete = $this->connection->prepare(
+            '
             
             SELECT commentaire_id, pseudo, B.contenu, date_ajout, validation
             FROM commentaires as B
@@ -65,7 +65,7 @@ class CommentDao extends PdoConstruct
         return $comments;
     }
     /**
-     * @param $idComment
+     * @param  $idComment
      * @return bool|\PDOStatement
      */
     public function deleteComment($idComment) // efface le commentaire en fonction du numéro d'id fournit ----------

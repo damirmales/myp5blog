@@ -5,9 +5,9 @@ namespace Services;
 class Messages
 {
     /**
-     * @param $titre
-     * @param $message
-     * @param $type
+     * @param  $titre
+     * @param  $message
+     * @param  $type
      * @return array
      */
     public static function setFlash($titre, $message, $type)

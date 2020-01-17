@@ -7,17 +7,17 @@ foreach ($articlesEdited as $article) : ?>
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="post-preview">
                     <h2 class="post-title">
-                        <a href="index.php?route=showArticle&id=<?= htmlspecialchars($article->getArticles_id()) ?>">   <?= htmlspecialchars($article->getTitre()); ?>
+                        <a href="index.php?route=showArticle&id=<?php echo htmlspecialchars($article->getArticles_id()) ?>">   <?php echo htmlspecialchars($article->getTitre()); ?>
                         </a>
                     </h2>
                     <h3 class="post-subtitle">
-                        <?= htmlspecialchars($article->getChapo()); ?>
+                        <?php echo htmlspecialchars($article->getChapo()); ?>
                     </h3>
                     <p class="post-meta">Modifié le :
-                        <?= htmlspecialchars($article->getDate_mise_a_jour()); ?>
+                        <?php echo htmlspecialchars($article->getDate_mise_a_jour()); ?>
                     </p>
                 </div>
-                <a href="index.php?route=showArticle&id=<?= htmlspecialchars($article->getArticles_id()) ?>">Voir
+                <a href="index.php?route=showArticle&id=<?php echo htmlspecialchars($article->getArticles_id()) ?>">Voir
                     l'article</a><br>
                 <hr>
             </div>

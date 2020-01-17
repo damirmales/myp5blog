@@ -48,23 +48,23 @@ if (!empty($loginEmailFormMessage["registerForm"]["OK"])) {
                         <label for="nom">Nom </label>
                         <!-- <input type="text" class="form-control" id="nom" placeholder="Entrez le nom" name="nom" required> -->
                         <input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"
-                               value="<?= htmlspecialchars(FormData::getFormData('register', 'nom')) ?>">
+                               value="<?php echo htmlspecialchars(FormData::getFormData('register', 'nom')) ?>">
                     </div>
                     <div class="form-group">
                         <label for="prenom">Prénom</label>
                         <input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"
-                               value="<?= htmlspecialchars(FormData::getFormData('register', 'prenom')) ?>">
+                               value="<?php echo htmlspecialchars(FormData::getFormData('register', 'prenom')) ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">E-mail</label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email"
-                               value="<?= htmlspecialchars(FormData::getFormData('register', 'email')) ?>">
+                               value="<?php echo htmlspecialchars(FormData::getFormData('register', 'email')) ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputLogin">Login</label>
                         <input type="input" class="form-control" id="login" aria-describedby="login" name="login"
                                placeholder="Login"
-                               value="<?= htmlspecialchars(FormData::getFormData('register', 'login')) ?>">
+                               value="<?php echo htmlspecialchars(FormData::getFormData('register', 'login')) ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputPassword">Mot de Passe</label>

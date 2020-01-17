@@ -34,7 +34,8 @@ class CheckContactInputs
 
         if (count($errMessage) != 0) {
             return $errMessage;
-        } else return null;
+        } else { return null;
+        }
     }
 
     public function checkNom($nom)
