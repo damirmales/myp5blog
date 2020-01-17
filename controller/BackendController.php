@@ -22,8 +22,7 @@ class BackendController
     {
         $mySession = new Session();
         if ($mySession->get('user', 'role') != 'admin') {// from frontendController checkUser() method via Router
-            header('Location: index.php'); // if user is NOT admin
-
+            header('Location: index.php');
         }
         include 'vue/backend/admin_page.php';
     }
@@ -45,19 +44,17 @@ class BackendController
         $checkInput = new CheckArticleInputs();
         $addArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
 
-
         $post = FormData::securizeFormFields($input->post());
         FormData::saveFormData('newArticle', $post);
 
         if (empty($addArticleErrorMessage)) {
-
             $article = new Articles($post);
             $articleDao = new ArticleDao();
             $articleAdded = $articleDao->setArticleToDb($article);
             //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
             $session = new Session();
             $session->set('new', 'article', Messages::setFlash("Super !", "Article ajouté", 'success'));
-            
+
             header('Location: index.php?route=showArticle&id=' . $articleAdded);
         }
         include 'vue/backend/create_article.php';
@@ -71,7 +68,6 @@ class BackendController
         $input = new FormGlobals();
         $checkInput = new  CheckArticleInputs();
         $updateArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
-
         $post = FormData::securizeFormFields($input->post());
 
         $article = new Articles($post);
@@ -130,9 +126,9 @@ class BackendController
         $articleDeleted = $articles->deleteArticle($idArticle);
         if ($articleDeleted) {
             header('Location:index.php?route=editListArticles');
-
         }
     }
+
 
     public function deleteComment($idComment)
     {

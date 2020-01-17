@@ -104,7 +104,8 @@ class FrontendController
                 } else {
                     $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
                 }
-            } else { FormData::saveFormData('comment', $post);
+            } else {
+                FormData::saveFormData('comment', $post);
             }
         }
         //check if instance of Articles and Comments classes already exist
@@ -176,7 +177,7 @@ class FrontendController
 
 
     /**
-     * acces to admin login page
+     * access to admin login page
      */
     public function logUser()
     {
@@ -185,7 +186,7 @@ class FrontendController
 
 
     /**
-     *  acces to logAdmin.php  page
+     *  access to logAdmin.php  page
      */
     public function logAdmin()
     {
@@ -208,9 +209,7 @@ class FrontendController
     {
         $session = new Session();
         $session->stop(); //unset($_SESSION);  session_destroy();
-
         header('Location: index.php');
-
     }
 
     /**
@@ -247,12 +246,9 @@ class FrontendController
 
                         //------ check if user is admin --------
                         if ($mySession->get('user', 'role') === 'admin') {
-
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
-
                         } else {
                             header('Location: index.php');
-
                         }
                     } else {// statut = 0
                         $connexionErrorMessage['statut'] = Messages::setFlash("Attention !", "Votre compte n'est pas encore validé", 'warning');
@@ -290,10 +286,8 @@ class FrontendController
 
                     if ($userLogin || $userEmail) {
                         if ($userLogin) {
-
                             $loginEmailFormMessage["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
                         }
-
                         if ($userEmail) {
                             $loginEmailFormMessage["registerForm"]["email"] = Messages::setFlash("Attention !", "Email déjà pris", "warning");
                         }
@@ -311,7 +305,6 @@ class FrontendController
                         $loginEmailFormMessage["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
 
                         FormData::cleanFormData('register', $post);
-
                     }
                 }
             }
