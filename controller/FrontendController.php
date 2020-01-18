@@ -177,22 +177,12 @@ class FrontendController
 
 
     /**
-     * access to admin login page
+     * access to login page
      */
     public function logUser()
     {
         include 'vue/login.php';
     }
-
-
-    /**
-     *  access to logAdmin.php  page
-     */
-    public function logAdmin()
-    {
-        include 'vue/logAdmin.php';
-    }
-
 
     /**
      * access to register login page

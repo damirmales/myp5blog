@@ -11,12 +11,12 @@ use Services\Messages; ?>
         }
         ?>
         <form action="index.php?route=updateArticle" method="post" name="sentMessage" id="addArticleForm" novalidate>
-            <input type="hidden" name="articles_id" value="<?php echo htmlspecialchars($article->getArticles_id()) ?>">
+            <input type="hidden" name="articles_id" value="<?= htmlspecialchars($article->getArticles_id()) ?>">
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                     <label>titre</label>
                     <input type="text" class="form-control" placeholder="Titre" name="titre" id="titre"
-                           value="<?php echo htmlspecialchars($article->getTitre()); ?>" required
+                           value="<?= htmlspecialchars($article->getTitre()); ?>" required
                            data-validation-required-message="Entrez le titre.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -26,7 +26,7 @@ use Services\Messages; ?>
                 <div class="form-group floating-label-form-group controls">
                     <label>Châpo</label>
                     <input type="text" class="form-control" placeholder="Châpo" name="chapo" id="chapo"
-                           value="<?php echo htmlspecialchars($article->getChapo()); ?>"" required
+                           value="<?= htmlspecialchars($article->getChapo()); ?>"" required
                     data-validation-required-message="Entrez le châpo.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -36,7 +36,7 @@ use Services\Messages; ?>
                 <div class="form-group floating-label-form-group controls">
                     <label>Auteur</label>
                     <input type="text" class="form-control" placeholder="Auteur" name="auteur" id="auteur"
-                           value="<?php echo htmlspecialchars($article->getAuteur()); ?>"" required
+                           value="<?= htmlspecialchars($article->getAuteur()); ?>"" required
                     data-validation-required-message="Entrez votre nom.">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -47,7 +47,7 @@ use Services\Messages; ?>
                     <label>Contenu</label>
                     <textarea rows="5" class="form-control" placeholder="Contenu" name="contenu" id="contenu"
                               required
-                              data-validation-required-message="Entrez le texte."><?php echo htmlspecialchars($article->getContenu()); ?></textarea>
+                              data-validation-required-message="Entrez le texte."><?= htmlspecialchars($article->getContenu()); ?></textarea>
                     <p class="help-block text-danger"></p>
                 </div>
             </div>

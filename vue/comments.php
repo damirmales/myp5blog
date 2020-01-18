@@ -21,10 +21,10 @@ $session = new Session();
                 ?>
                 <!-- Comment Content -->
                 <article>
-                    <p><strong>Rédigé par <?php echo htmlspecialchars($comment['pseudo']) ?></strong></p>
-                    <p>le <?php echo htmlspecialchars($comment['date_ajout']) ?></p>
+                    <p><strong>Rédigé par <?= htmlspecialchars($comment['pseudo']) ?></strong></p>
+                    <p>le <?= htmlspecialchars($comment['date_ajout']) ?></p>
                     <p><strong>Commentaire</strong></p>
-                    <p><?php echo nl2br(htmlspecialchars($comment['contenu'])) ?></p>
+                    <p><?= nl2br(htmlspecialchars($comment['contenu'])) ?></p>
                 </article>
             <?php } ?>
             <hr>

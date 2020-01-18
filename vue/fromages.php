@@ -1,40 +1,40 @@
 <?php ob_start(); ?>
 
-    <!-- Blog Author -->
-    <header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <div class="site-heading">
-                        <h1>Blog de Damir M</h1>
-                        <span class="subheading">Liste des articles de fromages</span>
-                    </div>
+<!-- Blog Author -->
+<header class="masthead" style="background-image: url('public/img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>Blog de Damir M</h1>
+                    <span class="subheading">Liste des articles de fromages</span>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
 <?php foreach ($articles as $article) : ?>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="post-preview">
-                    <a href="index.php?route=article&id=<?php echo $article->getArticles_id() ?>">
+                    <a href="index.php?route=article&id=<?= $article->getArticles_id() ?>">
 
                         <h2 class="post-title">
-                            <?php echo htmlspecialchars($article->getTitre()); ?>
+                            <?= htmlspecialchars($article->getTitre()); ?>
                         </h2>
                         <h3 class="post-subtitle">
-                            <?php echo htmlspecialchars($article->getChapo()); ?>
+                            <?= htmlspecialchars($article->getChapo()); ?>
                         </h3>
                     </a>
                     <p class="post-meta">Modifié le :
-                        <?php echo htmlspecialchars($article->getDate_mise_a_jour()); ?>
+                        <?= htmlspecialchars($article->getDate_mise_a_jour()); ?>
                     </p>
                 </div>
                 <hr>
-                <a href="index.php?route=article&id=<?php echo htmlspecialchars($article->getArticles_id()) ?>">Voir
+                <a href="index.php?route=article&id=<?= htmlspecialchars($article->getArticles_id()) ?>">Voir
                     l'article</a>
 
             </div>
