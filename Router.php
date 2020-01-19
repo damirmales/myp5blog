@@ -45,9 +45,6 @@ class Router
                     // go to login.php form page
                 } elseif ($get === 'connexion') {
                     $frontController->logUser();
-                    // go to logAdmin.php form page
-                } elseif ($get === 'connexionAdmin') {
-                    $frontController->logAdmin();
                 } elseif ($get === 'deconnexion') {
                     $frontController->logOff();
                     // from login.php check admin data to login
@@ -93,9 +90,11 @@ class Router
                     $backController->deleteComment($input->get('id'));
                 } elseif ($get === 'validateComment') {
                     $backController->validateComment($input->get('id'));
-                } else { header('Location:/404.php');
+                } else {
+                    header('Location:/404.php');
                 }
-            } else { $frontController->home();
+            } else {
+                $frontController->home();
             }
         } catch (Exception $e) {
             $errorException = ('Erreur niveau Router  : ' . $e->getMessage());

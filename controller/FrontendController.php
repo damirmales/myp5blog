@@ -258,7 +258,7 @@ class FrontendController
     {
         $input = new FormGlobals();
         $post = FormData::securizeFormFields($input->post());
-        $registerFormMessage = []; // array to store errors from invalid values from form inputs
+        //$registerFormMessage = []; // array to store errors from invalid values from form inputs
         $loginEmailFormMessage = []; //Store errors if login and/or email already used
 
         if (!empty($post)) {
