@@ -1,3 +1,4 @@
+
 "# myp5blog"
 
 Codacy Badge
@@ -20,6 +21,7 @@ Make a gitclone from Github repo
 Use Composer update to install dependencies
 Fill in Database.php with necessary parameters: host=localhost dbname=p5blog 'root' (this is the username by default). '' (this is the password by default with XAMPP on windows 10 : if you use WAMP and MacOs, 'root' password).
 Then create your database as followed: First : log to your database server click on "Import". Select a file and choose "p5blog.sql" in project file root. Then Execute
+
 
 
 
