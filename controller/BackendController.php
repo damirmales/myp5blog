@@ -22,8 +22,7 @@ class BackendController
     {
         $mySession = new Session();
         if ($mySession->get('user', 'role') != 'admin') {// from frontendController checkUser() method via Router
-            header('Location: index.php'); // if user is NOT admin
-
+            header('Location: index.php');
         }
         include 'vue/backend/admin_page.php';
     }
@@ -45,29 +44,30 @@ class BackendController
         $checkInput = new CheckArticleInputs();
         $addArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
 
-
         $post = FormData::securizeFormFields($input->post());
         FormData::saveFormData('newArticle', $post);
 
         if (empty($addArticleErrorMessage)) {
-
             $article = new Articles($post);
-            $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
+            $articleDao = new ArticleDao();
             $articleAdded = $articleDao->setArticleToDb($article);
             //$_SESSION['newArticle'] = Messages::setFlash("Super !", "Article ajouté", 'success');
+            $session = new Session();
+            $session->set('new', 'article', Messages::setFlash("Super !", "Article ajouté", 'success'));
+
             header('Location: index.php?route=showArticle&id=' . $articleAdded);
-
         }
-
         include 'vue/backend/create_article.php';
     }
 
+    /**
+     *
+     */
     public function updateArticle()
     {
         $input = new FormGlobals();
         $checkInput = new  CheckArticleInputs();
         $updateArticleErrorMessage = $checkInput->checkArticleInputs($input->post());
-
         $post = FormData::securizeFormFields($input->post());
 
         $article = new Articles($post);
@@ -90,27 +90,27 @@ class BackendController
     /**
      * display article
      **/
-    public
-    function showArticle($idArticle)
+    public function showArticle($idArticle)
     {
-        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $getArticle = new ArticleDao();
         $article = $getArticle->getSingleArticle($idArticle);
         include 'vue/backend/show_article.php';
     }
 
-    public
-    function editListArticles()
+    /**
+     *
+     */
+    public function editListArticles()
     {
         $articles = new ArticleDao();
-        $articlesEdited = $articles->getListArticles();
+        $articlesEdited = $articles->getArticlesByCategory('all');
         include 'vue/backend/list_articles.php';
     }
 
     /**
      * display current article's datas to be modified
      **/
-    public
-    function editArticle($idArticle)
+    public function editArticle($idArticle)
     {
         $getArticle = new ArticleDao();
         $article = $getArticle->getSingleArticle($idArticle);
@@ -120,27 +120,17 @@ class BackendController
     /**
      * @param $idArticle
      */
-    public
-    function deleteArticle($idArticle)
+    public function deleteArticle($idArticle)
     {
         $articles = new ArticleDao();
         $articleDeleted = $articles->deleteArticle($idArticle);
         if ($articleDeleted) {
             header('Location:index.php?route=editListArticles');
-
         }
     }
 
-    public
-    function showComment($idArticle)
-    {
-        $getArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $article = $getArticle->getSingleArticle($idArticle);
-        include 'vue/backend/show_article.php';
-    }
 
-    public
-    function deleteComment($idComment)
+    public function deleteComment($idComment)
     {
         $comment = new CommentDao();
         $commentDeleted = $comment->deleteComment($idComment);
@@ -149,16 +139,14 @@ class BackendController
         }
     }
 
-    public
-    function editListComments()
+    public function editListComments()
     {
         $comments = new CommentDao();
         $commentEdited = $comments->getListComments();
         include 'vue/backend/list_comments.php';
     }
 
-    public
-    function validateComment($idComment)
+    public function validateComment($idComment)
     {
         $getComment = new CommentDao(); //////////// voir gestion instance en Singleton
         $comment = $getComment->validateComment($idComment);

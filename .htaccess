@@ -3,6 +3,7 @@
 # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 RewriteEngine On
+ErrorDocument 404 https://damirweb.com/oc/p5/myp5blog/404.php
 RewriteBase /
-RewriteRule ^index\.html$ index.php?page=/
-RewriteRule ^([a-zA-Z0-9-]*\.html)$ index.php?page=$1 [L,QSA]
+RewriteRule ^index\.html$ https://damirweb.com/oc/p5/myp5blog/index.php?route=
+RewriteRule ^([a-zA-Z0-9-]*\.html)$ index.php?route=$1 [L,QSA]

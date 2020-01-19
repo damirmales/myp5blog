@@ -7,9 +7,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1fc885cb-6958-473b-97fc-788fa8b925da" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/BackendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BackendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/FrontendController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/backend/show_article.php" beforeDir="false" afterPath="$PROJECT_DIR$/vue/backend/show_article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/CheckUserInputs.php" beforeDir="false" afterPath="$PROJECT_DIR$/services/CheckUserInputs.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,12 +50,6 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/process" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-iconv" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
-      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
       <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
       <path value="$PROJECT_DIR$/vendor/bootstrap/css" />
       <path value="$PROJECT_DIR$/vendor/bootstrap/js" />
@@ -67,19 +62,25 @@
       <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
       <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
       <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
-      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
-      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
       <path value="$PROJECT_DIR$/vendor/psr/container" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/vendor/psr/log" />
-      <path value="$PROJECT_DIR$/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-iconv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
     </include_path>
   </component>
   <component name="ProjectId" id="1U1ItsIGaXBAJqiS8XKtwBW0N9i" />
@@ -91,20 +92,20 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/vue" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="settings.saveactions" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\vue" />
-      <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\vue\backend" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\recycle" />
       <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\vue" />
+      <recent name="C:\xampp3\htdocs\openclass\p5\myp5blog\vue\backend" />
     </key>
   </component>
   <component name="RunManager">
@@ -192,7 +193,18 @@
       <workItem from="1578483424496" duration="17927000" />
       <workItem from="1578560188169" duration="15000" />
       <workItem from="1578561025912" duration="15531000" />
-      <workItem from="1578597892458" duration="33009000" />
+      <workItem from="1578597892458" duration="36720000" />
+      <workItem from="1578865333495" duration="1104000" />
+      <workItem from="1578901270564" duration="17525000" />
+      <workItem from="1578951721165" duration="1508000" />
+      <workItem from="1578986988452" duration="9689000" />
+      <workItem from="1579078150919" duration="23423000" />
+      <workItem from="1579148930967" duration="17899000" />
+      <workItem from="1579245785772" duration="4905000" />
+      <workItem from="1579268659708" duration="9693000" />
+      <workItem from="1579343629289" duration="3660000" />
+      <workItem from="1579368009197" duration="5282000" />
+      <workItem from="1579427995880" duration="2697000" />
     </task>
     <servers />
   </component>
@@ -213,6 +225,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="275" y="23" key="#Options" timestamp="1579273061087">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="23" key="#Options/0.0.1366.728@0.0.1366.728" timestamp="1579273061087" />
     <state x="449" y="166" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1575056621397">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -229,14 +245,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="430" y="210" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1578483630640" />
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1578922562790">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1578922562790" />
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1577646616045">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1577646616045" />
-    <state x="453" y="178" key="NewPhpClassDialog" timestamp="1578674342774">
+    <state x="453" y="178" key="NewPhpClassDialog" timestamp="1579286292442">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="453" y="178" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1578674342774" />
+    <state x="453" y="178" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1579286292442" />
     <state x="517" y="287" key="NewPhpFileDialog" timestamp="1578748090900">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -245,18 +265,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="487" y="74" key="RollbackChangesDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106099533" />
-    <state x="291" y="12" key="SettingsEditor" timestamp="1578316338059">
+    <state x="291" y="12" key="SettingsEditor" timestamp="1579273605252">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1578316338059" />
+    <state x="291" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1579273605252" />
     <state x="569" y="280" key="VCS.EditChangelistDialog" timestamp="1577106083540">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="569" y="280" key="VCS.EditChangelistDialog/0.0.1366.728@0.0.1366.728" timestamp="1577106083540" />
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1578599847696">
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog" timestamp="1579368048097">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1578599847696" />
+    <state x="547" y="139" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1579368048097" />
     <state x="481" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1578486782489">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

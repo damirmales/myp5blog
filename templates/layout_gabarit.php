@@ -10,7 +10,8 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet' ?>" type="text/css">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet " type="text/css">
+
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
           type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
@@ -27,7 +28,8 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="index.php">Damir Males</a>
+        <a class="navbar-brand" href="index.php">
+            Damir Males</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -48,7 +50,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="index.php?route=livres">Livres</a>
                         <a class="dropdown-item" href="index.php?route=fromages">Fromages</a>
-                        <!--<a class="dropdown-item" href="index.php?route=fromages">Autres</a>-->
+                        <!--<a class="dropdown-item" href="index.php?route=autres">Autres</a>-->
                     </div>
                 </li>
                 <li class="nav-item">
@@ -80,51 +82,56 @@
     </div>
 </nav>
 
-<?= $content; ?>
+<?php echo $content; ?>
+
 
 <!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-
-                <div class="footer-social my-5">
-                    <div class="container">
-                        <div class="d-flex justify-content-center">
-                            <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-github"
-                               href="https://github.com/">
-                                <i class="fab fa-github"></i>
-                            </a>
-
-                            <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-twitter"
-                               href="https://twitter.com/sbootstrap">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a class="footer-social-link d-inline-flex mx-3 justify-content-center align-items-center text-white rounded-circle shadow btn btn-facebook"
-                               href="https://www.facebook.com/StartBootstrap/">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/damirmn">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/profile.php?id=100012201365725">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/damirmales/myp5blog/">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                </ul>
                 <?php
                 if (isset($session_role)) {
 
-                if ($session_role != 'admin')  {
-                ?>
+                    if ($session_role != 'admin') {
+                        ?>
                 <p class="admin text-center"><a href="index.php?route=connexionAdmin">⚒ Administration</a>
-                    <?php
+                        <?php
                     }
-                    }
-                    ?>
+                }
+                ?>
 
                 <p class="copyright text-muted">Copyright &copy; Damir Blog 2020</p>
             </div>
         </div>
     </div>
 </footer>
-
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>

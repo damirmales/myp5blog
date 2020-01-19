@@ -1,17 +1,21 @@
-<?php ob_start(); $session=&$_SESSION; ?>
+<?php use Services\Session;
+
+ob_start();
+$session = new Session();
+?>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <?php if (isset($session['user']['role'])) :
-                echo $formComment; // affiche le formulaire pour commenter
+            <?php if (($session->get('user', 'role')) != null) :
+                echo $formComment;
             else :
                 ?>
                 <p> Pour commenter un article vous devez vous enregistrer et/ou vous connecter</p>
                 <p>➢<a href="index.php?route=register" class""> s'enregistrer</a></p>
                 <p>➢<a href="index.php?route=connexion" class""> se connecter</a></p>
             <?php endif; ?>
-            <p>Les commentaires</p>
+            <p>Les commentaires publiés : </p>
             <?php
             foreach ($comments as $comment) {
                 ?>

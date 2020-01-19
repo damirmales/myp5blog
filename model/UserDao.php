@@ -21,8 +21,9 @@ class UserDao extends PdoConstruct
 
         return $user;
     }
+
     /**
-     * @param $loginUser
+     * @param  $loginUser
      * @return mixed
      */
     public function checkUserLogin($loginUser) //----- Check if user's login is in the DB
@@ -38,6 +39,7 @@ class UserDao extends PdoConstruct
         $user = $userData->fetch();
         return $user;
     }
+
     /**
      * Add user to database
      */
@@ -60,11 +62,12 @@ class UserDao extends PdoConstruct
         $requete->bindValue(':password', $this->hashPassword($user->getPassword()), \PDO::PARAM_STR);
 
         $affectedLines = $requete->execute();
-        $count = $requete->rowCount();
+        //$requete->rowCount();
         return $affectedLines;
     }
+
     /**
-     * @param $pswd
+     * @param  $pswd
      * @return false|string|null
      */
     private function hashPassword($pswd)
@@ -72,8 +75,9 @@ class UserDao extends PdoConstruct
         $pwd_hashed = password_hash($pswd, PASSWORD_DEFAULT);
         return $pwd_hashed;
     }
+
     /**
-     * @param $idUser
+     * @param  $idUser
      * @return bool
      */
     public function validateUser($idUser)
@@ -87,8 +91,9 @@ class UserDao extends PdoConstruct
         $validUser = $commentaire->execute([':id' => $idUser]);
         return $validUser;
     }
+
     /**
-     * @param $userToken
+     * @param  $userToken
      * @return mixed
      */
     public function fetchToken($userToken)// check the token from the link validate in the user's email

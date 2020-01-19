@@ -18,6 +18,7 @@ use Services\Session;
 
 class FrontendController
 {
+
     /**
      * home management
      **/
@@ -29,7 +30,7 @@ class FrontendController
     /**
      * cv
      */
-    public function cv()
+    public function cvitae()
     {
         include 'vue/cv.php';
     }
@@ -47,22 +48,22 @@ class FrontendController
      **/
     public function pullListeArticles() // get all articles
     {
-        $reqArticles = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $articles = $reqArticles->getListArticles();
+        $reqArticles = new ArticleDao();
+        $articles = $reqArticles->getArticlesByCategory('all');
         include 'vue/articles.php';
     }
 
     public function getArticle($id) // get one article
     {
-        $reqArticle = new ArticleDao(); // voir gestion instance en Singleton
+        $reqArticle = new ArticleDao();
         $article = $reqArticle->getSingleArticle($id);
-        $comments = $this->getComments($id); // insérer les commentaires avec l'article
+        $comments = $this->getComments($id); // insert comments on article
         include 'vue/commentForm.php';
     }
 
-    /*******************
+    /**
      * Front comments management
-     **********************/
+     */
     public function getComments($id)
     {
         $comments = new CommentDao();
@@ -79,8 +80,7 @@ class FrontendController
         $post = FormData::securizeFormFields($postData);
         $mySession = new Session();
         $nom = $mySession->get('user', 'nom');
-        // $nom = $_SESSION['user']['nom']; //use logged user's name
-        //$email = $_SESSION['user']['email'];//use logged user's email
+
         $comment = $post['comment'];
         $article = null;// init $article to use it as an array to display article datas
         $comments = null;// init comments to show all comments
@@ -100,18 +100,18 @@ class FrontendController
                 $affectedLines = $commentObj->addCommentsToDb($articleId, $newComment); // id de l'article
 
                 if ($affectedLines === false) {
-
                     $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "Impossible d'ajouter le commentaire !", 'success');
                 } else {
-
                     $commentErrorMessage['contenu'] = Messages::setFlash("Super !", "le commentaire est en attente de validation", 'success');
                 }
-            } else FormData::saveFormData('comment', $post);
+            } else {
+                FormData::saveFormData('comment', $post);
+            }
         }
         //check if instance of Articles and Comments classes already exist
         // help to not create multiple instance
         if (($article instanceof ArticleDao) != true) {
-            $reqArticle = new ArticleDao(); //////////// voir gestion instance en Singleton
+            $reqArticle = new ArticleDao();
             $article = $reqArticle->getSingleArticle($articleId);
         } else {
             $article = $reqArticle->getSingleArticle($articleId);
@@ -126,12 +126,12 @@ class FrontendController
     }
 
     /**
-     * Front articles.php categories management
+     *  list of articles management
      */
     public function getCategoryArticles($rubriq)
     {
         $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
-        $rubriques = $articleDao->getArticlesByCategory($rubriq);
+        $articles = $articleDao->getArticlesByCategory($rubriq);
 
         // Associer la vue correspondante à la rubrique sélectionnée
         if ($rubriq == "livres") {
@@ -142,7 +142,6 @@ class FrontendController
 
         } else {
             header('Location: index.php');
-
         }
     }
 
@@ -158,8 +157,6 @@ class FrontendController
         FormData::saveFormData('input', $field);
 
         if ($field['formContact'] == 'sent') {
-
-
             if (empty($contactErrorMessage)) {
 
                 /**
@@ -178,44 +175,37 @@ class FrontendController
         include_once 'vue/home.php';
     }
 
-//********** acces admin login page *************
-    public
-    function logUser()
+
+    /**
+     * access to login page
+     */
+    public function logUser()
     {
         include 'vue/login.php';
     }
 
-//********** acces logAdmin.php  page *************
-    public
-    function logAdmin()
-    {
-        include 'vue/logAdmin.php';
-    }
-
-//********** acces register login page *************
-
-    public
-    function register()
+    /**
+     * access to register login page
+     */
+    public function register()
     {
         ImportPage::getPage(include 'vue/register.php');
     }
 
-    public
-    function logOff()
+    /**
+     *
+     */
+    public function logOff()
     {
-
         $session = new Session();
         $session->stop(); //unset($_SESSION);  session_destroy();
-
         header('Location: index.php');
-
     }
 
     /**
      * Before login check user presence in database
      */
-    public
-    function checkUser()//---- from login.php ---------
+    public function checkUser()//---- from login.php
     {
         $connexionErrorMessage = [];// Store error message to be available into login.php
         $input = new FormGlobals();
@@ -246,12 +236,9 @@ class FrontendController
 
                         //------ check if user is admin --------
                         if ($mySession->get('user', 'role') === 'admin') {
-                            //echo '<pre> sessionUserrole'; var_dump(Session::get('user', 'role'));
                             header('Location: index.php?route=admin'); // if user is admin go to admin page
-
                         } else {
                             header('Location: index.php');
-                         
                         }
                     } else {// statut = 0
                         $connexionErrorMessage['statut'] = Messages::setFlash("Attention !", "Votre compte n'est pas encore validé", 'warning');
@@ -267,13 +254,12 @@ class FrontendController
     /**
      * Add user from register.php to database
      **/
-    public
-    function addUser()
+    public function addUser()
     {
         $input = new FormGlobals();
         $post = FormData::securizeFormFields($input->post());
-        $registerFormMessage = []; // on initialise un tableau pour afficher les erreurs présentent dans les champs du formulaire
-        $loginEmailFormMessage = []; //stocke erreur si login et email déjà utilisés
+        //$registerFormMessage = []; // array to store errors from invalid values from form inputs
+        $loginEmailFormMessage = []; //Store errors if login and/or email already used
 
         if (!empty($post)) {
             if ($post['formRegister'] == 'sent') {
@@ -290,20 +276,18 @@ class FrontendController
 
                     if ($userLogin || $userEmail) {
                         if ($userLogin) {
-
                             $loginEmailFormMessage["registerForm"]["login"] = Messages::setFlash("Attention !", "Login déjà pris", "warning");
                         }
-
                         if ($userEmail) {
                             $loginEmailFormMessage["registerForm"]["email"] = Messages::setFlash("Attention !", "Email déjà pris", "warning");
                         }
                     } else {
                         $token = Emails::generateToken();
-                        //instancier la classe qui envoie les données des utilisateurs vers la bdd
+                        //create instance which send user datas to the database
                         $user = new Users($post);
                         $user->setToken($token);
                         $userDao->addUserToDb($user);
-                        $userEmail = $user->getEmail(); //"damir@romandie.com";
+                        $userEmail = $user->getEmail();
                         $createUrlToken = Emails::createUrlWithToken($token, $userEmail);
                         $anEmail = new Emails();
                         $anEmail->tokenEmail($userEmail, $createUrlToken); //in Emails.php class
@@ -311,7 +295,6 @@ class FrontendController
                         $loginEmailFormMessage["registerForm"]["OK"] = Messages::setFlash("Génial !", "Email envoyé", "success");
 
                         FormData::cleanFormData('register', $post);
-
                     }
                 }
             }
@@ -319,7 +302,10 @@ class FrontendController
         include 'vue/register.php';
     }
 
-//check the token from the link validate in the user's email
+
+    /**
+     * check the token from the link validate in the user's email
+     */
     public function verifyToken()
     {
         $input = new FormGlobals();

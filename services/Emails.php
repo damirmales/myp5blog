@@ -19,9 +19,9 @@ class Emails
         $nom = $this->getNom();
         $email = $this->getEmail();
 
-        $message = 'email : ' . $email . ' - ';
-        $message .= 'nom : ' . $prenom . ' ' . $nom . " - ";
-        $message .= 'message : ' . $this->getMessage();
+        $message = 'Email : ' . $email;
+        $message .= ' Prenom : ' . '    ' . $prenom . ' Nom : ' . $nom . '    ';
+        $message .= ' Message : ' . $this->getMessage();
 
         $emailTo = "damir@romandie.com";
         $subject = "Contact";
@@ -99,18 +99,17 @@ class Emails
     }
 
     /**
-     * @param $userEmail
-     * @param $UrlToken
+     * @param  $userEmail
+     * @param  $UrlToken
      * @return bool
      */
     public function tokenEmail($userEmail, $UrlToken)   //---- send email with token to register a new user ----------
     {
 
-        $message = 'email : ' . $userEmail;
-        $message .= 'token : ' . $UrlToken;
+        $message = 'Votre email : ' . $userEmail;
+        $message .= ' Pour valider votre inscription cliquez sur ce lien : ' . $UrlToken;
         $emailTo = $userEmail;
         $subject = "confirmez votre email";
-
 
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
@@ -129,8 +128,8 @@ class Emails
     }
 
     /**
-     * @param $token
-     * @param $email
+     * @param  $token
+     * @param  $email
      * @return string
      */
     public static function createUrlWithToken($token, $email)

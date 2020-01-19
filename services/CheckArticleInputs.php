@@ -33,7 +33,8 @@ class CheckArticleInputs
 
         if (count($errMessage) != 0) {
             return $errMessage;
-        } else return null;
+        } else { return null;
+        }
     }
 
     public function checkTitre($titre)

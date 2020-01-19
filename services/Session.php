@@ -12,6 +12,7 @@ class Session
     public function __construct()
     {
         $this->session = &$_SESSION;
+
     }
 
     /**
@@ -25,8 +26,8 @@ class Session
     }
 
     /**
-     * @param $name
-     * @param $key
+     * @param  $name
+     * @param  $key
      * @return |null
      */
     public function get($name, $key)
@@ -38,8 +39,8 @@ class Session
     }
 
     /**
-     * @param $name
-     * @param $key
+     * @param  $name
+     * @param  $key
      * @return |null
      */
     public function show($name, $key)

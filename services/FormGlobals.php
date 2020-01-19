@@ -19,7 +19,7 @@ class FormGlobals
     }
 
     /**
-     * @param null $key
+     * @param  null $key
      * @return mixed|null
      */
     public function post($key = null)
@@ -34,8 +34,8 @@ class FormGlobals
 
 
     /**
-     * @param $global
-     * @param null $key
+     * @param  $global
+     * @param  null $key
      * @return mixed|null
      */
     private function checkGlobal($global, $key = null)

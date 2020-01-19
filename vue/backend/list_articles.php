@@ -7,7 +7,7 @@ foreach ($articlesEdited as $article) : ?>
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="post-preview">
                     <h2 class="post-title">
-                        <a href="index.php?route=showArticle&id=<?= htmlspecialchars($article->getArticles_id()) ?>">   <?= htmlspecialchars($article->getTitre()); ?>
+                        <a href="index.php?route=showArticle&id=<?= htmlspecialchars($article->getArticles_id()) ?>">   <?php echo htmlspecialchars($article->getTitre()); ?>
                         </a>
                     </h2>
                     <h3 class="post-subtitle">

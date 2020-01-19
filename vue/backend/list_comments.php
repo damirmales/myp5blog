@@ -17,8 +17,8 @@ $row = 0; // to display number for each row of the comment table
             foreach ($commentEdited as $comment) :
                 ?>
                 <tr>
-                    <th scope="row"><?= ++$row ?></th>
-                    <td><?php echo htmlspecialchars($comment->getPseudo()); ?></td>
+                    <th scope="row"><?php echo ++$row ?></th>
+                    <td><?= htmlspecialchars($comment->getPseudo()); ?></td>
                     <td><?= htmlspecialchars($comment->getContenu()); ?></td>
                     <td>
                         <a href="index.php?route=deleteComment&id=<?= htmlspecialchars($comment->getCommentaire_id()) ?>"

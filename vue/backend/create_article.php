@@ -56,8 +56,8 @@ use Services\Messages; ?>
             <div class="form-group floating-label-form-group controls">
                 <label>Contenu</label>
                 <textarea rows="5" class="form-control" placeholder="Contenu" name="contenu" id="contenu"
-                          value="<?= htmlspecialchars(FormData::getFormData('newArticle', 'contenu')) ?>" required
-                          data-validation-required-message="Entrez le texte."></textarea>
+                          required
+                          data-validation-required-message="Entrez le texte."><?= htmlspecialchars(FormData::getFormData('newArticle', 'contenu')) ?></textarea>
                 <p class="help-block text-danger"></p>
             </div>
         </div>

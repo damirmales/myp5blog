@@ -48,13 +48,13 @@
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="page-heading">
                     <h1>Page des erreurs</h1>
-                    <span class="subheading"><?= htmlspecialchars($titre); ?></span>
+                    <span class="subheading"><?php echo htmlspecialchars($titre); ?></span>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<?= $content; ?>
+<?php echo $content; ?>
 <!-- Footer -->
 <footer>
     <div class="container">

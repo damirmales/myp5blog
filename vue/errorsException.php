@@ -9,9 +9,11 @@ $errorException = null;
         <div class="col-lg-8 col-md-10 mx-auto">
             <?php
             if (!empty($errorException)) {
-                echo '<div class="container alerte alert-warning">Erreur
-<button type="button" class="close" data-dismiss="alert">&times;</button>' . $errorException .
-                    '</div>';
+                ?>
+                <div class="container alerte alert-warning">Erreur
+                    <button type="button" class="close" data-dismiss="alert">&times;</button><?= $errorException ?>
+                </div>
+                <?php
             }
             ?>
         </div>

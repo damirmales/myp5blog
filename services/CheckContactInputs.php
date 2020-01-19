@@ -34,14 +34,15 @@ class CheckContactInputs
 
         if (count($errMessage) != 0) {
             return $errMessage;
-        } else return null;
+        } else { return null;
+        }
     }
 
     public function checkNom($nom)
     {
         $err = null;
         if (strlen($nom) === 0) {
-            $err = "Le nom est obligatoireddddd";
+            $err = "Le nom est obligatoire";
         } elseif (strlen($nom) > 45) {
             $err = "Le nom ne doit pas exceder 45 c.";
         } elseif (!preg_match("/^[A-Za-z '-]+$/", $nom)) {
