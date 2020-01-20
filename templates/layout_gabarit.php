@@ -28,8 +28,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="index.php">
-            Damir Males</a>
+        <a class="navbar-brand" href="index.php"> Damir Males</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -64,17 +63,22 @@
                 if (isset($session['user']['role'])) {
                     ?>
                     <li class="nav-item">
-                        <?php if ($session['user']['role'] === 'admin') { ?>
-                            <a class="" href="index.php?route=admin">⚒ Admin</a>
-                        <?php } else { ?>
-                            <span class="menu_member"> ☑ Membre </span>
-                        <?php } ?>
-                        <a class="" href="index.php?route=deconnexion">ⓓ Déconnexion </a>
+                    <?php if ($session['user']['role'] === 'admin') { ?>
+                        <a class="nav-link" href="index.php?route=admin">⚒ Admin</a>
+                    <?php } else { ?>
+                        <span class="menu_member"> ☑ Membre </span>
+
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?route=deconnexion">ⓓ Déconnexion </a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item">
-                        <a class="" href="index.php?route=register">ⓔ S'enregistrer </a>
-                        <a class="" href="index.php?route=connexion">ⓒ Se connecter </a>
+                        <a class="nav-link" href="index.php?route=register">ⓔ S'enregistrer </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?route=connexion">ⓒ Se connecter </a>
                     </li>
                 <?php } ?>
             </ul>
@@ -119,13 +123,13 @@
                 <?php
                 if (isset($session_role)) {
 
-                    if ($session_role != 'admin') {
-                        ?>
-                <p class="admin text-center"><a href="index.php?route=connexionAdmin">⚒ Administration</a>
-                        <?php
-                    }
-                }
+                if ($session_role != 'admin') {
                 ?>
+                <p class="admin text-center"><a href="index.php?route=connexionAdmin">⚒ Administration</a>
+                    <?php
+                    }
+                    }
+                    ?>
 
                 <p class="copyright text-muted">Copyright &copy; Damir Blog 2020</p>
             </div>
