@@ -24,7 +24,7 @@ class BackendController
         if ($mySession->get('user', 'role') != 'admin') {// from frontendController checkUser() method via Router
             header('Location: index.php');
         }
-        include 'vue/backend/admin_page.php';
+        include 'vue/backend/adminPage.php';
     }
 
     /**
@@ -32,7 +32,7 @@ class BackendController
      */
     public function createArticle()
     {
-        include 'vue/backend/create_article.php';//call addArticle() when form will be completed
+        include 'vue/backend/createArticle.php';//call addArticle() when form will be completed
     }
 
     /**
@@ -57,7 +57,7 @@ class BackendController
 
             header('Location: index.php?route=showArticle&id=' . $articleAdded);
         }
-        include 'vue/backend/create_article.php';
+        include 'vue/backend/createArticle.php';
     }
 
     /**
@@ -82,7 +82,7 @@ class BackendController
                 $this->showArticle($post['articles_id']);
             }
         } else {
-            include 'vue/backend/edit_article.php';
+            include 'vue/backend/editArticle.php';
         }
 
     }
@@ -94,7 +94,7 @@ class BackendController
     {
         $getArticle = new ArticleDao();
         $article = $getArticle->getSingleArticle($idArticle);
-        include 'vue/backend/show_article.php';
+        include 'vue/backend/showArticle.php';
     }
 
     /**
@@ -104,7 +104,7 @@ class BackendController
     {
         $articles = new ArticleDao();
         $articlesEdited = $articles->getArticlesByCategory('all');
-        include 'vue/backend/list_articles.php';
+        include 'vue/backend/listArticles.php';
     }
 
     /**
@@ -114,7 +114,7 @@ class BackendController
     {
         $getArticle = new ArticleDao();
         $article = $getArticle->getSingleArticle($idArticle);
-        include_once 'vue/backend/edit_article.php';
+        include_once 'vue/backend/editArticle.php';
     }
 
     /**
@@ -143,7 +143,7 @@ class BackendController
     {
         $comments = new CommentDao();
         $commentEdited = $comments->getListComments();
-        include 'vue/backend/list_comments.php';
+        include 'vue/backend/listComments.php';
     }
 
     public function validateComment($idComment)

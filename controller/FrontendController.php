@@ -130,10 +130,12 @@ class FrontendController
      */
     public function getCategoryArticles($rubriq)
     {
-        $articleDao = new ArticleDao(); //////////// voir gestion instance en Singleton
+        $articleDao = new ArticleDao();
         $articles = $articleDao->getArticlesByCategory($rubriq);
 
-        // Associer la vue correspondante à la rubrique sélectionnée
+        /**
+         * Associate the corresponding view with the selected item
+         */
         if ($rubriq == "livres") {
             include 'vue/livres.php';
 
