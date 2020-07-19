@@ -42,10 +42,11 @@ final class NoTrailingWhitespaceFixer extends AbstractFixer
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after CombineConsecutiveIssetsFixer, CombineConsecutiveUnsetsFixer, FunctionToConstantFixer, NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoEmptyStatementFixer, NoUnneededControlParenthesesFixer, NoUselessElseFixer.
      */
     public function getPriority()
     {
-        // should be run after NoEmptyPhpdocFixer, NoUnneededControlParenthesesFixer, ClassDefinitionFixer, CombineConsecutiveUnsetsFixer, NoEmptyStatementFixer and NoUselessElseFixer.
         return 0;
     }
 
@@ -64,7 +65,8 @@ final class NoTrailingWhitespaceFixer extends AbstractFixer
     {
         for ($index = \count($tokens) - 1; $index >= 0; --$index) {
             $token = $tokens[$index];
-            if ($token->isGivenKind(T_OPEN_TAG)
+            if (
+                $token->isGivenKind(T_OPEN_TAG)
                 && $tokens->offsetExists($index + 1)
                 && $tokens[$index + 1]->isWhitespace()
                 && 1 === Preg::match('/(.*)\h$/', $token->getContent(), $openTagMatches)

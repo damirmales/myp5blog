@@ -18,9 +18,7 @@ class Semver
     const SORT_ASC = 1;
     const SORT_DESC = -1;
 
-    /**
-     * @var VersionParser 
-     */
+    /** @var VersionParser */
     private static $versionParser;
 
     /**
@@ -39,26 +37,24 @@ class Semver
 
         $versionParser = self::$versionParser;
         $provider = new Constraint('==', $versionParser->normalize($version));
-        $constraints = $versionParser->parseConstraints($constraints);
+        $parsedConstraints = $versionParser->parseConstraints($constraints);
 
-        return $constraints->matches($provider);
+        return $parsedConstraints->matches($provider);
     }
 
     /**
      * Return all versions that satisfy given constraints.
      *
-     * @param array  $versions
+     * @param array $versions
      * @param string $constraints
      *
      * @return array
      */
     public static function satisfiedBy(array $versions, $constraints)
     {
-        $versions = array_filter(
-            $versions, function ($version) use ($constraints) {
-                return Semver::satisfies($version, $constraints);
-            }
-        );
+        $versions = array_filter($versions, function ($version) use ($constraints) {
+            return Semver::satisfies($version, $constraints);
+        });
 
         return array_values($versions);
     }
@@ -89,7 +85,7 @@ class Semver
 
     /**
      * @param array $versions
-     * @param int   $direction
+     * @param int $direction
      *
      * @return array
      */
@@ -108,19 +104,17 @@ class Semver
             $normalized[] = array($versionParser->normalize($version), $key);
         }
 
-        usort(
-            $normalized, function (array $left, array $right) use ($direction) {
-                if ($left[0] === $right[0]) {
-                    return 0;
-                }
-
-                if (Comparator::lessThan($left[0], $right[0])) {
-                    return -$direction;
-                }
-
-                return $direction;
+        usort($normalized, function (array $left, array $right) use ($direction) {
+            if ($left[0] === $right[0]) {
+                return 0;
             }
-        );
+
+            if (Comparator::lessThan($left[0], $right[0])) {
+                return -$direction;
+            }
+
+            return $direction;
+        });
 
         // Recreate input array, using the original indexes which are now in sorted order.
         $sorted = array();

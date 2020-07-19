@@ -25,10 +25,11 @@ final class NoShortBoolCastFixer extends AbstractFixer
 {
     /**
      * {@inheritdoc}
+     *
+     * Must run before CastSpacesFixer.
      */
     public function getPriority()
     {
-        // should be run before the CastSpacesFixer
         return -9;
     }
 
@@ -64,8 +65,7 @@ final class NoShortBoolCastFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return int
      */
@@ -87,14 +87,14 @@ final class NoShortBoolCastFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $start
-     * @param int    $end
+     * @param int $start
+     * @param int $end
      */
     private function fixShortCastToBoolCast(Tokens $tokens, $start, $end)
     {
         for (; $start <= $end; ++$start) {
-            if (!$tokens[$start]->isComment()
+            if (
+                !$tokens[$start]->isComment()
                 && !($tokens[$start]->isWhitespace() && $tokens[$start - 1]->isComment())
             ) {
                 $tokens->clearAt($start);

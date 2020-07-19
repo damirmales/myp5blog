@@ -13,9 +13,9 @@
 namespace PhpCsFixer\Runner;
 
 use PhpCsFixer\Cache\CacheManagerInterface;
+use PhpCsFixer\Event\Event;
 use PhpCsFixer\FileReader;
 use PhpCsFixer\FixerFileProcessedEvent;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -41,10 +41,14 @@ final class FileFilterIterator extends \FilterIterator
     private $visitedElements = [];
 
     public function __construct(
-        \Iterator $iterator,
+        \Traversable $iterator,
         EventDispatcherInterface $eventDispatcher = null,
         CacheManagerInterface $cacheManager
     ) {
+        if (!$iterator instanceof \Iterator) {
+            $iterator = new \IteratorIterator($iterator);
+        }
+
         parent::__construct($iterator);
 
         $this->eventDispatcher = $eventDispatcher;
@@ -78,7 +82,8 @@ final class FileFilterIterator extends \FilterIterator
         $content = FileReader::createSingleton()->read($path);
 
         // mark as skipped:
-        if (// empty file
+        if (
+            // empty file
             '' === $content
             // file that does not need fixing due to cache
             || !$this->cacheManager->needFixing($file->getPathname(), $content)
@@ -96,7 +101,6 @@ final class FileFilterIterator extends \FilterIterator
 
     /**
      * @param string $name
-     * @param Event  $event
      */
     private function dispatchEvent($name, Event $event)
     {
@@ -105,7 +109,8 @@ final class FileFilterIterator extends \FilterIterator
         }
 
         // BC compatibility < Sf 4.3
-        if (!$this->eventDispatcher instanceof \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
+        if (
+            !$this->eventDispatcher instanceof \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
         ) {
             $this->eventDispatcher->dispatch($name, $event);
 

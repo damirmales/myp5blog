@@ -41,9 +41,7 @@ final class JunitReporter implements ReporterInterface
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $testsuites = $dom->appendChild($dom->createElement('testsuites'));
-        /**
- * @var \DomElement $testsuite 
-*/
+        /** @var \DomElement $testsuite */
         $testsuite = $testsuites->appendChild($dom->createElement('testsuite'));
         $testsuite->setAttribute('name', 'PHP CS Fixer');
 
@@ -81,11 +79,6 @@ final class JunitReporter implements ReporterInterface
         $testsuite->setAttribute('errors', '0');
     }
 
-    /**
-     * @param \DOMDocument  $dom
-     * @param \DOMElement   $testsuite
-     * @param ReportSummary $reportSummary
-     */
     private function createFailedTestCases(\DOMDocument $dom, \DOMElement $testsuite, ReportSummary $reportSummary)
     {
         $assertionsCount = 0;
@@ -107,10 +100,8 @@ final class JunitReporter implements ReporterInterface
     }
 
     /**
-     * @param \DOMDocument $dom
-     * @param string       $file
-     * @param array        $fixResult
-     * @param bool         $shouldAddAppliedFixers
+     * @param string $file
+     * @param bool   $shouldAddAppliedFixers
      *
      * @return \DOMElement
      */

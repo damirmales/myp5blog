@@ -45,7 +45,7 @@ final class Utils
     }
 
     /**
-     * Converts a camel cased string to an snake cased string.
+     * Converts a camel cased string to a snake cased string.
      *
      * @param string $string
      *
@@ -53,13 +53,7 @@ final class Utils
      */
     public static function camelCaseToUnderscore($string)
     {
-        return Preg::replaceCallback(
-            '/(^|[a-z0-9])([A-Z])/',
-            static function (array $matches) {
-                return strtolower('' !== $matches[1] ? $matches[1].'_'.$matches[2] : $matches[2]);
-            },
-            $string
-        );
+        return strtolower(Preg::replace('/(?<!^)((?=[A-Z][^A-Z])|(?<![A-Z])(?=[A-Z]))/', '_', $string));
     }
 
     /**
@@ -86,8 +80,6 @@ final class Utils
      * Calculate the trailing whitespace.
      *
      * What we're doing here is grabbing everything after the final newline.
-     *
-     * @param Token $token
      *
      * @return string
      */
@@ -122,29 +114,23 @@ final class Utils
      */
     public static function stableSort(array $elements, callable $getComparedValue, callable $compareValues)
     {
-        array_walk(
-            $elements, static function (&$element, $index) use ($getComparedValue) {
-                $element = [$element, $index, $getComparedValue($element)];
+        array_walk($elements, static function (&$element, $index) use ($getComparedValue) {
+            $element = [$element, $index, $getComparedValue($element)];
+        });
+
+        usort($elements, static function ($a, $b) use ($compareValues) {
+            $comparison = $compareValues($a[2], $b[2]);
+
+            if (0 !== $comparison) {
+                return $comparison;
             }
-        );
 
-        usort(
-            $elements, static function ($a, $b) use ($compareValues) {
-                $comparison = $compareValues($a[2], $b[2]);
+            return self::cmpInt($a[1], $b[1]);
+        });
 
-                if (0 !== $comparison) {
-                    return $comparison;
-                }
-
-                return self::cmpInt($a[1], $b[1]);
-            }
-        );
-
-        return array_map(
-            static function (array $item) {
-                return $item[0];
-            }, $elements
-        );
+        return array_map(static function (array $item) {
+            return $item[0];
+        }, $elements);
     }
 
     /**
@@ -184,11 +170,9 @@ final class Utils
             throw new \InvalidArgumentException('Array of names cannot be empty');
         }
 
-        $names = array_map(
-            static function ($name) {
-                return sprintf('`%s`', $name);
-            }, $names
-        );
+        $names = array_map(static function ($name) {
+            return sprintf('`%s`', $name);
+        }, $names);
 
         $last = array_pop($names);
 

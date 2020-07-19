@@ -57,8 +57,7 @@ final class TrimArraySpacesFixer extends AbstractFixer
     /**
      * Method to trim leading/trailing whitespace within single line arrays.
      *
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      */
     private static function fixArray(Tokens $tokens, $index)
     {
@@ -82,16 +81,20 @@ final class TrimArraySpacesFixer extends AbstractFixer
         $prevNonWhitespaceIndex = $tokens->getPrevNonWhitespace($endIndex);
         $prevNonWhitespaceToken = $tokens[$prevNonWhitespaceIndex];
 
-        if ($nextToken->isWhitespace(" \t")
-            && (            !$nextNonWhitespaceToken->isComment()
-            || $nextNonWhitespaceIndex === $prevNonWhitespaceIndex
-            || $tokenAfterNextNonWhitespaceToken->isWhitespace(" \t")
-            || '/*' === substr($nextNonWhitespaceToken->getContent(), 0, 2))
+        if (
+            $nextToken->isWhitespace(" \t")
+            && (
+                !$nextNonWhitespaceToken->isComment()
+                || $nextNonWhitespaceIndex === $prevNonWhitespaceIndex
+                || $tokenAfterNextNonWhitespaceToken->isWhitespace(" \t")
+                || '/*' === substr($nextNonWhitespaceToken->getContent(), 0, 2)
+            )
         ) {
             $tokens->clearAt($nextIndex);
         }
 
-        if ($prevToken->isWhitespace(" \t")
+        if (
+            $prevToken->isWhitespace(" \t")
             && !$prevNonWhitespaceToken->equals(',')
         ) {
             $tokens->clearAt($prevIndex);

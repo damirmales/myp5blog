@@ -38,9 +38,23 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
                 new CodeSample(
                     "<?php\n/**\n * @Foo ( )\n */\nclass Bar {}\n\n/**\n * @Foo(\"bar\" ,\"baz\")\n */\nclass Bar2 {}\n\n/**\n * @Foo(foo = \"foo\", bar = {\"foo\":\"foo\", \"bar\"=\"bar\"})\n */\nclass Bar3 {}\n"
                 ),
+                new CodeSample(
+                    "<?php\n/**\n * @Foo(foo = \"foo\", bar = {\"foo\":\"foo\", \"bar\"=\"bar\"})\n */\nclass Bar {}\n",
+                    ['after_array_assignments_equals' => false, 'before_array_assignments_equals' => false]
+                ),
             ],
             'There must not be any space around parentheses; commas must be preceded by no space and followed by one space; there must be no space around named arguments assignment operator; there must be one space around array assignment operator.'
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Must run after DoctrineAnnotationArrayAssignmentFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
     }
 
     public function configure(array $configuration = null)
@@ -77,10 +91,9 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            array_merge(
-                parent::createConfigurationDefinition()->getOptions(),
-                [
+        return new FixerConfigurationResolver(array_merge(
+            parent::createConfigurationDefinition()->getOptions(),
+            [
                 (new FixerOptionBuilder('around_parentheses', 'Whether to fix spaces around parentheses.'))
                     ->setAllowedTypes(['bool'])
                     ->setDefault(true)
@@ -123,9 +136,8 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
                     ->setAllowedTypes(['null', 'bool'])
                     ->setDefault(true)
                     ->getOption(),
-                ]
-            )
-        );
+            ]
+        ));
     }
 
     /**
@@ -141,7 +153,8 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
             $this->fixSpacesAroundCommas($tokens);
         }
 
-        if (null !== $this->configuration['before_argument_assignments']
+        if (
+            null !== $this->configuration['before_argument_assignments']
             || null !== $this->configuration['after_argument_assignments']
             || null !== $this->configuration['before_array_assignments_equals']
             || null !== $this->configuration['after_array_assignments_equals']
@@ -152,9 +165,6 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    /**
-     * @param Tokens $tokens
-     */
     private function fixSpacesAroundParentheses(Tokens $tokens)
     {
         $inAnnotationUntilIndex = null;
@@ -204,9 +214,6 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    /**
-     * @param Tokens $tokens
-     */
     private function fixSpacesAroundCommas(Tokens $tokens)
     {
         $inAnnotationUntilIndex = null;
@@ -246,9 +253,6 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    /**
-     * @param Tokens $tokens
-     */
     private function fixAroundAssignments(Tokens $tokens)
     {
         $beforeArguments = $this->configuration['before_argument_assignments'];
@@ -303,7 +307,6 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
     }
 
     /**
-     * @param Tokens    $tokens
      * @param int       $index
      * @param null|bool $insert
      */
@@ -313,7 +316,6 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
     }
 
     /**
-     * @param Tokens    $tokens
      * @param int       $index
      * @param null|bool $insert
      */
@@ -323,7 +325,6 @@ final class DoctrineAnnotationSpacesFixer extends AbstractDoctrineAnnotationFixe
     }
 
     /**
-     * @param Tokens    $tokens
      * @param int       $index
      * @param int       $insertIndex
      * @param null|bool $insert

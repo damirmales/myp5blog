@@ -54,7 +54,8 @@ final class DiffConsoleFormatter
 
         $template = $isDecorated
             ? $this->template
-            : Preg::replace('/<[^<>]+>/', '', $this->template);
+            : Preg::replace('/<[^<>]+>/', '', $this->template)
+        ;
 
         return sprintf(
             $template,
@@ -70,7 +71,7 @@ final class DiffConsoleFormatter
                                     '/^(\-.*)/',
                                     '/^(@.*)/',
                                 ],
-                                function ($matches) {
+                                static function ($matches) {
                                     if ('+' === $matches[0][0]) {
                                         $colour = 'green';
                                     } elseif ('-' === $matches[0][0]) {

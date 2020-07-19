@@ -32,7 +32,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class SelfUpdateCommand extends Command
 {
-    const COMMAND_NAME = 'self-update';
+    protected static $defaultName = 'self-update';
 
     /**
      * @var NewVersionCheckerInterface
@@ -67,7 +67,6 @@ final class SelfUpdateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(self::COMMAND_NAME)
             ->setAliases(['selfupdate'])
             ->setDefinition(
                 [
@@ -84,7 +83,8 @@ latest version released on:
 <info>$ php php-cs-fixer.phar %command.name%</info>
 
 EOT
-            );
+            )
+        ;
     }
 
     /**
@@ -106,12 +106,10 @@ EOT
             $latestVersion = $this->versionChecker->getLatestVersion();
             $latestVersionOfCurrentMajor = $this->versionChecker->getLatestVersionOfMajor($currentMajor);
         } catch (\Exception $exception) {
-            $output->writeln(
-                sprintf(
-                    '<error>Unable to determine newest version: %s</error>',
-                    $exception->getMessage()
-                )
-            );
+            $output->writeln(sprintf(
+                '<error>Unable to determine newest version: %s</error>',
+                $exception->getMessage()
+            ));
 
             return 1;
         }
@@ -124,7 +122,8 @@ EOT
 
         $remoteTag = $latestVersion;
 
-        if (0 !== $this->versionChecker->compareVersions($latestVersionOfCurrentMajor, $latestVersion)
+        if (
+            0 !== $this->versionChecker->compareVersions($latestVersionOfCurrentMajor, $latestVersion)
             && true !== $input->getOption('force')
         ) {
             $output->writeln(sprintf('<info>A new major version of php-cs-fixer is available</info> (<comment>%s</comment>)', $latestVersion));
@@ -172,5 +171,7 @@ EOT
         rename($tempFilename, $localFilename);
 
         $output->writeln(sprintf('<info>php-cs-fixer updated</info> (<comment>%s</comment>)', $remoteTag));
+
+        return 0;
     }
 }

@@ -390,7 +390,7 @@ final class DocParser
      */
     private function match($token)
     {
-        if (! $this->lexer->isNextToken($token) ) {
+        if ( ! $this->lexer->isNextToken($token) ) {
             $this->syntaxError($this->lexer->getLiteral($token));
         }
 
@@ -409,7 +409,7 @@ final class DocParser
      */
     private function matchAny(array $tokens)
     {
-        if (! $this->lexer->isNextTokenAny($tokens)) {
+        if ( ! $this->lexer->isNextTokenAny($tokens)) {
             $this->syntaxError(implode(' or ', array_map([$this->lexer, 'getLiteral'], $tokens)));
         }
 
@@ -483,19 +483,18 @@ final class DocParser
 
             self::$metadataParser->setIgnoreNotImportedAnnotations(true);
             self::$metadataParser->setIgnoredAnnotationNames($this->ignoredAnnotationNames);
-            self::$metadataParser->setImports(
-                [
+            self::$metadataParser->setImports([
                 'enum'          => 'Doctrine\Common\Annotations\Annotation\Enum',
                 'target'        => 'Doctrine\Common\Annotations\Annotation\Target',
                 'attribute'     => 'Doctrine\Common\Annotations\Annotation\Attribute',
                 'attributes'    => 'Doctrine\Common\Annotations\Annotation\Attributes'
-                ]
-            );
+            ]);
 
-            AnnotationRegistry::registerFile(__DIR__ . '/Annotation/Enum.php');
-            AnnotationRegistry::registerFile(__DIR__ . '/Annotation/Target.php');
-            AnnotationRegistry::registerFile(__DIR__ . '/Annotation/Attribute.php');
-            AnnotationRegistry::registerFile(__DIR__ . '/Annotation/Attributes.php');
+            // Make sure that annotations from metadata are loaded
+            class_exists(Enum::class);
+            class_exists(Target::class);
+            class_exists(Attribute::class);
+            class_exists(Attributes::class);
         }
 
         $class      = new \ReflectionClass($name);
@@ -546,7 +545,7 @@ final class DocParser
 
                     $attribute->required = (false !== strpos($propertyComment, '@Required'));
                     $attribute->name     = $property->name;
-                    $attribute->type     = (false !== strpos($propertyComment, '@var') && preg_match('/@var\s+([^\s]+)/', $propertyComment, $matches))
+                    $attribute->type     = (false !== strpos($propertyComment, '@var') && preg_match('/@var\s+([^\s]+)/',$propertyComment, $matches))
                         ? $matches[1]
                         : 'mixed';
 
@@ -559,7 +558,7 @@ final class DocParser
                         self::$metadataParser->setTarget(Target::TARGET_PROPERTY);
 
                         foreach (self::$metadataParser->parse($propertyComment, $context) as $annotation) {
-                            if (! $annotation instanceof Enum) {
+                            if ( ! $annotation instanceof Enum) {
                                 continue;
                             }
 
@@ -600,28 +599,28 @@ final class DocParser
         // Evaluate type
         switch (true) {
             // Checks if the property has array<type>
-        case (false !== $pos = strpos($type, '<')):
-            $arrayType  = substr($type, $pos + 1, -1);
-            $type       = 'array';
+            case (false !== $pos = strpos($type, '<')):
+                $arrayType  = substr($type, $pos + 1, -1);
+                $type       = 'array';
 
-            if (isset(self::$typeMap[$arrayType])) {
-                $arrayType = self::$typeMap[$arrayType];
-            }
+                if (isset(self::$typeMap[$arrayType])) {
+                    $arrayType = self::$typeMap[$arrayType];
+                }
 
-            $metadata['attribute_types'][$attribute->name]['array_type'] = $arrayType;
-            break;
+                $metadata['attribute_types'][$attribute->name]['array_type'] = $arrayType;
+                break;
 
             // Checks if the property has type[]
-        case (false !== $pos = strrpos($type, '[')):
-            $arrayType  = substr($type, 0, $pos);
-            $type       = 'array';
+            case (false !== $pos = strrpos($type, '[')):
+                $arrayType  = substr($type, 0, $pos);
+                $type       = 'array';
 
-            if (isset(self::$typeMap[$arrayType])) {
-                $arrayType = self::$typeMap[$arrayType];
-            }
+                if (isset(self::$typeMap[$arrayType])) {
+                    $arrayType = self::$typeMap[$arrayType];
+                }
 
-            $metadata['attribute_types'][$attribute->name]['array_type'] = $arrayType;
-            break;
+                $metadata['attribute_types'][$attribute->name]['array_type'] = $arrayType;
+                break;
         }
 
         $metadata['attribute_types'][$attribute->name]['type']     = $type;
@@ -654,8 +653,7 @@ final class DocParser
             // an identifier token
             if ((null === $peek = $this->lexer->glimpse())
                 || (DocLexer::T_NAMESPACE_SEPARATOR !== $peek['type'] && !in_array($peek['type'], self::$classIdentifiers, true))
-                || $peek['position'] !== $this->lexer->lookahead['position'] + 1
-            ) {
+                || $peek['position'] !== $this->lexer->lookahead['position'] + 1) {
                 $this->lexer->moveNext();
                 continue;
             }
@@ -713,11 +711,12 @@ final class DocParser
                     }
                 }
             } elseif (isset($this->imports[$loweredAlias])) {
-                $found = true;
-                $name  = (false !== $pos)
-                    ? $this->imports[$loweredAlias] . substr($name, $pos)
-                    : $this->imports[$loweredAlias];
-            } elseif (! isset($this->ignoredAnnotationNames[$name])
+                $namespace = ltrim($this->imports[$loweredAlias], '\\');
+                $name = (false !== $pos)
+                    ? $namespace . substr($name, $pos)
+                    : $namespace;
+                $found = $this->classExists($name);
+            } elseif ( ! isset($this->ignoredAnnotationNames[$name])
                 && isset($this->imports['__NAMESPACE__'])
                 && $this->classExists($this->imports['__NAMESPACE__'] . '\\' . $name)
             ) {
@@ -727,7 +726,7 @@ final class DocParser
                 $found = true;
             }
 
-            if (! $found) {
+            if ( ! $found) {
                 if ($this->isIgnoredAnnotation($name)) {
                     return false;
                 }
@@ -736,9 +735,9 @@ final class DocParser
             }
         }
 
-        $name = ltrim($name, '\\');
+        $name = ltrim($name,'\\');
 
-        if (! $this->classExists($name)) {
+        if ( ! $this->classExists($name)) {
             throw AnnotationException::semanticalError(sprintf('The annotation "@%s" in %s does not exist, or could not be auto-loaded.', $name, $this->context));
         }
 
@@ -748,13 +747,13 @@ final class DocParser
 
 
         // collects the metadata annotation only if there is not yet
-        if (! isset(self::$annotationMetadata[$name])) {
+        if ( ! isset(self::$annotationMetadata[$name])) {
             $this->collectAnnotationMetadata($name);
         }
 
         // verify that the class is really meant to be an annotation and not just any ordinary class
         if (self::$annotationMetadata[$name]['is_annotation'] === false) {
-            if ($this->ignoreNotImportedAnnotations || isset($this->ignoredAnnotationNames[$originalName])) {
+            if ($this->isIgnoredAnnotation($originalName) || $this->isIgnoredAnnotation($name)) {
                 return false;
             }
 
@@ -770,10 +769,8 @@ final class DocParser
         //if annotation does not support current target
         if (0 === (self::$annotationMetadata[$name]['targets'] & $target) && $target) {
             throw AnnotationException::semanticalError(
-                sprintf(
-                    'Annotation @%s is not allowed to be declared on %s. You may only use this annotation on these code elements: %s.',
-                    $originalName, $this->context, self::$annotationMetadata[$name]['targets_literal']
-                )
+                sprintf('Annotation @%s is not allowed to be declared on %s. You may only use this annotation on these code elements: %s.',
+                     $originalName, $this->context, self::$annotationMetadata[$name]['targets_literal'])
             );
         }
 
@@ -792,8 +789,7 @@ final class DocParser
         // checks all declared attributes
         foreach (self::$annotationMetadata[$name]['attribute_types'] as $property => $type) {
             if ($property === self::$annotationMetadata[$name]['default_property']
-                && !isset($values[$property]) && isset($values['value'])
-            ) {
+                && !isset($values[$property]) && isset($values['value'])) {
                 $property = 'value';
             }
 
@@ -808,7 +804,7 @@ final class DocParser
 
             if ($type['type'] === 'array') {
                 // handle the case of a single value
-                if (! is_array($values[$property])) {
+                if ( ! is_array($values[$property])) {
                     $values[$property] = [$values[$property]];
                 }
 
@@ -840,7 +836,7 @@ final class DocParser
                 }
 
                 // handle the case if the property has no annotations
-                if (! $property = self::$annotationMetadata[$name]['default_property']) {
+                if ( ! $property = self::$annotationMetadata[$name]['default_property']) {
                     throw AnnotationException::creationError(sprintf('The annotation @%s declared on %s does not accept any values, but got %s.', $originalName, $this->context, json_encode($values)));
                 }
             }
@@ -860,13 +856,13 @@ final class DocParser
     {
         $values = [];
 
-        if (! $this->lexer->isNextToken(DocLexer::T_OPEN_PARENTHESIS)) {
+        if ( ! $this->lexer->isNextToken(DocLexer::T_OPEN_PARENTHESIS)) {
             return $values;
         }
 
         $this->match(DocLexer::T_OPEN_PARENTHESIS);
 
-        if (! $this->lexer->isNextToken(DocLexer::T_CLOSE_PARENTHESIS)) {
+        if ( ! $this->lexer->isNextToken(DocLexer::T_CLOSE_PARENTHESIS)) {
             $values = $this->Values();
         }
 
@@ -894,7 +890,7 @@ final class DocParser
             $token = $this->lexer->lookahead;
             $value = $this->Value();
 
-            if (! is_object($value) && ! is_array($value)) {
+            if ( ! is_object($value) && ! is_array($value)) {
                 $this->syntaxError('Value', $token);
             }
 
@@ -904,10 +900,10 @@ final class DocParser
         foreach ($values as $k => $value) {
             if (is_object($value) && $value instanceof \stdClass) {
                 $values[$value->name] = $value->value;
-            } else if (! isset($values['value'])) {
+            } else if ( ! isset($values['value'])){
                 $values['value'] = $value;
             } else {
-                if (! is_array($values['value'])) {
+                if ( ! is_array($values['value'])) {
                     $values['value'] = [$values['value']];
                 }
 
@@ -931,7 +927,7 @@ final class DocParser
     {
         $identifier = $this->Identifier();
 
-        if (! defined($identifier) && false !== strpos($identifier, '::') && '\\' !== $identifier[0]) {
+        if ( ! defined($identifier) && false !== strpos($identifier, '::') && '\\' !== $identifier[0]) {
             list($className, $const) = explode('::', $identifier);
 
             $pos = strpos($className, '\\');
@@ -940,33 +936,33 @@ final class DocParser
             $loweredAlias = strtolower($alias);
 
             switch (true) {
-            case !empty($this->namespaces):
-                foreach ($this->namespaces as $ns) {
-                    if (class_exists($ns.'\\'.$className) || interface_exists($ns.'\\'.$className)) {
-                         $className = $ns.'\\'.$className;
-                         $found = true;
-                         break;
+                case !empty ($this->namespaces):
+                    foreach ($this->namespaces as $ns) {
+                        if (class_exists($ns.'\\'.$className) || interface_exists($ns.'\\'.$className)) {
+                             $className = $ns.'\\'.$className;
+                             $found = true;
+                             break;
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case isset($this->imports[$loweredAlias]):
-                $found     = true;
-                $className = (false !== $pos)
-                    ? $this->imports[$loweredAlias] . substr($className, $pos)
-                    : $this->imports[$loweredAlias];
-                break;
+                case isset($this->imports[$loweredAlias]):
+                    $found     = true;
+                    $className = (false !== $pos)
+                        ? $this->imports[$loweredAlias] . substr($className, $pos)
+                        : $this->imports[$loweredAlias];
+                    break;
 
-            default:
-                if(isset($this->imports['__NAMESPACE__'])) {
-                    $ns = $this->imports['__NAMESPACE__'];
+                default:
+                    if(isset($this->imports['__NAMESPACE__'])) {
+                        $ns = $this->imports['__NAMESPACE__'];
 
-                    if (class_exists($ns.'\\'.$className) || interface_exists($ns.'\\'.$className)) {
-                        $className = $ns.'\\'.$className;
-                        $found = true;
+                        if (class_exists($ns.'\\'.$className) || interface_exists($ns.'\\'.$className)) {
+                            $className = $ns.'\\'.$className;
+                            $found = true;
+                        }
                     }
-                }
-                break;
+                    break;
             }
 
             if ($found) {
@@ -974,10 +970,14 @@ final class DocParser
             }
         }
 
-        // checks if identifier ends with ::class, \strlen('::class') === 7
-        $classPos = stripos($identifier, '::class');
-        if ($classPos === strlen($identifier) - 7) {
-            return substr($identifier, 0, $classPos);
+        /**
+         * Checks if identifier ends with ::class and remove the leading backslash if it exists.
+         */
+        if ($this->identifierEndsWithClassConstant($identifier) && ! $this->identifierStartsWithBackslash($identifier)) {
+            return substr($identifier, 0, $this->getClassConstantPositionInIdentifier($identifier));
+        }
+        if ($this->identifierEndsWithClassConstant($identifier) && $this->identifierStartsWithBackslash($identifier)) {
+            return substr($identifier, 1, $this->getClassConstantPositionInIdentifier($identifier) - 1);
         }
 
         if (!defined($identifier)) {
@@ -985,6 +985,24 @@ final class DocParser
         }
 
         return constant($identifier);
+    }
+
+    private function identifierStartsWithBackslash(string $identifier) : bool
+    {
+        return '\\' === $identifier[0];
+    }
+
+    private function identifierEndsWithClassConstant(string $identifier) : bool
+    {
+        return $this->getClassConstantPositionInIdentifier($identifier) === strlen($identifier) - strlen('::class');
+    }
+
+    /**
+     * @return int|false
+     */
+    private function getClassConstantPositionInIdentifier(string $identifier)
+    {
+        return stripos($identifier, '::class');
     }
 
     /**
@@ -995,7 +1013,7 @@ final class DocParser
     private function Identifier()
     {
         // check if we have an annotation
-        if (! $this->lexer->isNextTokenAny(self::$classIdentifiers)) {
+        if ( ! $this->lexer->isNextTokenAny(self::$classIdentifiers)) {
             $this->syntaxError('namespace separator or identifier');
         }
 
@@ -1053,32 +1071,32 @@ final class DocParser
         }
 
         switch ($this->lexer->lookahead['type']) {
-        case DocLexer::T_STRING:
-            $this->match(DocLexer::T_STRING);
-            return $this->lexer->token['value'];
+            case DocLexer::T_STRING:
+                $this->match(DocLexer::T_STRING);
+                return $this->lexer->token['value'];
 
-        case DocLexer::T_INTEGER:
-            $this->match(DocLexer::T_INTEGER);
-            return (int)$this->lexer->token['value'];
+            case DocLexer::T_INTEGER:
+                $this->match(DocLexer::T_INTEGER);
+                return (int)$this->lexer->token['value'];
 
-        case DocLexer::T_FLOAT:
-            $this->match(DocLexer::T_FLOAT);
-            return (float)$this->lexer->token['value'];
+            case DocLexer::T_FLOAT:
+                $this->match(DocLexer::T_FLOAT);
+                return (float)$this->lexer->token['value'];
 
-        case DocLexer::T_TRUE:
-            $this->match(DocLexer::T_TRUE);
-            return true;
+            case DocLexer::T_TRUE:
+                $this->match(DocLexer::T_TRUE);
+                return true;
 
-        case DocLexer::T_FALSE:
-            $this->match(DocLexer::T_FALSE);
-            return false;
+            case DocLexer::T_FALSE:
+                $this->match(DocLexer::T_FALSE);
+                return false;
 
-        case DocLexer::T_NULL:
-            $this->match(DocLexer::T_NULL);
-            return null;
+            case DocLexer::T_NULL:
+                $this->match(DocLexer::T_NULL);
+                return null;
 
-        default:
-            $this->syntaxError('PlainValue');
+            default:
+                $this->syntaxError('PlainValue');
         }
     }
 
@@ -1160,8 +1178,7 @@ final class DocParser
         $peek = $this->lexer->glimpse();
 
         if (DocLexer::T_EQUALS === $peek['type']
-            || DocLexer::T_COLON === $peek['type']
-        ) {
+                || DocLexer::T_COLON === $peek['type']) {
 
             if ($this->lexer->isNextToken(DocLexer::T_IDENTIFIER)) {
                 $key = $this->Constant();

@@ -59,6 +59,16 @@ final class ReturnTypeDeclarationFixer extends AbstractFixer implements Configur
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after PhpdocToReturnTypeFixer, VoidReturnFixer.
+     */
+    public function getPriority()
+    {
+        return -17;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function isCandidate(Tokens $tokens)
     {
@@ -113,13 +123,11 @@ final class ReturnTypeDeclarationFixer extends AbstractFixer implements Configur
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('space_before', 'Spacing to apply before colon.'))
                 ->setAllowedValues(['one', 'none'])
                 ->setDefault('none')
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 }

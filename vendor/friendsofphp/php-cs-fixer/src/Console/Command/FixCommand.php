@@ -41,7 +41,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
  */
 final class FixCommand extends Command
 {
-    const COMMAND_NAME = 'fix';
+    protected static $defaultName = 'fix';
 
     /**
      * @var EventDispatcherInterface
@@ -95,7 +95,6 @@ final class FixCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(self::COMMAND_NAME)
             ->setDefinition(
                 [
                     new InputArgument('path', InputArgument::IS_ARRAY, 'The path.'),
@@ -113,7 +112,8 @@ final class FixCommand extends Command
                     new InputOption('show-progress', '', InputOption::VALUE_REQUIRED, 'Type of progress indicator (none, run-in, estimating, estimating-max or dots).'),
                 ]
             )
-            ->setDescription('Fixes a directory or a file.');
+            ->setDescription('Fixes a directory or a file.')
+        ;
     }
 
     /**
@@ -161,12 +161,10 @@ final class FixCommand extends Command
                     throw new \RuntimeException('Passing both `config` and `rules` options is not possible. This check was performed as `PHP_CS_FIXER_FUTURE_MODE` env var is set.');
                 }
 
-                $stdErr->writeln(
-                    [
+                $stdErr->writeln([
                     sprintf($stdErr->isDecorated() ? '<bg=yellow;fg=black;>%s</>' : '%s', 'When passing both "--config" and "--rules" the rules within the configuration file are not used.'),
                     sprintf($stdErr->isDecorated() ? '<bg=yellow;fg=black;>%s</>' : '%s', 'Passing both options is deprecated; version v3.0 PHP-CS-Fixer will exit with a configuration error code.'),
-                    ]
-                );
+                ]);
             }
 
             $configFile = $resolver->getConfigFile();
@@ -236,7 +234,8 @@ final class FixCommand extends Command
 
         $output->isDecorated()
             ? $output->write($reporter->generate($reportSummary))
-            : $output->write($reporter->generate($reportSummary), false, OutputInterface::OUTPUT_RAW);
+            : $output->write($reporter->generate($reportSummary), false, OutputInterface::OUTPUT_RAW)
+        ;
 
         $invalidErrors = $this->errorsManager->getInvalidErrors();
         $exceptionErrors = $this->errorsManager->getExceptionErrors();
@@ -264,7 +263,8 @@ final class FixCommand extends Command
             $resolver->isDryRun(),
             \count($changed) > 0,
             \count($invalidErrors) > 0,
-            \count($exceptionErrors) > 0
+            \count($exceptionErrors) > 0,
+            \count($lintErrors) > 0
         );
     }
 }

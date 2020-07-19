@@ -38,9 +38,7 @@ class VersionParser
      */
     private static $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)((?:[.-]?\d+)*+)?)?([.-]?dev)?';
 
-    /**
-     * @var array 
-     */
+    /** @var array */
     private static $stabilities = array('stable', 'RC', 'beta', 'alpha', 'dev');
 
     /**
@@ -54,11 +52,12 @@ class VersionParser
     {
         $version = preg_replace('{#.+$}i', '', $version);
 
-        if ('dev-' === substr($version, 0, 4) || '-dev' === substr($version, -4)) {
+        if (strpos($version, 'dev-') === 0 || '-dev' === substr($version, -4)) {
             return 'dev';
         }
 
         preg_match('{' . self::$modifierRegex . '(?:\+.*)?$}i', strtolower($version), $match);
+
         if (!empty($match[3])) {
             return 'dev';
         }
@@ -109,6 +108,9 @@ class VersionParser
 
         // strip off aliasing
         if (preg_match('{^([^,\s]++) ++as ++([^,\s]++)$}', $version, $match)) {
+            // verify that the alias is a version without constraint
+            $this->normalize($match[2]);
+
             $version = $match[1];
         }
 
@@ -118,7 +120,7 @@ class VersionParser
         }
 
         // if requirement is branch-like, use full name
-        if ('dev-' === strtolower(substr($version, 0, 4))) {
+        if (stripos($version, 'dev-') === 0) {
             return 'dev-' . substr($version, 4);
         }
 
@@ -134,7 +136,7 @@ class VersionParser
                 . (!empty($matches[3]) ? $matches[3] : '.0')
                 . (!empty($matches[4]) ? $matches[4] : '.0');
             $index = 5;
-            // match date(time) based versioning
+        // match date(time) based versioning
         } elseif (preg_match('{^v?(\d{4}(?:[.:-]?\d{2}){1,6}(?:[.:-]?\d{1,3})?)' . self::$modifierRegex . '$}i', $version, $matches)) {
             $version = preg_replace('{\D}', '.', $matches[1]);
             $index = 2;
@@ -238,6 +240,7 @@ class VersionParser
 
         $orConstraints = preg_split('{\s*\|\|?\s*}', trim($constraints));
         $orGroups = array();
+
         foreach ($orConstraints as $constraints) {
             $andConstraints = preg_split('{(?<!^|as|[=>< ,]) *(?<!-)[, ](?!-) *(?!,|as|$)}', $constraints);
             if (count($andConstraints) > 1) {
@@ -270,17 +273,15 @@ class VersionParser
             && 2 === count($orGroups[0]->getConstraints())
             && 2 === count($orGroups[1]->getConstraints())
             && ($a = (string) $orGroups[0])
-            && substr($a, 0, 3) === '[>=' && (false !== ($posA = strpos($a, '<', 4)))
+            && strpos($a, '[>=') === 0 && (false !== ($posA = strpos($a, '<', 4)))
             && ($b = (string) $orGroups[1])
-            && substr($b, 0, 3) === '[>=' && (false !== ($posB = strpos($b, '<', 4)))
+            && strpos($b, '[>=') === 0 && (false !== ($posB = strpos($b, '<', 4)))
             && substr($a, $posA + 2, -1) === substr($b, 4, $posB - 5)
         ) {
-            $constraint = new MultiConstraint(
-                array(
+            $constraint = new MultiConstraint(array(
                 new Constraint('>=', substr($a, 4, $posA - 5)),
                 new Constraint('<', substr($b, $posB + 2, -1)),
-                )
-            );
+            ));
         } else {
             $constraint = new MultiConstraint($orGroups, false);
         }
@@ -318,7 +319,7 @@ class VersionParser
         // version, to ensure that unstable instances of the current version are allowed. However, if a stability
         // suffix is added to the constraint, then a >= match on the current version is used instead.
         if (preg_match('{^~>?' . $versionRegex . '$}i', $constraint, $matches)) {
-            if (substr($constraint, 0, 2) === '~>') {
+            if (strpos($constraint, '~>') === 0) {
                 throw new \UnexpectedValueException(
                     'Could not parse version constraint ' . $constraint . ': ' .
                     'Invalid operator "~>", you probably meant to use the "~" operator'
@@ -458,11 +459,11 @@ class VersionParser
             try {
                 $version = $this->normalize($matches[2]);
 
-                if (!empty($stabilityModifier) && $this->parseStability($version) === 'stable') {
+                if (!empty($stabilityModifier) && self::parseStability($version) === 'stable') {
                     $version .= '-' . $stabilityModifier;
                 } elseif ('<' === $matches[1] || '>=' === $matches[1]) {
                     if (!preg_match('/-' . self::$modifierRegex . '$/', strtolower($matches[2]))) {
-                        if (substr($matches[2], 0, 4) !== 'dev-') {
+                        if (strpos($matches[2], 'dev-') !== 0) {
                             $version .= '-dev';
                         }
                     }
@@ -486,10 +487,10 @@ class VersionParser
      *
      * Support function for {@link parseConstraint()}
      *
-     * @param array  $matches   Array with version parts in array indexes 1,2,3,4
-     * @param int    $position  1,2,3,4 - which segment of the version to increment/decrement
-     * @param int    $increment
-     * @param string $pad       The string to pad version parts after $position
+     * @param array $matches Array with version parts in array indexes 1,2,3,4
+     * @param int $position 1,2,3,4 - which segment of the version to increment/decrement
+     * @param int $increment
+     * @param string $pad The string to pad version parts after $position
      *
      * @return string The new version
      */
@@ -507,7 +508,7 @@ class VersionParser
 
                     // Return null on a carry overflow
                     if ($i === 1) {
-                        return;
+                        return null;
                     }
                 }
             }
@@ -528,17 +529,17 @@ class VersionParser
         $stability = strtolower($stability);
 
         switch ($stability) {
-        case 'a':
-            return 'alpha';
-        case 'b':
-            return 'beta';
-        case 'p':
-        case 'pl':
-            return 'patch';
-        case 'rc':
-            return 'RC';
-        default:
-            return $stability;
+            case 'a':
+                return 'alpha';
+            case 'b':
+                return 'beta';
+            case 'p':
+            case 'pl':
+                return 'patch';
+            case 'rc':
+                return 'RC';
+            default:
+                return $stability;
         }
     }
 }

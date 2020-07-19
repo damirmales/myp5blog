@@ -39,7 +39,10 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     {
         return new FixerDefinition(
             'All PHPUnit test cases should have `@small`, `@medium` or `@large` annotation to enable run time limits.',
-            [new CodeSample("<?php\nclass MyTest extends TestCase {}\n")],
+            [
+                new CodeSample("<?php\nclass MyTest extends TestCase {}\n"),
+                new CodeSample("<?php\nclass MyTest extends TestCase {}\n", ['group' => 'medium']),
+            ],
             'The special groups [small, medium, large] provides a way to identify tests that are taking long to be executed.'
         );
     }
@@ -66,19 +69,16 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('group', 'Define a specific group to be used in case no group is already in use'))
                 ->setAllowedValues(['small', 'medium', 'large'])
                 ->setDefault('small')
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $startIndex
+     * @param int $startIndex
      */
     private function markClassSize(Tokens $tokens, $startIndex)
     {
@@ -100,8 +100,7 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $i
+     * @param int $i
      *
      * @return bool
      */
@@ -109,7 +108,7 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     {
         $typeIndex = $tokens->getPrevMeaningfulToken($i);
 
-        return $tokens[$typeIndex]->isGivenKind([T_ABSTRACT]);
+        return $tokens[$typeIndex]->isGivenKind(T_ABSTRACT);
     }
 
     private function createDocBlock(Tokens $tokens, $docBlockIndex)
@@ -139,8 +138,7 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return bool
      */
@@ -152,8 +150,7 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return int
      */
@@ -167,8 +164,7 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return string
      */
@@ -184,9 +180,7 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     }
 
     /**
-     * @param DocBlock $docBlock
-     * @param Tokens   $tokens
-     * @param int      $docBlockIndex
+     * @param int $docBlockIndex
      *
      * @return Line[]
      */
@@ -202,9 +196,7 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     }
 
     /**
-     * @param DocBlock $doc
-     * @param Tokens   $tokens
-     * @param int      $docBlockIndex
+     * @param int $docBlockIndex
      *
      * @return DocBlock
      */
@@ -224,7 +216,6 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
      * Take a one line doc block, and turn it into a multi line doc block.
      *
      * @param Line[] $lines
-     * @param Tokens $tokens
      * @param int    $docBlockIndex
      *
      * @return Line[]
@@ -266,18 +257,14 @@ final class PhpUnitSizeClassFixer extends AbstractFixer implements WhitespacesAw
     }
 
     /**
-     * @param DocBlock $doc
-     *
-     * @return Annotation[]
+     * @return Annotation[][]
      */
     private function filterDocBlock(DocBlock $doc)
     {
-        return array_filter(
-            [
+        return array_filter([
             $doc->getAnnotationsOfType('small'),
             $doc->getAnnotationsOfType('large'),
             $doc->getAnnotationsOfType('medium'),
-            ]
-        );
+        ]);
     }
 }

@@ -42,21 +42,21 @@ final class SpaceAfterSemicolonFixer extends AbstractFixer implements Configurat
                         for ( ;;++\$sample) {
                         }\n"
                 ),
-                new CodeSample(
-                    "<?php\nfor (\$i = 0; ; ++\$i) {\n}\n", [
+                new CodeSample("<?php\nfor (\$i = 0; ; ++\$i) {\n}\n", [
                     'remove_in_empty_for_expressions' => true,
-                    ]
-                ),
+                ]),
             ]
         );
     }
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after CombineConsecutiveUnsetsFixer, MultilineWhitespaceBeforeSemicolonsFixer, NoEmptyStatementFixer, OrderedClassElementsFixer, SingleImportPerStatementFixer, SingleTraitInsertPerStatementFixer.
      */
     public function getPriority()
     {
-        return -1; // Must run after MultilineWhitespaceBeforeSemicolonsFixer
+        return -1;
     }
 
     /**
@@ -72,14 +72,12 @@ final class SpaceAfterSemicolonFixer extends AbstractFixer implements Configurat
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('remove_in_empty_for_expressions', 'Whether spaces should be removed for empty `for` expressions.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
@@ -110,8 +108,11 @@ final class SpaceAfterSemicolonFixer extends AbstractFixer implements Configurat
             }
 
             if (!$tokens[$index + 1]->isWhitespace()) {
-                if (!$tokens[$index + 1]->equalsAny([')', [T_INLINE_HTML]]) && (                    !$this->configuration['remove_in_empty_for_expressions']
-                    || !$tokens[$index + 1]->equals(';'))
+                if (
+                    !$tokens[$index + 1]->equalsAny([')', [T_INLINE_HTML]]) && (
+                        !$this->configuration['remove_in_empty_for_expressions']
+                        || !$tokens[$index + 1]->equals(';')
+                    )
                 ) {
                     $tokens->insertAt($index + 1, new Token([T_WHITESPACE, ' ']));
                     ++$max;
@@ -120,7 +121,8 @@ final class SpaceAfterSemicolonFixer extends AbstractFixer implements Configurat
                 continue;
             }
 
-            if (null !== $insideForParenthesesUntil
+            if (
+                null !== $insideForParenthesesUntil
                 && ($tokens[$index + 2]->equals(';') || $index + 2 === $insideForParenthesesUntil)
                 && !Preg::match('/\R/', $tokens[$index + 1]->getContent())
             ) {
@@ -129,7 +131,8 @@ final class SpaceAfterSemicolonFixer extends AbstractFixer implements Configurat
                 continue;
             }
 
-            if (isset($tokens[$index + 2])
+            if (
+                isset($tokens[$index + 2])
                 && !$tokens[$index + 1]->equals([T_WHITESPACE, ' '])
                 && $tokens[$index + 1]->isWhitespace(" \t")
                 && !$tokens[$index + 2]->isComment()

@@ -77,11 +77,12 @@ function f9(string $foo, $bar, $baz) {}
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAlignFixer, PhpdocAlignFixer, PhpdocOrderFixer.
+     * Must run after CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocNoAliasTagFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
      */
     public function getPriority()
     {
-        // must be run after PhpdocNoAliasTagFixer
-        // must be run before PhpdocAlignFixer and PhpdocNoEmptyReturnFixer
         return 10;
     }
 
@@ -91,14 +92,6 @@ function f9(string $foo, $bar, $baz) {}
     public function isCandidate(Tokens $tokens)
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isRisky()
-    {
-        return false;
     }
 
     /**
@@ -133,8 +126,7 @@ function f9(string $foo, $bar, $baz) {}
                 return;
             }
 
-            while ($tokens[$index]->isGivenKind(
-                [
+            while ($tokens[$index]->isGivenKind([
                 T_ABSTRACT,
                 T_FINAL,
                 T_PRIVATE,
@@ -142,8 +134,7 @@ function f9(string $foo, $bar, $baz) {}
                 T_PUBLIC,
                 T_STATIC,
                 T_VAR,
-                ]
-            )) {
+            ])) {
                 $index = $tokens->getNextMeaningfulToken($index);
             }
 
@@ -200,15 +191,13 @@ function f9(string $foo, $bar, $baz) {}
                     $type = 'null|'.$type;
                 }
 
-                $newLines[] = new Line(
-                    sprintf(
-                        '%s* @param %s %s%s',
-                        $indent,
-                        $type,
-                        $argument['name'],
-                        $this->whitespacesConfig->getLineEnding()
-                    )
-                );
+                $newLines[] = new Line(sprintf(
+                    '%s* @param %s %s%s',
+                    $indent,
+                    $type,
+                    $argument['name'],
+                    $this->whitespacesConfig->getLineEnding()
+                ));
             }
 
             array_splice(
@@ -227,20 +216,17 @@ function f9(string $foo, $bar, $baz) {}
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('only_untyped', 'Whether to add missing `@param` annotations for untyped parameters only.'))
                 ->setDefault(true)
                 ->setAllowedTypes(['bool'])
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $start
-     * @param int    $end
+     * @param int $start
+     * @param int $end
      *
      * @return array
      */

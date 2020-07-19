@@ -82,30 +82,25 @@ SAMPLE
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('after_heredoc', 'Whether the whitespace between heredoc end and comma should be removed.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
-                ->setNormalizer(
-                    static function (Options $options, $value) {
-                        if (\PHP_VERSION_ID < 70300 && $value) {
-                            throw new InvalidOptionsForEnvException('"after_heredoc" option can only be enabled with PHP 7.3+.');
-                        }
-
-                        return $value;
+                ->setNormalizer(static function (Options $options, $value) {
+                    if (\PHP_VERSION_ID < 70300 && $value) {
+                        throw new InvalidOptionsForEnvException('"after_heredoc" option can only be enabled with PHP 7.3+.');
                     }
-                )
+
+                    return $value;
+                })
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
      * Method to fix spacing in array declaration.
      *
-     * @param int    $index
-     * @param Tokens $tokens
+     * @param int $index
      */
     private function fixSpacing($index, Tokens $tokens)
     {
@@ -122,8 +117,9 @@ SAMPLE
             $currentToken = $tokens[$i];
             $prevIndex = $tokens->getPrevNonWhitespace($i - 1);
 
-            if ($currentToken->equals(',') && !$tokens[$prevIndex]->isComment() 
-                && ($this->configuration['after_heredoc'] || !$tokens[$prevIndex]->equals([T_END_HEREDOC]))
+            if (
+                $currentToken->equals(',') && !$tokens[$prevIndex]->isComment() &&
+                ($this->configuration['after_heredoc'] || !$tokens[$prevIndex]->equals([T_END_HEREDOC]))
             ) {
                 $tokens->removeLeadingWhitespace($i);
             }
@@ -133,8 +129,7 @@ SAMPLE
     /**
      * Method to move index over the non-array elements like function calls or function declarations.
      *
-     * @param int    $index
-     * @param Tokens $tokens
+     * @param int $index
      *
      * @return int New index
      */

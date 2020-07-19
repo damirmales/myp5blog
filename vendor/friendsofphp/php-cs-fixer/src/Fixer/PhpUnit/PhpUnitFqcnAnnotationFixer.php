@@ -53,10 +53,11 @@ final class MyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before NoUnusedImportsFixer, PhpUnitOrderedCoversFixer.
      */
     public function getPriority()
     {
-        // should be run before NoUnusedImportsFixer
         return -9;
     }
 
@@ -85,21 +86,18 @@ final class MyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $startIndex
-     * @param int    $endIndex
+     * @param int $startIndex
+     * @param int $endIndex
      */
     private function fixPhpUnitClass(Tokens $tokens, $startIndex, $endIndex)
     {
         for ($index = $startIndex; $index < $endIndex; ++$index) {
             if ($tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
-                $tokens[$index] = new Token(
-                    [T_DOC_COMMENT, Preg::replace(
-                        '~^(\s*\*\s*@(?:expectedException|covers|coversDefaultClass|uses)\h+)(?!(?:self|static)::)(\w.*)$~m',
-                        '$1\\\\$2',
-                        $tokens[$index]->getContent()
-                    )]
-                );
+                $tokens[$index] = new Token([T_DOC_COMMENT, Preg::replace(
+                    '~^(\s*\*\s*@(?:expectedException|covers|coversDefaultClass|uses)\h+)(?!(?:self|static)::)(\w.*)$~m',
+                    '$1\\\\$2',
+                    $tokens[$index]->getContent()
+                )]);
             }
         }
     }

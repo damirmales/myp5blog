@@ -49,7 +49,6 @@ final class Signature implements SignatureInterface
      * @param string $fixerVersion
      * @param string $indent
      * @param string $lineEnding
-     * @param array  $rules
      */
     public function __construct($phpVersion, $fixerVersion, $indent, $lineEnding, array $rules)
     {
@@ -100,13 +99,11 @@ final class Signature implements SignatureInterface
             return $data;
         }
 
-        array_walk_recursive(
-            $data, static function (&$item) {
-                if (\is_string($item) && !mb_detect_encoding($item, 'utf-8', true)) {
-                    $item = utf8_encode($item);
-                }
+        array_walk_recursive($data, static function (&$item) {
+            if (\is_string($item) && !mb_detect_encoding($item, 'utf-8', true)) {
+                $item = utf8_encode($item);
             }
-        );
+        });
 
         return $data;
     }

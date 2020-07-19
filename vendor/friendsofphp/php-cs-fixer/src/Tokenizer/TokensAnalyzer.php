@@ -49,7 +49,7 @@ final class TokensAnalyzer
 
         for ($index = 1, $count = \count($this->tokens) - 2; $index < $count; ++$index) {
             if ($this->tokens[$index]->isClassy()) {
-                list($index, $newElements) = $this->findClassyElements($index);
+                list($index, $newElements) = $this->findClassyElements($index, $index);
                 $elements += $newElements;
             }
         }
@@ -142,7 +142,8 @@ final class TokensAnalyzer
 
         $endIndex = $tokens[$index]->equals('(')
             ? $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index)
-            : $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index);
+            : $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index)
+        ;
 
         for (++$index; $index < $endIndex; ++$index) {
             $token = $tokens[$index];
@@ -154,9 +155,10 @@ final class TokensAnalyzer
                 continue;
             }
 
-            if ($token->isWhitespace() 
-                && !$tokens[$index - 1]->isGivenKind(T_END_HEREDOC) 
-                && false !== strpos($token->getContent(), "\n")
+            if (
+                $token->isWhitespace() &&
+                !$tokens[$index - 1]->isGivenKind(T_END_HEREDOC) &&
+                false !== strpos($token->getContent(), "\n")
             ) {
                 return true;
             }
@@ -278,8 +280,11 @@ final class TokensAnalyzer
      */
     public function isLambda($index)
     {
-        if (!$this->tokens[$index]->isGivenKind(T_FUNCTION)) {
-            throw new \LogicException(sprintf('No T_FUNCTION at given index %d, got %s.', $index, $this->tokens[$index]->getName()));
+        if (
+            !$this->tokens[$index]->isGivenKind(T_FUNCTION)
+            && (\PHP_VERSION_ID < 70400 || !$this->tokens[$index]->isGivenKind(T_FN))
+        ) {
+            throw new \LogicException(sprintf('No T_FUNCTION or T_FN at given index %d, got %s.', $index, $this->tokens[$index]->getName()));
         }
 
         $startParenthesisIndex = $this->tokens->getNextMeaningfulToken($index);
@@ -309,15 +314,16 @@ final class TokensAnalyzer
 
         $nextIndex = $this->tokens->getNextMeaningfulToken($index);
 
-        if ($this->tokens[$nextIndex]->equalsAny(['(', '{']) 
-            || $this->tokens[$nextIndex]->isGivenKind([T_AS, T_DOUBLE_COLON, T_ELLIPSIS, T_NS_SEPARATOR, CT::T_RETURN_REF, CT::T_TYPE_ALTERNATION, T_VARIABLE])
+        if (
+            $this->tokens[$nextIndex]->equalsAny(['(', '{']) ||
+            $this->tokens[$nextIndex]->isGivenKind([T_AS, T_DOUBLE_COLON, T_ELLIPSIS, T_NS_SEPARATOR, CT::T_RETURN_REF, CT::T_TYPE_ALTERNATION, T_VARIABLE])
         ) {
             return false;
         }
 
         $prevIndex = $this->tokens->getPrevMeaningfulToken($index);
 
-        if ($this->tokens[$prevIndex]->isGivenKind([T_AS, T_CLASS, T_CONST, T_DOUBLE_COLON, T_FUNCTION, T_GOTO, CT::T_GROUP_IMPORT_BRACE_OPEN, T_INTERFACE, T_OBJECT_OPERATOR, T_TRAIT])) {
+        if ($this->tokens[$prevIndex]->isGivenKind([T_AS, T_CLASS, T_CONST, T_DOUBLE_COLON, T_FUNCTION, T_GOTO, CT::T_GROUP_IMPORT_BRACE_OPEN, T_INTERFACE, T_OBJECT_OPERATOR, T_TRAIT, CT::T_TYPE_COLON])) {
             return false;
         }
 
@@ -325,7 +331,7 @@ final class TokensAnalyzer
             $prevIndex = $this->tokens->getPrevMeaningfulToken($prevIndex);
         }
 
-        if ($this->tokens[$prevIndex]->isGivenKind([CT::T_CONST_IMPORT, T_EXTENDS, CT::T_FUNCTION_IMPORT, T_IMPLEMENTS, T_INSTANCEOF, T_INSTEADOF, T_NAMESPACE, T_NEW, T_USE, CT::T_USE_TRAIT])) {
+        if ($this->tokens[$prevIndex]->isGivenKind([CT::T_CONST_IMPORT, T_EXTENDS, CT::T_FUNCTION_IMPORT, T_IMPLEMENTS, T_INSTANCEOF, T_INSTEADOF, T_NAMESPACE, T_NEW, CT::T_NULLABLE_TYPE, CT::T_TYPE_COLON, T_USE, CT::T_USE_TRAIT])) {
             return false;
         }
 
@@ -340,14 +346,14 @@ final class TokensAnalyzer
             }
         }
 
-        // check for `implements`/`use` list
+        // check for `extends`/`implements`/`use` list
         if ($this->tokens[$prevIndex]->equals(',')) {
             $checkIndex = $prevIndex;
             while ($this->tokens[$checkIndex]->equalsAny([',', [T_AS], [CT::T_NAMESPACE_OPERATOR], [T_NS_SEPARATOR], [T_STRING]])) {
                 $checkIndex = $this->tokens->getPrevMeaningfulToken($checkIndex);
             }
 
-            if ($this->tokens[$checkIndex]->isGivenKind([CT::T_GROUP_IMPORT_BRACE_OPEN, T_IMPLEMENTS, CT::T_USE_TRAIT])) {
+            if ($this->tokens[$checkIndex]->isGivenKind([T_EXTENDS, CT::T_GROUP_IMPORT_BRACE_OPEN, T_IMPLEMENTS, T_USE, CT::T_USE_TRAIT])) {
                 return false;
             }
         }
@@ -382,6 +388,7 @@ final class TokensAnalyzer
             ']',
             [T_STRING],
             [T_VARIABLE],
+            [CT::T_ARRAY_INDEX_CURLY_BRACE_CLOSE],
             [CT::T_DYNAMIC_PROP_BRACE_CLOSE],
             [CT::T_DYNAMIC_VAR_BRACE_CLOSE],
         ];
@@ -425,6 +432,7 @@ final class TokensAnalyzer
                 '"',
                 '`',
                 [CT::T_ARRAY_SQUARE_BRACE_CLOSE],
+                [CT::T_ARRAY_INDEX_CURLY_BRACE_CLOSE],
                 [CT::T_DYNAMIC_PROP_BRACE_CLOSE],
                 [CT::T_DYNAMIC_VAR_BRACE_CLOSE],
                 [T_CLASS_C],
@@ -550,6 +558,10 @@ final class TokensAnalyzer
             if (\defined('T_COALESCE')) {
                 $arrayOperators[T_COALESCE] = true;  // ??
             }
+
+            if (\defined('T_COALESCE_EQUAL')) {
+                $arrayOperators[T_COALESCE_EQUAL] = true;  // ??=
+            }
         }
 
         $tokens = $this->tokens;
@@ -604,16 +616,16 @@ final class TokensAnalyzer
      * Searches in tokens from the classy (start) index till the end (index) of the classy.
      * Returns an array; first value is the index until the method has analysed (int), second the found classy elements (array).
      *
-     * @param int $index classy index
+     * @param int $classIndex classy index
+     * @param int $index
      *
      * @return array
      */
-    private function findClassyElements($index)
+    private function findClassyElements($classIndex, $index)
     {
         $elements = [];
         $curlyBracesLevel = 0;
         $bracesLevel = 0;
-        $classIndex = $index;
         ++$index; // skip the classy index itself
 
         for ($count = \count($this->tokens); $index < $count; ++$index) {
@@ -624,8 +636,47 @@ final class TokensAnalyzer
             }
 
             if ($token->isClassy()) { // anonymous class in class
-                list($index, $newElements) = $this->findClassyElements($index);
-                $elements += $newElements;
+                // check for nested anonymous classes inside the new call of an anonymous class,
+                // for example `new class(function (){new class(function (){new class(function (){}){};}){};}){};` etc.
+                // if class(XYZ) {} skip till `(` as XYZ might contain functions etc.
+
+                $nestedClassIndex = $index;
+                $index = $this->tokens->getNextMeaningfulToken($index);
+
+                if ($this->tokens[$index]->equals('(')) {
+                    ++$index; // move after `(`
+
+                    for ($nestedBracesLevel = 1; $index < $count; ++$index) {
+                        $token = $this->tokens[$index];
+
+                        if ($token->equals('(')) {
+                            ++$nestedBracesLevel;
+
+                            continue;
+                        }
+
+                        if ($token->equals(')')) {
+                            --$nestedBracesLevel;
+
+                            if (0 === $nestedBracesLevel) {
+                                list($index, $newElements) = $this->findClassyElements($nestedClassIndex, $index);
+                                $elements += $newElements;
+
+                                break;
+                            }
+
+                            continue;
+                        }
+
+                        if ($token->isClassy()) { // anonymous class in class
+                            list($index, $newElements) = $this->findClassyElements($index, $index);
+                            $elements += $newElements;
+                        }
+                    }
+                } else {
+                    list($index, $newElements) = $this->findClassyElements($nestedClassIndex, $nestedClassIndex);
+                    $elements += $newElements;
+                }
 
                 continue;
             }

@@ -60,7 +60,7 @@ final class BinaryOperatorSpacesFixer extends AbstractFixer implements Configura
 
     /**
      * @internal
-     * @const    Placeholder used as anchor for right alignment.
+     * @const Placeholder used as anchor for right alignment.
      */
     const ALIGN_PLACEHOLDER = "\x2 ALIGNABLE%d \x3";
 
@@ -136,6 +136,7 @@ final class BinaryOperatorSpacesFixer extends AbstractFixer implements Configura
         '**=',
         '<=>',
         '??',
+        '??=',
     ];
 
     /**
@@ -158,8 +159,9 @@ final class BinaryOperatorSpacesFixer extends AbstractFixer implements Configura
      */
     public function configure(array $configuration = null)
     {
-        if (null !== $configuration 
-            && (\array_key_exists('align_equals', $configuration) || \array_key_exists('align_double_arrow', $configuration))
+        if (
+            null !== $configuration &&
+            (\array_key_exists('align_equals', $configuration) || \array_key_exists('align_double_arrow', $configuration))
         ) {
             $configuration = $this->resolveOldConfig($configuration);
         }
@@ -220,11 +222,12 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after ArrayIndentationFixer, ArraySyntaxFixer, ListSyntaxFixer, NoMultilineWhitespaceAroundDoubleArrowFixer, PowToExponentiationFixer, StandardizeNotEqualsFixer, StrictComparisonFixer.
      */
     public function getPriority()
     {
-        // must run after ArraySyntaxFixer, NoMultilineWhitespaceAroundDoubleArrowFixer, PowToExponentiationFixer, StandardizeNotEqualsFixer, StrictComparisonFixer and ArrayIndentationFixer.
-        return -31;
+        return -32;
     }
 
     /**
@@ -273,42 +276,39 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('default', 'Default fix strategy.'))
                 ->setDefault(self::SINGLE_SPACE)
                 ->setAllowedValues(self::$allowedValues)
                 ->getOption(),
             (new FixerOptionBuilder('operators', 'Dictionary of `binary operator` => `fix strategy` values that differ from the default strategy.'))
                 ->setAllowedTypes(['array'])
-                ->setAllowedValues(
-                    [static function ($option) {
-                        foreach ($option as $operator => $value) {
-                            if (!\in_array($operator, self::$supportedOperators, true)) {
-                                throw new InvalidOptionsException(
-                                    sprintf(
-                                        'Unexpected "operators" key, expected any of "%s", got "%s".',
-                                        implode('", "', self::$supportedOperators),
-                                        \is_object($operator) ? \get_class($operator) : \gettype($operator).'#'.$operator
-                                    )
-                                );
-                            }
-
-                            if (!\in_array($value, self::$allowedValues, true)) {
-                                throw new InvalidOptionsException(
-                                    sprintf(
-                                        'Unexpected value for operator "%s", expected any of "%s", got "%s".',
-                                        $operator,
-                                        implode('", "', self::$allowedValues),
-                                        \is_object($value) ? \get_class($value) : (null === $value ? 'null' : \gettype($value).'#'.$value)
-                                    )
-                                );
-                            }
+                ->setAllowedValues([static function ($option) {
+                    foreach ($option as $operator => $value) {
+                        if (!\in_array($operator, self::$supportedOperators, true)) {
+                            throw new InvalidOptionsException(
+                                sprintf(
+                                    'Unexpected "operators" key, expected any of "%s", got "%s".',
+                                    implode('", "', self::$supportedOperators),
+                                    \is_object($operator) ? \get_class($operator) : \gettype($operator).'#'.$operator
+                                )
+                            );
                         }
 
-                        return true;
-                    }]
-                )
+                        if (!\in_array($value, self::$allowedValues, true)) {
+                            throw new InvalidOptionsException(
+                                sprintf(
+                                    'Unexpected value for operator "%s", expected any of "%s", got "%s".',
+                                    $operator,
+                                    implode('", "', self::$allowedValues),
+                                    \is_object($value) ? \get_class($value) : (null === $value ? 'null' : \gettype($value).'#'.$value)
+                                )
+                            );
+                        }
+                    }
+
+                    return true;
+                }])
                 ->setDefault([])
                 ->getOption(),
             // add deprecated options as BC layer
@@ -322,13 +322,11 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
                 ->setAllowedValues([true, false, null])
                 ->setDeprecationMessage('Use options `operators` and `default` instead.')
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      */
     private function fixWhiteSpaceAroundOperator(Tokens $tokens, $index)
     {
@@ -370,8 +368,7 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      */
     private function fixWhiteSpaceAroundOperatorToSingleSpace(Tokens $tokens, $index)
     {
@@ -397,8 +394,7 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      */
     private function fixWhiteSpaceAroundOperatorToNoSpace(Tokens $tokens, $index)
     {
@@ -420,8 +416,7 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return false|int index of T_DECLARE where the `=` belongs to or `false`
      */
@@ -470,12 +465,14 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
             unset($operators['??']);
         }
 
+        if (!\defined('T_COALESCE_EQUAL')) {
+            unset($operators['??=']);
+        }
+
         return $operators;
     }
 
     /**
-     * @param array $configuration
-     *
      * @return array
      */
     private function resolveOldConfig(array $configuration)
@@ -536,7 +533,6 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     // Alignment logic related methods
 
     /**
-     * @param Tokens                $tokens
      * @param array<string, string> $toAlign
      */
     private function fixAlignment(Tokens $tokens, array $toAlign)
@@ -588,7 +584,6 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param Tokens $tokens
      * @param int    $startAt
      * @param int    $endAt
      * @param string $tokenContent
@@ -599,7 +594,8 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
             $token = $tokens[$index];
 
             $content = $token->getContent();
-            if (strtolower($content) === $tokenContent
+            if (
+                strtolower($content) === $tokenContent
                 && $this->tokensAnalyzer->isBinaryOperator($index)
                 && ('=' !== $content || !$this->isEqualPartOfDeclareStatement($tokens, $index))
             ) {
@@ -635,9 +631,8 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $startAt
-     * @param int    $endAt
+     * @param int $startAt
+     * @param int $endAt
      */
     private function injectAlignmentPlaceholdersForArrow(Tokens $tokens, $startAt, $endAt)
     {
@@ -719,9 +714,8 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $from
-     * @param int    $until
+     * @param int $from
+     * @param int $until
      */
     private function injectArrayAlignmentPlaceholders(Tokens $tokens, $from, $until)
     {
@@ -735,7 +729,6 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param Tokens $tokens
      * @param int    $index
      * @param string $alignStrategy
      */
@@ -761,7 +754,6 @@ $foo = \json_encode($bar, JSON_PRESERVE_ZERO_FRACTION | JSON_PRETTY_PRINT);
     /**
      * Look for group of placeholders and provide vertical alignment.
      *
-     * @param Tokens $tokens
      * @param string $alignStrategy
      *
      * @return string

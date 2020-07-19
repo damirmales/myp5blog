@@ -16,24 +16,18 @@ namespace Composer\Semver\Constraint;
  */
 class MultiConstraint implements ConstraintInterface
 {
-    /**
-     * @var ConstraintInterface[] 
-     */
+    /** @var ConstraintInterface[] */
     protected $constraints;
 
-    /**
-     * @var string 
-     */
+    /** @var string */
     protected $prettyString;
 
-    /**
-     * @var bool 
-     */
+    /** @var bool */
     protected $conjunctive;
 
     /**
      * @param ConstraintInterface[] $constraints A set of constraints
-     * @param bool                  $conjunctive Whether the constraints should be treated as conjunctive or disjunctive
+     * @param bool $conjunctive Whether the constraints should be treated as conjunctive or disjunctive
      */
     public function __construct(array $constraints, $conjunctive = true)
     {
@@ -108,7 +102,7 @@ class MultiConstraint implements ConstraintInterface
             return $this->prettyString;
         }
 
-        return $this->__toString();
+        return (string) $this;
     }
 
     /**

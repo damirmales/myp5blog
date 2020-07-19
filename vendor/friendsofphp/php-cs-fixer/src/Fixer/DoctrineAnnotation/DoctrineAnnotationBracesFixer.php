@@ -50,17 +50,15 @@ final class DoctrineAnnotationBracesFixer extends AbstractDoctrineAnnotationFixe
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            array_merge(
-                parent::createConfigurationDefinition()->getOptions(),
-                [
+        return new FixerConfigurationResolver(array_merge(
+            parent::createConfigurationDefinition()->getOptions(),
+            [
                 (new FixerOptionBuilder('syntax', 'Whether to add or remove braces.'))
                     ->setAllowedValues(['with_braces', 'without_braces'])
                     ->setDefault('without_braces')
                     ->getOption(),
-                ]
-            )
-        );
+            ]
+        ));
     }
 
     /**
@@ -75,9 +73,6 @@ final class DoctrineAnnotationBracesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    /**
-     * @param Tokens $tokens
-     */
     private function addBracesToAnnotations(Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
@@ -95,9 +90,6 @@ final class DoctrineAnnotationBracesFixer extends AbstractDoctrineAnnotationFixe
         }
     }
 
-    /**
-     * @param Tokens $tokens
-     */
     private function removesBracesFromAnnotations(Tokens $tokens)
     {
         for ($index = 0, $max = \count($tokens); $index < $max; ++$index) {

@@ -39,10 +39,12 @@ final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before FunctionToConstantFixer.
+     * Must run after PowToExponentiationFixer.
      */
     public function getPriority()
     {
-        // must run before FunctionToConstantFixer
         return 2;
     }
 
@@ -75,7 +77,8 @@ final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
             // check for ternary operator
             $endParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
             $nextNonWhiteSpace = $tokens->getNextMeaningfulToken($endParenthesisIndex);
-            if (null !== $nextNonWhiteSpace
+            if (
+                null !== $nextNonWhiteSpace
                 && $tokens[$nextNonWhiteSpace]->equals('?')
                 && $tokens[$lastTokenIndex]->isGivenKind($languageConstructionTokens)
             ) {
@@ -92,7 +95,8 @@ final class NoSpacesAfterFunctionNameFixer extends AbstractFixer
                 }
             } elseif ($tokens[$lastTokenIndex]->equalsAny($braceTypes)) {
                 $block = Tokens::detectBlockType($tokens[$lastTokenIndex]);
-                if (Tokens::BLOCK_TYPE_ARRAY_INDEX_CURLY_BRACE === $block['type']
+                if (
+                    Tokens::BLOCK_TYPE_ARRAY_INDEX_CURLY_BRACE === $block['type']
                     || Tokens::BLOCK_TYPE_DYNAMIC_VAR_BRACE === $block['type']
                     || Tokens::BLOCK_TYPE_INDEX_SQUARE_BRACE === $block['type']
                     || Tokens::BLOCK_TYPE_PARENTHESIS_BRACE === $block['type']

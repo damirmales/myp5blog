@@ -113,16 +113,14 @@ final class RandomApiMigrationFixer extends AbstractFunctionReferenceFixer imple
                 $tokens[$functionName] = new Token([T_STRING, $functionReplacement['alternativeName']]);
 
                 if (0 === $count && 'random_int' === $functionReplacement['alternativeName']) {
-                    $tokens->insertAt(
-                        $currIndex + 1, [
+                    $tokens->insertAt($currIndex + 1, [
                         new Token([T_LNUMBER, '0']),
                         new Token(','),
                         new Token([T_WHITESPACE, ' ']),
                         new Token([T_STRING, 'getrandmax']),
                         new Token('('),
                         new Token(')'),
-                        ]
-                    );
+                    ]);
 
                     $currIndex += 6;
                 }
@@ -135,45 +133,35 @@ final class RandomApiMigrationFixer extends AbstractFunctionReferenceFixer imple
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless(
-            'replacements', [
+        return new FixerConfigurationResolverRootless('replacements', [
             (new FixerOptionBuilder('replacements', 'Mapping between replaced functions with the new ones.'))
                 ->setAllowedTypes(['array'])
-                ->setAllowedValues(
-                    [static function ($value) {
-                        foreach ($value as $functionName => $replacement) {
-                            if (!\array_key_exists($functionName, self::$argumentCounts)) {
-                                throw new InvalidOptionsException(
-                                    sprintf(
-                                        'Function "%s" is not handled by the fixer.',
-                                        $functionName
-                                    )
-                                );
-                            }
-
-                            if (!\is_string($replacement)) {
-                                throw new InvalidOptionsException(
-                                    sprintf(
-                                        'Replacement for function "%s" must be a string, "%s" given.',
-                                        $functionName,
-                                        \is_object($replacement) ? \get_class($replacement) : \gettype($replacement)
-                                    )
-                                );
-                            }
+                ->setAllowedValues([static function ($value) {
+                    foreach ($value as $functionName => $replacement) {
+                        if (!\array_key_exists($functionName, self::$argumentCounts)) {
+                            throw new InvalidOptionsException(sprintf(
+                                'Function "%s" is not handled by the fixer.',
+                                $functionName
+                            ));
                         }
 
-                        return true;
-                    }]
-                )
-                ->setDefault(
-                    [
+                        if (!\is_string($replacement)) {
+                            throw new InvalidOptionsException(sprintf(
+                                'Replacement for function "%s" must be a string, "%s" given.',
+                                $functionName,
+                                \is_object($replacement) ? \get_class($replacement) : \gettype($replacement)
+                            ));
+                        }
+                    }
+
+                    return true;
+                }])
+                ->setDefault([
                     'getrandmax' => 'mt_getrandmax',
                     'rand' => 'mt_rand',
                     'srand' => 'mt_srand',
-                    ]
-                )
+                ])
                 ->getOption(),
-            ], $this->getName()
-        );
+        ], $this->getName());
     }
 }

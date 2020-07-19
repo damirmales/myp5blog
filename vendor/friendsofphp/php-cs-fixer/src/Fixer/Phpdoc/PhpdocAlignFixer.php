@@ -62,6 +62,8 @@ final class PhpdocAlignFixer extends AbstractFixer implements ConfigurationDefin
     private static $alignableTags = [
         'param',
         'property',
+        'property-read',
+        'property-write',
         'return',
         'throws',
         'type',
@@ -143,6 +145,8 @@ EOF;
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after CommentToPhpdocFixer, CommentToPhpdocFixer, GeneralPhpdocAnnotationRemoveFixer, NoBlankLinesAfterPhpdocFixer, NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAddMissingParamAnnotationFixer, PhpdocAddMissingParamAnnotationFixer, PhpdocAnnotationWithoutDotFixer, PhpdocIndentFixer, PhpdocIndentFixer, PhpdocInlineTagFixer, PhpdocLineSpanFixer, PhpdocNoAccessFixer, PhpdocNoAliasTagFixer, PhpdocNoEmptyReturnFixer, PhpdocNoPackageFixer, PhpdocNoUselessInheritdocFixer, PhpdocOrderFixer, PhpdocReturnSelfReferenceFixer, PhpdocScalarFixer, PhpdocScalarFixer, PhpdocSeparationFixer, PhpdocSingleLineVarSpacingFixer, PhpdocSummaryFixer, PhpdocToCommentFixer, PhpdocToCommentFixer, PhpdocToParamTypeFixer, PhpdocToReturnTypeFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer, PhpdocTypesFixer, PhpdocTypesFixer, PhpdocTypesOrderFixer, PhpdocVarAnnotationCorrectOrderFixer, PhpdocVarWithoutNameFixer.
      */
     public function getPriority()
     {
@@ -197,28 +201,25 @@ EOF;
              * By default, all tags apart from @property and @method will be aligned for backwards compatibility
              * @TODO 3.0 Align all available tags by default
              */
-            ->setDefault(
-                [
+            ->setDefault([
                 'param',
                 'return',
                 'throws',
                 'type',
                 'var',
-                ]
-            );
+            ])
+        ;
 
         $align = new FixerOptionBuilder('align', 'Align comments');
         $align
             ->setAllowedTypes(['string'])
             ->setAllowedValues([self::ALIGN_LEFT, self::ALIGN_VERTICAL])
-            ->setDefault(self::ALIGN_VERTICAL);
+            ->setDefault(self::ALIGN_VERTICAL)
+        ;
 
         return new FixerConfigurationResolver([$tags->getOption(), $align->getOption()]);
     }
 
-    /**
-     * @param DocBlock $docBlock
-     */
     private function fixDocBlock(DocBlock $docBlock)
     {
         $lineEnding = $this->whitespacesConfig->getLineEnding();
@@ -332,7 +333,7 @@ EOF;
      * @param string $line
      * @param bool   $matchCommentOnly
      *
-     * @return null|string[]
+     * @return null|array<string, null|string>
      */
     private function getMatches($line, $matchCommentOnly = false)
     {
@@ -363,6 +364,8 @@ EOF;
 
             return $matches;
         }
+
+        return null;
     }
 
     /**

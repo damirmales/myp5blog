@@ -28,13 +28,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class OrderedClassElementsFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    /**
- * @internal 
-*/
+    /** @internal */
     const SORT_ALPHA = 'alpha';
-    /**
- * @internal 
-*/
+
+    /** @internal */
     const SORT_NONE = 'none';
 
     /**
@@ -214,11 +211,12 @@ class Example
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before ClassAttributesSeparationFixer, MethodSeparationFixer, NoBlankLinesAfterClassOpeningFixer, SpaceAfterSemicolonFixer.
+     * Must run after NoPhp4ConstructorFixer, ProtectedToPrivateFixer.
      */
     public function getPriority()
     {
-        // must run before MethodSeparationFixer, NoBlankLinesAfterClassOpeningFixer and SpaceAfterSemicolonFixer.
-        // must run after ProtectedToPrivateFixer.
         return 65;
     }
 
@@ -235,7 +233,7 @@ class Example
             $i = $tokens->getNextTokenOfKind($i, ['{']);
             $elements = $this->getElements($tokens, $i);
 
-            if (!$elements) {
+            if (0 === \count($elements)) {
                 continue;
             }
 
@@ -255,13 +253,11 @@ class Example
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless(
-            'order', [
+        return new FixerConfigurationResolverRootless('order', [
             (new FixerOptionBuilder('order', 'List of strings defining order of elements.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(array_keys(array_merge(self::$typeHierarchy, self::$specialTypes)))])
-                ->setDefault(
-                    [
+                ->setDefault([
                     'use_trait',
                     'constant_public',
                     'constant_protected',
@@ -276,20 +272,17 @@ class Example
                     'method_public',
                     'method_protected',
                     'method_private',
-                    ]
-                )
+                ])
                 ->getOption(),
             (new FixerOptionBuilder('sortAlgorithm', 'How multiple occurrences of same type statements should be sorted'))
                 ->setAllowedValues($this->supportedSortAlgorithms)
                 ->setDefault(self::SORT_NONE)
                 ->getOption(),
-            ], $this->getName()
-        );
+        ], $this->getName());
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $startIndex
+     * @param int $startIndex
      *
      * @return array[]
      */
@@ -341,7 +334,7 @@ class Example
 
                 if ('property' === $element['type']) {
                     $element['name'] = $tokens[$i]->getContent();
-                } elseif (\in_array($element['type'], ['use_trait', 'constant', 'method', 'magic'], true)) {
+                } elseif (\in_array($element['type'], ['use_trait', 'constant', 'method', 'magic', 'construct', 'destruct'], true)) {
                     $element['name'] = $tokens[$tokens->getNextMeaningfulToken($i)]->getContent();
                 }
 
@@ -356,8 +349,7 @@ class Example
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return array|string type or array of type and name
      */
@@ -387,14 +379,13 @@ class Example
             return 'destruct';
         }
 
-        if ($nameToken->equalsAny(
-            [
+        if (
+            $nameToken->equalsAny([
                 [T_STRING, 'setUpBeforeClass'],
                 [T_STRING, 'tearDownAfterClass'],
                 [T_STRING, 'setUp'],
                 [T_STRING, 'tearDown'],
-                ], false
-        )
+            ], false)
         ) {
             return ['phpunit', strtolower($nameToken->getContent())];
         }
@@ -407,8 +398,7 @@ class Example
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return int
      */
@@ -420,8 +410,7 @@ class Example
             $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index);
         }
 
-        for (++$index; $tokens[$index]->isWhitespace(" \t") || $tokens[$index]->isComment(); ++$index) {
-        }
+        for (++$index; $tokens[$index]->isWhitespace(" \t") || $tokens[$index]->isComment(); ++$index);
 
         --$index;
 
@@ -469,15 +458,13 @@ class Example
         }
         unset($element);
 
-        usort(
-            $elements, function (array $a, array $b) {
-                if ($a['position'] === $b['position']) {
-                    return $this->sortGroupElements($a, $b);
-                }
-
-                return $a['position'] > $b['position'] ? 1 : -1;
+        usort($elements, function (array $a, array $b) {
+            if ($a['position'] === $b['position']) {
+                return $this->sortGroupElements($a, $b);
             }
-        );
+
+            return $a['position'] > $b['position'] ? 1 : -1;
+        });
 
         return $elements;
     }
@@ -494,7 +481,6 @@ class Example
     }
 
     /**
-     * @param Tokens  $tokens
      * @param int     $startIndex
      * @param int     $endIndex
      * @param array[] $elements

@@ -47,9 +47,7 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
         $analyzer = new TokensAnalyzer($phpTokens);
         $this->classyElements = $analyzer->getClassyElements();
 
-        /**
- * @var PhpToken $docCommentToken 
-*/
+        /** @var PhpToken $docCommentToken */
         foreach ($phpTokens->findGivenKind(T_DOC_COMMENT) as $index => $docCommentToken) {
             if (!$this->nextElementAcceptsDoctrineAnnotations($phpTokens, $index)) {
                 continue;
@@ -66,8 +64,6 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
 
     /**
      * Fixes Doctrine annotations from the given PHPDoc style comment.
-     *
-     * @param DoctrineAnnotationTokens $doctrineAnnotationTokens
      */
     abstract protected function fixAnnotations(DoctrineAnnotationTokens $doctrineAnnotationTokens);
 
@@ -76,23 +72,19 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('ignored_tags', 'List of tags that must not be treated as Doctrine Annotations.'))
                 ->setAllowedTypes(['array'])
-                ->setAllowedValues(
-                    [static function ($values) {
-                        foreach ($values as $value) {
-                            if (!\is_string($value)) {
-                                return false;
-                            }
+                ->setAllowedValues([static function ($values) {
+                    foreach ($values as $value) {
+                        if (!\is_string($value)) {
+                            return false;
                         }
+                    }
 
-                        return true;
-                    }]
-                )
-                ->setDefault(
-                    [
+                    return true;
+                }])
+                ->setDefault([
                     // PHPDocumentor 1
                     'abstract',
                     'access',
@@ -196,16 +188,13 @@ abstract class AbstractDoctrineAnnotationFixer extends AbstractFixer implements 
                     'FIXME',
                     'fixme',
                     'override',
-                    ]
-                )
+                ])
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
-     * @param PhpTokens $tokens
-     * @param int       $index
+     * @param int $index
      *
      * @return bool
      */

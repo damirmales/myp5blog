@@ -39,11 +39,9 @@ final class Transformers
     {
         $this->registerBuiltInTransformers();
 
-        usort(
-            $this->items, static function (TransformerInterface $a, TransformerInterface $b) {
-                return Utils::cmpInt($b->getPriority(), $a->getPriority());
-            }
-        );
+        usort($this->items, static function (TransformerInterface $a, TransformerInterface $b) {
+            return Utils::cmpInt($b->getPriority(), $a->getPriority());
+        });
     }
 
     /**
@@ -104,9 +102,7 @@ final class Transformers
      */
     private function findBuiltInTransformers()
     {
-        /**
- * @var SplFileInfo $file 
-*/
+        /** @var SplFileInfo $file */
         foreach (Finder::create()->files()->in(__DIR__.'/Transformer') as $file) {
             $relativeNamespace = $file->getRelativePath();
             $class = __NAMESPACE__.'\\Transformer\\'.($relativeNamespace ? $relativeNamespace.'\\' : '').$file->getBasename('.php');

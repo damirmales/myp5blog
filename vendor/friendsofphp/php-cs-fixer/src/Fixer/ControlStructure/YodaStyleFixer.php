@@ -96,6 +96,16 @@ return $foo === count($bar);
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after IsNullFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function isCandidate(Tokens $tokens)
     {
@@ -115,8 +125,7 @@ return $foo === count($bar);
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('equal', 'Style for equal (`==`, `!=`) statements.'))
                 ->setAllowedTypes(['bool', 'null'])
                 ->setDefault(true)
@@ -133,8 +142,7 @@ return $foo === count($bar);
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
@@ -223,7 +231,8 @@ return $foo === count($bar);
                 continue;
             }
 
-            if ($block['isStart']
+            if (
+                $block['isStart']
                 || ($nonBlockFound && Tokens::BLOCK_TYPE_CURLY_BRACE === $block['type']) // closing of structure not related to the comparison
             ) {
                 break;
@@ -236,8 +245,6 @@ return $foo === count($bar);
     }
 
     /**
-     * @param Tokens $tokens
-     *
      * @return Tokens
      */
     private function fixTokens(Tokens $tokens)
@@ -245,7 +252,8 @@ return $foo === count($bar);
         for ($i = \count($tokens) - 1; $i > 1; --$i) {
             if ($tokens[$i]->isGivenKind($this->candidateTypes)) {
                 $yoda = $this->candidateTypesConfiguration[$tokens[$i]->getId()];
-            } elseif (($tokens[$i]->equals('<') && \in_array('<', $this->candidateTypes, true))
+            } elseif (
+                ($tokens[$i]->equals('<') && \in_array('<', $this->candidateTypes, true))
                 || ($tokens[$i]->equals('>') && \in_array('>', $this->candidateTypes, true))
             ) {
                 $yoda = $this->candidateTypesConfiguration[$tokens[$i]->getContent()];
@@ -282,12 +290,11 @@ return $foo === count($bar);
      * If the left-hand side and right-hand side of the given comparison are
      * swapped, this function runs recursively on the previous left-hand-side.
      *
-     * @param Tokens $tokens
-     * @param int    $startLeft
-     * @param int    $endLeft
-     * @param int    $compareOperatorIndex
-     * @param int    $startRight
-     * @param int    $endRight
+     * @param int $startLeft
+     * @param int $endLeft
+     * @param int $compareOperatorIndex
+     * @param int $startRight
+     * @param int $endRight
      *
      * @return int a upper bound for all non-fixed comparisons
      */
@@ -325,9 +332,8 @@ return $foo === count($bar);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $start
-     * @param int    $end
+     * @param int $start
+     * @param int $end
      *
      * @return Tokens
      */
@@ -343,9 +349,8 @@ return $foo === count($bar);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
-     * @param bool   $yoda
+     * @param int  $index
+     * @param bool $yoda
      *
      * @return null|array
      */
@@ -366,15 +371,20 @@ return $foo === count($bar);
             $expectedValueSide = $right;
         }
 
-        if (// variable cannot be moved to expected side
-            !(            !$this->isVariable($tokens, $expectedAssignableSide['start'], $expectedAssignableSide['end'], false)
-            && !$this->isListStatement($tokens, $expectedAssignableSide['start'], $expectedAssignableSide['end'])
-            && $this->isVariable($tokens, $expectedValueSide['start'], $expectedValueSide['end'], false))
+        if (
+            // variable cannot be moved to expected side
+            !(
+                !$this->isVariable($tokens, $expectedAssignableSide['start'], $expectedAssignableSide['end'], false)
+                && !$this->isListStatement($tokens, $expectedAssignableSide['start'], $expectedAssignableSide['end'])
+                && $this->isVariable($tokens, $expectedValueSide['start'], $expectedValueSide['end'], false)
+            )
             // variable cannot be moved to expected side (strict mode)
-            && !(            $this->configuration['always_move_variable']
-            && !$this->isVariable($tokens, $expectedAssignableSide['start'], $expectedAssignableSide['end'], true)
-            && !$this->isListStatement($tokens, $expectedAssignableSide['start'], $expectedAssignableSide['end'])
-            && $this->isVariable($tokens, $expectedValueSide['start'], $expectedValueSide['end'], true))
+            && !(
+                $this->configuration['always_move_variable']
+                && !$this->isVariable($tokens, $expectedAssignableSide['start'], $expectedAssignableSide['end'], true)
+                && !$this->isListStatement($tokens, $expectedAssignableSide['start'], $expectedAssignableSide['end'])
+                && $this->isVariable($tokens, $expectedValueSide['start'], $expectedValueSide['end'], true)
+            )
         ) {
             return null;
         }
@@ -386,8 +396,7 @@ return $foo === count($bar);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return array
      */
@@ -400,8 +409,7 @@ return $foo === count($bar);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return array
      */
@@ -414,9 +422,8 @@ return $foo === count($bar);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
-     * @param int    $end
+     * @param int $index
+     * @param int $end
      *
      * @return bool
      */
@@ -452,31 +459,33 @@ return $foo === count($bar);
                 T_CONCAT_EQUAL, // .=
                 T_DIV_EQUAL,    // /=
                 T_DOUBLE_ARROW, // =>
+                T_ECHO,         // echo
                 T_GOTO,         // goto
                 T_LOGICAL_AND,  // and
                 T_LOGICAL_OR,   // or
                 T_LOGICAL_XOR,  // xor
                 T_MINUS_EQUAL,  // -=
+                T_MOD_EQUAL,    // %=
                 T_MUL_EQUAL,    // *=
+                T_OPEN_TAG,     // <?php
+                T_OPEN_TAG_WITH_ECHO,
                 T_OR_EQUAL,     // |=
                 T_PLUS_EQUAL,   // +=
+                T_POW_EQUAL,    // **=
+                T_PRINT,        // print
                 T_RETURN,       // return
-                T_SL_EQUAL,     // <<
+                T_SL_EQUAL,     // <<=
                 T_SR_EQUAL,     // >>=
                 T_THROW,        // throw
                 T_XOR_EQUAL,    // ^=
-                T_ECHO,
-                T_PRINT,
-                T_OPEN_TAG,
-                T_OPEN_TAG_WITH_ECHO,
             ];
-
-            if (\defined('T_POW_EQUAL')) {
-                $tokens[] = T_POW_EQUAL; // **=
-            }
 
             if (\defined('T_COALESCE')) {
                 $tokens[] = T_COALESCE; // ??
+            }
+
+            if (\defined('T_COALESCE_EQUAL')) {
+                $tokens[] = T_COALESCE_EQUAL; // ??=
             }
         }
 
@@ -519,7 +528,8 @@ return $foo === count($bar);
             }
 
             for ($index = $start; $index <= $end; ++$index) {
-                if ($tokens[$index]->isCast()
+                if (
+                    $tokens[$index]->isCast()
                     || $tokens[$index]->isGivenKind(T_INSTANCEOF)
                     || $tokens[$index]->equals('!')
                     || $tokenAnalyzer->isBinaryOperator($index)
@@ -591,7 +601,8 @@ return $foo === count($bar);
             }
 
             // $a[...], a[...] (as in $c->a[$b]), $a{...} or a{...} (as in $c->a{$b})
-            if ($current->isGivenKind($expectString ? T_STRING : T_VARIABLE)
+            if (
+                $current->isGivenKind($expectString ? T_STRING : T_VARIABLE)
                 && $next->equalsAny(['[', [CT::T_ARRAY_INDEX_CURLY_BRACE_OPEN, '{']])
             ) {
                 $index = $tokens->findBlockEnd(
@@ -647,6 +658,7 @@ return $foo === count($bar);
 
     private function isConstant(Tokens $tokens, $index, $end)
     {
+        $expectArrayOnly = false;
         $expectNumberOnly = false;
         $expectNothing = false;
 
@@ -654,9 +666,23 @@ return $foo === count($bar);
             $token = $tokens[$index];
 
             if ($token->isComment() || $token->isWhitespace()) {
-                if ($expectNothing) {
-                    return false;
+                continue;
+            }
+
+            if ($expectNothing) {
+                return false;
+            }
+
+            if ($expectArrayOnly) {
+                if ($token->equalsAny(['(', ')', [CT::T_ARRAY_SQUARE_BRACE_CLOSE]])) {
+                    continue;
                 }
+
+                return false;
+            }
+
+            if ($token->isGivenKind([T_ARRAY,  CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
+                $expectArrayOnly = true;
 
                 continue;
             }
@@ -671,7 +697,8 @@ return $foo === count($bar);
                 continue;
             }
 
-            if ($token->isGivenKind([T_LNUMBER, T_DNUMBER, T_CONSTANT_ENCAPSED_STRING])
+            if (
+                $token->isGivenKind([T_LNUMBER, T_DNUMBER, T_CONSTANT_ENCAPSED_STRING])
                 || $token->equalsAny([[T_STRING, 'true'], [T_STRING, 'false'], [T_STRING, 'null']])
             ) {
                 $expectNothing = true;

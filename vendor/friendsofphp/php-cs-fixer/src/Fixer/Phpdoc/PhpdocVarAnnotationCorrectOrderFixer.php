@@ -28,13 +28,22 @@ final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer
     {
         return new FixerDefinition(
             '`@var` and `@type` annotations must have type and name in the correct order.',
-            [new CodeSample(
-                '<?php
+            [new CodeSample('<?php
 /** @var $foo int */
 $foo = 2 + 2;
-'
-            )]
+')]
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Must run before PhpdocAlignFixer.
+     * Must run after CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens)
@@ -54,7 +63,7 @@ $foo = 2 + 2;
             }
 
             $newContent = Preg::replace(
-                '/(@(?:type|var)\s*)(\$\S+)(\s+)([^\$](?:[^<\s]|<[^>]*>)*)(\s|\*)/i',
+                '/(@(?:type|var)\s*)(\$\S+)(\h+)([^\$](?:[^<\s]|<[^>]*>)*)(\s|\*)/i',
                 '$1$4$3$2$5',
                 $token->getContent()
             );

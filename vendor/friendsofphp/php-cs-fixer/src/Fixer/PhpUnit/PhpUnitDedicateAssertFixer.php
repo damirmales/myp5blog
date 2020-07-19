@@ -19,6 +19,7 @@ use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverRootless;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -81,8 +82,7 @@ final class PhpUnitDedicateAssertFixer extends AbstractFixer implements Configur
 
         if (PhpUnitTargetVersion::fulfills($this->configuration['target'], PhpUnitTargetVersion::VERSION_3_5)) {
             // assertions added in 3.5: assertInternalType assertNotEmpty assertEmpty
-            $this->functions = array_merge(
-                $this->functions, [
+            $this->functions = array_merge($this->functions, [
                 'empty',
                 'is_array',
                 'is_bool',
@@ -99,29 +99,24 @@ final class PhpUnitDedicateAssertFixer extends AbstractFixer implements Configur
                 'is_resource',
                 'is_scalar',
                 'is_string',
-                ]
-            );
+            ]);
         }
 
         if (PhpUnitTargetVersion::fulfills($this->configuration['target'], PhpUnitTargetVersion::VERSION_5_0)) {
             // assertions added in 5.0: assertFinite assertInfinite assertNan
-            $this->functions = array_merge(
-                $this->functions, [
+            $this->functions = array_merge($this->functions, [
                 'is_infinite',
                 'is_nan',
-                ]
-            );
+            ]);
         }
 
         if (PhpUnitTargetVersion::fulfills($this->configuration['target'], PhpUnitTargetVersion::VERSION_5_6)) {
             // assertions added in 5.6: assertDirectoryExists assertDirectoryNotExists assertIsReadable assertNotIsReadable assertIsWritable assertNotIsWritable
-            $this->functions = array_merge(
-                $this->functions, [
+            $this->functions = array_merge($this->functions, [
                 'is_dir',
                 'is_readable',
                 'is_writable',
-                ]
-            );
+            ]);
         }
     }
 
@@ -171,10 +166,12 @@ $this->assertTrue(is_readable($a));
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before PhpUnitDedicateAssertInternalTypeFixer.
+     * Must run after NoAliasFunctionsFixer, PhpUnitConstructFixer.
      */
     public function getPriority()
     {
-        // should be run after the PhpUnitConstructFixer.
         return -15;
     }
 
@@ -191,7 +188,8 @@ $this->assertTrue(is_readable($a));
                 continue;
             }
 
-            if ('assertsame' === $assertCall['loweredName']
+            if (
+                'assertsame' === $assertCall['loweredName']
                 || 'assertnotsame' === $assertCall['loweredName']
                 || 'assertequals' === $assertCall['loweredName']
                 || 'assertnotequals' === $assertCall['loweredName']
@@ -233,40 +231,30 @@ $this->assertTrue(is_readable($a));
 
         sort($values);
 
-        return new FixerConfigurationResolverRootless(
-            'functions', [
+        return new FixerConfigurationResolverRootless('functions', [
             (new FixerOptionBuilder('functions', 'List of assertions to fix (overrides `target`).'))
                 ->setAllowedTypes(['null', 'array'])
-                ->setAllowedValues(
-                    [
+                ->setAllowedValues([
                     null,
                     new AllowedValueSubset($values),
-                    ]
-                )
+                ])
                 ->setDefault(null)
                 ->setDeprecationMessage('Use option `target` instead.')
                 ->getOption(),
             (new FixerOptionBuilder('target', 'Target version of PHPUnit.'))
                 ->setAllowedTypes(['string'])
-                ->setAllowedValues(
-                    [
+                ->setAllowedValues([
                     PhpUnitTargetVersion::VERSION_3_0,
                     PhpUnitTargetVersion::VERSION_3_5,
                     PhpUnitTargetVersion::VERSION_5_0,
                     PhpUnitTargetVersion::VERSION_5_6,
                     PhpUnitTargetVersion::VERSION_NEWEST,
-                    ]
-                )
+                ])
                 ->setDefault(PhpUnitTargetVersion::VERSION_5_0) // @TODO 3.x: change to `VERSION_NEWEST`
                 ->getOption(),
-            ], $this->getName()
-        );
+        ], $this->getName());
     }
 
-    /**
-     * @param Tokens $tokens
-     * @param array  $assertCall
-     */
     private function fixAssertTrueFalse(Tokens $tokens, array $assertCall)
     {
         $testDefaultNamespaceTokenIndex = false;
@@ -331,10 +319,6 @@ $this->assertTrue(is_readable($a));
         }
     }
 
-    /**
-     * @param Tokens $tokens
-     * @param array  $assertCall
-     */
     private function fixAssertSameEquals(Tokens $tokens, array $assertCall)
     {
         // @ $this->/self::assertEquals/Same([$nextIndex])
@@ -393,16 +377,16 @@ $this->assertTrue(is_readable($a));
             $countCallCloseBraceIndex
         );
 
-        $tokens[$assertCall['index']] = new Token(
-            [
+        $tokens[$assertCall['index']] = new Token([
             T_STRING,
             false === strpos($assertCall['loweredName'], 'not', 6) ? 'assertCount' : 'assertNotCount',
-            ]
-        );
+        ]);
     }
 
     private function getPreviousAssertCall(Tokens $tokens)
     {
+        $functionsAnalyzer = new FunctionsAnalyzer();
+
         for ($index = $tokens->count(); $index > 0; --$index) {
             $index = $tokens->getPrevTokenOfKind($index, [[T_STRING]]);
             if (null === $index) {
@@ -421,13 +405,7 @@ $this->assertTrue(is_readable($a));
                 continue;
             }
 
-            $operatorIndex = $tokens->getPrevMeaningfulToken($index);
-            $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
-
-            if (!($tokens[$operatorIndex]->equals([T_OBJECT_OPERATOR, '->']) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this']))
-                && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STRING, 'self']))
-                && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STATIC, 'static']))
-            ) {
+            if (!$functionsAnalyzer->isTheSameClassCall($tokens, $index)) {
                 continue;
             }
 
@@ -441,7 +419,6 @@ $this->assertTrue(is_readable($a));
     }
 
     /**
-     * @param Tokens    $tokens
      * @param false|int $callNSIndex
      * @param int       $callIndex
      * @param int       $openIndex

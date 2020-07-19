@@ -85,10 +85,11 @@ with a line not prefixed with asterisk
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after ArrayIndentationFixer.
      */
     public function getPriority()
     {
-        // Should run after ArrayIndentationFixer
         return -40;
     }
 
@@ -121,7 +122,7 @@ with a line not prefixed with asterisk
                 $whitespace = Preg::replace('/\S/', '', $tokens[$previousIndex]->getContent()).$whitespace;
             }
 
-            if (1 !== Preg::match('/\R([ \t]*)$/', $whitespace, $matches)) {
+            if (1 !== Preg::match('/\R(\h*)$/', $whitespace, $matches)) {
                 continue;
             }
 
@@ -160,13 +161,11 @@ with a line not prefixed with asterisk
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('comment_type', 'Whether to fix PHPDoc comments only (`phpdocs_only`), any multi-line comment whose lines all start with an asterisk (`phpdocs_like`) or any multi-line comment (`all_multiline`).'))
                 ->setAllowedValues(['phpdocs_only', 'phpdocs_like', 'all_multiline'])
                 ->setDefault('phpdocs_only')
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 }

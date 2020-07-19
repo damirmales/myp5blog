@@ -65,8 +65,7 @@ EOF;
             'In PHP double-quoted strings and heredocs some chars like `n`, `$` or `u` have special meanings if preceded by a backslash '
             .'(and some are special only if followed by other special chars), while a backslash preceding other chars are interpreted like a plain '
             .'backslash. The precise list of those special chars is hard to remember and to identify quickly: this fixer escapes backslashes '
-            .'that do not start a special interpretation with the char after them.'
-            .PHP_EOL
+            ."that do not start a special interpretation with the char after them.\n"
             .'It is possible to fix also single-quoted strings: in this case there is no special chars apart from single-quote and backslash '
             .'itself, so the fixer simply ensure that all backslashes are escaped. Both single and double backslashes are allowed in single-quoted '
             .'strings, so the purpose in this context is mainly to have a uniformed way to have them written all over the codebase.'
@@ -83,10 +82,12 @@ EOF;
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before HeredocToNowdocFixer, SingleQuoteFixer.
+     * Must run after BacktickToShellExecFixer.
      */
     public function getPriority()
     {
-        // Should run before single_quote and heredoc_to_nowdoc
         return 1;
     }
 
@@ -121,7 +122,8 @@ EOF;
                 || ($token->isGivenKind(T_ENCAPSED_AND_WHITESPACE) && $doubleQuoteOpened)
             ;
             $isHeredocSyntax = !$isSingleQuotedString && !$isDoubleQuotedString;
-            if ((false === $this->configuration['single_quoted'] && $isSingleQuotedString)
+            if (
+                (false === $this->configuration['single_quoted'] && $isSingleQuotedString)
                 || (false === $this->configuration['double_quoted'] && $isDoubleQuotedString)
                 || (false === $this->configuration['heredoc_syntax'] && $isHeredocSyntax)
             ) {
@@ -147,8 +149,7 @@ EOF;
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('single_quoted', 'Whether to fix single-quoted strings.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
@@ -161,7 +162,6 @@ EOF;
                 ->setAllowedTypes(['bool'])
                 ->setDefault(true)
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 }

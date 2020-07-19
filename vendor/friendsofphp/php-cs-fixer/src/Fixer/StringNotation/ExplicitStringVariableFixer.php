@@ -44,9 +44,20 @@ EOT
                 ."\n".'- When there are two valid ways of doing the same thing, using both is confusing, there should be a coding standard to follow'
                 ."\n".'- PHP manual marks `"$var"` syntax as implicit and `"${var}"` syntax as explicit: explicit code should always be preferred'
                 ."\n".'- Explicit syntax allows word concatenation inside strings, e.g. `"${var}IsAVar"`, implicit doesn\'t'
-                ."\n".'- Explicit syntax is easier to detect for IDE/editors and therefore has colors/hightlight with higher contrast, which is easier to read'
+                ."\n".'- Explicit syntax is easier to detect for IDE/editors and therefore has colors/highlight with higher contrast, which is easier to read'
             ."\n".'Backtick operator is skipped because it is harder to handle; you can use `backtick_to_shell_exec` fixer to normalize backticks to strings'
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Must run before SimpleToComplexStringVariableFixer.
+     * Must run after BacktickToShellExecFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
     }
 
     /**
@@ -92,7 +103,9 @@ EOT
             $nextIndex = $index + 1;
             $squareBracketCount = 0;
             while (!$this->isStringPartToken($tokens[$nextIndex])) {
-                if ($tokens[$nextIndex]->isGivenKind(T_VARIABLE) && 1 !== $squareBracketCount) {
+                if ($tokens[$nextIndex]->isGivenKind(T_CURLY_OPEN)) {
+                    $nextIndex = $tokens->getNextTokenOfKind($nextIndex, [[CT::T_CURLY_CLOSE]]);
+                } elseif ($tokens[$nextIndex]->isGivenKind(T_VARIABLE) && 1 !== $squareBracketCount) {
                     $distinctVariableIndex = $nextIndex;
                     $variableTokens[$distinctVariableIndex] = [
                         'tokens' => [$nextIndex => $tokens[$nextIndex]],
@@ -116,13 +129,11 @@ EOT
                 if (1 === \count($distinctVariableSet['tokens'])) {
                     $singleVariableIndex = key($distinctVariableSet['tokens']);
                     $singleVariableToken = current($distinctVariableSet['tokens']);
-                    $tokens->overrideRange(
-                        $singleVariableIndex, $singleVariableIndex, [
+                    $tokens->overrideRange($singleVariableIndex, $singleVariableIndex, [
                         new Token([T_DOLLAR_OPEN_CURLY_BRACES, '${']),
                         new Token([T_STRING_VARNAME, substr($singleVariableToken->getContent(), 1)]),
                         new Token([CT::T_DOLLAR_CLOSE_CURLY_BRACES, '}']),
-                        ]
-                    );
+                    ]);
                 } else {
                     foreach ($distinctVariableSet['tokens'] as $variablePartIndex => $variablePartToken) {
                         if ($variablePartToken->isGivenKind(T_NUM_STRING)) {
@@ -155,6 +166,7 @@ EOT
         return $token->isGivenKind(T_ENCAPSED_AND_WHITESPACE)
             || $token->isGivenKind(T_START_HEREDOC)
             || '"' === $token->getContent()
-            || 'b"' === strtolower($token->getContent());
+            || 'b"' === strtolower($token->getContent())
+        ;
     }
 }

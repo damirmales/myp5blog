@@ -61,6 +61,17 @@ function fnc($foo) {}
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before PhpdocAlignFixer.
+     * Must run after CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function isCandidate(Tokens $tokens)
     {
@@ -92,8 +103,7 @@ function fnc($foo) {}
     }
 
     /**
-     * @param DocBlock $doc
-     * @param int      $summaryEnd
+     * @param int $summaryEnd
      */
     private function fixSummary(DocBlock $doc, $summaryEnd)
     {
@@ -103,8 +113,7 @@ function fnc($foo) {}
     }
 
     /**
-     * @param DocBlock $doc
-     * @param int      $summaryEnd
+     * @param int $summaryEnd
      */
     private function fixDescription(DocBlock $doc, $summaryEnd)
     {
@@ -135,9 +144,8 @@ function fnc($foo) {}
     }
 
     /**
-     * @param DocBlock $doc
-     * @param int      $from
-     * @param int      $to
+     * @param int $from
+     * @param int $to
      */
     private function removeExtraBlankLinesBetween(DocBlock $doc, $from, $to)
     {
@@ -148,22 +156,16 @@ function fnc($foo) {}
         }
     }
 
-    /**
-     * @param Line $current
-     * @param Line $next
-     */
     private function removeExtraBlankLine(Line $current, Line $next)
     {
         if (!$current->isTheEnd() && !$current->containsUsefulContent()
-            && !$next->isTheEnd() && !$next->containsUsefulContent()
-        ) {
+            && !$next->isTheEnd() && !$next->containsUsefulContent()) {
             $current->remove();
         }
     }
 
     /**
-     * @param DocBlock $doc
-     * @param int      $after
+     * @param int $after
      *
      * @return null|int
      */
@@ -178,11 +180,11 @@ function fnc($foo) {}
                 return $index;
             }
         }
+
+        return null;
     }
 
     /**
-     * @param DocBlock $doc
-     *
      * @return int
      */
     private function findFirstAnnotationOrEnd(DocBlock $doc)
@@ -198,8 +200,7 @@ function fnc($foo) {}
     }
 
     /**
-     * @param DocBlock $doc
-     * @param int      $from
+     * @param int $from
      *
      * @return null|int
      */

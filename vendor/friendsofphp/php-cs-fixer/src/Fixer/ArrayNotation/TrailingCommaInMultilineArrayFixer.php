@@ -63,6 +63,16 @@ SAMPLE
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after NoMultilineWhitespaceAroundDoubleArrowFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function isCandidate(Tokens $tokens)
     {
@@ -88,28 +98,23 @@ SAMPLE
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('after_heredoc', 'Whether a trailing comma should also be placed after heredoc end.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
-                ->setNormalizer(
-                    static function (Options $options, $value) {
-                        if (\PHP_VERSION_ID < 70300 && $value) {
-                            throw new InvalidOptionsForEnvException('"after_heredoc" option can only be enabled with PHP 7.3+.');
-                        }
-
-                        return $value;
+                ->setNormalizer(static function (Options $options, $value) {
+                    if (\PHP_VERSION_ID < 70300 && $value) {
+                        throw new InvalidOptionsForEnvException('"after_heredoc" option can only be enabled with PHP 7.3+.');
                     }
-                )
+
+                    return $value;
+                })
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      */
     private function fixArray(Tokens $tokens, $index)
     {
@@ -126,8 +131,9 @@ SAMPLE
         $beforeEndToken = $tokens[$beforeEndIndex];
 
         // if there is some item between braces then add `,` after it
-        if ($startIndex !== $beforeEndIndex && !$beforeEndToken->equals(',') 
-            && ($this->configuration['after_heredoc'] || !$beforeEndToken->isGivenKind(T_END_HEREDOC))
+        if (
+            $startIndex !== $beforeEndIndex && !$beforeEndToken->equals(',') &&
+            ($this->configuration['after_heredoc'] || !$beforeEndToken->isGivenKind(T_END_HEREDOC))
         ) {
             $tokens->insertAt($beforeEndIndex + 1, new Token(','));
 

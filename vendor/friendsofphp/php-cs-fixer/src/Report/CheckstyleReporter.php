@@ -42,9 +42,7 @@ final class CheckstyleReporter implements ReporterInterface
         $checkstyles = $dom->appendChild($dom->createElement('checkstyle'));
 
         foreach ($reportSummary->getChanged() as $filePath => $fixResult) {
-            /**
- * @var \DOMElement $file 
-*/
+            /** @var \DOMElement $file */
             $file = $checkstyles->appendChild($dom->createElement('file'));
             $file->setAttribute('name', $filePath);
 
@@ -60,8 +58,7 @@ final class CheckstyleReporter implements ReporterInterface
     }
 
     /**
-     * @param \DOMDocument $dom
-     * @param string       $appliedFixer
+     * @param string $appliedFixer
      *
      * @return \DOMElement
      */

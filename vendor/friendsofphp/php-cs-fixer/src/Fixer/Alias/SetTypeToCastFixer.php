@@ -115,7 +115,8 @@ settype($bar, "null");
                 $secondArgumentStart = $tokens->getNextMeaningfulToken($secondArgumentStart);
             }
 
-            if (!$tokens[$secondArgumentStart]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)
+            if (
+                !$tokens[$secondArgumentStart]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)
                 || $tokens->getNextMeaningfulToken($secondArgumentStart) < $secondArgumentEnd
             ) {
                 continue; // second argument is of the wrong type or is a (complex) statement of some sort (function is overridden)
@@ -170,13 +171,12 @@ settype($bar, "null");
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $functionNameIndex
-     * @param int    $openParenthesisIndex
-     * @param int    $firstArgumentStart
-     * @param int    $commaIndex
-     * @param int    $secondArgumentStart
-     * @param int    $closeParenthesisIndex
+     * @param int $functionNameIndex
+     * @param int $openParenthesisIndex
+     * @param int $firstArgumentStart
+     * @param int $commaIndex
+     * @param int $secondArgumentStart
+     * @param int $closeParenthesisIndex
      */
     private function removeSettypeCall(
         Tokens $tokens,
@@ -201,10 +201,7 @@ settype($bar, "null");
     }
 
     /**
-     * @param Tokens $tokens
-     * @param Token  $castToken
-     * @param int    $functionNameIndex
-     * @param Token  $argumentToken
+     * @param int $functionNameIndex
      */
     private function fixSettypeCall(
         Tokens $tokens,
@@ -229,9 +226,7 @@ settype($bar, "null");
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $functionNameIndex
-     * @param Token  $argumentToken
+     * @param int $functionNameIndex
      */
     private function findSettypeNullCall(
         Tokens $tokens,

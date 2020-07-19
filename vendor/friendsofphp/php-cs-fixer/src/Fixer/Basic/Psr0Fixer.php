@@ -105,6 +105,7 @@ class InvalidName {}
             $dir = \dirname($path);
 
             if ('' !== $this->configuration['dir']) {
+                /** @var false|string $dir until support for PHP 5.6 is dropped */
                 $dir = substr($dir, \strlen(realpath($this->configuration['dir'])) + 1);
 
                 if (false === $dir) {
@@ -120,6 +121,7 @@ class InvalidName {}
                 }
             }
 
+            /** @var false|string $dir until support for PHP 5.6 is dropped */
             $dir = substr($dir, -\strlen($normNamespace));
             if (false === $dir) {
                 $dir = '';
@@ -159,13 +161,11 @@ class InvalidName {}
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('dir', 'The directory where the project code is placed.'))
                 ->setAllowedTypes(['string'])
                 ->setDefault('')
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 }

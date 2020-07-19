@@ -36,7 +36,7 @@ class Annotation
     (?<types>
         (?<type>
             (?<array>
-                (?&simple)\[\]
+                (?&simple)(\[\])*
             )
             |
             (?<simple>
@@ -233,11 +233,9 @@ class Annotation
      */
     public function getNormalizedTypes()
     {
-        $normalized = array_map(
-            static function ($type) {
-                return strtolower($type);
-            }, $this->getTypes()
-        );
+        $normalized = array_map(static function ($type) {
+            return strtolower($type);
+        }, $this->getTypes());
 
         sort($normalized);
 
@@ -250,7 +248,23 @@ class Annotation
     public function remove()
     {
         foreach ($this->lines as $line) {
-            $line->remove();
+            if ($line->isTheStart() && $line->isTheEnd()) {
+                // Single line doc block, remove entirely
+                $line->remove();
+            } elseif ($line->isTheStart()) {
+                // Multi line doc block, but start is on the same line as the first annotation, keep only the start
+                $content = Preg::replace('#(\s*/\*\*).*#', '$1', $line->getContent());
+
+                $line->setContent($content);
+            } elseif ($line->isTheEnd()) {
+                // Multi line doc block, but end is on the same line as the last annotation, keep only the end
+                $content = Preg::replace('#(\s*)\S.*(\*/.*)#', '$1$2', $line->getContent());
+
+                $line->setContent($content);
+            } else {
+                // Multi line doc block, neither start nor end on this line, can be removed safely
+                $line->remove();
+            }
         }
 
         $this->clearCache();
@@ -288,7 +302,7 @@ class Annotation
             }
 
             $matchingResult = Preg::match(
-                '{^(?:\s*\*|/\*\*)\s*@'.$name.'\s+'.self::REGEX_TYPES.'(?:[ \t].*)?$}sx',
+                '{^(?:\s*\*|/\*\*)\s*@'.$name.'\s+'.self::REGEX_TYPES.'(?:[*\h\v].*)?$}sx',
                 $this->lines[0]->getContent(),
                 $matches
             );

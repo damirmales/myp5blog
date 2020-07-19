@@ -73,6 +73,16 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after PhpUnitTestAnnotationFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function isCandidate(Tokens $tokens)
     {
@@ -95,20 +105,17 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('case', 'Apply camel or snake case to test methods'))
                 ->setAllowedValues([self::CAMEL_CASE, self::SNAKE_CASE])
                 ->setDefault(self::CAMEL_CASE)
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $startIndex
-     * @param int    $endIndex
+     * @param int $startIndex
+     * @param int $endIndex
      */
     private function applyCasing(Tokens $tokens, $startIndex, $endIndex)
     {
@@ -152,8 +159,7 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return bool
      */
@@ -186,8 +192,7 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return bool
      */
@@ -210,8 +215,7 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return bool
      */
@@ -223,8 +227,7 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return int
      */
@@ -238,39 +241,36 @@ class MyTest extends \\PhpUnit\\FrameWork\\TestCase
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $docBlockIndex
+     * @param int $docBlockIndex
      */
     private function updateDocBlock(Tokens $tokens, $docBlockIndex)
     {
         $doc = new DocBlock($tokens[$docBlockIndex]->getContent());
         $lines = $doc->getLines();
 
-        $docBlockNeesUpdate = false;
+        $docBlockNeedsUpdate = false;
         for ($inc = 0; $inc < \count($lines); ++$inc) {
             $lineContent = $lines[$inc]->getContent();
             if (false === strpos($lineContent, '@depends')) {
                 continue;
             }
 
-            $newLineContent = Preg::replaceCallback(
-                '/(@depends\s+)(.+)(\b)/', function (array $matches) {
-                    return sprintf(
-                        '%s%s%s',
-                        $matches[1],
-                        $this->updateMethodCasing($matches[2]),
-                        $matches[3]
-                    );
-                }, $lineContent
-            );
+            $newLineContent = Preg::replaceCallback('/(@depends\s+)(.+)(\b)/', function (array $matches) {
+                return sprintf(
+                    '%s%s%s',
+                    $matches[1],
+                    $this->updateMethodCasing($matches[2]),
+                    $matches[3]
+                );
+            }, $lineContent);
 
             if ($newLineContent !== $lineContent) {
                 $lines[$inc] = new Line($newLineContent);
-                $docBlockNeesUpdate = true;
+                $docBlockNeedsUpdate = true;
             }
         }
 
-        if ($docBlockNeesUpdate) {
+        if ($docBlockNeedsUpdate) {
             $lines = implode('', $lines);
             $tokens[$docBlockIndex] = new Token([T_DOC_COMMENT, $lines]);
         }

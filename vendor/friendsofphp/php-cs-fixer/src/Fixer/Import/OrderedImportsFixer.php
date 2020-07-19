@@ -158,10 +158,11 @@ use Bar;
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after GlobalNamespaceImportFixer, NoLeadingImportSlashFixer.
      */
     public function getPriority()
     {
-        // should be run after the NoLeadingImportSlashFixer
         return -30;
     }
 
@@ -235,8 +236,7 @@ use Bar;
     {
         $supportedSortTypes = $this->supportedSortTypes;
 
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new AliasedFixerOptionBuilder(
                 new FixerOptionBuilder('sort_algorithm', 'whether the statements should be sorted alphabetically or by length, or not sorted'),
                 'sortAlgorithm'
@@ -249,39 +249,32 @@ use Bar;
                 'importsOrder'
             ))
                 ->setAllowedTypes(['array', 'null'])
-                ->setAllowedValues(
-                    [static function ($value) use ($supportedSortTypes) {
-                        if (null !== $value) {
-                            $missing = array_diff($supportedSortTypes, $value);
-                            if (\count($missing)) {
-                                throw new InvalidOptionsException(
-                                    sprintf(
-                                        'Missing sort %s "%s".',
-                                        1 === \count($missing) ? 'type' : 'types',
-                                        implode('", "', $missing)
-                                    )
-                                );
-                            }
-
-                            $unknown = array_diff($value, $supportedSortTypes);
-                            if (\count($unknown)) {
-                                throw new InvalidOptionsException(
-                                    sprintf(
-                                        'Unknown sort %s "%s".',
-                                        1 === \count($unknown) ? 'type' : 'types',
-                                        implode('", "', $unknown)
-                                    )
-                                );
-                            }
+                ->setAllowedValues([static function ($value) use ($supportedSortTypes) {
+                    if (null !== $value) {
+                        $missing = array_diff($supportedSortTypes, $value);
+                        if (\count($missing)) {
+                            throw new InvalidOptionsException(sprintf(
+                                'Missing sort %s "%s".',
+                                1 === \count($missing) ? 'type' : 'types',
+                                implode('", "', $missing)
+                            ));
                         }
 
-                        return true;
-                    }]
-                )
+                        $unknown = array_diff($value, $supportedSortTypes);
+                        if (\count($unknown)) {
+                            throw new InvalidOptionsException(sprintf(
+                                'Unknown sort %s "%s".',
+                                1 === \count($unknown) ? 'type' : 'types',
+                                implode('", "', $unknown)
+                            ));
+                        }
+                    }
+
+                    return true;
+                }])
                 ->setDefault(null)
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
@@ -341,8 +334,7 @@ use Bar;
     }
 
     /**
-     * @param int[]  $uses
-     * @param Tokens $tokens
+     * @param int[] $uses
      *
      * @return array
      */
@@ -398,6 +390,7 @@ use Bar;
                         $firstIndent = '';
                         $separator = ', ';
                         $lastIndent = '';
+                        $hasGroupTrailingComma = false;
 
                         for ($k1 = $k + 1; $k1 < $namespaceTokensCount; ++$k1) {
                             $comment = '';
@@ -414,9 +407,10 @@ use Bar;
                                 }
 
                                 // if there is any line ending inside the group import, it should be indented properly
-                                if ('' === $firstIndent 
-                                    && $namespaceTokens[$k2]->isWhitespace() 
-                                    && false !== strpos($namespaceTokens[$k2]->getContent(), $lineEnding)
+                                if (
+                                    '' === $firstIndent &&
+                                    $namespaceTokens[$k2]->isWhitespace() &&
+                                    false !== strpos($namespaceTokens[$k2]->getContent(), $lineEnding)
                                 ) {
                                     $lastIndent = $lineEnding;
                                     $firstIndent = $lineEnding.$this->whitespacesConfig->getIndent();
@@ -427,6 +421,12 @@ use Bar;
                             }
 
                             $namespacePart = trim($namespacePart);
+                            if ('' === $namespacePart) {
+                                $hasGroupTrailingComma = true;
+
+                                continue;
+                            }
+
                             $comment = trim($comment);
                             if ('' !== $comment) {
                                 $namespacePart .= ' '.$comment;
@@ -444,7 +444,7 @@ use Bar;
                         if ($sortedParts === $parts) {
                             $namespace = Tokens::fromArray($namespaceTokens)->generateCode();
                         } else {
-                            $namespace .= $firstIndent.implode($separator, $parts).$lastIndent.'}';
+                            $namespace .= $firstIndent.implode($separator, $parts).($hasGroupTrailingComma ? ',' : '').$lastIndent.'}';
                         }
                     } else {
                         $namespace = Tokens::fromArray($namespaceTokens)->generateCode();

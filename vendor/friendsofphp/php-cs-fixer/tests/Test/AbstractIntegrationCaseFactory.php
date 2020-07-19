@@ -23,8 +23,6 @@ use Symfony\Component\Finder\SplFileInfo;
 abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryInterface
 {
     /**
-     * @param SplFileInfo $file
-     *
      * @return IntegrationCase
      */
     public function create(SplFileInfo $file)
@@ -42,8 +40,7 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
                 $/sx',
                 $file->getContents(),
                 $match
-            )
-            ) {
+            )) {
                 throw new \InvalidArgumentException('File format is invalid.');
             }
 
@@ -80,36 +77,29 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
     /**
      * Parses the '--CONFIG--' block of a '.test' file.
      *
-     * @param SplFileInfo $file
-     * @param string      $config
+     * @param string $config
      *
      * @return array
      */
     protected function determineConfig(SplFileInfo $file, $config)
     {
-        $parsed = $this->parseJson(
-            $config, [
+        $parsed = $this->parseJson($config, [
             'indent' => '    ',
             'lineEnding' => "\n",
-            ]
-        );
+        ]);
 
         if (!\is_string($parsed['indent'])) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Expected string value for "indent", got "%s".',
-                    \is_object($parsed['indent']) ? \get_class($parsed['indent']) : \gettype($parsed['indent']).'#'.$parsed['indent']
-                )
-            );
+            throw new \InvalidArgumentException(sprintf(
+                'Expected string value for "indent", got "%s".',
+                \is_object($parsed['indent']) ? \get_class($parsed['indent']) : \gettype($parsed['indent']).'#'.$parsed['indent']
+            ));
         }
 
         if (!\is_string($parsed['lineEnding'])) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Expected string value for "lineEnding", got "%s".',
-                    \is_object($parsed['lineEnding']) ? \get_class($parsed['lineEnding']) : \gettype($parsed['lineEnding']).'#'.$parsed['lineEnding']
-                )
-            );
+            throw new \InvalidArgumentException(sprintf(
+                'Expected string value for "lineEnding", got "%s".',
+                \is_object($parsed['lineEnding']) ? \get_class($parsed['lineEnding']) : \gettype($parsed['lineEnding']).'#'.$parsed['lineEnding']
+            ));
         }
 
         return $parsed;
@@ -118,26 +108,21 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
     /**
      * Parses the '--REQUIREMENTS--' block of a '.test' file and determines requirements.
      *
-     * @param SplFileInfo $file
-     * @param string      $config
+     * @param string $config
      *
      * @return array
      */
     protected function determineRequirements(SplFileInfo $file, $config)
     {
-        $parsed = $this->parseJson(
-            $config, [
+        $parsed = $this->parseJson($config, [
             'php' => \PHP_VERSION_ID,
-            ]
-        );
+        ]);
 
         if (!\is_int($parsed['php'])) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Expected int value like 50509 for "php", got "%s".',
-                    \is_object($parsed['php']) ? \get_class($parsed['php']) : \gettype($parsed['php']).'#'.$parsed['php']
-                )
-            );
+            throw new \InvalidArgumentException(sprintf(
+                'Expected int value like 50509 for "php", got "%s".',
+                \is_object($parsed['php']) ? \get_class($parsed['php']) : \gettype($parsed['php']).'#'.$parsed['php']
+            ));
         }
 
         return $parsed;
@@ -146,8 +131,7 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
     /**
      * Parses the '--RULESET--' block of a '.test' file and determines what fixers should be used.
      *
-     * @param SplFileInfo $file
-     * @param string      $config
+     * @param string $config
      *
      * @return RuleSet
      */
@@ -159,8 +143,7 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
     /**
      * Parses the '--TEST--' block of a '.test' file and determines title.
      *
-     * @param SplFileInfo $file
-     * @param string      $config
+     * @param string $config
      *
      * @return string
      */
@@ -172,33 +155,27 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
     /**
      * Parses the '--SETTINGS--' block of a '.test' file and determines settings.
      *
-     * @param SplFileInfo $file
-     * @param string      $config
+     * @param string $config
      *
      * @return array
      */
     protected function determineSettings(SplFileInfo $file, $config)
     {
-        $parsed = $this->parseJson(
-            $config, [
+        $parsed = $this->parseJson($config, [
             'checkPriority' => true,
-            ]
-        );
+        ]);
 
         if (!\is_bool($parsed['checkPriority'])) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Expected bool value for "checkPriority", got "%s".',
-                    \is_object($parsed['checkPriority']) ? \get_class($parsed['checkPriority']) : \gettype($parsed['checkPriority']).'#'.$parsed['checkPriority']
-                )
-            );
+            throw new \InvalidArgumentException(sprintf(
+                'Expected bool value for "checkPriority", got "%s".',
+                \is_object($parsed['checkPriority']) ? \get_class($parsed['checkPriority']) : \gettype($parsed['checkPriority']).'#'.$parsed['checkPriority']
+            ));
         }
 
         return $parsed;
     }
 
     /**
-     * @param SplFileInfo $file
      * @param null|string $code
      *
      * @return string
@@ -215,7 +192,6 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
     }
 
     /**
-     * @param SplFileInfo $file
      * @param null|string $code
      *
      * @return null|string
@@ -226,7 +202,6 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
     }
 
     /**
-     * @param SplFileInfo $file
      * @param null|string $code
      * @param string      $suffix
      *
@@ -242,11 +217,12 @@ abstract class AbstractIntegrationCaseFactory implements IntegrationCaseFactoryI
         if ($candidateFile->isFile()) {
             return $candidateFile->getContents();
         }
+
+        return null;
     }
 
     /**
      * @param null|string $encoded
-     * @param null|array  $template
      *
      * @return array
      */

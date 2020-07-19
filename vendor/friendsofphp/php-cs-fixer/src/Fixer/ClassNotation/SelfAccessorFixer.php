@@ -100,7 +100,6 @@ class Sample
     /**
      * Replace occurrences of the name of the classy element by "self" (if possible).
      *
-     * @param Tokens $tokens
      * @param string $namespace
      * @param string $name
      * @param int    $startIndex
@@ -155,11 +154,14 @@ class Sample
                 continue;
             }
 
-            if ($prevToken->isGivenKind([T_INSTANCEOF, T_NEW])
+            if (
+                $prevToken->isGivenKind([T_INSTANCEOF, T_NEW])
                 || $nextToken->isGivenKind(T_PAAMAYIM_NEKUDOTAYIM)
-                || (                null !== $insideMethodSignatureUntil
-                && $i < $insideMethodSignatureUntil
-                && $prevToken->equalsAny(['(', ',', [CT::T_TYPE_COLON], [CT::T_NULLABLE_TYPE]]))
+                || (
+                    null !== $insideMethodSignatureUntil
+                    && $i < $insideMethodSignatureUntil
+                    && $prevToken->equalsAny(['(', ',', [CT::T_TYPE_COLON], [CT::T_NULLABLE_TYPE]])
+                )
             ) {
                 for ($j = $classStartIndex; $j < $i; ++$j) {
                     $tokens->clearTokenAndMergeSurroundingWhitespace($j);
@@ -176,13 +178,11 @@ class Sample
         foreach (array_reverse(Preg::split('/(\\\\)/', $namespace, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE)) as $piece) {
             $index = $tokens->getPrevMeaningfulToken($index);
             if ('\\' === $piece) {
-                if (!$tokens[$index]->isGivenKind([T_NS_SEPARATOR])) {
+                if (!$tokens[$index]->isGivenKind(T_NS_SEPARATOR)) {
                     return null;
                 }
-            } else {
-                if (!$tokens[$index]->equals([T_STRING, $piece], false)) {
-                    return null;
-                }
+            } elseif (!$tokens[$index]->equals([T_STRING, $piece], false)) {
+                return null;
             }
         }
 

@@ -123,8 +123,7 @@ interface Bar extends
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new AliasedFixerOptionBuilder(
                 new FixerOptionBuilder('multi_line_extends_each_single_line', 'Whether definitions should be multiline.'),
                 'multiLineExtendsEachSingleLine'
@@ -146,13 +145,11 @@ interface Bar extends
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $classyIndex Class definition token start index
+     * @param int $classyIndex Class definition token start index
      */
     private function fixClassyDefinition(Tokens $tokens, $classyIndex)
     {
@@ -198,9 +195,7 @@ interface Bar extends
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $classOpenIndex
-     * @param array  $classExtendsInfo
+     * @param int $classOpenIndex
      *
      * @return array
      */
@@ -223,9 +218,7 @@ interface Bar extends
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $classOpenIndex
-     * @param array  $classImplementsInfo
+     * @param int $classOpenIndex
      *
      * @return array
      */
@@ -248,9 +241,6 @@ interface Bar extends
     }
 
     /**
-     * @param Tokens $tokens
-     * @param array  $classDefInfo
-     *
      * @return int
      */
     private function fixClassyDefinitionOpenSpacing(Tokens $tokens, array $classDefInfo)
@@ -286,8 +276,7 @@ interface Bar extends
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $classyIndex
+     * @param int $classyIndex
      *
      * @return array
      */
@@ -324,7 +313,6 @@ interface Bar extends
     }
 
     /**
-     * @param Tokens $tokens
      * @param int    $startIndex
      * @param string $label
      *
@@ -352,9 +340,8 @@ interface Bar extends
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $startIndex
-     * @param int    $endIndex
+     * @param int $startIndex
+     * @param int $endIndex
      */
     private function makeClassyDefinitionSingleLine(Tokens $tokens, $startIndex, $endIndex)
     {
@@ -407,9 +394,8 @@ interface Bar extends
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $startIndex
-     * @param int    $endIndex
+     * @param int $startIndex
+     * @param int $endIndex
      */
     private function makeClassyInheritancePartMultiLine(Tokens $tokens, $startIndex, $endIndex)
     {
@@ -435,12 +421,10 @@ interface Bar extends
 
             if (!$isOnOwnLine) {
                 if ($tokens[$breakAtIndex - 1]->isWhitespace()) {
-                    $tokens[$breakAtIndex - 1] = new Token(
-                        [
+                    $tokens[$breakAtIndex - 1] = new Token([
                         T_WHITESPACE,
                         $this->whitespacesConfig->getLineEnding().$this->whitespacesConfig->getIndent(),
-                        ]
-                    );
+                    ]);
                 } else {
                     $tokens->insertAt($breakAtIndex, new Token([T_WHITESPACE, $this->whitespacesConfig->getLineEnding().$this->whitespacesConfig->getIndent()]));
                 }

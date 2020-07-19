@@ -75,14 +75,13 @@ class TokenParser
      *
      * @return array|null The token if exists, null otherwise.
      */
-    public function next($docCommentIsComment = true)
+    public function next($docCommentIsComment = TRUE)
     {
         for ($i = $this->pointer; $i < $this->numTokens; $i++) {
             $this->pointer++;
-            if ($this->tokens[$i][0] === T_WHITESPACE 
-                || $this->tokens[$i][0] === T_COMMENT 
-                || ($docCommentIsComment && $this->tokens[$i][0] === T_DOC_COMMENT)
-            ) {
+            if ($this->tokens[$i][0] === T_WHITESPACE ||
+                $this->tokens[$i][0] === T_COMMENT ||
+                ($docCommentIsComment && $this->tokens[$i][0] === T_DOC_COMMENT)) {
 
                 continue;
             }

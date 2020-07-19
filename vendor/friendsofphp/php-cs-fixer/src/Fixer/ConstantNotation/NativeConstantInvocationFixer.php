@@ -49,7 +49,7 @@ final class NativeConstantInvocationFixer extends AbstractFixer implements Confi
         return new FixerDefinition(
             'Add leading `\` before constant invocation of internal constant to speed up resolving. Constant name match is case-sensitive, except for `null`, `false` and `true`.',
             [
-                new CodeSample('<?php var_dump(PHP_VERSION, M_PI, MY_CUSTOM_PI);'.PHP_EOL),
+                new CodeSample("<?php var_dump(PHP_VERSION, M_PI, MY_CUSTOM_PI);\n"),
                 new CodeSample(
                     '<?php
 namespace space1 {
@@ -62,7 +62,7 @@ namespace {
                     ['scope' => 'namespaced']
                 ),
                 new CodeSample(
-                    '<?php var_dump(PHP_VERSION, M_PI, MY_CUSTOM_PI);'.PHP_EOL,
+                    "<?php var_dump(PHP_VERSION, M_PI, MY_CUSTOM_PI);\n",
                     [
                         'include' => [
                             'MY_CUSTOM_PI',
@@ -70,7 +70,7 @@ namespace {
                     ]
                 ),
                 new CodeSample(
-                    '<?php var_dump(PHP_VERSION, M_PI, MY_CUSTOM_PI);'.PHP_EOL,
+                    "<?php var_dump(PHP_VERSION, M_PI, MY_CUSTOM_PI);\n",
                     [
                         'fix_built_in' => false,
                         'include' => [
@@ -79,7 +79,7 @@ namespace {
                     ]
                 ),
                 new CodeSample(
-                    '<?php var_dump(PHP_VERSION, M_PI, MY_CUSTOM_PI);'.PHP_EOL,
+                    "<?php var_dump(PHP_VERSION, M_PI, MY_CUSTOM_PI);\n",
                     [
                         'exclude' => [
                             'M_PI',
@@ -90,6 +90,16 @@ namespace {
             null,
             'Risky when any of the constants are namespaced or overridden.'
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Must run before GlobalNamespaceImportFixer.
+     */
+    public function getPriority()
+    {
+        return 10;
     }
 
     /**
@@ -144,11 +154,7 @@ namespace {
 
         $caseInsensitiveConstantsToEscape = array_diff(
             array_unique($caseInsensitiveConstantsToEscape),
-            array_map(
-                function ($function) {
-                    return strtolower($function); 
-                }, $uniqueConfiguredExclude
-            )
+            array_map(static function ($function) { return strtolower($function); }, $uniqueConfiguredExclude)
         );
 
         // Store the cache
@@ -173,9 +179,7 @@ namespace {
         $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
 
         // 'scope' is 'namespaced' here
-        /**
- * @var NamespaceAnalysis $namespace 
-*/
+        /** @var NamespaceAnalysis $namespace */
         foreach (array_reverse($namespaces) as $namespace) {
             if ('' === $namespace->getFullName()) {
                 continue;
@@ -193,20 +197,17 @@ namespace {
         $constantChecker = static function ($value) {
             foreach ($value as $constantName) {
                 if (!\is_string($constantName) || '' === trim($constantName) || trim($constantName) !== $constantName) {
-                    throw new InvalidOptionsException(
-                        sprintf(
-                            'Each element must be a non-empty, trimmed string, got "%s" instead.',
-                            \is_object($constantName) ? \get_class($constantName) : \gettype($constantName)
-                        )
-                    );
+                    throw new InvalidOptionsException(sprintf(
+                        'Each element must be a non-empty, trimmed string, got "%s" instead.',
+                        \is_object($constantName) ? \get_class($constantName) : \gettype($constantName)
+                    ));
                 }
             }
 
             return true;
         };
 
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('fix_built_in', 'Whether to fix constants returned by `get_defined_constants`. User constants are not accounted in this list and must be specified in the include one.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(true)
@@ -225,14 +226,12 @@ namespace {
                 ->setAllowedValues(['all', 'namespaced'])
                 ->setDefault('all')
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $start
-     * @param int    $end
+     * @param int $start
+     * @param int $end
      */
     private function fixConstantInvocations(Tokens $tokens, $start, $end)
     {

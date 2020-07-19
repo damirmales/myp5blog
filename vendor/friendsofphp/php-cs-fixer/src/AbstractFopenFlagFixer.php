@@ -110,11 +110,13 @@ abstract class AbstractFopenFlagFixer extends AbstractFunctionReferenceFixer
             }
 
             if ('+' !== $mode[$i]
-                || (                'a' !== $mode[$i - 1] // 'a+','c+','r+','w+','x+'
-                && 'c' !== $mode[$i - 1]
-                && 'r' !== $mode[$i - 1]
-                && 'w' !== $mode[$i - 1]
-                && 'x' !== $mode[$i - 1])
+                || (
+                    'a' !== $mode[$i - 1] // 'a+','c+','r+','w+','x+'
+                    && 'c' !== $mode[$i - 1]
+                    && 'r' !== $mode[$i - 1]
+                    && 'w' !== $mode[$i - 1]
+                    && 'x' !== $mode[$i - 1]
+                )
             ) {
                 return false;
             }

@@ -40,7 +40,7 @@ final class NoUnneededControlParenthesesFixer extends AbstractFixer implements C
     ];
 
     /**
-     * Dynamic yield option set on constructor.
+     * Dynamic `null` coalesce option set on constructor.
      */
     public function __construct()
     {
@@ -105,9 +105,9 @@ yield(2);
     }
 
     /**
-     * Should be run before no_trailing_whitespace.
-     *
      * {@inheritdoc}
+     *
+     * Must run before NoTrailingWhitespaceFixer.
      */
     public function getPriority()
     {
@@ -171,12 +171,10 @@ yield(2);
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolverRootless(
-            'statements', [
+        return new FixerConfigurationResolverRootless('statements', [
             (new FixerOptionBuilder('statements', 'List of control statements to fix.'))
                 ->setAllowedTypes(['array'])
-                ->setDefault(
-                    [
+                ->setDefault([
                     'break',
                     'clone',
                     'continue',
@@ -184,10 +182,8 @@ yield(2);
                     'return',
                     'switch_case',
                     'yield',
-                    ]
-                )
+                ])
                 ->getOption(),
-            ], $this->getName()
-        );
+        ], $this->getName());
     }
 }

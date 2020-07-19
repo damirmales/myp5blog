@@ -33,15 +33,24 @@ final class PhpdocSummaryFixer extends AbstractFixer implements WhitespacesAware
     {
         return new FixerDefinition(
             'PHPDoc summary should end in either a full stop, exclamation mark, or question mark.',
-            [new CodeSample(
-                '<?php
+            [new CodeSample('<?php
 /**
  * Foo function is great
  */
 function foo () {}
-'
-            )]
+')]
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Must run before PhpdocAlignFixer.
+     * Must run after CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocScalarFixer, PhpdocToCommentFixer, PhpdocTypesFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
     }
 
     /**

@@ -76,13 +76,9 @@ final class PhpdocTypesFixer extends AbstractPhpdocTypesFixer implements Configu
     {
         parent::configure($configuration);
 
-        $this->typesToFix = array_merge(
-            ...array_map(
-                function ($group) {
-                    return self::$possibleTypes[$group];
-                }, $this->configuration['groups']
-            )
-        );
+        $this->typesToFix = array_merge(...array_map(static function ($group) {
+            return self::$possibleTypes[$group];
+        }, $this->configuration['groups']));
     }
 
     /**
@@ -102,10 +98,26 @@ final class PhpdocTypesFixer extends AbstractPhpdocTypesFixer implements Configu
  */
 '
                 ),
+                new CodeSample(
+                    '<?php
+/**
+ * @param BOOL $foo
+ *
+ * @return MIXED
+ */
+',
+                    ['groups' => ['simple', 'alias']]
+                ),
             ]
         );
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * Must run before GeneralPhpdocAnnotationRemoveFixer, NoBlankLinesAfterPhpdocFixer, NoEmptyPhpdocFixer, NoSuperfluousPhpdocTagsFixer, PhpdocAddMissingParamAnnotationFixer, PhpdocAlignFixer, PhpdocAlignFixer, PhpdocInlineTagFixer, PhpdocLineSpanFixer, PhpdocNoAccessFixer, PhpdocNoAliasTagFixer, PhpdocNoEmptyReturnFixer, PhpdocNoPackageFixer, PhpdocNoUselessInheritdocFixer, PhpdocOrderFixer, PhpdocReturnSelfReferenceFixer, PhpdocScalarFixer, PhpdocSeparationFixer, PhpdocSingleLineVarSpacingFixer, PhpdocSummaryFixer, PhpdocToParamTypeFixer, PhpdocToReturnTypeFixer, PhpdocToReturnTypeFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer, PhpdocTypesOrderFixer, PhpdocVarAnnotationCorrectOrderFixer, PhpdocVarWithoutNameFixer.
+     * Must run after PhpdocAnnotationWithoutDotFixer, PhpdocIndentFixer.
+     */
     public function getPriority()
     {
         /*
@@ -140,14 +152,12 @@ final class PhpdocTypesFixer extends AbstractPhpdocTypesFixer implements Configu
     {
         $possibleGroups = array_keys(self::$possibleTypes);
 
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('groups', 'Type groups to fix.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset($possibleGroups)])
                 ->setDefault($possibleGroups)
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 }

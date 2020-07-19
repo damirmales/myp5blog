@@ -52,6 +52,17 @@ switch ($foo) {
 }
 '
                 ),
+                new CodeSample(
+                    '<?php
+switch ($foo) {
+    case 1:
+        foo();
+    case 2:
+        foo();
+}
+',
+                    ['comment_text' => 'some comment']
+                ),
             ],
             'Adds a "no break" comment before fall-through cases, and removes it if there is no fall-through.'
         );
@@ -70,12 +81,10 @@ switch ($foo) {
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('comment_text', 'The text to use in the added comment and to detect it.'))
                 ->setAllowedTypes(['string'])
-                ->setAllowedValues(
-                    [
+                ->setAllowedValues([
                     static function ($value) {
                         if (\is_string($value) && Preg::match('/\R/', $value)) {
                             throw new InvalidOptionsException('The comment text must not contain new lines.');
@@ -83,17 +92,13 @@ switch ($foo) {
 
                         return true;
                     },
-                    ]
-                )
-                ->setNormalizer(
-                    static function (Options $options, $value) {
-                        return rtrim($value);
-                    }
-                )
+                ])
+                ->setNormalizer(static function (Options $options, $value) {
+                    return rtrim($value);
+                })
                 ->setDefault('no break')
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
@@ -109,8 +114,7 @@ switch ($foo) {
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $casePosition
+     * @param int $casePosition
      */
     private function fixCase(Tokens $tokens, $casePosition)
     {
@@ -157,12 +161,10 @@ switch ($foo) {
                     } else {
                         $text = $this->configuration['comment_text'];
 
-                        $tokens[$commentPosition] = new Token(
-                            [
+                        $tokens[$commentPosition] = new Token([
                             $tokens[$commentPosition]->getId(),
                             str_ireplace($text, $text, $tokens[$commentPosition]->getContent()),
-                            ]
-                        );
+                        ]);
 
                         $this->ensureNewLineAt($tokens, $commentPosition);
                     }
@@ -180,8 +182,6 @@ switch ($foo) {
     }
 
     /**
-     * @param Token $token
-     *
      * @return bool
      */
     private function isNoBreakComment(Token $token)
@@ -196,8 +196,7 @@ switch ($foo) {
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $casePosition
+     * @param int $casePosition
      */
     private function insertCommentAt(Tokens $tokens, $casePosition)
     {
@@ -219,7 +218,7 @@ switch ($foo) {
         }
 
         if ($nbNewlines > 1) {
-            Preg::match('/^(.*?)(\R[ \t]*)$/s', $newlineToken->getContent(), $matches);
+            Preg::match('/^(.*?)(\R\h*)$/s', $newlineToken->getContent(), $matches);
 
             $indent = $this->getIndentAt($tokens, $newlinePosition - 1);
             $tokens[$newlinePosition] = new Token([$newlineToken->getId(), $matches[1].$lineEnding.$indent]);
@@ -232,8 +231,7 @@ switch ($foo) {
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $position
+     * @param int $position
      *
      * @return int The newline token position
      */
@@ -272,17 +270,16 @@ switch ($foo) {
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $commentPosition
+     * @param int $commentPosition
      */
     private function removeComment(Tokens $tokens, $commentPosition)
     {
         if ($tokens[$tokens->getPrevNonWhitespace($commentPosition)]->isGivenKind(T_OPEN_TAG)) {
             $whitespacePosition = $commentPosition + 1;
-            $regex = '/^\R[ \t]*/';
+            $regex = '/^\R\h*/';
         } else {
             $whitespacePosition = $commentPosition - 1;
-            $regex = '/\R[ \t]*$/';
+            $regex = '/\R\h*$/';
         }
 
         $whitespaceToken = $tokens[$whitespacePosition];
@@ -299,8 +296,7 @@ switch ($foo) {
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $position
+     * @param int $position
      *
      * @return string
      */
@@ -320,7 +316,7 @@ switch ($foo) {
                 $content = $this->whitespacesConfig->getLineEnding().$content;
             }
 
-            if (Preg::match('/\R([ \t]*)$/', $content, $matches)) {
+            if (Preg::match('/\R(\h*)$/', $content, $matches)) {
                 return $matches[1];
             }
         }
@@ -329,8 +325,7 @@ switch ($foo) {
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $position
+     * @param int $position
      *
      * @return int
      */

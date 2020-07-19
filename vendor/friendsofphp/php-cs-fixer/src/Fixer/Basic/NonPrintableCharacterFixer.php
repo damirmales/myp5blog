@@ -101,23 +101,19 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
      */
     protected function createConfigurationDefinition()
     {
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('use_escape_sequences_in_strings', 'Whether characters should be replaced with escape sequences in strings.'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false) // @TODO 3.0 change to true
-                ->setNormalizer(
-                    static function (Options $options, $value) {
-                        if (\PHP_VERSION_ID < 70000 && $value) {
-                            throw new InvalidOptionsForEnvException('Escape sequences require PHP 7.0+.');
-                        }
-
-                        return $value;
+                ->setNormalizer(static function (Options $options, $value) {
+                    if (\PHP_VERSION_ID < 70000 && $value) {
+                        throw new InvalidOptionsForEnvException('Escape sequences require PHP 7.0+.');
                     }
-                )
+
+                    return $value;
+                })
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 
     /**
@@ -135,7 +131,8 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
         foreach ($tokens as $index => $token) {
             $content = $token->getContent();
 
-            if ($this->configuration['use_escape_sequences_in_strings']
+            if (
+                $this->configuration['use_escape_sequences_in_strings']
                 && $token->isGivenKind([T_CONSTANT_ENCAPSED_STRING, T_ENCAPSED_AND_WHITESPACE])
             ) {
                 if (!Preg::match('/'.implode('|', array_keys($escapeSequences)).'/', $content)) {
@@ -144,6 +141,7 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
 
                 $previousToken = $tokens[$index - 1];
                 $stringTypeChanged = false;
+                $swapQuotes = false;
 
                 if ($previousToken->isGivenKind(T_START_HEREDOC)) {
                     $previousTokenContent = $previousToken->getContent();
@@ -153,12 +151,20 @@ final class NonPrintableCharacterFixer extends AbstractFixer implements Configur
                         $stringTypeChanged = true;
                     }
                 } elseif ("'" === $content[0]) {
-                    $content = Preg::replace('/^\'(.*)\'$/', '"$1"', $content);
                     $stringTypeChanged = true;
+                    $swapQuotes = true;
                 }
 
+                if ($swapQuotes) {
+                    $content = str_replace("\\'", "'", $content);
+                }
                 if ($stringTypeChanged) {
-                    $content = Preg::replace('/([\\\\$])/', '\\\\$1', $content);
+                    $content = Preg::replace('/(\\\\{1,2})/', '\\\\\\\\', $content);
+                    $content = str_replace('$', '\$', $content);
+                }
+                if ($swapQuotes) {
+                    $content = str_replace('"', '\"', $content);
+                    $content = Preg::replace('/^\'(.*)\'$/', '"$1"', $content);
                 }
 
                 $tokens[$index] = new Token([$token->getId(), strtr($content, $escapeSequences)]);

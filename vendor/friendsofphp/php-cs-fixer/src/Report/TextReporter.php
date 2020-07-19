@@ -53,8 +53,7 @@ final class TextReporter implements ReporterInterface
     }
 
     /**
-     * @param bool  $isDecoratedOutput
-     * @param array $fixResult
+     * @param bool $isDecoratedOutput
      *
      * @return string
      */
@@ -67,8 +66,7 @@ final class TextReporter implements ReporterInterface
     }
 
     /**
-     * @param bool  $isDecoratedOutput
-     * @param array $fixResult
+     * @param bool $isDecoratedOutput
      *
      * @return string
      */
@@ -78,13 +76,11 @@ final class TextReporter implements ReporterInterface
             return '';
         }
 
-        $diffFormatter = new DiffConsoleFormatter(
-            $isDecoratedOutput, sprintf(
-                '<comment>      ---------- begin diff ----------</comment>%s%%s%s<comment>      ----------- end diff -----------</comment>',
-                PHP_EOL,
-                PHP_EOL
-            )
-        );
+        $diffFormatter = new DiffConsoleFormatter($isDecoratedOutput, sprintf(
+            '<comment>      ---------- begin diff ----------</comment>%s%%s%s<comment>      ----------- end diff -----------</comment>',
+            PHP_EOL,
+            PHP_EOL
+        ));
 
         return PHP_EOL.$diffFormatter->format($fixResult['diff']).PHP_EOL;
     }

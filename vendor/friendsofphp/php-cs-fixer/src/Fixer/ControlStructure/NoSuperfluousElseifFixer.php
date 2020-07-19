@@ -44,6 +44,16 @@ final class NoSuperfluousElseifFixer extends AbstractNoUselessElseFixer
 
     /**
      * {@inheritdoc}
+     *
+     * Must run after NoAlternativeSyntaxFixer.
+     */
+    public function getPriority()
+    {
+        return parent::getPriority();
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
@@ -55,8 +65,7 @@ final class NoSuperfluousElseifFixer extends AbstractNoUselessElseFixer
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return bool
      */
@@ -70,8 +79,7 @@ final class NoSuperfluousElseifFixer extends AbstractNoUselessElseFixer
     }
 
     /**
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      */
     private function convertElseifToIf(Tokens $tokens, $index)
     {
@@ -84,11 +92,15 @@ final class NoSuperfluousElseifFixer extends AbstractNoUselessElseFixer
         $whitespace = '';
         for ($previous = $index - 1; $previous > 0; --$previous) {
             $token = $tokens[$previous];
-            if ($token->isWhitespace() && Preg::match('/(\R\V*)$/', $token->getContent(), $matches)) {
+            if ($token->isWhitespace() && Preg::match('/(\R\N*)$/', $token->getContent(), $matches)) {
                 $whitespace = $matches[1];
 
                 break;
             }
+        }
+
+        if ('' === $whitespace) {
+            return;
         }
 
         $previousToken = $tokens[$index - 1];

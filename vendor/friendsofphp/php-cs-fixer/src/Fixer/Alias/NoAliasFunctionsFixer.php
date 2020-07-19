@@ -29,14 +29,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoAliasFunctionsFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    /**
-     * @var array<string, string> stores alias (key) - master (value) functions mapping 
-     */
+    /** @var array<string, string> stores alias (key) - master (value) functions mapping */
     private $aliases = [];
 
-    /**
-     * @var array<string, string> stores alias (key) - master (value) functions mapping 
-     */
+    /** @var array<string, string> stores alias (key) - master (value) functions mapping */
     private static $internalSet = [
         'chop' => 'rtrim',
         'close' => 'closedir',
@@ -59,9 +55,7 @@ final class NoAliasFunctionsFixer extends AbstractFixer implements Configuration
         'user_error' => 'trigger_error',
     ];
 
-    /**
-     * @var array<string, string> stores alias (key) - master (value) functions mapping 
-     */
+    /** @var array<string, string> stores alias (key) - master (value) functions mapping */
     private static $imapSet = [
         'imap_create' => 'imap_createmailbox',
         'imap_fetchtext' => 'imap_body',
@@ -73,9 +67,7 @@ final class NoAliasFunctionsFixer extends AbstractFixer implements Configuration
         'imap_scanmailbox' => 'imap_listscan',
     ];
 
-    /**
-     * @var array<string, string> stores alias (key) - master (value) functions mapping 
-     */
+    /** @var array<string, string> stores alias (key) - master (value) functions mapping */
     private static $mbregSet = [
         'mbereg' => 'mb_ereg',
         'mbereg_match' => 'mb_ereg_match',
@@ -164,6 +156,16 @@ mbereg_search_getregs();
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before ImplodeCallFixer, PhpUnitDedicateAssertFixer.
+     */
+    public function getPriority()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function isCandidate(Tokens $tokens)
     {
@@ -185,9 +187,7 @@ mbereg_search_getregs();
     {
         $functionsAnalyzer = new FunctionsAnalyzer();
 
-        /**
- * @var \PhpCsFixer\Tokenizer\Token $token 
-*/
+        /** @var Token $token */
         foreach ($tokens->findGivenKind(T_STRING) as $index => $token) {
             // check mapping hit
             $tokenContent = strtolower($token->getContent());
@@ -216,14 +216,12 @@ mbereg_search_getregs();
     {
         $sets = ['@internal', '@IMAP', '@mbreg', '@all'];
 
-        return new FixerConfigurationResolver(
-            [
+        return new FixerConfigurationResolver([
             (new FixerOptionBuilder('sets', 'List of sets to fix. Defined sets are `@internal` (native functions), `@IMAP` (IMAP functions), `@mbreg` (from `ext-mbstring`) `@all` (all listed sets).'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset($sets)])
                 ->setDefault(['@internal', '@IMAP'])
                 ->getOption(),
-            ]
-        );
+        ]);
     }
 }

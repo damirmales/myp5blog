@@ -34,15 +34,24 @@ final class PhpdocAnnotationWithoutDotFixer extends AbstractFixer
     {
         return new FixerDefinition(
             'PHPDoc annotation descriptions should not be a sentence.',
-            [new CodeSample(
-                '<?php
+            [new CodeSample('<?php
 /**
  * @param string $bar Some string.
  */
 function foo ($bar) {}
-'
-            )]
+')]
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Must run before PhpdocAlignFixer, PhpdocTypesFixer, PhpdocTypesOrderFixer.
+     * Must run after CommentToPhpdocFixer, PhpdocIndentFixer, PhpdocToCommentFixer.
+     */
+    public function getPriority()
+    {
+        return 17;
     }
 
     /**
@@ -71,7 +80,8 @@ function foo ($bar) {}
             }
 
             foreach ($annotations as $annotation) {
-                if (!$annotation->getTag()->valid() || !\in_array($annotation->getTag()->getName(), $this->tags, true)
+                if (
+                    !$annotation->getTag()->valid() || !\in_array($annotation->getTag()->getName(), $this->tags, true)
                 ) {
                     continue;
                 }
@@ -87,7 +97,8 @@ function foo ($bar) {}
 
                 $content = $annotation->getContent();
 
-                if (1 !== Preg::match('/[.。]\h*$/u', $content)
+                if (
+                    1 !== Preg::match('/[.。]\h*$/u', $content)
                     || 0 !== Preg::match('/[.。](?!\h*$)/u', $content, $matches)
                 ) {
                     continue;
@@ -103,6 +114,10 @@ function foo ($bar) {}
                 $content = Preg::replaceCallback(
                     '/^(\s*\*\s*@\w+\s+'.$optionalTypeRegEx.')(\p{Lu}?(?=\p{Ll}|\p{Zs}))(.*)$/',
                     static function (array $matches) {
+                        if (\function_exists('mb_strtolower')) {
+                            return $matches[1].mb_strtolower($matches[2]).$matches[3];
+                        }
+
                         return $matches[1].strtolower($matches[2]).$matches[3];
                     },
                     $startLine->getContent(),

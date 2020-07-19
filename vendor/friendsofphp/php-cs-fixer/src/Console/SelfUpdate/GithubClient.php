@@ -27,13 +27,11 @@ final class GithubClient implements GithubClientInterface
         $result = @file_get_contents(
             $url,
             false,
-            stream_context_create(
-                [
+            stream_context_create([
                 'http' => [
                     'header' => 'User-Agent: FriendsOfPHP/PHP-CS-Fixer',
                 ],
-                ]
-            )
+            ])
         );
 
         if (false === $result) {
@@ -42,13 +40,11 @@ final class GithubClient implements GithubClientInterface
 
         $result = json_decode($result, true);
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Failed to read response from "%s" as JSON: %s.',
-                    $url,
-                    json_last_error_msg()
-                )
-            );
+            throw new \RuntimeException(sprintf(
+                'Failed to read response from "%s" as JSON: %s.',
+                $url,
+                json_last_error_msg()
+            ));
         }
 
         return $result;

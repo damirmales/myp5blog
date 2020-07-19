@@ -37,11 +37,11 @@ final class NoEmptyStatementFixer extends AbstractFixer
 
     /**
      * {@inheritdoc}
+     *
+     * Must run before BracesFixer, CombineConsecutiveUnsetsFixer, MultilineWhitespaceBeforeSemicolonsFixer, NoExtraBlankLinesFixer, NoSinglelineWhitespaceBeforeSemicolonsFixer, NoTrailingWhitespaceFixer, NoUselessElseFixer, NoUselessReturnFixer, NoWhitespaceInBlankLineFixer, ReturnAssignmentFixer, SpaceAfterSemicolonFixer, SwitchCaseSemicolonToColonFixer.
      */
     public function getPriority()
     {
-        // should be run before the BracesFixer, CombineConsecutiveUnsetsFixer, NoExtraBlankLinesFixer, MultilineWhitespaceBeforeSemicolonsFixer, NoSinglelineWhitespaceBeforeSemicolonsFixer,
-        // NoTrailingCommaInListCallFixer, NoUselessReturnFixer, NoWhitespaceInBlankLineFixer, SpaceAfterSemicolonFixer, SwitchCaseSemicolonToColonFixer.
         return 26;
     }
 
@@ -100,9 +100,8 @@ final class NoEmptyStatementFixer extends AbstractFixer
      * - declare (with '{' '}')
      * - namespace (with '{' '}')
      *
-     * @param Tokens $tokens
-     * @param int    $index           Semicolon index
-     * @param int    $curlyCloseIndex
+     * @param int $index           Semicolon index
+     * @param int $curlyCloseIndex
      */
     private function fixSemicolonAfterCurlyBraceClose(Tokens $tokens, $index, $curlyCloseIndex)
     {
@@ -128,8 +127,9 @@ final class NoEmptyStatementFixer extends AbstractFixer
 
             $tokensAnalyzer = new TokensAnalyzer($tokens);
 
-            if ($tokens[$classyTest]->isGivenKind(T_NAMESPACE) 
-                || ($tokens[$classyTest]->isClassy() && !$tokensAnalyzer->isAnonymousClass($classyTest))
+            if (
+                $tokens[$classyTest]->isGivenKind(T_NAMESPACE) ||
+                ($tokens[$classyTest]->isClassy() && !$tokensAnalyzer->isAnonymousClass($classyTest))
             ) {
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             }

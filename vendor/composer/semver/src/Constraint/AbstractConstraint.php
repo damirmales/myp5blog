@@ -18,9 +18,7 @@ trigger_error('The ' . __NAMESPACE__ . '\AbstractConstraint abstract class is de
  */
 abstract class AbstractConstraint implements ConstraintInterface
 {
-    /**
-     * @var string 
-     */
+    /** @var string */
     protected $prettyString;
 
     /**

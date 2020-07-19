@@ -34,7 +34,7 @@ final class StaticLambdaFixer extends AbstractFixer
             'Lambdas not (indirect) referencing `$this` must be declared `static`.',
             [new CodeSample("<?php\n\$a = function () use (\$b)\n{   echo \$b;\n};\n")],
             null,
-            'Risky when using "->bindTo" on lambdas without referencing to `$this`.'
+            'Risky when using `->bindTo` on lambdas without referencing to `$this`.'
         );
     }
 
@@ -43,6 +43,10 @@ final class StaticLambdaFixer extends AbstractFixer
      */
     public function isCandidate(Tokens $tokens)
     {
+        if (\PHP_VERSION_ID >= 70400 && $tokens->isTokenKindFound(T_FN)) {
+            return true;
+        }
+
         return $tokens->isTokenKindFound(T_FUNCTION);
     }
 
@@ -61,8 +65,13 @@ final class StaticLambdaFixer extends AbstractFixer
     {
         $analyzer = new TokensAnalyzer($tokens);
 
+        $expectedFunctionKinds = [T_FUNCTION];
+        if (\PHP_VERSION_ID >= 70400) {
+            $expectedFunctionKinds[] = T_FN;
+        }
+
         for ($index = $tokens->count() - 4; $index > 0; --$index) {
-            if (!$tokens[$index]->isGivenKind(T_FUNCTION) || !$analyzer->isLambda($index)) {
+            if (!$tokens[$index]->isGivenKind($expectedFunctionKinds) || !$analyzer->isLambda($index)) {
                 continue;
             }
 
@@ -71,11 +80,18 @@ final class StaticLambdaFixer extends AbstractFixer
                 continue; // lambda is already 'static'
             }
 
+            $argumentsStartIndex = $tokens->getNextTokenOfKind($index, ['(']);
+            $argumentsEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $argumentsStartIndex);
+
             // figure out where the lambda starts ...
-            $lambdaOpenIndex = $tokens->getNextTokenOfKind($index, ['{']);
+            $lambdaOpenIndex = $tokens->getNextTokenOfKind($argumentsEndIndex, ['{', [T_DOUBLE_ARROW]]);
 
             // ... and where it ends
-            $lambdaEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $lambdaOpenIndex);
+            if ($tokens[$lambdaOpenIndex]->isGivenKind(T_DOUBLE_ARROW)) {
+                $lambdaEndIndex = $tokens->getNextTokenOfKind($lambdaOpenIndex, [';']);
+            } else {
+                $lambdaEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $lambdaOpenIndex);
+            }
 
             if ($this->hasPossibleReferenceToThis($tokens, $lambdaOpenIndex, $lambdaEndIndex)) {
                 continue;
@@ -97,9 +113,8 @@ final class StaticLambdaFixer extends AbstractFixer
     /**
      * Returns 'true' if there is a possible reference to '$this' within the given tokens index range.
      *
-     * @param Tokens $tokens
-     * @param int    $startIndex
-     * @param int    $endIndex
+     * @param int $startIndex
+     * @param int $endIndex
      *
      * @return bool
      */
@@ -110,17 +125,14 @@ final class StaticLambdaFixer extends AbstractFixer
                 return true; // directly accessing '$this'
             }
 
-            if ($tokens[$i]->isGivenKind(
-                [
+            if ($tokens[$i]->isGivenKind([
                 T_INCLUDE,                    // loading additional symbols we cannot analyze here
                 T_INCLUDE_ONCE,               // "
                 T_REQUIRE,                    // "
                 T_REQUIRE_ONCE,               // "
                 CT::T_DYNAMIC_VAR_BRACE_OPEN, // "$h = ${$g};" case
                 T_EVAL,                       // "$c = eval('return $this;');" case
-                ]
-            )
-            ) {
+            ])) {
                 return true;
             }
 
